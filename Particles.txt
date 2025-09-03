@@ -1,0 +1,8 @@
+I:/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/SharedDev/Assets/Effects/Effects_Banks/AssetsEffects/Beams/VFX_Beams_Lightning_DragonSkeletal_LightningBreath_Beam_01.lsfx
+
+I:/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/Shared/Assets/Effects/Effects_Banks/Environment/VFX_Environment_Snow_Blizzard_01.lsfx
+
+I:/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/Shared/Assets/Effects/Effects_Banks/Environment/VFX_Environment_ATM_Snow_Blizzard_01.lsfx
+
+I:/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/SharedDev/Assets/Effects/Effects_Banks/Cinematic/VFX_Cinematic_Gale_Mystra_NorthernLights_01.lsfx
+
