@@ -141,6 +141,7 @@ function MainTab2(mt2)
 
     GlobalsIMGUI.checkPickerSize = mt2:AddCheckbox('Smaller color picker')
     GlobalsIMGUI.checkPickerSize.Checked = pickerSize
+    GlobalsIMGUI.checkPickerSize.Checked = pickerSize or false
     GlobalsIMGUI.checkPickerSize.OnChange = function ()
         ChangeColorPickerSize()
         pickerSize = GlobalsIMGUI.checkPickerSize.Checked
