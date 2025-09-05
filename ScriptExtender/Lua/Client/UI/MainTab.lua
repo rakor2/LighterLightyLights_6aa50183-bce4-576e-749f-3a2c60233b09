@@ -162,9 +162,13 @@ function MainWindow(mw)
     Style.MainWindow.Main(mw)
     ViewportSize = Ext.IMGUI.GetViewportSize()
     mw:SetPos({ ViewportSize[1] / 6, ViewportSize[2] / 10 })
-    -- mw:SetSize({622, 1000})
-    mw:SetSize({ 700, 1000 })
+    if ViewportSize[1] <= 1920 and ViewportSize[2] <= 1080 then
+        mw:SetSize({ 525, 750 })
+    else
+        mw:SetSize({ 700, 1000 })
+    end
     mw.AlwaysAutoResize = false
+    mw.Scaling = 'Scaled'
 
 
 

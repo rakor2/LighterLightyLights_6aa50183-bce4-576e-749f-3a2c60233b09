@@ -55,11 +55,11 @@ Ext.IMGUI.LoadFont("Font", "Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2
 
 Style.buttonSize = {
     default = function(button)
-        button.Size = {130, 35}
+        button.Size = {130, 39}
     end,
     
     disabled = function(button)
-        button.Size = {130, 35}
+        button.Size = {130, 39}
         button.Disabled = true
         button:SetColor("Button", {0.1, 0.1, 0.1, 1.0})         -- Dark red
     end,
@@ -73,7 +73,7 @@ Style.buttonSize = {
 -- Button confirm style _ai
 Style.buttonConfirm = {
     default = function(button)
-        button.Size = {130, 35}
+        button.Size = {130, 39}
         button:SetColor("Button", {0.55, 0.0, 0.0, 1.0})  
         button:SetColor("ButtonHovered", {0.35, 0.0, 0.0, 1.0})
         button:SetColor("ButtonActive", {0.25, 0.0, 0.0, 1.0})
