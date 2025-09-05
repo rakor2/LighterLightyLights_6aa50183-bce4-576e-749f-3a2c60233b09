@@ -1703,6 +1703,7 @@ Ext.RegisterNetListener('LL_AtmosphereApply', function(channel, payload, user)
     for _, trigger in pairs(Globals.AtmosphereTriggers) do
         Osi.TriggerSetAtmosphere(trigger.Uuid.EntityUuid, atm_templates2[payload])
     end
+    DPrint(atm_templates2[payload])
     Globals.SelectedAtmosphere = payload
 end)
 

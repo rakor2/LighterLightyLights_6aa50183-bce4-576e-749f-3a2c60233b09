@@ -35,57 +35,57 @@ else
     DPrint(" Settings file not found. The file will be created after changing UI style")
 end
 
--- Load favorites when mod initializes _ai
-function LoadFavoritesFromFile()
-    local exists = Ext.IO.LoadFile("LightyLights/AnL_Favorites.json")
+-- -- Load favorites when mod initializes _ai
+-- function LoadFavoritesFromFile()
+--     local exists = Ext.IO.LoadFile("LightyLights/AnL_Favorites.json")
     
-    -- Initialize empty lists and arrays _ai
-    ATMFavoritesList = {}
-    LTNFavoritesList = {}
-    ATMFavorites = {}
-    LTNFavorites = {}
+--     -- Initialize empty lists and arrays _ai
+--     ATMFavoritesList = {}
+--     LTNFavoritesList = {}
+--     ATMFavorites = {}
+--     LTNFavorites = {}
     
-    if exists then
-        -- DPrint("Found favorites file")
-        local success, favorites = pcall(function()
-            return Ext.Json.Parse(exists)
-        end)
+--     if exists then
+--         -- DPrint("Found favorites file")
+--         local success, favorites = pcall(function()
+--             return Ext.Json.Parse(exists)
+--         end)
         
-        if success and favorites then
-            -- DPrint("Successfully parsed favorites file")
+--         if success and favorites then
+--             -- DPrint("Successfully parsed favorites file")
             
-            -- Load lists _ai
-            ATMFavoritesList = favorites.atm or {}
-            LTNFavoritesList = favorites.ltn or {}
+--             -- Load lists _ai
+--             ATMFavoritesList = favorites.atm or {}
+--             LTNFavoritesList = favorites.ltn or {}
             
-            -- Rebuild arrays _ai
-            for _, fav in ipairs(ATMFavoritesList) do
-                table.insert(ATMFavorites, fav.index)
-            end
+--             -- Rebuild arrays _ai
+--             for _, fav in ipairs(ATMFavoritesList) do
+--                 table.insert(ATMFavorites, fav.index)
+--             end
             
-            for _, fav in ipairs(LTNFavoritesList) do
-                table.insert(LTNFavorites, fav.index)
-            end
+--             for _, fav in ipairs(LTNFavoritesList) do
+--                 table.insert(LTNFavorites, fav.index)
+--             end
             
-            -- DPrint("Loaded ATM favorites count:", #ATMFavoritesList)
-            -- DPrint("Loaded LTN favorites indices count:", #ATMFavorites)
-            -- DPrint("Loaded LTN favorites count:", #LTNFavoritesList)
-            -- DPrint("Loaded LTN favorites indices count:", #LTNFavorites)
-        else
-            -- DPrint("Error parsing favorites file:", favorites)
-        end
-    else
-        -- DPrint("No favorites file found - using empty lists")
-    end
-end
+--             -- DPrint("Loaded ATM favorites count:", #ATMFavoritesList)
+--             -- DPrint("Loaded LTN favorites indices count:", #ATMFavorites)
+--             -- DPrint("Loaded LTN favorites count:", #LTNFavoritesList)
+--             -- DPrint("Loaded LTN favorites indices count:", #LTNFavorites)
+--         else
+--             -- DPrint("Error parsing favorites file:", favorites)
+--         end
+--     else
+--         -- DPrint("No favorites file found - using empty lists")
+--     end
+-- end
 
-LoadFavoritesFromFile()
+-- LoadFavoritesFromFile()
 
-if Ext.IO.LoadFile("LightyLights/AnL_Favorites.json") then
-    DPrint(" AnL favorites loaded")
-else
-    DPrint(" AnL favorites file not found. The file will be created after adding an LTN or ATM in favorites")
-end
+-- if Ext.IO.LoadFile("LightyLights/AnL_Favorites.json") then
+--     DPrint(" AnL favorites loaded")
+-- else
+--     DPrint(" AnL favorites file not found. The file will be created after adding an LTN or ATM in favorites")
+-- end
 
 
 -- Ext.Events.SessionLoaded:Subscribe(function()
