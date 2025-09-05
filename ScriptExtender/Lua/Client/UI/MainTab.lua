@@ -1290,6 +1290,7 @@ function BetterPMTab(parent)
     end
 
     local farPlane = camCollapse:AddSlider('Far plane distane', 1000, 0, 5000, 1)
+    local farPlane = camCollapse:AddSlider('Far plane distance', 1000, 0, 5000, 1)
     farPlane.Logarithmic = true
     farPlane.OnChange = function()
         CameraControlls('Far_plane', farPlane.Value[1])
@@ -1302,7 +1303,7 @@ function BetterPMTab(parent)
             if nearPlane.Checked then
                 camera.Camera.Controller.NearPlane = 0.01
             else
-                camera.Camera.Controller.NearPlane = 0.25
+                camera.Camera.Controller.NearPlane = 0.099999
             end
         end
     end
@@ -1310,7 +1311,7 @@ function BetterPMTab(parent)
     dofCollapse = parent:AddCollapsingHeader("DoF")
     dofCollapse.DefaultOpen = false
 
-    local dofStrength = dofCollapse:AddSlider("Strength", 0, 1, 22, 0.001)
+    local dofStrength = dofCollapse:AddSlider("Strength", 0, 22, 1, 0.001)
     dofStrength.IDContext = "DofStr"
     dofStrength.SameLine = false
     dofStrength.Logarithmic = true
@@ -1339,7 +1340,21 @@ function BetterPMTab(parent)
     end)
 
 
-    local dofDistance = dofCollapse:AddSlider("Distance", 0, 0, 30, 0.001)
+    
+
+    
+
+    local function dofChange(value)
+        local success, result = pcall(function()
+            return Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFDistance
+        end)
+
+        if success and result then
+            Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFDistance = value
+        end    
+    end
+
+    local dofDistance = dofCollapse:AddSlider("", 0, 0, 30, 0.001)
     dofDistance.IDContext = "DofDist"
     dofDistance.SameLine = false
     dofDistance.Logarithmic = true
@@ -1349,13 +1364,24 @@ function BetterPMTab(parent)
         local success, result = pcall(function()
             return Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFDistance
         end)
-
-        if success and result then
-            local preciseDofDist = (dofDistance.Value[1])
-            Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFDistance = preciseDofDist
-        end
+        dofChange(dofDistance.Value[1])
     end
 
+
+    local btnDofDistanceDec= dofCollapse:AddButton('<')
+    btnDofDistanceDec.SameLine = true
+    btnDofDistanceDec.OnClick = function ()
+        dofChange(dofDistance.Value[1] + 0.0005)
+    end
+    
+    local btnDofDistanceInc = dofCollapse:AddButton('>')
+    btnDofDistanceInc.SameLine = true
+    btnDofDistanceInc.OnClick = function ()
+        dofChange(dofDistance.Value[1] - 0.0005)
+    end
+
+    local textDofDistance = dofCollapse:AddText('Distance')
+    textDofDistance.SameLine = true
 
     local getDofDistanceSub = Ext.Events.Tick:Subscribe(function()
         local success, result = pcall(function()
