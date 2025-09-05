@@ -7,6 +7,7 @@ currentIntensityTextWidget = nil
 currentDistanceTextWidget = nil
 
 local OPENQUESTIONMARK = false
+IMGUI:AntiStupiditySystem()
 
 -- Function to get list of created lights _ai
 function GetLightOptions()
@@ -140,7 +141,6 @@ function MainTab2(mt2)
 
 
     GlobalsIMGUI.checkPickerSize = mt2:AddCheckbox('Smaller color picker')
-    GlobalsIMGUI.checkPickerSize.Checked = pickerSize
     GlobalsIMGUI.checkPickerSize.Checked = pickerSize or false
     GlobalsIMGUI.checkPickerSize.OnChange = function ()
         ChangeColorPickerSize()
@@ -183,9 +183,7 @@ function MainWindow(mw)
     mainTab = mainTabBar:AddTabItem("Main")
     MainWindowTab(mainTab)
 
-    -- Add Origin Point tab _ai
-    originPointTab = mainTabBar:AddTabItem("Origin point")
-    OriginPointTab(originPointTab)
+
 
     -- Add AnL tab to the same TabBar _ai
     -- anlTab = mainTabBar:AddTabItem("AnL")
@@ -195,12 +193,15 @@ function MainWindow(mw)
     Anal2Tab(anal2Tab)
 
 
+    betterPM = mainTabBar:AddTabItem("PM")
+    BetterPMTab(betterPM)
+
+    originPointTab = mainTabBar:AddTabItem("Origin point")
+    OriginPointTab(originPointTab)
+
     goboTab = mainTabBar:AddTabItem("Gobo")
     GoboWindowTab(goboTab)
 
-
-    betterPM = mainTabBar:AddTabItem("PM")
-    BetterPMTab(betterPM)
 
     dev = mainTabBar:AddTabItem("Dev")
     DevTab(dev)
@@ -246,12 +247,12 @@ function MainWindowTab(parent)
         CreateLightClick()
     end
 
-    local createButton = parent:AddButton("D")
-    createButton.IDContext = "CreateLightButton"
-    createButton.SameLine = true
-    createButton.OnClick = function()
-        mw:SetScroll({ 0, 1000000 })
-    end
+    -- local createButton = parent:AddButton("D")
+    -- createButton.IDContext = "CreateLightButton"
+    -- createButton.SameLine = true
+    -- createButton.OnClick = function()
+    --     mw:SetScroll({ 0, 1000000 })
+    -- end
 
     -- Add spawned lights combo directly to mt _ai
     LightDropdown = parent:AddCombo("Created lights")
@@ -327,12 +328,13 @@ function MainWindowTab(parent)
 
 
     -- Add position source checkbox _ai
-    local posSourceCheckbox = parent:AddCheckbox("Use client-side position")
-    local useOriginPoint = parent:AddCheckbox("Use origin point")
-    local tlDummyCheckbox = parent:AddCheckbox("Use cutscene position")
+    local useOriginPoint = parent:AddCheckbox("Origin point")
+    local tlDummyCheckbox = parent:AddCheckbox("Cutscene")
+    local posSourceCheckbox = parent:AddCheckbox("Client-side")
     local CollapsingHeaderOrbit
 
     posSourceCheckbox.IDContext = "PosSourceCheckbox"
+    posSourceCheckbox.SameLine = true
     posSourceCheckbox.OnChange = function(checkbox)
         if checkbox.Checked then
             useOriginPoint.Checked = false
@@ -344,7 +346,7 @@ function MainWindowTab(parent)
     end
 
     useOriginPoint.IDContext = "UseOriginPointCheckbox"
-    useOriginPoint.SameLine = true
+    useOriginPoint.SameLine = false
     useOriginPoint.OnChange = function(checkbox)
         if checkbox.Checked then
             posSourceCheckbox.Checked = false
@@ -362,7 +364,7 @@ function MainWindowTab(parent)
 
     tlDummyCheckbox.IDContext = "CutsceneCheckbox"
     tlDummyCheckbox.Checked = false
-    tlDummyCheckbox.SameLine = false
+    tlDummyCheckbox.SameLine = true
     tlDummyCheckbox.OnChange = function(checkbox)
         if tlDummyCheckbox.Checked then
             useOriginPoint.Checked = false
@@ -374,6 +376,37 @@ function MainWindowTab(parent)
     end
 
     local separator = parent:AddSeparatorText("Parameters")
+
+    
+    local toggleLightButton = parent:AddButton("Toggle light")
+    toggleLightButton.IDContext = "ToggleLightButton"
+    toggleLightButton.OnClick = function()
+        ToggleLight()
+    end
+
+    local toggleLightsButton = parent:AddButton("Toggle all")
+    toggleLightsButton.IDContext = "ToggleLightsButton"
+    Style.buttonSize.default(toggleLightsButton)
+    toggleLightsButton.SameLine = true
+    toggleLightsButton.OnClick = function()
+        ToggleLights()
+    end
+
+    local toggleMarkerButton = parent:AddButton("Toggle marker")
+    toggleMarkerButton.SameLine = true
+    toggleMarkerButton.IDContext = "ToggleMarkerButton"
+    toggleMarkerButton.OnClick = function()
+        ToggleMarker()
+    end
+
+    local toggleAllMarkersButton = parent:AddButton("Toggle all")
+    toggleAllMarkersButton.SameLine = true
+    Style.buttonSize.default(toggleAllMarkersButton)
+    toggleAllMarkersButton.IDContext = "ToggleAllMarkersButton"
+    toggleAllMarkersButton.SameLine = true
+    toggleAllMarkersButton.OnClick = function()
+        ToggleAllMarkers()
+    end
 
     collapsingHeader = parent:AddCollapsingHeader("Color/Temperature/Power/Distance")
 
@@ -450,13 +483,13 @@ function MainWindowTab(parent)
     -- currentIntensityTextWidget = currentIntensityText
     currentIntensityText.SameLine = true
 
-    local resetIntensityButton = collapsingHeader:AddButton("r")
-    resetIntensityButton.SameLine = true
-    resetIntensityButton.IDContext = "ResetIntensityButton"
-    resetIntensityButton.OnClick = function()
-        intensitySlider.Value = { 1, 0, 0, 0 }
-        ResetIntensityClick()
-    end
+    -- local resetIntensityButton = collapsingHeader:AddButton("r")
+    -- resetIntensityButton.SameLine = true
+    -- resetIntensityButton.IDContext = "ResetIntensityButton"
+    -- resetIntensityButton.OnClick = function()
+    --     intensitySlider.Value = { 1, 0, 0, 0 }
+    --     ResetIntensityClick()
+    -- end
 
     local radiusSlider = collapsingHeader:AddSlider("", 0, 0, 60, 0.001)
     radiusSlider.IDContext = "LightRadiusSlider"
@@ -473,91 +506,35 @@ function MainWindowTab(parent)
     -- currentDistanceTextWidget = currentDistanceText
     currentDistanceText.SameLine = true
 
-    local resetRadiusButton = collapsingHeader:AddButton("r")
-    resetRadiusButton.IDContext = "ResetRadiusButton"
-    resetRadiusButton.SameLine = true
-    resetRadiusButton.OnClick = function()
-        radiusSlider.Value = { 1, 0, 0, 0 }
-        ResetRadiusClick()
-    end
+    -- local resetRadiusButton = collapsingHeader:AddButton("r")
+    -- resetRadiusButton.IDContext = "ResetRadiusButton"
+    -- resetRadiusButton.SameLine = true
+    -- resetRadiusButton.OnClick = function()
+    --     radiusSlider.Value = { 1, 0, 0, 0 }
+    --     ResetRadiusClick()
+    -- end
 
 
     -- Add position controls separator _ai
-    local Separator = parent:AddSeparatorText("Position")
+    local Separator = parent:AddSeparatorText("Positioning")
 
 
 
-
-
-
-    -- Forward/Back reset button _ai
-    local resetForwardBackButton = parent:AddButton("X reset")
-    Style.buttonSize.default(resetForwardBackButton)
-    resetForwardBackButton.IDContext = "ResetForwardBackButton"
-    resetForwardBackButton.OnClick = function()
-        ResetLightPosition("z")
-    end
-
-    -- Left/Right reset button _ai
-    local resetLeftRightButton = parent:AddButton("Y reset")
-    Style.buttonSize.default(resetLeftRightButton)
-    resetLeftRightButton.IDContext = "ResetLeftRightButton"
-    resetLeftRightButton.SameLine = true
-    resetLeftRightButton.OnClick = function()
-        ResetLightPosition("x")
-    end
-
-    -- Up/Down reset button _ai
-    local resetUpDownButton = parent:AddButton("Z reset")
-    Style.buttonSize.default(resetUpDownButton)
-    resetUpDownButton.IDContext = "ResetUpDownButton"
-    resetUpDownButton.SameLine = true
-    resetUpDownButton.OnClick = function()
-        ResetLightPosition("y")
-    end
-
-    -- Reset all position button _ai
-    local resetAllPositionButton = parent:AddButton("Reset all")
-    Style.buttonSize.default(resetAllPositionButton)
-    resetAllPositionButton.SameLine = true
+    local resetAllPositionButton = parent:AddButton("Reset position")
+    resetAllPositionButton.SameLine = false
     resetAllPositionButton.IDContext = "ResetAllPositionButton"
     resetAllPositionButton.OnClick = function()
         ResetLightPosition("all")
     end
+   
 
-    -- Tilt rotation reset button _ai
-    local resetTiltButton = parent:AddButton("Tilt reset")
-    Style.buttonSize.default(resetTiltButton)
-    resetTiltButton.IDContext = "ResetTiltButton"
-    resetTiltButton.OnClick = function()
-        ResetLightRotation("tilt")
-    end
-
-    -- Yaw rotation reset button _ai
-    local resetYawButton = parent:AddButton("Yaw reset")
-    Style.buttonSize.default(resetYawButton)
-    resetYawButton.SameLine = true
-    resetYawButton.OnClick = function()
-        ResetLightRotation("yaw")
-    end
-
-    -- Roll rotation reset button _ai
-    local resetRollButton = parent:AddButton("Roll reset")
-    Style.buttonSize.default(resetRollButton)
-    resetRollButton.IDContext = "ResetRollButton"
-    resetRollButton.SameLine = true
-    resetRollButton.OnClick = function()
-        ResetLightRotation("roll")
-    end
-
-    -- Reset all rotation button _ai
-    local resetAllRotationButton = parent:AddButton("Reset all")
-    Style.buttonSize.default(resetAllRotationButton)
+    local resetAllRotationButton = parent:AddButton("Reset rotation")
     resetAllRotationButton.SameLine = true
     resetAllRotationButton.IDContext = "ResetAllRotationButton"
     resetAllRotationButton.OnClick = function()
         ResetLightRotation("all")
     end
+
 
     CheckBoxCF = parent:AddCheckbox("Stick light to camera")
     CheckBoxCF.OnChange = function()
@@ -588,6 +565,31 @@ function MainWindowTab(parent)
 
     local addtext = CollapsingHeaderOrbit:AddText("Ccw/Cw")
     addtext.SameLine = true
+    
+
+        local heightSlider = CollapsingHeaderOrbit:AddSlider("", 0, -1000, 1000, 0.001)
+    heightSlider.IDContext = "HeightSlider"
+    heightSlider.OnChange = function(value)
+        OrbitSliderChange(value, "height", 0.0001)
+    end
+
+    -- Height orbit buttons _ai
+    local heightDownButton = CollapsingHeaderOrbit:AddButton("<")
+    heightDownButton.IDContext = "HeightDownButton"
+    heightDownButton.SameLine = true
+    heightDownButton.OnClick = function()
+        OrbitButtonClick("height", -buttonStep)
+    end
+
+    local heightUpButton = CollapsingHeaderOrbit:AddButton(">")
+    heightUpButton.IDContext = "HeightUpButton"
+    heightUpButton.SameLine = true
+    heightUpButton.OnClick = function()
+        OrbitButtonClick("height", buttonStep)
+    end
+
+    local addtext = CollapsingHeaderOrbit:AddText("Down/Up")
+    addtext.SameLine = true
 
     local radiusSlider = CollapsingHeaderOrbit:AddSlider("", 0, -1000, 1000, 0.001)
     radiusSlider.IDContext = "RadiusSlider"
@@ -613,29 +615,9 @@ function MainWindowTab(parent)
     local addtext = CollapsingHeaderOrbit:AddText("Close/Far")
     addtext.SameLine = true
 
-    local heightSlider = CollapsingHeaderOrbit:AddSlider("", 0, -1000, 1000, 0.001)
-    heightSlider.IDContext = "HeightSlider"
-    heightSlider.OnChange = function(value)
-        OrbitSliderChange(value, "height", 0.0001)
-    end
 
-    -- Height orbit buttons _ai
-    local heightDownButton = CollapsingHeaderOrbit:AddButton("<")
-    heightDownButton.IDContext = "HeightDownButton"
-    heightDownButton.SameLine = true
-    heightDownButton.OnClick = function()
-        OrbitButtonClick("height", -buttonStep)
-    end
 
-    local heightUpButton = CollapsingHeaderOrbit:AddButton(">")
-    heightUpButton.IDContext = "HeightUpButton"
-    heightUpButton.SameLine = true
-    heightUpButton.OnClick = function()
-        OrbitButtonClick("height", buttonStep)
-    end
 
-    local addtext = CollapsingHeaderOrbit:AddText("Down/Up")
-    addtext.SameLine = true
 
     -- Collapsing header _ai
     local CollapsingHeaderDm = parent:AddCollapsingHeader("World relative")
@@ -661,9 +643,34 @@ function MainWindowTab(parent)
         MoveLightForwardBack(buttonStep)
     end
 
-    local addtext = CollapsingHeaderDm:AddText("South/North")
+    local addtext = CollapsingHeaderDm:AddText("South/North")   
+    addtext.SameLine = true
+                         
+    
+    local upDownSlider = CollapsingHeaderDm:AddSlider("", 0, -1000, 1000, 0.001)
+    upDownSlider.IDContext = "UpDownSlider"
+    upDownSlider.OnChange = function(value)
+        SliderChange(value, MoveLightUpDown, stepMultiplier)
+    end
+    -- Up/Down movement _ai
+    local downButton = CollapsingHeaderDm:AddButton("<")
+    downButton.SameLine = true
+    downButton.IDContext = "MoveDownButton"
+    downButton.OnClick = function()
+        MoveLightUpDown(-buttonStep)
+    end
+
+    local upButton = CollapsingHeaderDm:AddButton(">")
+    upButton.IDContext = "MoveUpButton"
+    upButton.SameLine = true
+    upButton.OnClick = function()
+        MoveLightUpDown(buttonStep)
+    end
+
+    local addtext = CollapsingHeaderDm:AddText("Down/Up")
     addtext.SameLine = true
 
+    
     local leftRightSlider = CollapsingHeaderDm:AddSlider("", 0, -1000, 1000, 0.001)
     leftRightSlider.IDContext = "LeftRightSlider"
     leftRightSlider.OnChange = function(value)
@@ -689,28 +696,6 @@ function MainWindowTab(parent)
     local addtext = CollapsingHeaderDm:AddText("West/East")
     addtext.SameLine = true
 
-    local upDownSlider = CollapsingHeaderDm:AddSlider("", 0, -1000, 1000, 0.001)
-    upDownSlider.IDContext = "UpDownSlider"
-    upDownSlider.OnChange = function(value)
-        SliderChange(value, MoveLightUpDown, stepMultiplier)
-    end
-    -- Up/Down movement _ai
-    local downButton = CollapsingHeaderDm:AddButton("<")
-    downButton.SameLine = true
-    downButton.IDContext = "MoveDownButton"
-    downButton.OnClick = function()
-        MoveLightUpDown(-buttonStep)
-    end
-
-    local upButton = CollapsingHeaderDm:AddButton(">")
-    upButton.IDContext = "MoveUpButton"
-    upButton.SameLine = true
-    upButton.OnClick = function()
-        MoveLightUpDown(buttonStep)
-    end
-
-    local addtext = CollapsingHeaderDm:AddText("Down/Up")
-    addtext.SameLine = true
 
 
     --  -- Collapsing header _ai
@@ -853,6 +838,67 @@ function MainWindowTab(parent)
     addtext.SameLine = true
 
 
+ 
+    --#region
+
+    -- -- Tilt rotation reset button _ai
+    -- local resetTiltButton = parent:AddButton("Tilt reset")
+    -- Style.buttonSize.default(resetTiltButton)
+    -- resetTiltButton.IDContext = "ResetTiltButton"
+    -- resetTiltButton.OnClick = function()
+    --     ResetLightRotation("tilt")
+    -- end
+
+    -- -- Yaw rotation reset button _ai
+    -- local resetYawButton = parent:AddButton("Yaw reset")
+    -- Style.buttonSize.default(resetYawButton)
+    -- resetYawButton.SameLine = true
+    -- resetYawButton.OnClick = function()
+    --     ResetLightRotation("yaw")
+    -- end
+
+    -- -- Roll rotation reset button _ai
+    -- local resetRollButton = parent:AddButton("Roll reset")
+    -- Style.buttonSize.default(resetRollButton)
+    -- resetRollButton.IDContext = "ResetRollButton"
+    -- resetRollButton.SameLine = true
+    -- resetRollButton.OnClick = function()
+    --     ResetLightRotation("roll")
+    -- end
+
+    
+    
+    -- Forward/Back reset button _ai
+    -- local resetForwardBackButton = parent:AddButton("X reset")
+    -- Style.buttonSize.default(resetForwardBackButton)
+    -- resetForwardBackButton.IDContext = "ResetForwardBackButton"
+    -- resetForwardBackButton.OnClick = function()
+    --     ResetLightPosition("z")
+    -- end
+
+    -- -- Left/Right reset button _ai
+    -- local resetLeftRightButton = parent:AddButton("Y reset")
+    -- Style.buttonSize.default(resetLeftRightButton)
+    -- resetLeftRightButton.IDContext = "ResetLeftRightButton"
+    -- resetLeftRightButton.SameLine = true
+    -- resetLeftRightButton.OnClick = function()
+    --     ResetLightPosition("x")
+    -- end
+
+    -- -- Up/Down reset button _ai
+    -- local resetUpDownButton = parent:AddButton("Z reset")
+    -- Style.buttonSize.default(resetUpDownButton)
+    -- resetUpDownButton.IDContext = "ResetUpDownButton"
+    -- resetUpDownButton.SameLine = true
+    -- resetUpDownButton.OnClick = function()
+    --     ResetLightPosition("y")
+    -- end
+
+    
+    --#endregion
+
+
+    
     local savePositionButton = parent:AddButton("Save")
     savePositionButton.IDContext = "SavePositionButton"
     Style.buttonSize.default(savePositionButton)
@@ -868,39 +914,12 @@ function MainWindowTab(parent)
         LoadLightPosition()
     end
 
+
+
+
+
     -- Add position controls separator _ai
     local Separator = parent:AddSeparatorText("Utilities")
-
-    -- Add toggle single light button _ai
-    local toggleLightButton = parent:AddButton("Toggle light")
-    toggleLightButton.IDContext = "ToggleLightButton"
-    toggleLightButton.OnClick = function()
-        ToggleLight()
-    end
-
-    -- Add toggle lights button _ai
-    local toggleLightsButton = parent:AddButton("Toggle all")
-    toggleLightsButton.IDContext = "ToggleLightsButton"
-    Style.buttonSize.default(toggleLightsButton)
-    toggleLightsButton.SameLine = true
-    toggleLightsButton.OnClick = function()
-        ToggleLights()
-    end
-
-    -- Add toggle marker button _ai
-    local toggleMarkerButton = parent:AddButton("Toggle marker")
-    toggleMarkerButton.IDContext = "ToggleMarkerButton"
-    toggleMarkerButton.OnClick = function()
-        ToggleMarker()
-    end
-
-    -- Add toggle all markers button _ai
-    local toggleAllMarkersButton = parent:AddButton("Toggle all")
-    toggleAllMarkersButton.IDContext = "ToggleAllMarkersButton"
-    toggleAllMarkersButton.SameLine = true
-    toggleAllMarkersButton.OnClick = function()
-        ToggleAllMarkers()
-    end
 
     -- Add step control sliders _ai
     local movementStepSlider = parent:AddSlider("Position mod", buttonStep, 0.001, 2, 0.001)
@@ -926,12 +945,12 @@ function MainWindowTab(parent)
     dummyUP.SameLine = true
 
 
-    local createButton = parent:AddButton("U")
-    createButton.IDContext = "CreateLightButton"
-    createButton.SameLine = true
-    createButton.OnClick = function()
-        mw:SetScroll({ 0, 0 })
-    end
+    -- local createButton = parent:AddButton("U")
+    -- createButton.IDContext = "CreateLightButton"
+    -- createButton.SameLine = true
+    -- createButton.OnClick = function()
+    --     mw:SetScroll({ 0, 0 })
+    -- end
 end
 
 --===============-------------------------------------------------------------------------------------------------------------------------------
@@ -1011,6 +1030,31 @@ function OriginPointTab(parent)
     local addtext = parent:AddText("South/North")
     addtext.SameLine = true
 
+
+    
+    local ySlider = parent:AddSlider("", 0, -1000, 1000, 0.001)
+    ySlider.OnChange = function(value)
+        OriginPointSliderChange(value, "y", stepMultiplier)
+    end
+
+    -- Y axis buttons _ai
+    local yLeftButton = parent:AddButton("<")
+    yLeftButton.SameLine = true
+    yLeftButton.IDContext = "YLeftButton"
+    yLeftButton.OnClick = function()
+        MoveOriginPoint("y", -buttonStep)
+    end
+
+    local yRightButton = parent:AddButton(">")
+    yRightButton.SameLine = true
+    yRightButton.IDContext = "YRightButton"
+    yRightButton.OnClick = function()
+        MoveOriginPoint("y", buttonStep)
+    end
+
+    local addtext = parent:AddText("Down/Up")
+    addtext.SameLine = true
+
     -- Add sliders for position adjustment _ai
     local xSlider = parent:AddSlider("", 0, -1000, 1000, 0.001)
     xSlider.IDContext = "XSlider"
@@ -1036,28 +1080,6 @@ function OriginPointTab(parent)
     local addtext = parent:AddText("West/East")
     addtext.SameLine = true
 
-    local ySlider = parent:AddSlider("", 0, -1000, 1000, 0.001)
-    ySlider.OnChange = function(value)
-        OriginPointSliderChange(value, "y", stepMultiplier)
-    end
-
-    -- Y axis buttons _ai
-    local yLeftButton = parent:AddButton("<")
-    yLeftButton.SameLine = true
-    yLeftButton.IDContext = "YLeftButton"
-    yLeftButton.OnClick = function()
-        MoveOriginPoint("y", -buttonStep)
-    end
-
-    local yRightButton = parent:AddButton(">")
-    yRightButton.SameLine = true
-    yRightButton.IDContext = "YRightButton"
-    yRightButton.OnClick = function()
-        MoveOriginPoint("y", buttonStep)
-    end
-
-    local addtext = parent:AddText("Down/Up")
-    addtext.SameLine = true
 end
 
 --===============-------------------------------------------------------------------------------------------------------------------------------
@@ -1244,110 +1266,7 @@ function AnLWindowTab(parent)
 
 end
 
---===============-------------------------------------------------------------------------------------------------------------------------------
------GOBO TAB----
---===============-------------------------------------------------------------------------------------------------------------------------------
 
-function GoboWindowTab(parent)
-    parent:AddSeparatorText("Management")
-
-    local goboGUIDs = {
-        Tree = gobo_window_tree,
-        Figures = gobo_figures,
-        Window = gobo_window
-    }
-
-    -- Use existing LightDropdown for light selection _ai
-    goboLightDropdown = parent:AddCombo("Created lights")
-    goboLightDropdown.IDContext = "GoboLightDropdown"
-    goboLightDropdown.HeightLargest = true
-    goboLightDropdown.Options = LightDropdown.Options
-    goboLightDropdown.SelectedIndex = LightDropdown.SelectedIndex
-
-    -- List of available gobo masks _ai
-    local goboList = parent:AddCombo("Masks")
-    goboList.IDContext = "GoboMasksList"
-    goboList.HeightLargest = true
-    goboList.Options = { "Tree", "Figures", "Window" }
-    goboList.SelectedIndex = 0
-
-    -- Add distance slider for gobo _ai
-    local goboDistanceSlider = parent:AddSlider("Distance", 1.0, 0.1, 4.0, 0.01)
-    goboDistanceSlider.IDContext = "GoboDistanceSlider"
-    goboDistanceSlider.OnChange = function(widget)
-        GoboDistanceSliderChange(widget, goboLightDropdown)
-    end
-
-
-    -- local goboRotationHeader = parent:AddSeparatorText("Rotation")
-
-
-    -- local goboRotationXSlider = parent:AddSlider("", 0, 0, 360.0, 1.0)
-    -- goboRotationXSlider.IDContext = "GoboRotationXSlider"
-    -- goboRotationXSlider.OnChange = function(widget)
-    --     GoboRotationAxisSlider(widget, goboLightDropdown, "x")
-    -- end
-
-    -- local resetGoboRotationXButton = parent:AddButton("Reset tilt")
-    -- resetGoboRotationXButton.IDContext = "ResetGoboRotationXButton"
-    -- resetGoboRotationXButton.SameLine = true
-    -- resetGoboRotationXButton.OnClick = function()
-    --     ResetGoboRotation(goboLightDropdown, "x")
-    --     goboRotationXSlider.Value = {0, 0, 0, 0}
-    -- end
-
-    -- local goboRotationYSlider = parent:AddSlider("", 0, 0, 360.0, 1.0)
-    -- goboRotationYSlider.IDContext = "GoboRotationYSlider"
-    -- goboRotationYSlider.OnChange = function(widget)
-    --     GoboRotationAxisSlider(widget, goboLightDropdown, "y")
-    -- end
-
-    -- local resetGoboRotationYButton = parent:AddButton("Reset yaw")
-    -- resetGoboRotationYButton.IDContext = "ResetGoboRotationYButton"
-    -- resetGoboRotationYButton.SameLine = true
-    -- resetGoboRotationYButton.OnClick = function()
-    --     ResetGoboRotation(goboLightDropdown, "y")
-    --     goboRotationYSlider.Value = {0, 0, 0, 0}
-    -- end
-
-    -- local goboRotationZSlider = parent:AddSlider("", 0, 0, 360.0, 1.0)
-    -- goboRotationZSlider.IDContext = "GoboRotationZSlider"
-    -- goboRotationZSlider.OnChange = function(widget)
-    --     GoboRotationAxisSlider(widget, goboLightDropdown, "z")
-    -- end
-
-    -- local resetGoboRotationZButton = parent:AddButton("Reset roll")
-    -- resetGoboRotationZButton.IDContext = "ResetGoboRotationZButton"
-    -- resetGoboRotationZButton.SameLine = true
-    -- resetGoboRotationZButton.OnClick = function()
-    --     ResetGoboRotation(goboLightDropdown, "z")
-    --     goboRotationZSlider.Value = {0, 0, 0, 0}
-    -- end
-
-    -- local resetAllGoboRotationButton = parent:AddButton("Reset all")
-    -- resetAllGoboRotationButton.IDContext = "ResetAllGoboRotationButton"
-    -- resetAllGoboRotationButton.OnClick = function()
-    --     ResetGoboRotation(goboLightDropdown, "all")
-    --     goboRotationXSlider.Value = {0, 0, 0, 0}
-    --     goboRotationYSlider.Value = {0, 0, 0, 0}
-    --     goboRotationZSlider.Value = {0, 0, 0, 0}
-    -- end
-
-    -- Add create gobo button _ai
-    local createGoboButton = parent:AddButton("Create gobo")
-    createGoboButton.IDContext = "CreateGoboButton"
-    createGoboButton.OnClick = function()
-        CreateGoboClick(goboLightDropdown, goboList, goboGUIDs)
-    end
-
-
-    local deleteGoboButton = parent:AddButton("Delete gobo")
-    deleteGoboButton.IDContext = "DeleteGoboButton"
-    deleteGoboButton.SameLine = true
-    deleteGoboButton.OnClick = function()
-        DeleteGoboClick(goboLightDropdown)
-    end
-end
 
 --===============-------------------------------------------------------------------------------------------------------------------------------
 -----PM TAB------
@@ -2010,6 +1929,110 @@ end
 
 
 
+--===============-------------------------------------------------------------------------------------------------------------------------------
+-----GOBO TAB----
+--===============-------------------------------------------------------------------------------------------------------------------------------
+
+function GoboWindowTab(parent)
+    parent:AddSeparatorText("Management")
+
+    local goboGUIDs = {
+        Tree = gobo_window_tree,
+        Figures = gobo_figures,
+        Window = gobo_window
+    }
+
+    -- Use existing LightDropdown for light selection _ai
+    goboLightDropdown = parent:AddCombo("Created lights")
+    goboLightDropdown.IDContext = "GoboLightDropdown"
+    goboLightDropdown.HeightLargest = true
+    goboLightDropdown.Options = LightDropdown.Options
+    goboLightDropdown.SelectedIndex = LightDropdown.SelectedIndex
+
+    -- List of available gobo masks _ai
+    local goboList = parent:AddCombo("Masks")
+    goboList.IDContext = "GoboMasksList"
+    goboList.HeightLargest = true
+    goboList.Options = { "Tree", "Figures", "Window" }
+    goboList.SelectedIndex = 0
+
+    -- Add distance slider for gobo _ai
+    local goboDistanceSlider = parent:AddSlider("Distance", 1.0, 0.1, 4.0, 0.01)
+    goboDistanceSlider.IDContext = "GoboDistanceSlider"
+    goboDistanceSlider.OnChange = function(widget)
+        GoboDistanceSliderChange(widget, goboLightDropdown)
+    end
+
+
+    -- local goboRotationHeader = parent:AddSeparatorText("Rotation")
+
+
+    -- local goboRotationXSlider = parent:AddSlider("", 0, 0, 360.0, 1.0)
+    -- goboRotationXSlider.IDContext = "GoboRotationXSlider"
+    -- goboRotationXSlider.OnChange = function(widget)
+    --     GoboRotationAxisSlider(widget, goboLightDropdown, "x")
+    -- end
+
+    -- local resetGoboRotationXButton = parent:AddButton("Reset tilt")
+    -- resetGoboRotationXButton.IDContext = "ResetGoboRotationXButton"
+    -- resetGoboRotationXButton.SameLine = true
+    -- resetGoboRotationXButton.OnClick = function()
+    --     ResetGoboRotation(goboLightDropdown, "x")
+    --     goboRotationXSlider.Value = {0, 0, 0, 0}
+    -- end
+
+    -- local goboRotationYSlider = parent:AddSlider("", 0, 0, 360.0, 1.0)
+    -- goboRotationYSlider.IDContext = "GoboRotationYSlider"
+    -- goboRotationYSlider.OnChange = function(widget)
+    --     GoboRotationAxisSlider(widget, goboLightDropdown, "y")
+    -- end
+
+    -- local resetGoboRotationYButton = parent:AddButton("Reset yaw")
+    -- resetGoboRotationYButton.IDContext = "ResetGoboRotationYButton"
+    -- resetGoboRotationYButton.SameLine = true
+    -- resetGoboRotationYButton.OnClick = function()
+    --     ResetGoboRotation(goboLightDropdown, "y")
+    --     goboRotationYSlider.Value = {0, 0, 0, 0}
+    -- end
+
+    -- local goboRotationZSlider = parent:AddSlider("", 0, 0, 360.0, 1.0)
+    -- goboRotationZSlider.IDContext = "GoboRotationZSlider"
+    -- goboRotationZSlider.OnChange = function(widget)
+    --     GoboRotationAxisSlider(widget, goboLightDropdown, "z")
+    -- end
+
+    -- local resetGoboRotationZButton = parent:AddButton("Reset roll")
+    -- resetGoboRotationZButton.IDContext = "ResetGoboRotationZButton"
+    -- resetGoboRotationZButton.SameLine = true
+    -- resetGoboRotationZButton.OnClick = function()
+    --     ResetGoboRotation(goboLightDropdown, "z")
+    --     goboRotationZSlider.Value = {0, 0, 0, 0}
+    -- end
+
+    -- local resetAllGoboRotationButton = parent:AddButton("Reset all")
+    -- resetAllGoboRotationButton.IDContext = "ResetAllGoboRotationButton"
+    -- resetAllGoboRotationButton.OnClick = function()
+    --     ResetGoboRotation(goboLightDropdown, "all")
+    --     goboRotationXSlider.Value = {0, 0, 0, 0}
+    --     goboRotationYSlider.Value = {0, 0, 0, 0}
+    --     goboRotationZSlider.Value = {0, 0, 0, 0}
+    -- end
+
+    -- Add create gobo button _ai
+    local createGoboButton = parent:AddButton("Create gobo")
+    createGoboButton.IDContext = "CreateGoboButton"
+    createGoboButton.OnClick = function()
+        CreateGoboClick(goboLightDropdown, goboList, goboGUIDs)
+    end
+
+
+    local deleteGoboButton = parent:AddButton("Delete gobo")
+    deleteGoboButton.IDContext = "DeleteGoboButton"
+    deleteGoboButton.SameLine = true
+    deleteGoboButton.OnClick = function()
+        DeleteGoboClick(goboLightDropdown)
+    end
+end
 
 --===============-------------------------------------------------------------------------------------------------------------------------------
 -----MAIN2 TAB------
@@ -2108,7 +2131,16 @@ function Anal2Tab(parent)
     local winAtmFav
 
     local CHILD_WIN_SIZE = {554, 200}
-    
+
+
+    -- local valuesApplyButton = parent:AddButton("Apply 2")
+    -- valuesApplyButton.IDContext = "sunValuesDayLoad"
+    -- valuesApplyButton.SameLine = false
+    -- valuesApplyButton.OnClick = function()
+    --     Ext.Net.PostMessageToServer("valuesApplyDay", "")
+    -- end
+
+
 
     parent:AddSeparatorText('Lighting')
 
@@ -2271,10 +2303,27 @@ function Anal2Tab(parent)
     end
 
 
+    
 
 
     --#region TBD: refactor
     parent:AddSeparatorText('Parameters')
+
+    local valuesApplyButton = parent:AddButton("Apply")
+    valuesApplyButton.IDContext = "sunValuesNightLoad"
+    valuesApplyButton.OnClick = function()
+        Ext.Net.PostMessageToServer("valuesApply", "")
+    end
+
+
+    local sunValuesLoadButton = parent:AddButton("Reset all")
+    sunValuesLoadButton.IDContext = "sunValuesLoad"
+    sunValuesLoadButton.SameLine = true
+    sunValuesLoadButton.OnClick = function()
+        Ext.Net.PostMessageToServer("sunValuesResetAll", "")
+        starsCheckbox.Checked = false
+        castLightCheckbox.Checked = false
+    end
 
     local collapsingHeaderSun = parent:AddCollapsingHeader("Sun")
 
@@ -2304,7 +2353,7 @@ function Anal2Tab(parent)
         UpdateValue("SunInt", "value1", value)
     end
 
-    sunColor = collapsingHeaderSun:AddColorPicker("Sun color")
+    sunColor = collapsingHeaderSun:AddColorEdit("Sun color")
     sunColor.IDContext = "colorSun"
     sunColor.Color = { 1.0, 1.0, 1.0, 1.0 }
     sunColor.NoAlpha = true
@@ -2419,7 +2468,7 @@ function Anal2Tab(parent)
     -- end
 
 
-    moonColor = collapsingHeaderMoon:AddColorPicker("Moon color")
+    moonColor = collapsingHeaderMoon:AddColorEdit("Moon color")
     moonColor.IDContext = "colorMoon"
     moonColor.Color = { 1.0, 1.0, 1.0, 1.0 }
     moonColor.NoAlpha = true
@@ -2669,7 +2718,7 @@ function Anal2Tab(parent)
         UpdateValue("FogLayer1NoiseCoverage", "value1", value)
     end
 
-    fogLayer1Albedo = collapsingHeaderFogLayer1:AddColorPicker("Albedo color")
+    fogLayer1Albedo = collapsingHeaderFogLayer1:AddColorEdit("Albedo color")
     fogLayer1Albedo.IDContext = "fogLayer1Albedo"
     fogLayer1Albedo.Color = { 1.0, 1.0, 1.0, 1.0 }
     fogLayer1Albedo.NoAlpha = true
@@ -2726,7 +2775,7 @@ function Anal2Tab(parent)
         UpdateValue("FogLayer0NoiseCoverage", "value1", value)
     end
 
-    fogLayer0Albedo = collapsingHeaderFogLayer0:AddColorPicker("Albedo color")
+    fogLayer0Albedo = collapsingHeaderFogLayer0:AddColorEdit("Albedo color")
     fogLayer0Albedo.IDContext = "fogLayer0Albedo"
     fogLayer0Albedo.Color = { 1.0, 1.0, 1.0, 1.0 }
     fogLayer0Albedo.NoAlpha = true
@@ -2766,7 +2815,7 @@ function Anal2Tab(parent)
         UpdateValue("CirrusCloudsAmount", "value1", value)
     end
 
-    cirrusCloudsColor = collapsingHeaderSkyLight:AddColorPicker("Cirrus clouds color")
+    cirrusCloudsColor = collapsingHeaderSkyLight:AddColorEdit("Cirrus clouds color")
     cirrusCloudsColor.IDContext = "cirrusCloudsColor"
     cirrusCloudsColor.Color = { 1.0, 1.0, 1.0, 1.0 }
     cirrusCloudsColor.NoAlpha = true
@@ -2801,7 +2850,7 @@ function Anal2Tab(parent)
         UpdateValue("ScatteringIntensity", "value1", value)
     end
 
-    scatteringSunColor = collapsingHeaderSkyLight:AddColorPicker("Scattering sun color")
+    scatteringSunColor = collapsingHeaderSkyLight:AddColorEdit("Scattering sun color")
     scatteringSunColor.IDContext = "scatteringSunColor"
     scatteringSunColor.Color = { 1.0, 1.0, 1.0, 1.0 }
     scatteringSunColor.NoAlpha = true
@@ -2932,7 +2981,7 @@ function Anal2Tab(parent)
         UpdateValue("CloudSunRayLength", "value1", value)
     end
 
-    cloudBaseColor = collapsingHeaderVolumetricCloud:AddColorPicker("Base color")
+    cloudBaseColor = collapsingHeaderVolumetricCloud:AddColorEdit("Base color")
     cloudBaseColor.IDContext = "cloudBaseColor"
     cloudBaseColor.Color = { 1.0, 1.0, 1.0, 1.0 }
     cloudBaseColor.NoAlpha = true
@@ -2944,7 +2993,7 @@ function Anal2Tab(parent)
         UpdateValue("CloudBaseColor", "value4", value)
     end
 
-    cloudTopColor = collapsingHeaderVolumetricCloud:AddColorPicker("Top color")
+    cloudTopColor = collapsingHeaderVolumetricCloud:AddColorEdit("Top color")
     cloudTopColor.IDContext = "cloudTopColor"
     cloudTopColor.Color = { 1.0, 1.0, 1.0, 1.0 }
     cloudTopColor.NoAlpha = true
@@ -2959,29 +3008,6 @@ function Anal2Tab(parent)
     --#endregion
 
 
-
-    local valuesApplyButton = parent:AddButton("Apply")
-    valuesApplyButton.IDContext = "sunValuesNightLoad"
-    valuesApplyButton.OnClick = function()
-        Ext.Net.PostMessageToServer("valuesApply", "")
-    end
-
-
-    local sunValuesLoadButton = parent:AddButton("Reset all")
-    sunValuesLoadButton.IDContext = "sunValuesLoad"
-    sunValuesLoadButton.SameLine = true
-    sunValuesLoadButton.OnClick = function()
-        Ext.Net.PostMessageToServer("sunValuesResetAll", "")
-        starsCheckbox.Checked = false
-        castLightCheckbox.Checked = false
-    end
-
-    -- local valuesApplyButton = parent:AddButton("Apply 2")
-    -- valuesApplyButton.IDContext = "sunValuesDayLoad"
-    -- valuesApplyButton.SameLine = false
-    -- valuesApplyButton.OnClick = function()
-    --     Ext.Net.PostMessageToServer("valuesApplyDay", "")
-    -- end
 
 
 
