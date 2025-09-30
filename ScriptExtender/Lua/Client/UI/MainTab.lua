@@ -6,8 +6,13 @@ ltnCombo = nil
 currentIntensityTextWidget = nil
 currentDistanceTextWidget = nil
 
-local OPENQUESTIONMARK = false
+local OPENQUESTIONMARK = true
 IMGUI:AntiStupiditySystem()
+
+
+
+
+
 
 -- Function to get list of created lights _ai
 function GetLightOptions()
@@ -102,6 +107,7 @@ function MainTab2(mt2)
 
     -- Create window first _ai
     mw = Ext.IMGUI.NewWindow("Lighty Lights")
+    mw.Font = "f16_1"
     mw.Open = OPENQUESTIONMARK
 
     mw.Closeable = true
@@ -150,10 +156,10 @@ function MainTab2(mt2)
 
 
 
-    local ifuckedupbtn = mt2:AddButton('Delete stuck lights and markers')
-    ifuckedupbtn.OnClick = function()
-        IFuckedUp:GatherLightsAndMarkers()
-    end
+    -- local ifuckedupbtn = mt2:AddButton('Delete stuck lights and markers')
+    -- ifuckedupbtn.OnClick = function()
+    --     IFuckedUp:GatherLightsAndMarkers()
+    -- end
     -- ApplyStyle(mw, StyleSettings.selectedStyle)
 
     MainWindow(mw)
@@ -162,7 +168,7 @@ end
 function MainWindow(mw)
     Style.MainWindow.Main(mw)
     ViewportSize = Ext.IMGUI.GetViewportSize()
-    mw:SetPos({ ViewportSize[1] / 6, ViewportSize[2] / 10 })
+    mw:SetPos({ViewportSize[1] / 6, ViewportSize[2] / 10})
     if ViewportSize[1] <= 1920 and ViewportSize[2] <= 1080 then
         mw:SetSize({ 525, 750 })
     else
@@ -205,6 +211,10 @@ function MainWindow(mw)
 
     dev = mainTabBar:AddTabItem("Dev")
     DevTab(dev)
+
+    main2 = mainTabBar:AddTabItem("Main2")
+    MainTab(main2)
+
 
 
     -- mainTab2 = mainTabBar:AddTabItem("Main2")
@@ -1259,11 +1269,6 @@ function AnLWindowTab(parent)
     resetLTNButton.OnClick = function()
         ResetAllLTN()
     end
-
-
-
-
-
 end
 
 
@@ -1289,7 +1294,6 @@ function BetterPMTab(parent)
          Ext.Stats.GetStatsManager().ExtraData["PhotoModeCameraMovementSpeed"] = camSpeed.Value[1]
     end
 
-    local farPlane = camCollapse:AddSlider('Far plane distane', 1000, 0, 5000, 1)
     local farPlane = camCollapse:AddSlider('Far plane distance', 1000, 0, 5000, 1)
     farPlane.Logarithmic = true
     farPlane.OnChange = function()
@@ -1340,10 +1344,6 @@ function BetterPMTab(parent)
     end)
 
 
-    
-
-    
-
     local function dofChange(value)
         local success, result = pcall(function()
             return Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFDistance
@@ -1361,9 +1361,6 @@ function BetterPMTab(parent)
     dofDistance.Components = 1
     dofDistance.Value = { 1, 0, 0, 0 }
     dofDistance.OnChange = function()
-        local success, result = pcall(function()
-            return Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFDistance
-        end)
         dofChange(dofDistance.Value[1])
     end
 
@@ -1394,80 +1391,118 @@ function BetterPMTab(parent)
         end
     end)
 
+    --CamPos
+
+    collapseSavePos = parent:AddCollapsingHeader('Save/Load position')
 
 
+    local btnCounter = 0
+    local btnSavePos = collapseSavePos:AddButton('Save')
+    btnSavePos.IDContext = '238492kjndflkjsdnf'
+    btnSavePos.OnClick = function ()
+        
+        btnCounter = btnCounter + 1
+        local btnLoadPos
+        local btnDeleteLoadPos
+        local size = 38
+
+        
+        CameraSaveLoadPosition(btnCounter)
 
 
-    local sepa2 = parent:AddSeparatorText('Dymmy controls')
+        GlobalsIMGUI.windowLoadPos.Size = {GlobalsIMGUI.windowLoadPos.Size[1], GlobalsIMGUI.windowLoadPos.Size[2] + size}
+        
+        btnDeleteLoadPos = GlobalsIMGUI.windowLoadPos:AddButton('X')
+        btnDeleteLoadPos.IDContext = Ext.Math.Random(1,10000)
+        btnDeleteLoadPos.OnClick = function ()
+            btnLoadPos:Destroy()
+            btnDeleteLoadPos:Destroy()
+            GlobalsIMGUI.windowLoadPos.Size = {GlobalsIMGUI.windowLoadPos.Size[1], GlobalsIMGUI.windowLoadPos.Size[2] - size}
+        end
+
+
+        btnLoadPos = GlobalsIMGUI.windowLoadPos:AddButton('')
+        btnLoadPos.IDContext = Ext.Math.Random(1,10000)
+        btnLoadPos.SameLine = true
+        btnLoadPos.Label = btnCounter
+        btnLoadPos.OnClick = function ()
+            --DDump(Globals.CameraPositions[btnLoadPos.Label])
+            if Globals.CameraPositions[btnLoadPos.Label] then 
+                Camera:SetTranslate(Globals.CameraPositions[btnLoadPos.Label].activeTranslate)
+                Camera:SetRotationQuat(Globals.CameraPositions[btnLoadPos.Label].activeRotationQuat)
+                Camera:SetScale(Globals.CameraPositions[btnLoadPos.Label].activeScale)
+            end
+            
+            -- Camera:GetActiveCamera().PhotoModeCameraSavedTransform.field_0.Translate = Globals.CameraPositions[btnLoadPos.Label].activeTranslate
+            -- Camera:GetActiveCamera().PhotoModeCameraSavedTransform.field_0.RotationQuat = Globals.CameraPositions[btnLoadPos.Label].activeRotationQuat
+            -- Camera:GetActiveCamera().PhotoModeCameraSavedTransform.field_0.Scale = Globals.CameraPositions[btnLoadPos.Label].activeScale
+        end
+    end
+    
+    GlobalsIMGUI.windowLoadPos = collapseSavePos:AddChildWindow('Load')
+    GlobalsIMGUI.windowLoadPos.Size = {0, 1}
+
+    local sepa2 = parent:AddSeparatorText('Dummy controls')
 
 
 
     visTemComob = parent:AddCombo('Character')
-    visTemComob.IDContext = "visTemComob123"
+    visTemComob.IDContext = 'visTemComob123'
     visTemComob.SelectedIndex = 0
+    visTemComob.Options = {'Not in Photo Mode'}
     visTemComob.HeightLargest = true
     visTemComob.SameLine = false
     visTemComob.OnChange = function()
         --getSelectedFillCharacter()
         selectedCharacter = visTemComob.SelectedIndex + 1
-        UpdateCharacterInfo()
+        UpdateCharacterInfo(visTemComob.SelectedIndex + 1)
     end
+    selectedCharacter = visTemComob.SelectedIndex + 1
 
-    -- local populateOptions = parent:AddButton("Fill options")
-    -- populateOptions.IDContext = "populateOptions123"
-    -- populateOptions.SameLine = true
-    -- populateOptions.OnClick = function()
-    --     if Ext.UI.GetRoot():Find("ContentRoot"):Child(21):GetAllProperties().DataContext and Ext.UI.GetRoot():Find("ContentRoot"):Child(21):GetAllProperties().DataContext.UpdatePlayingVisibility then
-    --         visTemplatesTable, _ = getDummyVisualTemplates()
-    --         getSelectedFillCharacter()
-    --         selectedCharacter = visTemComob.SelectedIndex + 1
-    --     end
-    -- end
-    
+
+
     local infoCollapse = parent:AddCollapsingHeader('Info')
     
-    -- GlobalsIMGUI.textPos = infoCollapse:AddText('Position: ')
-    -- GlobalsIMGUI.infoPos = infoCollapse:AddText('')
-    -- GlobalsIMGUI.infoPos.Label = ''
-    
-    -- GlobalsIMGUI.textRot = infoCollapse:AddText('Rotation: ')
-    -- GlobalsIMGUI.infoRot = infoCollapse:AddText('')
-    -- GlobalsIMGUI.infoRot.Label = ''
-    
-    -- GlobalsIMGUI.textScale = infoCollapse:AddText('Scale: ')
-    -- GlobalsIMGUI.infoScale = infoCollapse:AddText('')
-    -- GlobalsIMGUI.infoScale.Label = ''
+
     
     posInput = infoCollapse:AddInputScalar('Position')
     posInput.Components = 3
     posInput.Value = {0, 0, 0, 0}
 
+
+
     rotInput = infoCollapse:AddInputScalar('Rotation')
     rotInput.Components = 3
     rotInput.Value = {0, 0, 0, 0}
+
+
 
     scaleInput = infoCollapse:AddInputScalar('Scale')
     scaleInput.Components = 3
     scaleInput.Value = {1, 1, 1, 0}
 
 
+
     local applyButton = infoCollapse:AddButton('Apply')
     applyButton.IDContext = "loadApply"
     applyButton.SameLine = false
     applyButton.OnClick = function()
-        if visTemplatesTable and visTemplatesTable[visTemComob.SelectedIndex + 1] then
-            local transform = visTemplatesTable[visTemComob.SelectedIndex + 1].Visual.Visual.WorldTransform
+        if Globals.DummyNameMap and Globals.DummyNameMap[visTemComob.Options[selectedCharacter]] then
+            local transform = Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform
             transform.Translate = {posInput.Value[1], posInput.Value[2], posInput.Value[3]}
             transform.Scale = {scaleInput.Value[1], scaleInput.Value[2], scaleInput.Value[3]}
             local deg = {rotInput.Value[1], rotInput.Value[2], rotInput.Value[3]}
-            local quats = EulerToQuats(deg)
+            local quats = Math:EulerToQuats(deg)
             transform.RotationQuat = quats
-            --UpdateCharacterInfo()
+            --UpdateCharacterInfo(index)
         end
     end
     
+
+
     local charPosCollapse = parent:AddCollapsingHeader("Position")
     charPosCollapse.DefaultOpen = false
+
 
 
     local stemModSlider = charPosCollapse:AddSliderInt("", 0, 1, 10000, 1) --default, min, max, step
@@ -1480,12 +1515,16 @@ function BetterPMTab(parent)
         stepMod = stemModSlider.Value[1]
     end
 
+
+
     local resetStemMod = charPosCollapse:AddButton('Mod')
     resetStemMod.IDContext = "modSl1231232323131ider"
     resetStemMod.SameLine = true
     resetStemMod.OnClick = function()
         stemModSlider.Value = { 1500, 0, 0, 0 }
     end
+
+
 
     local posX = charPosCollapse:AddSlider("W/E", 0, -100, 100, 1)
     posX.IDContext = "sliderX"
@@ -1494,10 +1533,12 @@ function BetterPMTab(parent)
     posX.Value = { 0, 0, 0, 0 }
     posX.OnChange = function()
         local value = posX.Value[1]
-        -- DPrint(visTemComob.Options[visTemComob.SelectedIndex + 1])
+        -- DPrint(visTemComob.Options[selectedCharacter])
         MoveCharacter("x", value, stepMod, selectedCharacter)
         posX.Value = { 0, 0, 0, 0 }
     end
+
+
 
     local posY = charPosCollapse:AddSlider("D/U", 0, -100, 100, 1)
     posY.IDContext = "sliderY"
@@ -1509,6 +1550,8 @@ function BetterPMTab(parent)
         MoveCharacter("y", value, stepMod, selectedCharacter)
         posY.Value = { 0, 0, 0, 0 }
     end
+
+
 
     local posZ = charPosCollapse:AddSlider("S/N", 0, -100, 100, 1)
     posZ.IDContext = "sliderZ"
@@ -1527,6 +1570,7 @@ function BetterPMTab(parent)
     charRotCollapse.DefaultOpen = false
 
 
+
     local rotationModSlider = charRotCollapse:AddSliderInt("", 0, 1, 10000, 1)
     rotationModSlider.IDContext = "rotModSlider"
     rotationModSlider.Logarithmic = true
@@ -1538,12 +1582,15 @@ function BetterPMTab(parent)
     end
 
 
+
     local resetRotMod = charRotCollapse:AddButton('Mod')
     resetRotMod.IDContext = "modSl1231111123131ider"
     resetRotMod.SameLine = true
     resetRotMod.OnClick = function()
         rotationModSlider.Value = { 1500, 0, 0, 0 }
     end
+
+
 
     local rotX = charRotCollapse:AddSlider("Pitch", 0, -100, 100, 1)
     rotX.IDContext = "rotX"
@@ -1556,6 +1603,8 @@ function BetterPMTab(parent)
         rotX.Value = { 0, 0, 0, 0 }
     end
 
+
+
     local rotY = charRotCollapse:AddSlider("Yaw", 0, -100, 100, 1)
     rotY.IDContext = "rotY"
     rotY.SameLine = false
@@ -1566,6 +1615,8 @@ function BetterPMTab(parent)
         RotateCharacter("y", value, rotMod, selectedCharacter)
         rotY.Value = { 0, 0, 0, 0 }
     end
+
+
 
     local rotZ = charRotCollapse:AddSlider("Roll", 0, -100, 100, 1)
     rotZ.IDContext = "rotZ"
@@ -1578,16 +1629,21 @@ function BetterPMTab(parent)
         rotZ.Value = { 0, 0, 0, 0 }
     end
 
+
+
     local resetRot = charRotCollapse:AddButton("Reset")
     resetRot.IDContext = "resetrot"
     resetRot.SameLine = false
     resetRot.OnClick = function()
-        visTemplatesTable[selectedCharacter].Visual.Visual.WorldTransform.RotationQuat =  {0.0, 1.0, 0.0, 0.0}
-        UpdateCharacterInfo()
+        Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat =  {0.0, 1.0, 0.0, 0.0}
+        UpdateCharacterInfo(selectedCharacter)
     end
+
+
 
     local charScaleCollapse = parent:AddCollapsingHeader("Scale")
     charScaleCollapse.DefaultOpen = false
+
 
 
     local scaleModSlider = charScaleCollapse:AddSliderInt("", 0, 1, 10000, 1)
@@ -1601,12 +1657,15 @@ function BetterPMTab(parent)
     end
 
 
+
     local resetScaMod = charScaleCollapse:AddButton('Mod')
     resetScaMod.IDContext = "modSl123123131ider"
     resetScaMod.SameLine = true
     resetScaMod.OnClick = function()
         scaleModSlider.Value = { 1500, 0, 0, 0 }
     end
+
+
 
     local scaleLenght = charScaleCollapse:AddSlider("Length", 0, -100, 100, 1)
     scaleLenght.IDContext = "scaleLenght123"
@@ -1619,6 +1678,8 @@ function BetterPMTab(parent)
         scaleLenght.Value = { 0, 0, 0, 0 }
     end
 
+
+
     local scaleWidth = charScaleCollapse:AddSlider("Height", 0, -100, 100, 1)
     scaleWidth.IDContext = "scaleWidth232"
     scaleWidth.SameLine = false
@@ -1629,6 +1690,8 @@ function BetterPMTab(parent)
         ScaleCharacter("y", value, scaleMod, selectedCharacter)
         scaleWidth.Value = { 0, 0, 0, 0 }
     end
+
+
 
     local scaleHeight = charScaleCollapse:AddSlider("Width", 0, -100, 100, 1)
     scaleHeight.IDContext = "scaleHeight323"
@@ -1641,6 +1704,8 @@ function BetterPMTab(parent)
         scaleHeight.Value = { 0, 0, 0, 0 }
     end
 
+
+
     local scaleAll = charScaleCollapse:AddSlider("All", 0, -100, 100, 1)
     scaleAll.IDContext = "scalescaleAll323"
     scaleAll.SameLine = false
@@ -1652,43 +1717,111 @@ function BetterPMTab(parent)
         scaleAll.Value = { 0, 0, 0, 0 }
     end
 
+
+
     local resetScale = charScaleCollapse:AddButton("Reset")
     resetScale.IDContext = "resetscale"
     resetScale.SameLine = false
     resetScale.OnClick = function()
-        visTemplatesTable[selectedCharacter].Visual.Visual.WorldTransform.Scale = { 1, 1, 1 }
+        Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Scale = { 1, 1, 1 }
         GlobalsIMGUI.infoScale.Label = string.format('L: %.2f  H: %.2f  W: %.2f', 1, 1, 1)
+        UpdateCharacterInfo(selectedCharacter)
     end
 
-    local sepa3 = parent:AddSeparatorText('')
+
+
+    parent:AddSeparatorText('')
+
+
 
     local saveLoadCollapse = parent:AddCollapsingHeader('Save/Load postition')
 
 
+
     saveLoadWindow = saveLoadCollapse:AddChildWindow('')
     saveLoadWindow.AlwaysAutoResize = false
-    saveLoadWindow.Size = { 0, 1 }
+    saveLoadWindow.Size = {0, 1}
+
 
 
     local saveButton = saveLoadCollapse:AddButton("Save")
     saveButton.IDContext = "saveIdddasdasda"
     saveButton.SameLine = false
     saveButton.OnClick = function()
-        if visTemplatesTable[1] ~= nil then
+        if Globals.DummyNameMap then
             SaveVisTempCharacterPosition()
         end
     end
 
+    --LookAt
+
+    parent:AddSeparatorText('Look at')
 
 
 
+    local collapseLookAt = parent:AddCollapsingHeader("Position")
+    collapseLookAt.IDContext = 'wwwswdawdwdwd'
+    collapseLookAt.DefaultOpen = false
 
 
-    local sepa4 = parent:AddSeparatorText('Tail')
+    
+    local btnCreateLookAt = collapseLookAt:AddButton('Marker')
+    btnCreateLookAt.OnClick = function ()
+        Ext.Net.PostMessageToServer('LL_CreateLookAtTarget', '')
+    end
+    
+
+
+    local targetPos
+
+
+
+    local btnMoveToCamLookAt = collapseLookAt:AddButton('Move to cam')
+    btnMoveToCamLookAt.SameLine = true
+    btnMoveToCamLookAt.OnClick = function ()
+        targetPos = Camera:GetActiveCamera().Transform.Transform.Translate
+        Ext.Net.PostMessageToServer('LL_MoveLookAtTargetToCam', Ext.Json.Stringify(targetPos))
+    end
+
+
+    local btnDeleteLookAt = collapseLookAt:AddButton('Delete')
+    btnDeleteLookAt.SameLine = true
+    btnDeleteLookAt.OnClick = function ()
+        Ext.Net.PostMessageToServer('LL_DeleteLookAtTarget', '')
+    end
+    
+
+
+    local slLookAt = collapseLookAt:AddSlider('X Y Z', 0, -0.2, 0.2, 1)
+    slLookAt.IDContext = '131231asdad'
+    slLookAt.SameLine = false
+    slLookAt.Components = 3
+    slLookAt.Value = {0, 0, 0, 0}
+    slLookAt.OnChange = function()
+        targetPos = targetPos or _C().Transform.Transform.Translate
+        targetPos[1] = targetPos[1] + slLookAt.Value[1]
+        targetPos[2] = targetPos[2] + slLookAt.Value[2]
+        targetPos[3] = targetPos[3] + slLookAt.Value[3]
+        Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1].PhotoModeCameraTransform.Transform.Translate = {targetPos[1],targetPos[2],targetPos[3]}
+        local data = {
+            x = targetPos[1],
+            y = targetPos[2],
+            z = targetPos[3],
+        }
+        Ext.Net.PostMessageToServer('LL_MoveLookAtTarget', Ext.Json.Stringify(data))
+        slLookAt.Value = {0, 0, 0, 0}
+    end
+
+
+
+    parent:AddSeparatorText('Tail')
+
+
 
     local tailPosCollapse = parent:AddCollapsingHeader("Position")
-    tailPosCollapse.IDContext = 'asdasdds'
+    tailPosCollapse.IDContext = 'wwwwdwd'
     tailPosCollapse.DefaultOpen = false
+
 
 
     local tposX = tailPosCollapse:AddSlider("W/E", 0, -100, 100, 1)
@@ -1698,11 +1831,13 @@ function BetterPMTab(parent)
     tposX.Value = { 0, 0, 0, 0 }
     tposX.OnChange = function()
         local value = tposX.Value[1]
-        -- DPrint(visTemComob.Options[visTemComob.SelectedIndex + 1])
+        -- DPrint(visTemComob.Options[selectedCharacter])
         MoveTail("x", value, 3000, selectedCharacter)
 
         tposX.Value = { 0, 0, 0, 0 }
     end
+
+
 
     local tposY = tailPosCollapse:AddSlider("D/U", 0, -100, 100, 1)
     tposY.IDContext = "slid123erY"
@@ -1715,6 +1850,8 @@ function BetterPMTab(parent)
         tposY.Value = { 0, 0, 0, 0 }
     end
 
+
+
     local tposZ = tailPosCollapse:AddSlider("S/N", 0, -100, 100, 1)
     tposZ.IDContext = "slid123123erZ"
     tposZ.SameLine = false
@@ -1726,22 +1863,27 @@ function BetterPMTab(parent)
         tposZ.Value = { 0, 0, 0, 0 }
     end
 
+
+
     local resettPos = tailPosCollapse:AddButton("Reset")
     resettPos.IDContext = "resetttrot"
     resettPos.SameLine = false
     resettPos.OnClick = function()
-        for i = 1, #visTemplatesTable[selectedCharacter].Visual.Visual.Attachments do
-            if visTemplatesTable[selectedCharacter].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
-                visTemplatesTable[selectedCharacter].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(
-                    visTemplatesTable[selectedCharacter].Visual.Visual.WorldTransform.Translate)
+        for i = 1, #Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
+            if Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
+                Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(
+                    Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate)
                 break
             end
         end
     end
 
+
+
     local tailRotCollapse = parent:AddCollapsingHeader("Rotation")
     tailRotCollapse.IDContext = 'asdasdasdasdasds'
     tailRotCollapse.DefaultOpen = false
+
 
 
     local trotX = tailRotCollapse:AddSlider("Pitch", 0, -100, 100, 1)
@@ -1755,6 +1897,8 @@ function BetterPMTab(parent)
         trotX.Value = { 0, 0, 0, 0 }
     end
 
+
+
     local trotY = tailRotCollapse:AddSlider("Yaw", 0, -100, 100, 1)
     trotY.IDContext = "r123otY"
     trotY.SameLine = false
@@ -1765,6 +1909,8 @@ function BetterPMTab(parent)
         RotateTail("y", value, 3000, selectedCharacter)
         trotY.Value = { 0, 0, 0, 0 }
     end
+
+
 
     local trotZ = tailRotCollapse:AddSlider("Roll", 0, -100, 100, 1)
     trotZ.IDContext = "ro12312tZ"
@@ -1777,24 +1923,31 @@ function BetterPMTab(parent)
         trotZ.Value = { 0, 0, 0, 0 }
     end
 
+
+
     local resettRot = tailRotCollapse:AddButton("Reset")
     resettRot.IDContext = "resetttrot"
     resettRot.SameLine = false
     resettRot.OnClick = function()
-        for i = 1, #visTemplatesTable[selectedCharacter].Visual.Visual.Attachments do
-            if visTemplatesTable[selectedCharacter].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
-                visTemplatesTable[selectedCharacter].Visual.Visual.Attachments[i].Visual:SetWorldRotate(
-                    visTemplatesTable[selectedCharacter].Visual.Visual.WorldTransform.RotationQuat)
+        for i = 1, #Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
+            if Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
+                Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldRotate(
+                    Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat)
                 break
             end
         end
     end
 
+
+
     local sepa5 = parent:AddSeparatorText('Horns')
+
+
 
     local hornsPosCollapse = parent:AddCollapsingHeader("Position")
     hornsPosCollapse.IDContext = 'as123123da323sdds'
     hornsPosCollapse.DefaultOpen = false
+
 
 
     local hposX = hornsPosCollapse:AddSlider("W/E", 0, -100, 100, 1)
@@ -1804,11 +1957,13 @@ function BetterPMTab(parent)
     hposX.Value = { 0, 0, 0, 0 }
     hposX.OnChange = function()
         local value = hposX.Value[1]
-        -- DPrint(visTemComob.Options[visTemComob.SelectedIndex + 1])
+        -- DPrint(visTemComob.Options[selectedCharacter])
         MoveHorns("x", value, 3000, selectedCharacter)
 
         hposX.Value = { 0, 0, 0, 0 }
     end
+
+
 
     local hposY = hornsPosCollapse:AddSlider("D/U", 0, -100, 100, 1)
     hposY.IDContext = "slid13123erY"
@@ -1821,6 +1976,8 @@ function BetterPMTab(parent)
         hposY.Value = { 0, 0, 0, 0 }
     end
 
+
+
     local hposZ = hornsPosCollapse:AddSlider("S/N", 0, -100, 100, 1)
     hposZ.IDContext = "sli23d123123erZ"
     hposZ.SameLine = false
@@ -1832,24 +1989,29 @@ function BetterPMTab(parent)
         hposZ.Value = { 0, 0, 0, 0 }
     end
 
+
+
     local resethPos = hornsPosCollapse:AddButton("Reset")
     resethPos.IDContext = "re11sehhhhpos"
     resethPos.SameLine = false
     resethPos.OnClick = function()
-        for i = 1, #visTemplatesTable[selectedCharacter].Visual.Visual.Attachments do
-            if visTemplatesTable[selectedCharacter].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
-                visTemplatesTable[selectedCharacter].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(
-                    visTemplatesTable[selectedCharacter].Visual.Visual.WorldTransform.Translate)
+        for i = 1, #Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
+            if Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
+                Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(
+                    Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate)
                 break
             end
         end
     end
+
+
 
     local hornsRotCollapse = parent:AddCollapsingHeader("Rotation")
     hornsRotCollapse.IDContext = 'asdas123123dasdasdasds'
     hornsRotCollapse.DefaultOpen = false
 
 
+    
     local hrotX = hornsRotCollapse:AddSlider("Pitch", 0, -100, 100, 1)
     hrotX.IDContext = "ro1312323tX"
     hrotX.SameLine = false
@@ -1860,6 +2022,8 @@ function BetterPMTab(parent)
         RotateHorns("x", value, 3000, selectedCharacter)
         hrotX.Value = { 0, 0, 0, 0 }
     end
+
+
 
     local hrotY = hornsRotCollapse:AddSlider("Yaw", 0, -100, 100, 1)
     hrotY.IDContext = "r1213otY"
@@ -1872,6 +2036,8 @@ function BetterPMTab(parent)
         hrotY.Value = { 0, 0, 0, 0 }
     end
 
+
+
     local hrotZ = hornsRotCollapse:AddSlider("Roll", 0, -100, 100, 1)
     hrotZ.IDContext = "ro1233312tZ"
     hrotZ.SameLine = false
@@ -1883,14 +2049,16 @@ function BetterPMTab(parent)
         hrotZ.Value = { 0, 0, 0, 0 }
     end
 
+
+
     local resethRot = hornsRotCollapse:AddButton("Reset")
     resethRot.IDContext = "rese123hhhrot"
     resethRot.SameLine = false
     resethRot.OnClick = function()
-        for i = 1, #visTemplatesTable[selectedCharacter].Visual.Visual.Attachments do
-            if visTemplatesTable[selectedCharacter].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
-                visTemplatesTable[selectedCharacter].Visual.Visual.Attachments[i].Visual:SetWorldRotate(
-                    visTemplatesTable[selectedCharacter].Visual.Visual.WorldTransform.RotationQuat)
+        for i = 1, #Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
+            if Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
+                Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldRotate(
+                    Globals.DummyNameMap[visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat)
                 break
             end
         end
@@ -2153,10 +2321,9 @@ end
 function Anal2Tab(parent)
 
     
+    local CHILD_WIN_SIZE = {554, 200}
     local winLtnFav
     local winAtmFav
-
-    local CHILD_WIN_SIZE = {554, 200}
 
 
     -- local valuesApplyButton = parent:AddButton("Apply 2")
@@ -2171,8 +2338,11 @@ function Anal2Tab(parent)
     parent:AddSeparatorText('Lighting')
 
     
+
     Globals.FilteredLTNOptions = Globals.LtnComboOptions
 
+
+    
     local inpSearchLighting = parent:AddInputText('')
     inpSearchLighting.IDContext = 'o9irtqjwno9485839c'
     inpSearchLighting.OnChange = function()
@@ -2181,23 +2351,28 @@ function Anal2Tab(parent)
         GlobalsIMGUI.comboLighting.SelectedIndex = 0
     end
 
+
+
     local btnClearSearch = parent:AddButton('Search')
     btnClearSearch.SameLine = true
     btnClearSearch.OnClick = function ()
         inpSearchLighting.Text = ''
         Globals.FilteredLTNOptions = Globals.LtnComboOptions
+        GlobalsIMGUI.comboLighting.Options = Globals.LtnComboOptions
     end
     
+
+
     GlobalsIMGUI.comboLighting = parent:AddCombo('')
     GlobalsIMGUI.comboLighting.IDContext = ';oeirj4eiouh'
     GlobalsIMGUI.comboLighting.Options = Globals.LtnComboOptions or {}
     GlobalsIMGUI.comboLighting.SelectedIndex = 0
     GlobalsIMGUI.comboLighting.OnChange = function ()
         Ext.Net.PostMessageToServer('LL_LightingApply', UI:SelectedOpt(GlobalsIMGUI.comboLighting))
+        ChangeLTNValues()
     end
 
     
-
     
     local btnPrevLtn = parent:AddButton('<')
     btnPrevLtn.IDContext = ';olsikefnlieurhn'
@@ -2205,7 +2380,10 @@ function Anal2Tab(parent)
     btnPrevLtn.OnClick = function ()
         UI:PrevOption(GlobalsIMGUI.comboLighting)
         Ext.Net.PostMessageToServer('LL_LightingApply', UI:SelectedOpt(GlobalsIMGUI.comboLighting))
+        ChangeLTNValues()
     end
+
+
 
     local btnNextLtn = parent:AddButton('>')
     btnNextLtn.IDContext = ';olsikefnlieur3402934u20934uhn'
@@ -2213,6 +2391,7 @@ function Anal2Tab(parent)
     btnNextLtn.OnClick = function ()
         UI:NextOption(GlobalsIMGUI.comboLighting)
         Ext.Net.PostMessageToServer('LL_LightingApply', UI:SelectedOpt(GlobalsIMGUI.comboLighting))
+        ChangeLTNValues()
     end
 
 
@@ -2228,11 +2407,16 @@ function Anal2Tab(parent)
         end
     end
 
+
+
     local colFav = parent:AddCollapsingHeader('Favorites')
     colFav.IDContext = 'iaeuhkbnkwbriyuwg34iy'
     
+
+
     winLtnFav = colFav:AddChildWindow('')
     winLtnFav.Size = CHILD_WIN_SIZE
+
 
 
     if Ext.IO.LoadFile('LightyLights/FavoriteLighting.json') then
@@ -2246,7 +2430,11 @@ function Anal2Tab(parent)
 
     parent:AddSeparatorText('Atmosphere')
 
+
+
     Globals.FilteredATMOptions = Globals.AtmComboOptions
+
+
 
     local inpSearchAtmosphere = parent:AddInputText('')
     inpSearchAtmosphere.IDContext = 'pfkjawpo3i4rho83hr'
@@ -2256,13 +2444,18 @@ function Anal2Tab(parent)
         GlobalsIMGUI.comboAtmosphere.SelectedIndex = 0
     end
 
+
+
     local btnClearSearchAtm = parent:AddButton('Search')
     btnClearSearchAtm.IDContext = 'oweifjw3oiufhn'
     btnClearSearchAtm.SameLine = true
     btnClearSearchAtm.OnClick = function ()
         inpSearchAtmosphere.Text = ''
         Globals.FilteredATMOptions = Globals.AtmComboOptions
+        GlobalsIMGUI.comboAtmosphere.Options = Globals.AtmComboOptions
     end
+
+
 
     GlobalsIMGUI.comboAtmosphere = parent:AddCombo('')
     GlobalsIMGUI.comboAtmosphere.IDContext = ';o342342etm'
@@ -2272,6 +2465,8 @@ function Anal2Tab(parent)
         Ext.Net.PostMessageToServer('LL_AtmosphereApply', UI:SelectedOpt(GlobalsIMGUI.comboAtmosphere))
     end
 
+
+
     local btnPrevAtm = parent:AddButton('<')
     btnPrevAtm.IDContext = ';olsikefnli4444444eurhnatm'
     btnPrevAtm.SameLine = true
@@ -2280,6 +2475,8 @@ function Anal2Tab(parent)
         Ext.Net.PostMessageToServer('LL_AtmosphereApply', UI:SelectedOpt(GlobalsIMGUI.comboAtmosphere))
     end
 
+
+
     local btnNextAtm = parent:AddButton('>')
     btnNextAtm.IDContext = ';ol123123sik34uhnatm'
     btnNextAtm.SameLine = true
@@ -2287,6 +2484,8 @@ function Anal2Tab(parent)
         UI:NextOption(GlobalsIMGUI.comboAtmosphere)
         Ext.Net.PostMessageToServer('LL_AtmosphereApply', UI:SelectedOpt(GlobalsIMGUI.comboAtmosphere))
     end
+
+
 
     local btnAddToFavAtm = parent:AddButton('Add')
     btnAddToFavAtm.IDContext = 'oiu12312354125m'
@@ -2299,11 +2498,14 @@ function Anal2Tab(parent)
         end
     end
 
+
+
     local colFavAtm = parent:AddCollapsingHeader('Favorites')
     colFavAtm.IDContext = 'iae1231231235156646hgdtm'
 
     winAtmFav = colFavAtm:AddChildWindow('')
     winAtmFav.Size = CHILD_WIN_SIZE
+
 
 
     if Ext.IO.LoadFile('LightyLights/FavoriteAtmosphere.json') then
@@ -2314,13 +2516,17 @@ function Anal2Tab(parent)
     end
 
 
+
     local aepasdaw = parent:AddSeparatorText('Reset')
+
+
 
     local resetLtnBtn = parent:AddButton('Lighting')
     resetLtnBtn.OnClick = function ()
         ResetAllLTN()
     end
     
+
 
     local resetAtmBtn = parent:AddButton('Atmosphere')
     resetAtmBtn.SameLine = true
@@ -2350,6 +2556,8 @@ function Anal2Tab(parent)
         starsCheckbox.Checked = false
         castLightCheckbox.Checked = false
     end
+
+    parent:AddText('I advise you to set a hotkey for Apply').SameLine = true
 
     local collapsingHeaderSun = parent:AddCollapsingHeader("Sun")
 
@@ -2723,15 +2931,17 @@ function Anal2Tab(parent)
         UpdateValue("FogLayer1Density1", "value1", value)
     end
 
-    fogLayer1Height0 = collapsingHeaderFogLayer1:AddSlider("Height 0", 0, -10000, 10000, 1)
+    fogLayer1Height0 = collapsingHeaderFogLayer1:AddSlider("Height 0", 0, -100, 100, 1)
     fogLayer1Height0.IDContext = "fogLayer1Height0"
+    fogLayer1Height0.Logarithmic = true
     fogLayer1Height0.SameLine = false
     fogLayer1Height0.OnChange = function(value)
         UpdateValue("FogLayer1Height0", "value1", value)
     end
 
-    fogLayer1Height1 = collapsingHeaderFogLayer1:AddSlider("Height 1", 0, -10000, 10000, 1)
+    fogLayer1Height1 = collapsingHeaderFogLayer1:AddSlider("Height 1", 0, -100, 100, 1)
     fogLayer1Height1.IDContext = "fogLayer1Height1"
+    fogLayer1Height1.Logarithmic = true
     fogLayer1Height1.SameLine = false
     fogLayer1Height1.OnChange = function(value)
         UpdateValue("FogLayer1Height1", "value1", value)
@@ -2780,16 +2990,18 @@ function Anal2Tab(parent)
         UpdateValue("FogLayer0Density1", "value1", value)
     end
 
-    fogLayer0Height0 = collapsingHeaderFogLayer0:AddSlider("Height 0", 0, -10000, 10000, 1)
+    fogLayer0Height0 = collapsingHeaderFogLayer0:AddSlider("Height 0", 0, -100, 100, 1)
     fogLayer0Height0.IDContext = "fogLayer0Height0"
+    fogLayer0Height0.Logarithmic = true
     fogLayer0Height0.SameLine = false
     fogLayer0Height0.OnChange = function(value)
         UpdateValue("FogLayer0Height0", "value1", value)
     end
 
-    fogLayer0Height1 = collapsingHeaderFogLayer0:AddSlider("Height 1", 0, -10000, 10000, 1)
+    fogLayer0Height1 = collapsingHeaderFogLayer0:AddSlider("Height 1", 0, -100, 100, 1)
     fogLayer0Height1.IDContext = "fogLayer0Height1"
-    fogLayer0Height1.SameLine = false
+    fogLayer0Height1.Logarithmic = true
+    fogLayer0Height1.SameLine = false              
     fogLayer0Height1.OnChange = function(value)
         UpdateValue("FogLayer0Height1", "value1", value)
     end
@@ -3051,39 +3263,19 @@ end
 
 
 function DevTab(parent)
+
+
+    
     parent:AddSeparatorText('AnL')
     local getTriggersBtn = parent:AddButton('Update triggers')
     getTriggersBtn.OnClick = function ()
         Ext.Net.PostMessageToServer('LL_GetLTNTriggers', '')
         Ext.Net.PostMessageToServer('LL_GetATMTriggers', '')
     end
+
+
+
 end
 
---===============-------------------------------------------------------------------------------------------------------------------------------
------SETTINGS TAB------
---===============-------------------------------------------------------------------------------------------------------------------------------
-
--- function SettingsTab(parent)
-
--- end
-
---===============-------------------------------------------------------------------------------------------------------------------------------
---SCENE SAVER TAB--
---===============-------------------------------------------------------------------------------------------------------------------------------
-
--- function SceneSaverWindowTab(parent)
---     parent:AddSeparatorText("Scene Saver")
---     parent:AddSeparatorText("Scene Saver")
---     parent:AddSeparatorText("Scene Saver")
---     parent:AddSeparatorText("Scene Saver")
---     parent:AddSeparatorText("Scene Saver")
---     parent:AddSeparatorText("Scene Saver")
---     parent:AddSeparatorText("Scene Saver")
---     parent:AddSeparatorText("Scene Saver")
---     parent:AddSeparatorText("Scene Saver")
---     parent:AddSeparatorText("Scene Saver")
---     parent:AddSeparatorText("Scene Saver")
---     parent:AddSeparatorText("Scene Saver")
--- end
 
 Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Lighty Lights", MainTab2)

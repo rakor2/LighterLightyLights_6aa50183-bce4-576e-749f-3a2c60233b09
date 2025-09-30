@@ -100,7 +100,7 @@ function ConfirmDeleteAllClick(deleteAllButton, confirmButton)
     confirmButton.Visible = false
     deleteAllButton.Visible = true
     
-
+    
     -- Clear all client-side data _ai
     ClientSpawnedLights = {}
     LightColorValues = {}
@@ -110,7 +110,7 @@ function ConfirmDeleteAllClick(deleteAllButton, confirmButton)
     lightStates = {}
     currentValues.intensity = {}
     currentValues.radius = {}
-
+    
     UsedLightSlots = {
         ["Directional_5"] = {},
         ["Directional_10"] = {},
@@ -132,8 +132,12 @@ function ConfirmDeleteAllClick(deleteAllButton, confirmButton)
     end
     UpdateValuesText()
     
-    -- Send request to server _ai
-    Ext.Net.PostMessageToServer("DeleteAllLights", "")
+    
+    IFuckedUp:GatherLightsAndMarkers()
+    Helpers.Timer:OnTicks(10, function ()
+        Ext.Net.PostMessageToServer("DeleteAllLights", "")
+    end)                                 
+    
 end
 
 -- Request replace light _ai

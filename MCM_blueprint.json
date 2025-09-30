@@ -13,7 +13,6 @@
                         {
                             "Id": "ll_toggle_window",
                             "Name": "! Toggle window",
-                            "Description": "looks boring with no description",
                             "Type": "keybinding_v2",
                             "Default": {
                                 "Keyboard": {
@@ -28,7 +27,6 @@
                         {
                             "Id": "ll_toggle_light",
                             "Name": "Toggle selected light",
-                            "Description": "looks boring with no description",
                             "Type": "keybinding_v2",
                             "Default": {
                                 "Keyboard": {
@@ -43,7 +41,6 @@
                         {
                             "Id": "ll_toggle_all_lights",
                             "Name": "Toggle all lights",
-                            "Description": "looks boring with no description",
                             "Type": "keybinding_v2",
                             "Default": {
                                 "Keyboard": {
@@ -59,7 +56,6 @@
                         {
                             "Id": "ll_toggle_marker",
                             "Name": "Toggle marker",
-                            "Description": "looks boring with no description",
                             "Type": "keybinding_v2",
                             "Default": {
                                 "Keyboard": {
@@ -74,7 +70,6 @@
                         {
                             "Id": "ll_toggle_all_markers",
                             "Name": "Toggle all markers",
-                            "Description": "looks boring with no description",
                             "Type": "keybinding_v2",
                             "Default": {
                                 "Keyboard": {
@@ -89,7 +84,6 @@
                         {
                             "Id": "ll_duplicate",
                             "Name": "Duplicate selected light",
-                            "Description": "looks boring with no description",
                             "Type": "keybinding_v2",
                             "Default": {
                                 "Keyboard": {
@@ -104,7 +98,6 @@
                         {
                             "Id": "ll_stick",
                             "Name": "Stick light to camera",
-                            "Description": "looks boring with no description",
                             "Type": "keybinding_v2",
                             "Default": {
                                 "Keyboard": {
@@ -119,7 +112,6 @@
                         {
                             "Id": "ll_window_scroll_down",
                             "Name": "Scroll window down",
-                            "Description": "looks boring with no description",
                             "Type": "keybinding_v2",
                             "Default": {
                                 "Keyboard": {
@@ -134,7 +126,6 @@
                         {
                             "Id": "ll_window_scroll_up",
                             "Name": "Scroll window up",
-                            "Description": "looks boring with no description",
                             "Type": "keybinding_v2",
                             "Default": {
                                 "Keyboard": {
@@ -149,7 +140,6 @@
                         {
                             "Id": "ll_apply_anl",
                             "Name": "Apply AnL",
-                            "Description": "looks boring with no description",
                             "Type": "keybinding_v2",
                             "Default": {
                                 "Keyboard": {
@@ -164,7 +154,6 @@
                         {
                             "Id": "ll_move_to_cursor",
                             "Name": "Move selected character to cursor",
-                            "Description": "looks boring with no description",
                             "Type": "keybinding_v2",
                             "Default": {
                                 "Keyboard": {

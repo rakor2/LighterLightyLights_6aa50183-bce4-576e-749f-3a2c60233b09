@@ -48,7 +48,10 @@ StyleSettings = {
 }
 
 
-Ext.IMGUI.LoadFont("Font", "Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/GUI/QuadraatOffcPro.ttf", 35.0)
+
+
+
+
 
 -- Ext.IMGUI.EnableDemo(true)
 

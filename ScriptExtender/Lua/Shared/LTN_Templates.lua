@@ -1,5 +1,8 @@
 ltn_templates = {
     {uuid = "308e4292-f1e7-dc5e-9680-a66f28d1a869", name = "LTN_LLL_Blackout"}, --LTN_LLL_Blackout
+    {uuid = "f020d4cd-18b5-68bb-cad1-c427fa1c1dd2", name = "LTN_LII"},
+    {uuid = "f020d4cd-18wdwdwdb5-68bb-cad1-c427fa1c1dd2", name = "LTN_LII"},
+    {uuid = "1002530d-57b7-0f5d-d5eb-8cd2380bdf93", name = "LTN_TUH_Mad2"},
     {uuid = "4ffe46ad-b46b-0a3a-c739-d71f1bf209d9", name = "LTN_BGH_Highberrys_Cellar_A"},
     {uuid = "f2c0d648-869a-dee1-4842-8ec9e37b0441", name = "LTN_BGO_Camp_A"},
     {uuid = "f8551744-5846-a40e-d03e-778662463fd4", name = "LTN_BGO_HouseofHope_A"},

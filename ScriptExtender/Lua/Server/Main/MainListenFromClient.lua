@@ -2,7 +2,24 @@
 -- Ext.RegisterNetListener("TestButtonClicked", function(channel, payload)
 --     --DPrint("[MainServer]", "Test button clicked")
 -- end)
+       
 
+
+
+
+Ext.RegisterNetListener('LL_WhenLevelGameplayStarted', function (channel, payload, user)
+end)
+
+Ext.Events.ResetCompleted:Subscribe(function()
+    getLevelAvailableLTNTriggers()
+    getLevelAvailableATMTriggers()
+end)
+
+
+
+
+
+--#region AI SLOB MOSTLY
 
 -- Add marker visibility state tracking _ai
 local markerVisible = {}
@@ -80,7 +97,6 @@ Ext.RegisterNetListener("SpawnLight", function(channel, payload)
     -- Send color update _ai
     Ext.Net.BroadcastMessage("SyncSpawnedLights", Ext.Json.Stringify(updateData))
     
-    DPrint(uuidServer[lightIndex])
 
 end)
 
@@ -928,103 +944,105 @@ end)
 Ext.RegisterNetListener("LTNValueCahnged", function(channel, payload)
     local data = Ext.Json.Parse(payload)
     for i = 1, #ltn_templates do
-        local lighting = Ext.Resource.Get(ltn_templates[i].uuid, "Lighting").Lighting
+        if Ext.Resource.Get(ltn_templates[i].uuid, "Lighting") then
+            local lighting = Ext.Resource.Get(ltn_templates[i].uuid, "Lighting").Lighting
 
-        if data.name == "SunYaw" then lighting.Sun.Yaw = data.value
-        elseif data.name == "SunPitch" then lighting.Sun.Pitch = data.value
-        elseif data.name == "SunInt" then lighting.Sun.SunIntensity = data.value
-        elseif data.name == "SunColor" then lighting.Sun.SunColor = {data.value1,data.value2,data.value3}
-        elseif data.name == "CastLight" then lighting.Moon.CastLightEnabled = data.value
-        elseif data.name == "MoonYaw" then lighting.Moon.Yaw = data.value
-        elseif data.name == "MoonPitch" then lighting.Moon.Pitch = data.value
-        elseif data.name == "MoonInt" then lighting.Moon.Intensity = data.value
-        elseif data.name == "MoonRadius" then lighting.Moon.Radius = data.value
-        elseif data.name == "MoonColor" then lighting.Moon.Color = {data.value1,data.value2,data.value3}
-        elseif data.name == "StarsState" then lighting.SkyLight.ProcStarsEnabled = data.value
-        elseif data.name == "StarsAmount" then lighting.SkyLight.ProcStarsAmount = data.value
-        elseif data.name == "StarsInt" then lighting.SkyLight.ProcStarsIntensity = data.value
-        elseif data.name == "StarsSaturation1" then lighting.SkyLight.ProcStarsSaturation[1] = data.value
-        elseif data.name == "StarsSaturation2" then lighting.SkyLight.ProcStarsSaturation[2] = data.value
-        elseif data.name == "StarsShimmer" then lighting.SkyLight.SkyLight.ProcStarsShimmer = data.value
-        elseif data.name == "CascadeSpeed" then lighting.SkyLight.CascadeSpeed = data.value
+            if data.name == "SunYaw" then lighting.Sun.Yaw = data.value
+            elseif data.name == "SunPitch" then lighting.Sun.Pitch = data.value
+            elseif data.name == "SunInt" then lighting.Sun.SunIntensity = data.value
+            elseif data.name == "SunColor" then lighting.Sun.SunColor = {data.value1,data.value2,data.value3}
+            elseif data.name == "CastLight" then lighting.Moon.CastLightEnabled = data.value
+            elseif data.name == "MoonYaw" then lighting.Moon.Yaw = data.value
+            elseif data.name == "MoonPitch" then lighting.Moon.Pitch = data.value
+            elseif data.name == "MoonInt" then lighting.Moon.Intensity = data.value
+            elseif data.name == "MoonRadius" then lighting.Moon.Radius = data.value
+            elseif data.name == "MoonColor" then lighting.Moon.Color = {data.value1,data.value2,data.value3}
+            elseif data.name == "StarsState" then lighting.SkyLight.ProcStarsEnabled = data.value
+            elseif data.name == "StarsAmount" then lighting.SkyLight.ProcStarsAmount = data.value
+            elseif data.name == "StarsInt" then lighting.SkyLight.ProcStarsIntensity = data.value
+            elseif data.name == "StarsSaturation1" then lighting.SkyLight.ProcStarsSaturation[1] = data.value
+            elseif data.name == "StarsSaturation2" then lighting.SkyLight.ProcStarsSaturation[2] = data.value
+            elseif data.name == "StarsShimmer" then lighting.SkyLight.SkyLight.ProcStarsShimmer = data.value
+            elseif data.name == "CascadeSpeed" then lighting.SkyLight.CascadeSpeed = data.value
 
-        
-        --Fog Layer 0
-        elseif data.name == "FogLayer0Enabled" then lighting.Fog.FogLayer0.Enabled = data.value
-        elseif data.name == "FogLayer0Density0" then lighting.Fog.FogLayer0.Density0 = data.value
-        elseif data.name == "FogLayer0Density1" then lighting.Fog.FogLayer0.Density1 = data.value
-        elseif data.name == "FogLayer0Height0" then lighting.Fog.FogLayer0.Height0 = data.value
-        elseif data.name == "FogLayer0Height1" then lighting.Fog.FogLayer0.Height1 = data.value
-        elseif data.name == "FogLayer0NoiseCoverage" then lighting.Fog.FogLayer0.NoiseCoverage = data.value
-        elseif data.name == "FogLayer0Albedo" then lighting.Fog.FogLayer0.Albedo = {data.value1, data.value2, data.value3}
-        
-        --Fog Layer 1
-        elseif data.name == "FogLayer1Enabled" then lighting.Fog.FogLayer1.Enabled = data.value
-        elseif data.name == "FogLayer1Density0" then lighting.Fog.FogLayer1.Density0 = data.value
-        elseif data.name == "FogLayer1Density1" then lighting.Fog.FogLayer1.Density1 = data.value
-        elseif data.name == "FogLayer1Height0" then lighting.Fog.FogLayer1.Height0 = data.value
-        elseif data.name == "FogLayer1Height1" then lighting.Fog.FogLayer1.Height1 = data.value
-        elseif data.name == "FogLayer1NoiseCoverage" then lighting.Fog.FogLayer1.NoiseCoverage = data.value
-        elseif data.name == "FogLayer1Albedo" then lighting.Fog.FogLayer1.Albedo = {data.value1, data.value2, data.value3}
-        
-        --Fog General
-        elseif data.name == "FogPhase" then lighting.Fog.Phase = data.value
-        elseif data.name == "FogRenderDistance" then lighting.Fog.RenderDistance = data.value
-        
-        --Moon Extended
-        elseif data.name == "MoonDistance" then lighting.Moon.Distance = data.value
-        elseif data.name == "MoonEarthshine" then lighting.Moon.Earthshine = data.value
-        elseif data.name == "MoonEnabled" then lighting.Moon.Enabled = data.value
-        elseif data.name == "CastLightEnabled" then lighting.Moon.CastLightEnabled = data.value
-        elseif data.name == "MoonGlare" then lighting.Moon.MoonGlare = data.value
-        elseif data.name == "TearsRotate" then lighting.Moon.TearsRotate = data.value
-        elseif data.name == "TearsScale" then lighting.Moon.TearsScale = data.value
-        
-        --SkyLight
-        elseif data.name == "CirrusCloudsAmount" then lighting.SkyLight.CirrusCloudsAmount = data.value
-        elseif data.name == "CirrusCloudsColor" then lighting.SkyLight.CirrusCloudsColor = {data.value1, data.value2, data.value3}
-        elseif data.name == "CirrusCloudsEnabled" then lighting.SkyLight.CirrusCloudsEnabled = data.value
-        elseif data.name == "CirrusCloudsIntensity" then lighting.SkyLight.CirrusCloudsIntensity = data.value
-        elseif data.name == "RotateSkydomeEnabled" then lighting.SkyLight.RotateSkydomeEnabled = data.value
-        elseif data.name == "ScatteringEnabled" then lighting.SkyLight.ScatteringEnabled = data.value
-        elseif data.name == "ScatteringIntensity" then lighting.SkyLight.ScatteringIntensity = data.value
-        elseif data.name == "ScatteringSunColor" then lighting.SkyLight.ScatteringSunColor = {data.value1, data.value2, data.value3}
-        elseif data.name == "ScatteringSunIntensity" then lighting.SkyLight.ScatteringSunIntensity = data.value
-        elseif data.name == "SkydomeEnabled" then lighting.SkyLight.SkydomeEnabled = data.value
-        
-        --Sun Extended
-        elseif data.name == "LightSize" then lighting.Sun.LightSize = data.value
-        elseif data.name == "CascadeCount" then lighting.Sun.CascadeCount = math.floor(data.value)
-        elseif data.name == "ShadowBias" then lighting.Sun.ShadowBias = data.value
-        elseif data.name == "ShadowEnabled" then lighting.Sun.ShadowEnabled = data.value
-        elseif data.name == "ShadowFade" then lighting.Sun.ShadowFade = data.value
-        elseif data.name == "ShadowFarPlane" then lighting.Sun.ShadowFarPlane = data.value
-        elseif data.name == "ShadowNearPlane" then lighting.Sun.ShadowNearPlane = data.value
-        elseif data.name == "ScatteringIntensityScale" then lighting.Sun.ScatteringIntensityScale = data.value
-        
-        --Volumetric Cloud
-        elseif data.name == "CloudEnabled" then lighting.VolumetricCloudSettings.Enabled = data.value
-        elseif data.name == "CloudAmbientLightFactor" then lighting.VolumetricCloudSettings.AmbientLightFactor = data.value
-        elseif data.name == "CloudBaseColor" then lighting.VolumetricCloudSettings.BaseColor = {data.value1, data.value2, data.value3}
-        elseif data.name == "CloudEndHeight" then lighting.VolumetricCloudSettings.CoverageSettings.EndHeight = data.value
-        elseif data.name == "CloudHorizonDistance" then lighting.VolumetricCloudSettings.CoverageSettings.HorizonDistance = data.value
-        elseif data.name == "CloudStartHeight" then lighting.VolumetricCloudSettings.CoverageSettings.StartHeight = data.value
-        elseif data.name == "CloudCoverageStartDistance" then lighting.VolumetricCloudSettings.CoverageStartDistance = data.value
-        elseif data.name == "CloudCoverageWindSpeed" then lighting.VolumetricCloudSettings.CoverageWindSpeed = data.value
-        elseif data.name == "CloudDetailScale" then lighting.VolumetricCloudSettings.DetailScale = data.value
-        elseif data.name == "CloudIntensity" then lighting.VolumetricCloudSettings.Intensity = data.value
-        elseif data.name == "CloudShadowFactor" then lighting.VolumetricCloudSettings.ShadowFactor = data.value
-        elseif data.name == "CloudSunLightFactor" then lighting.VolumetricCloudSettings.SunLightFactor = data.value
-        elseif data.name == "CloudSunRayLength" then lighting.VolumetricCloudSettings.SunRayLength = data.value
-        elseif data.name == "CloudTopColor" then lighting.VolumetricCloudSettings.TopColor = {data.value1, data.value2, data.value3}
+            
+            --Fog Layer 0
+            elseif data.name == "FogLayer0Enabled" then lighting.Fog.FogLayer0.Enabled = data.value
+            elseif data.name == "FogLayer0Density0" then lighting.Fog.FogLayer0.Density0 = data.value
+            elseif data.name == "FogLayer0Density1" then lighting.Fog.FogLayer0.Density1 = data.value
+            elseif data.name == "FogLayer0Height0" then lighting.Fog.FogLayer0.Height0 = data.value
+            elseif data.name == "FogLayer0Height1" then lighting.Fog.FogLayer0.Height1 = data.value
+            elseif data.name == "FogLayer0NoiseCoverage" then lighting.Fog.FogLayer0.NoiseCoverage = data.value
+            elseif data.name == "FogLayer0Albedo" then lighting.Fog.FogLayer0.Albedo = {data.value1, data.value2, data.value3}
+            
+            --Fog Layer 1
+            elseif data.name == "FogLayer1Enabled" then lighting.Fog.FogLayer1.Enabled = data.value
+            elseif data.name == "FogLayer1Density0" then lighting.Fog.FogLayer1.Density0 = data.value
+            elseif data.name == "FogLayer1Density1" then lighting.Fog.FogLayer1.Density1 = data.value
+            elseif data.name == "FogLayer1Height0" then lighting.Fog.FogLayer1.Height0 = data.value
+            elseif data.name == "FogLayer1Height1" then lighting.Fog.FogLayer1.Height1 = data.value
+            elseif data.name == "FogLayer1NoiseCoverage" then lighting.Fog.FogLayer1.NoiseCoverage = data.value
+            elseif data.name == "FogLayer1Albedo" then lighting.Fog.FogLayer1.Albedo = {data.value1, data.value2, data.value3}
+            
+            --Fog General
+            elseif data.name == "FogPhase" then lighting.Fog.Phase = data.value
+            elseif data.name == "FogRenderDistance" then lighting.Fog.RenderDistance = data.value
+            
+            --Moon Extended
+            elseif data.name == "MoonDistance" then lighting.Moon.Distance = data.value
+            elseif data.name == "MoonEarthshine" then lighting.Moon.Earthshine = data.value
+            elseif data.name == "MoonEnabled" then lighting.Moon.Enabled = data.value
+            elseif data.name == "CastLightEnabled" then lighting.Moon.CastLightEnabled = data.value
+            elseif data.name == "MoonGlare" then lighting.Moon.MoonGlare = data.value
+            elseif data.name == "TearsRotate" then lighting.Moon.TearsRotate = data.value
+            elseif data.name == "TearsScale" then lighting.Moon.TearsScale = data.value
+            
+            --SkyLight
+            elseif data.name == "CirrusCloudsAmount" then lighting.SkyLight.CirrusCloudsAmount = data.value
+            elseif data.name == "CirrusCloudsColor" then lighting.SkyLight.CirrusCloudsColor = {data.value1, data.value2, data.value3}
+            elseif data.name == "CirrusCloudsEnabled" then lighting.SkyLight.CirrusCloudsEnabled = data.value
+            elseif data.name == "CirrusCloudsIntensity" then lighting.SkyLight.CirrusCloudsIntensity = data.value
+            elseif data.name == "RotateSkydomeEnabled" then lighting.SkyLight.RotateSkydomeEnabled = data.value
+            elseif data.name == "ScatteringEnabled" then lighting.SkyLight.ScatteringEnabled = data.value
+            elseif data.name == "ScatteringIntensity" then lighting.SkyLight.ScatteringIntensity = data.value
+            elseif data.name == "ScatteringSunColor" then lighting.SkyLight.ScatteringSunColor = {data.value1, data.value2, data.value3}
+            elseif data.name == "ScatteringSunIntensity" then lighting.SkyLight.ScatteringSunIntensity = data.value
+            elseif data.name == "SkydomeEnabled" then lighting.SkyLight.SkydomeEnabled = data.value
+            
+            --Sun Extended
+            elseif data.name == "LightSize" then lighting.Sun.LightSize = data.value
+            elseif data.name == "CascadeCount" then lighting.Sun.CascadeCount = math.floor(data.value)
+            elseif data.name == "ShadowBias" then lighting.Sun.ShadowBias = data.value
+            elseif data.name == "ShadowEnabled" then lighting.Sun.ShadowEnabled = data.value
+            elseif data.name == "ShadowFade" then lighting.Sun.ShadowFade = data.value
+            elseif data.name == "ShadowFarPlane" then lighting.Sun.ShadowFarPlane = data.value
+            elseif data.name == "ShadowNearPlane" then lighting.Sun.ShadowNearPlane = data.value
+            elseif data.name == "ScatteringIntensityScale" then lighting.Sun.ScatteringIntensityScale = data.value
+            
+            --Volumetric Cloud
+            elseif data.name == "CloudEnabled" then lighting.VolumetricCloudSettings.Enabled = data.value
+            elseif data.name == "CloudAmbientLightFactor" then lighting.VolumetricCloudSettings.AmbientLightFactor = data.value
+            elseif data.name == "CloudBaseColor" then lighting.VolumetricCloudSettings.BaseColor = {data.value1, data.value2, data.value3}
+            elseif data.name == "CloudEndHeight" then lighting.VolumetricCloudSettings.CoverageSettings.EndHeight = data.value
+            elseif data.name == "CloudHorizonDistance" then lighting.VolumetricCloudSettings.CoverageSettings.HorizonDistance = data.value
+            elseif data.name == "CloudStartHeight" then lighting.VolumetricCloudSettings.CoverageSettings.StartHeight = data.value
+            elseif data.name == "CloudCoverageStartDistance" then lighting.VolumetricCloudSettings.CoverageStartDistance = data.value
+            elseif data.name == "CloudCoverageWindSpeed" then lighting.VolumetricCloudSettings.CoverageWindSpeed = data.value
+            elseif data.name == "CloudDetailScale" then lighting.VolumetricCloudSettings.DetailScale = data.value
+            elseif data.name == "CloudIntensity" then lighting.VolumetricCloudSettings.Intensity = data.value
+            elseif data.name == "CloudShadowFactor" then lighting.VolumetricCloudSettings.ShadowFactor = data.value
+            elseif data.name == "CloudSunLightFactor" then lighting.VolumetricCloudSettings.SunLightFactor = data.value
+            elseif data.name == "CloudSunRayLength" then lighting.VolumetricCloudSettings.SunRayLength = data.value
+            elseif data.name == "CloudTopColor" then lighting.VolumetricCloudSettings.TopColor = {data.value1, data.value2, data.value3}
 
-        
-        elseif data.name == "SSAOBias" then lighting.SSAOSettings.Bias = data.value
-        elseif data.name == "SSAODirectLightInfluence" then lighting.SSAOSettings.DirectLightInfluence = data.value
-        elseif data.name == "SSAOEnabled" then lighting.SSAOSettings.Enabled = data.value
-        elseif data.name == "SSAOIntensity" then lighting.SSAOSettings.Intensity = data.value
-        elseif data.name == "SSAORadius" then lighting.SSAOSettings.Radius = data.value
-        
+            
+            elseif data.name == "SSAOBias" then lighting.SSAOSettings.Bias = data.value
+            elseif data.name == "SSAODirectLightInfluence" then lighting.SSAOSettings.DirectLightInfluence = data.value
+            elseif data.name == "SSAOEnabled" then lighting.SSAOSettings.Enabled = data.value
+            elseif data.name == "SSAOIntensity" then lighting.SSAOSettings.Intensity = data.value
+            elseif data.name == "SSAORadius" then lighting.SSAOSettings.Radius = data.value
+            
+            end
         end
     end
 end)
@@ -1563,6 +1581,8 @@ Ext.RegisterNetListener("ResetGoboRotation", function(channel, payload)
     UpdateGoboPosition(lightUUID)
 end)
 
+
+
 Ext.RegisterNetListener("ApplyTranformToServerXd", function(channel, payload)
     local data = Ext.Json.Parse(payload)
     local lightEntity = Ext.Entity.Get(data.lightUUID)
@@ -1583,9 +1603,12 @@ Ext.RegisterNetListener("ApplyTranformToServerXd", function(channel, payload)
     end
 end)
 
+--#endregion
 
 
-Ext.RegisterNetListener("StuffToDelete", function(channel, payload)
+
+
+Ext.RegisterNetListener('LL_EntitiesToDelete', function(channel, payload)
     local data = Ext.Json.Parse(payload)
     for _, uuid in ipairs(data) do
         Osi.RequestDelete(uuid)
@@ -1593,9 +1616,12 @@ Ext.RegisterNetListener("StuffToDelete", function(channel, payload)
 end)
 
 
+
 Ext.RegisterNetListener('PostLatestPositionToServer', function(channel, payload)
         clientEntLatestPos = Ext.Json.Parse(payload) 
 end)
+
+
 
 Ext.RegisterNetListener('posSlider', function(channel, payload)
     local data = Ext.Json.Parse(payload)
@@ -1607,28 +1633,111 @@ end)
 
 
 
+----------------------------ANAL------------------------------------
 
 
 
 
 
 
+function getLevelAvailableLTNTriggers()
+    Globals.LightingTriggers = Ext.Entity.GetAllEntitiesWithComponent('ServerLightingTrigger')
+    return Globals.LightingTriggers
+end
 
-Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function(levelName, isEditorMode)
-    
+
+function getLevelAvailableATMTriggers()
+    Globals.AtmosphereTriggers = Ext.Entity.GetAllEntitiesWithComponent('ServerAtmosphereTrigger')
+    return Globals.AtmosphereTriggers
+end
+
+
+Ext.RegisterNetListener('LL_GetLTNTriggers', function(channel, payload, user)
     getLevelAvailableLTNTriggers()
-    getLevelAvailableATMTriggers()
-
-    -- DWarn('LL AnL triggers:------')
-    -- DDump(Globals.LightingTriggers)
-    -- DDump(Globals.AtmosphereTriggers)
-    -- DPrint('-------------------')
-
-    Ext.Net.BroadcastMessage('LL_WhenLevelGameplayStarted', Ext.Json.Stringify(data))
 end)
 
 
-Globals = Globals or {}
+
+Ext.RegisterNetListener('LL_LightingApply', function(channel, payload, user)
+    for _, trigger in pairs(Globals.LightingTriggers) do
+        Osi.TriggerSetLighting(trigger.Uuid.EntityUuid, ltn_templates2[payload])
+    end
+    Globals.SelectedLighting = payload
+end)
+
+
+
+Ext.RegisterNetListener('LL_AtmosphereApply', function(channel, payload, user)
+    for _, trigger in pairs(Globals.AtmosphereTriggers) do
+        Osi.TriggerSetAtmosphere(trigger.Uuid.EntityUuid, atm_templates2[payload])
+    end
+    DPrint(atm_templates2[payload])
+    Globals.SelectedAtmosphere = payload
+end)
+
+
+
+Ext.RegisterNetListener('LL_GetATMTriggers', function(channel, payload, user)
+    getLevelAvailableATMTriggers()
+end)
+
+
+
+
+
+
+----------------LOOKAT--------------------------------
+
+
+
+
+
+
+local lookAtExists = false
+Ext.RegisterNetListener('LL_CreateLookAtTarget', function(channel, payload, user)
+    if lookAtExists ~= true then
+        local pos = _C().Transform.Transform.Translate
+        Globals.tragetUuid = Osi.CreateAt('12f13f99-c12f-4b79-a487-4dc187d44cb5', pos[1], pos[2], pos[3], 1, 0, '')
+        lookAtExists = true
+        Globals.tragetEntity = Ext.Entity.Get(Globals.tragetUuid)
+    end
+    Ext.Net.BroadcastMessage('LL_SendLookAtTargetUuid', Globals.tragetUuid)
+end)
+
+
+
+Ext.RegisterNetListener('LL_DeleteLookAtTarget', function(channel, payload, user)
+    if Globals.tragetUuid then
+        Osi.RequestDelete(Globals.tragetUuid)
+        Globals.tragetUuid = nil
+        lookAtExists = false
+        Globals.tragetEntity = nil
+    end
+end)
+
+
+
+Ext.RegisterNetListener('LL_MoveLookAtTarget', function(channel, payload, user)
+    local data = Ext.Json.Parse(payload)
+    if Globals.tragetUuid then
+        Osi.ToTransform(Globals.tragetUuid, data.x, data.y, data.z, 0, 0, 0) 
+    end
+end)
+
+
+
+Ext.RegisterNetListener('LL_MoveLookAtTargetToCam', function(channel, payload, user)
+    local data = Ext.Json.Parse(payload)
+    if Globals.tragetUuid then
+        Osi.ToTransform(Globals.tragetUuid, data[1], data[2], data[3], 0, 0, 0) 
+    end
+end)
+
+
+
+
+
+
 
 --[[
 Globals.LightEntities = {}
@@ -1669,49 +1778,3 @@ Ext.RegisterNetListener('LL_RecreateLight', function (channel, payload, user)
 end)
 ]]
 
-
-Ext.Events.ResetCompleted:Subscribe(function()
-    getLevelAvailableLTNTriggers()
-    getLevelAvailableATMTriggers()
-end)
-
-function getLevelAvailableLTNTriggers()
-    Globals.LightingTriggers = Ext.Entity.GetAllEntitiesWithComponent('ServerLightingTrigger')
-    return Globals.LightingTriggers
-end
-
-
-function getLevelAvailableATMTriggers()
-    Globals.AtmosphereTriggers = Ext.Entity.GetAllEntitiesWithComponent('ServerAtmosphereTrigger')
-    return Globals.AtmosphereTriggers
-end
-
-
-Ext.RegisterNetListener('LL_GetLTNTriggers', function(channel, payload, user)
-    getLevelAvailableLTNTriggers()
-end)
-
-
-Ext.RegisterNetListener('LL_LightingApply', function(channel, payload, user)
-    for _, trigger in pairs(Globals.LightingTriggers) do
-        Osi.TriggerSetLighting(trigger.Uuid.EntityUuid, ltn_templates2[payload])
-    end
-    Globals.SelectedLighting = payload
-end)
-
-Ext.RegisterNetListener('LL_AtmosphereApply', function(channel, payload, user)
-    for _, trigger in pairs(Globals.AtmosphereTriggers) do
-        Osi.TriggerSetAtmosphere(trigger.Uuid.EntityUuid, atm_templates2[payload])
-    end
-    DPrint(atm_templates2[payload])
-    Globals.SelectedAtmosphere = payload
-end)
-
-
-
-
-
-
-Ext.RegisterNetListener('LL_GetATMTriggers', function(channel, payload, user)
-    getLevelAvailableATMTriggers()
-end)

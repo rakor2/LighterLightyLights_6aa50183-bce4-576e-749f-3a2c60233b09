@@ -18,17 +18,19 @@ function LL:Init()
     -- AnL:
     -- Gobo:
     -- Gobo:
+    ANL:Main()
+    PM:CameraContorls()
     PM:GetVisualTemplates()
     PM:VisualTemplatesControls()
     PM:VisualTemplateSaveLoad()
     PM:TailControls()
     PM:HornyControls()
-    Particles:Management()
+    -- Particles:Management()
     -- Particles:Controls()
 end
 
 
---Holy shit, who would've thought thought that AI code is trash
+--Holy shit, who would've thought that AI code is trash
 --TBD: remake the whole thing again
 
 
@@ -1596,8 +1598,31 @@ LightTemperatureValues = LightTemperatureValues or {}
 
 
 
+
+
+
+function PM:CameraContorls()
+
+    Globals.CameraPositions = {}
+    function CameraSaveLoadPosition(index)
+        local activeCam = Camera:GetActiveCamera()
+        local pmCamera = Camera:GetPhotoModeCamera()
+        if pmCamera and activeCam then
+            Globals.CameraPositions[tostring(index)] = {
+                activeTranslate = activeCam.Transform.Transform.Translate,
+                activeRotationQuat = activeCam.Transform.Transform.RotationQuat,
+                activeScale = activeCam.Transform.Transform.Scale,
+            }
+        end
+        return Globals.CameraPositions 
+    end
+
+end
+
+
+
 function PM:GetVisualTemplates()
-    visTemplatesTable = {}
+    Globals.DummyNameMap = {}
     visTemplatesOptionsIndex = {}
 
     rotMod = 1500
@@ -1605,7 +1630,7 @@ function PM:GetVisualTemplates()
     scaleMod = 1500
 
     function GetEmzptyVisualTemplatesAndPopulateCombo()
-        visTemplatesTable = {}
+        Globals.DummyNameMap = {}
         visTemplatesOptionsIndex = {}
         GetEmptyVisualTemplates()
     end
@@ -1620,9 +1645,9 @@ function PM:GetVisualTemplates()
                 then
                         -- DPrint(visTemplates[i].Visual.Visual.VisualResource.Template .. '  ' .. i)
                         -- DDump(visTemplates[i]:GetAllComponentNames(false))
-                        table.insert(visTemplatesTable, visTemplates[i])
+                        table.insert(Globals.DummyNameMap, visTemplates[i])
                         visTemplatesOptionsIndex = {}
-                            for o = 1, #visTemplatesTable do
+                            for o = 1, #Globals.DummyNameMap do
                                 table.insert(visTemplatesOptionsIndex, o)
                             end
                         -- DDump(visTemplatesOptionsIndex)
@@ -1633,149 +1658,163 @@ function PM:GetVisualTemplates()
 end
 
 
+
 function PM:VisualTemplatesControls()
+
+    Globals.SaveLoad = {}
     
     MCM.SetKeybindingCallback('ll_move_to_cursor', function()
-        if visTemplatesTable and visTemplatesTable[visTemComob.SelectedIndex + 1] then
+        if Globals.DummyNameMap and Globals.DummyNameMap[visTemComob.SelectedIndex + 1] then
             local mousePos = Utils:GetMouseover().Inner.Position
-            visTemplatesTable[visTemComob.SelectedIndex + 1].Visual.Visual.WorldTransform.Translate = mousePos
-            UpdateCharacterInfo()
+            Globals.DummyNameMap[visTemComob.SelectedIndex + 1].Visual.Visual.WorldTransform.Translate = mousePos
+            UpdateCharacterInfo(index)
         end
     end)
 
-    Globals.SaveLoad = {}
 
+    function UpdateCharacterInfo(index)
+        Helpers.Timer:OnTicks(5, function ()
+        if index and Globals.DummyNameMap and Globals.DummyNameMap[visTemComob.Options[index]]  and
+        Globals.DummyNameMap[visTemComob.Options[index]].Visual                                 and 
+        Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual                          then
 
-    function UpdateCharacterInfo()
-        if visTemplatesTable and visTemplatesTable[visTemComob.SelectedIndex + 1] then 
-            local transform = visTemplatesTable[visTemComob.SelectedIndex + 1].Visual.Visual.WorldTransform
-            posInput.Value = {transform.Translate[1], transform.Translate[2], transform.Translate[3], 0}
-            scaleInput.Value = {transform.Scale[1], transform.Scale[2], transform.Scale[3], 0}
-            --local deg = QuatsToEuler(transform.RotationQuat)
-            local deg = Helpers.Math.QuatToEuler(transform.RotationQuat)
-            rotInput.Value = {deg[1], deg[2], deg[3], 0}
-        else
-            posInput.Value = {0,0,0,0}
-            rotInput.Value = {0,0,0,0}
-            scaleInput.Value = {1,1,1,0}
-        end
+                
+                local transform = Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.WorldTransform
+                posInput.Value = {transform.Translate[1], transform.Translate[2], transform.Translate[3], 0}
+                scaleInput.Value = {transform.Scale[1], transform.Scale[2], transform.Scale[3], 0}
+                local deg = Helpers.Math.QuatToEuler(transform.RotationQuat)
+                rotInput.Value = {deg[1], deg[2], deg[3], 0}
+            else
+                posInput.Value = {0,0,0,0}
+                rotInput.Value = {0,0,0,0}
+                scaleInput.Value = {0,0,0,0}
+            end
+        end)
     end
+
+
 
     function MoveCharacter(axis, value, stepMod, index)
-        if visTemplatesTable and visTemplatesTable[index] then 
-            local pos = visTemplatesTable[index].Visual.Visual.WorldTransform.Translate
-            if axis == 'x' then
-                pos.x = value
-                pos[1] = pos[1] + (pos.x/stepMod)
-            elseif axis == 'y' then
-                pos.y = value
-                pos[2] = pos[2] + (pos.y/stepMod)
-            elseif axis == 'z' then
-                pos.z = value
-                pos[3] = pos[3] + (pos.z/stepMod)
-            end
-            visTemplatesTable[index].Visual.Visual.WorldTransform.Translate = {pos[1], pos[2], pos[3]}
-            for q = 1, #visTemplatesTable[index].Visual.Visual.Attachments do
-                for i = 1, #visTemplatesTable[index].Visual.Visual.Attachments[q].Visual.ObjectDescs do
-                    local objDesc = visTemplatesTable[index].Visual.Visual.Attachments[q].Visual.ObjectDescs[i]
-                    if objDesc and objDesc.Renderable and objDesc.Renderable.WorldTransform then
-                        objDesc.Renderable.WorldTransform.Translate = {pos[1], pos[2], pos[3]}
+        if Globals.DummyNameMap then
+            local entity = Globals.DummyNameMap[visTemComob.Options[index]]
+            if entity then
+                local pos = entity.Visual.Visual.WorldTransform.Translate
+                local original_pos = entity.DummyOriginalTransform.Transform.Translate
+                if axis == 'x' then
+                    pos.x = value
+                    pos[1] = pos[1] + (pos.x/stepMod)
+                    original_pos[1] = original_pos[1] + (pos.x/stepMod)
+                elseif axis == 'y' then
+                    pos.y = value
+                    pos[2] = pos[2] + (pos.y/stepMod)
+                    original_pos[2] = original_pos[2] + (pos.y/stepMod)
+                elseif axis == 'z' then
+                    pos.z = value
+                    pos[3] = pos[3] + (pos.z/stepMod)
+                    original_pos[3] = original_pos[3] + (pos.z/stepMod)
+                end
+                entity.Visual.Visual.WorldTransform.Translate = {pos[1], pos[2], pos[3]}
+                entity.DummyOriginalTransform.Transform.Translate = {original_pos[1], original_pos[2], original_pos[3]}
+                for q = 1, #entity.Visual.Visual.Attachments do
+                    for i = 1, #entity.Visual.Visual.Attachments[q].Visual.ObjectDescs do
+                        local objDesc = entity.Visual.Visual.Attachments[q].Visual.ObjectDescs[i]
+                        if objDesc and objDesc.Renderable and objDesc.Renderable.WorldTransform then
+                            objDesc.Renderable.WorldTransform.Translate = {pos[1], pos[2], pos[3]}
+                        end
                     end
                 end
+                UpdateCharacterInfo(index)
             end
-            UpdateCharacterInfo()
         end
-    end
-
-
-    -- function QuatsToEuler(quat)
-    --     local mat3 = Ext.Math.QuatToMat3(quat)
-    --     local rad = Ext.Math.ExtractEulerAngles(mat3)
-    --     local deg = {
-    --         math.deg(rad[1]),
-    --         math.deg(rad[2]),
-    --         math.deg(rad[3]),
-    --     }
-    --     return deg
-    -- end
-
-
-    function EulerToQuats(deg)
-        return Ext.Math.QuatFromEuler({math.rad(deg[1]), math.rad(deg[2]), math.rad(deg[3])})
     end
 
 
     function RotateCharacter(axis, value, rotMod, index)
-        if visTemplatesTable and visTemplatesTable[index] then 
-            local rot = visTemplatesTable[index].Visual.Visual.WorldTransform.RotationQuat
-            local currentQuat = {rot[1], rot[2], rot[3], rot[4]}
-            local rotationAngle = value / rotMod
-            local axisVec = {0, 0, 0}
-            
-            if axis == 'x' then
-                axisVec = {1, 0, 0}
-            elseif axis == 'y' then
-                axisVec = {0, 1, 0}
-            elseif axis == 'z' then
-                axisVec = {0, 0, 1}
-            end
-            local quat = Ext.Math.QuatRotateAxisAngle(currentQuat, axisVec, rotationAngle)
-            visTemplatesTable[index].Visual.Visual.WorldTransform.RotationQuat = quat
-            for q = 1, #visTemplatesTable[index].Visual.Visual.Attachments do
-                for i = 1, #visTemplatesTable[index].Visual.Visual.Attachments[q].Visual.ObjectDescs do
-                    local objDesc = visTemplatesTable[index].Visual.Visual.Attachments[q].Visual.ObjectDescs[i]
-                    if objDesc and objDesc.Renderable and objDesc.Renderable.WorldTransform then
-                        objDesc.Renderable.WorldTransform.RotationQuat = quat
+        if Globals.DummyNameMap then
+            local entity = Globals.DummyNameMap[visTemComob.Options[index]]
+            if entity then
+                local rot = entity.Visual.Visual.WorldTransform.RotationQuat
+                local original_rot = entity.DummyOriginalTransform.Transform.RotationQuat
+                local currentQuat = {rot[1], rot[2], rot[3], rot[4]}
+                local rotationAngle = value / rotMod
+                local axisVec = {0, 0, 0}
+                
+                if axis == 'x' then
+                    axisVec = {1, 0, 0}
+                elseif axis == 'y' then
+                    axisVec = {0, 1, 0}
+                elseif axis == 'z' then
+                    axisVec = {0, 0, 1}
+                end
+                local quat = Ext.Math.QuatRotateAxisAngle(currentQuat, axisVec, rotationAngle)
+                local original_quat = Ext.Math.QuatRotateAxisAngle(original_rot, axisVec, rotationAngle)
+                entity.Visual.Visual.WorldTransform.RotationQuat = quat
+                entity.DummyOriginalTransform.Transform.RotationQuat = original_quat
+                for q = 1, #entity.Visual.Visual.Attachments do
+                    for i = 1, #entity.Visual.Visual.Attachments[q].Visual.ObjectDescs do
+                        local objDesc = entity.Visual.Visual.Attachments[q].Visual.ObjectDescs[i]
+                        if objDesc and objDesc.Renderable and objDesc.Renderable.WorldTransform then
+                            objDesc.Renderable.WorldTransform.RotationQuat = quat
+                        end
                     end
                 end
+                UpdateCharacterInfo(index)
             end
-            UpdateCharacterInfo()
-            --DDump(QuaternionToYRotation_Euler(visTemplatesTable[index].Visual.Visual.WorldTransform.RotationQuat))
-
-
         end
     end
 
 
     function ScaleCharacter(axis, value, scaleMod, index)
-        local scale
-        if visTemplatesTable and visTemplatesTable[index] then 
-            -- DDump(visTemplatesTable)
-            -- DDump(visTemplatesTable[index])
-            scale = visTemplatesTable[index].Visual.Visual.WorldTransform.Scale
-            if axis == 'x' then
-                scale.x = value
-                scale[1] = scale[1] + (scale.x/scaleMod)
-            elseif axis == 'y' then
-                scale.y = value
-                scale[2] = scale[2] + (scale.y/scaleMod)
-            elseif axis == 'z' then
-                scale.z = value
-                scale[3] = scale[3] + (scale.z/scaleMod)
-            elseif axis == 'all' then
-                scale.x = value
-                scale[1] = scale[1] + (scale.x/scaleMod)
-                scale.y = value
-                scale[2] = scale[2] + (scale.y/scaleMod)
-                scale.z = value
-                scale[3] = scale[3] + (scale.z/scaleMod)
-            end
-            visTemplatesTable[index].Visual.Visual.WorldTransform.Scale = {scale[1], scale[2], scale[3]}
-            for q = 1, #visTemplatesTable[index].Visual.Visual.Attachments do
-                for i = 1, #visTemplatesTable[index].Visual.Visual.Attachments[q].Visual.ObjectDescs do
-                    local objDesc = visTemplatesTable[index].Visual.Visual.Attachments[q].Visual.ObjectDescs[i]
-                    if objDesc and objDesc.Renderable and objDesc.Renderable.WorldTransform then
-                        objDesc.Renderable.WorldTransform.Scale = {scale[1], scale[2], scale[3]}
+        if Globals.DummyNameMap then
+            local entity = Globals.DummyNameMap[visTemComob.Options[index]]
+            if entity then
+                local scale = entity.Visual.Visual.WorldTransform.Scale
+                local original_scale = entity.DummyOriginalTransform.Transform.Scale
+                if axis == 'x' then
+                    scale.x = value
+                    scale[1] = scale[1] + (scale.x/scaleMod)
+                    original_scale[1] = original_scale[1] + (scale.x/scaleMod)
+                elseif axis == 'y' then
+                    scale.y = value
+                    scale[2] = scale[2] + (scale.y/scaleMod)
+                    original_scale[2] = original_scale[2] + (scale.y/scaleMod)
+                elseif axis == 'z' then
+                    scale.z = value
+                    scale[3] = scale[3] + (scale.z/scaleMod)
+                    original_scale[3] = original_scale[3] + (scale.z/scaleMod)
+                elseif axis == 'all' then
+                    scale.x = value
+                    scale[1] = scale[1] + (scale.x/scaleMod)
+                    original_scale[1] = original_scale[1] + (scale.x/scaleMod)
+                    scale.y = value
+                    scale[2] = scale[2] + (scale.y/scaleMod)
+                    original_scale[2] = original_scale[2] + (scale.y/scaleMod)
+                    scale.z = value
+                    scale[3] = scale[3] + (scale.z/scaleMod)
+                    original_scale[3] = original_scale[3] + (scale.z/scaleMod)
+                end
+                entity.Visual.Visual.WorldTransform.Scale = {scale[1], scale[2], scale[3]}
+                entity.DummyOriginalTransform.Transform.Scale = {original_scale[1], original_scale[2], original_scale[3]}
+                for q = 1, #entity.Visual.Visual.Attachments do
+                    for i = 1, #entity.Visual.Visual.Attachments[q].Visual.ObjectDescs do
+                        local objDesc = entity.Visual.Visual.Attachments[q].Visual.ObjectDescs[i]
+                        if objDesc and objDesc.Renderable and objDesc.Renderable.WorldTransform then
+                            objDesc.Renderable.WorldTransform.Scale = {scale[1], scale[2], scale[3]}
+                        end
                     end
                 end
+                UpdateCharacterInfo(index)
             end
-            UpdateCharacterInfo()
         end
     end
 end
 
 
+
 function PM:VisualTemplateSaveLoad()
+
+
+
     local size = 38
     local savedPos = {}
     local savedRot = {}
@@ -1785,33 +1824,34 @@ function PM:VisualTemplateSaveLoad()
     local deleteButtonesCounter = 0
     --wtf
     function SaveVisTempCharacterPosition()
-        local selectedCharacterIndex = visTemComob.SelectedIndex + 1
-        if selectedCharacterIndex then
-            savedPos[selectedCharacterIndex] = visTemplatesTable[selectedCharacterIndex].Visual.Visual.WorldTransform.Translate
-            savedRot[selectedCharacterIndex] = visTemplatesTable[selectedCharacterIndex].Visual.Visual.WorldTransform.RotationQuat
-            savedScale[selectedCharacterIndex] = visTemplatesTable[selectedCharacterIndex].Visual.Visual.WorldTransform.Scale
-            if loadButtones[selectedCharacterIndex] then
-                loadButtones[selectedCharacterIndex].Label = tostring(selectedCharacterIndex) .. '; ' ..
-                'x = ' .. string.format("%.2f", savedPos[selectedCharacterIndex][1]) .. '; ' ..
-                'y = ' .. string.format("%.2f", savedPos[selectedCharacterIndex][2]) .. '; ' ..
-                'z = ' .. string.format("%.2f", savedPos[selectedCharacterIndex][3])
-                loadButtones[selectedCharacterIndex].OnClick = function ()
+        local index = visTemComob.SelectedIndex + 1
+        if visTemComob.Options[index] then
+            savedPos[visTemComob.Options[index]] = Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.WorldTransform.Translate
+            savedRot[visTemComob.Options[index]] = Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.WorldTransform.RotationQuat
+            savedScale[visTemComob.Options[index]] = Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.WorldTransform.Scale
+            if loadButtones[visTemComob.Options[index]] then
+                loadButtones[visTemComob.Options[index]].Label = (
+                    string.gsub(tostring((visTemComob.Options[index])), "##.*", "") .. '; ' ..
+                    'x = ' .. string.format("%.2f", savedPos[visTemComob.Options[index]][1]) .. '; ' ..
+                    'y = ' .. string.format("%.2f", savedPos[visTemComob.Options[index]][2]) .. '; ' ..
+                    'z = ' .. string.format("%.2f", savedPos[visTemComob.Options[index]][3]))
+                loadButtones[visTemComob.Options[index]].OnClick = function ()
                     local actualSelected = visTemComob.SelectedIndex + 1
-                    visTemplatesTable[actualSelected].Visual.Visual.WorldTransform.Translate = savedPos[selectedCharacterIndex]
-                    visTemplatesTable[actualSelected].Visual.Visual.WorldTransform.RotationQuat = savedRot[selectedCharacterIndex]
-                    visTemplatesTable[actualSelected].Visual.Visual.WorldTransform.Scale = savedScale[selectedCharacterIndex]
+                    Globals.DummyNameMap[visTemComob.Options[actualSelected]].Visual.Visual.WorldTransform.Translate = savedPos[visTemComob.Options[index]]
+                    Globals.DummyNameMap[visTemComob.Options[actualSelected]].Visual.Visual.WorldTransform.RotationQuat = savedRot[visTemComob.Options[index]]
+                    Globals.DummyNameMap[visTemComob.Options[actualSelected]].Visual.Visual.WorldTransform.Scale = savedScale[visTemComob.Options[index]]
                 end
             else
                 saveLoadWindow.Size = {saveLoadWindow.Size[1], saveLoadWindow.Size[2] + size}
-                local buttonIndex = selectedCharacterIndex
-                deleteButtones[selectedCharacterIndex] = saveLoadWindow:AddButton('x')
-                deleteButtones[selectedCharacterIndex].IDContext = 'xBtn' .. tostring(Ext.Math.Random())
-                deleteButtones[selectedCharacterIndex].OnClick = function ()
+                local buttonIndex = visTemComob.Options[index]
+                deleteButtones[visTemComob.Options[index]] = saveLoadWindow:AddButton('x')
+                deleteButtones[visTemComob.Options[index]].IDContext = 'xBtn' .. tostring(Ext.Math.Random())
+                deleteButtones[visTemComob.Options[index]].OnClick = function ()
                     deleteButtonesCounter = deleteButtonesCounter - 1
-                    loadButtones[selectedCharacterIndex]:Destroy()
-                    deleteButtones[selectedCharacterIndex]:Destroy()
-                    loadButtones[selectedCharacterIndex] = nil
-                    deleteButtones[selectedCharacterIndex] = nil
+                    loadButtones[visTemComob.Options[index]]:Destroy()
+                    deleteButtones[visTemComob.Options[index]]:Destroy()
+                    loadButtones[visTemComob.Options[index]] = nil
+                    deleteButtones[visTemComob.Options[index]] = nil
                     if deleteButtonesCounter == 0 then
                         savedPos = {}
                         savedRot = {}
@@ -1822,65 +1862,77 @@ function PM:VisualTemplateSaveLoad()
                     saveLoadWindow.Size = {saveLoadWindow.Size[1], saveLoadWindow.Size[2] - size}
                 end
                 deleteButtonesCounter = deleteButtonesCounter + 1
-                loadButtones[selectedCharacterIndex] = saveLoadWindow:AddButton(
-                    tostring(selectedCharacterIndex) .. '; ' ..
-                    'x = ' .. string.format("%.2f", savedPos[selectedCharacterIndex][1]) .. '; ' ..
-                    'y = ' .. string.format("%.2f", savedPos[selectedCharacterIndex][2]) .. '; ' ..
-                    'z = ' .. string.format("%.2f", savedPos[selectedCharacterIndex][3]))
-                loadButtones[selectedCharacterIndex].IDContext = 'loadBtn' .. tostring(Ext.Math.Random())
-                loadButtones[selectedCharacterIndex].SameLine = true
-                loadButtones[selectedCharacterIndex].OnClick = function ()
+                loadButtones[visTemComob.Options[index]] = (saveLoadWindow:AddButton(
+                    string.gsub(tostring((visTemComob.Options[index])), "##.*", "") .. '; ' ..
+                    'x = ' .. string.format("%.2f", savedPos[visTemComob.Options[index]][1]) .. '; ' ..
+                    'y = ' .. string.format("%.2f", savedPos[visTemComob.Options[index]][2]) .. '; ' ..
+                    'z = ' .. string.format("%.2f", savedPos[visTemComob.Options[index]][3])))
+                loadButtones[visTemComob.Options[index]].IDContext = 'loadBtn' .. tostring(Ext.Math.Random())
+                loadButtones[visTemComob.Options[index]].SameLine = true
+                loadButtones[visTemComob.Options[index]].OnClick = function ()
                     local actualSelected = visTemComob.SelectedIndex + 1
-                    visTemplatesTable[actualSelected].Visual.Visual.WorldTransform.Translate = savedPos[buttonIndex]
-                    visTemplatesTable[actualSelected].Visual.Visual.WorldTransform.RotationQuat = savedRot[buttonIndex]
-                    visTemplatesTable[actualSelected].Visual.Visual.WorldTransform.Scale = savedScale[buttonIndex]
-                    UpdateCharacterInfo()
+                    Globals.DummyNameMap[visTemComob.Options[actualSelected]].Visual.Visual.WorldTransform.Translate = savedPos[buttonIndex]
+                    Globals.DummyNameMap[visTemComob.Options[actualSelected]].Visual.Visual.WorldTransform.RotationQuat = savedRot[buttonIndex]
+                    Globals.DummyNameMap[visTemComob.Options[actualSelected]].Visual.Visual.WorldTransform.Scale = savedScale[buttonIndex]
+                    UpdateCharacterInfo(index)
                 end
             end
         end
     end
+
+
+
 end
 
 
 
 function IFuckedUp:GatherLightsAndMarkers()
-    local stuffToDelete = {}
-    local vis = Ext.Entity.GetAllEntitiesWithComponent("GameObjectVisual")
-    for _, entity in ipairs(vis) do
-        if string.find(entity.GameObjectVisual.RootTemplateId, "62a459e2") or string.find(entity.GameObjectVisual.RootTemplateId, "cabc9b70") then --or string.find(entity.GameObjectVisual.RootTemplateId, "3879bf75")
-        table.insert(stuffToDelete, entity.Uuid.EntityUuid)
+
+    local EntitiesToDelete = {}
+    local x = 0
+
+    local gov = Ext.Entity.GetAllEntitiesWithComponent('GameObjectVisual')
+    --DDump(gov)
+    for _, entity in ipairs(gov) do
+        if entity.GameObjectVisual.RootTemplateId:find('62a459e2') or entity.GameObjectVisual.RootTemplateId:find('cabc9b70')then
+            -- DPrint('--------------------------------------------------------------')
+            -- DPrint('Marker found: %s, Template: %s', entity, entity.Visual.Visual.VisualResource.Template)
+            table.insert(EntitiesToDelete, entity.Uuid.EntityUuid)
         end
     end
+    -- DPrint('Iterations: %s, #gov entities: %s', x, y)
+    -- DPrint('Markers')
+    -- DDump(EntitiesToDelete)
 
-    local effects = Ext.Entity.GetAllEntitiesWithComponent("Effect")
+
+    local effects = Ext.Entity.GetAllEntitiesWithComponent('Effect')
     for _, entity in ipairs(effects) do
-        if string.find(entity.Effect.EffectName, "LLL_") then
-        table.insert(stuffToDelete, entity.Uuid.EntityUuid)
+        if entity.Effect.EffectName:find('LLL_') then
+            -- DPrint('Light found: %s', entity)
+            table.insert(EntitiesToDelete, entity.Uuid.EntityUuid)
         end
     end
-    Ext.Net.PostMessageToServer('StuffToDelete', Ext.Json.Stringify(stuffToDelete))
-end
-
-Particles = {}
-
-function Particles:Management()
-end
-
--- function endParticles:Controls()
--- end
+    -- DPrint('Markers and lights')
+    -- DDump(EntitiesToDelete)
     
+    Ext.Net.PostMessageToServer('LL_EntitiesToDelete', Ext.Json.Stringify(EntitiesToDelete))
+
+end
+
+
 
 function PM:TailControls()
+
 
 
     function MoveTail(axis, value, stepMod, index)
         local tailVis = nil
         local pos
-        if visTemplatesTable[index] and visTemplatesTable[index].Visual then 
-            for i = 1, #visTemplatesTable[index].Visual.Visual.Attachments do
-                if visTemplatesTable[index].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("tail") then
-                    pos = visTemplatesTable[index].Visual.Visual.Attachments[i].Visual.WorldTransform.Translate
-                    tailVis = visTemplatesTable[index].Visual.Visual.Attachments[i]
+        if Globals.DummyNameMap[visTemComob.Options[index]]and Globals.DummyNameMap[visTemComob.Options[index]].Visual then 
+            for i = 1, #Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments do
+                if Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("tail") then
+                    pos = Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.WorldTransform.Translate
+                    tailVis = Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i]
                     break
                 end
             end
@@ -1895,20 +1947,19 @@ function PM:TailControls()
                     pos.z = value
                     pos[3] = pos[3] + (pos.z/stepMod)
                 end
-                
                 tailVis.Visual:SetWorldTranslate({pos[1], pos[2], pos[3]})
             end
         end
-        
     end
     
+
 
     function RotateTail(axis, value, rotMod, index)
         local tailVis = nil
-        if visTemplatesTable[index] and visTemplatesTable[index].Visual then 
-            for i = 1, #visTemplatesTable[index].Visual.Visual.Attachments do
-                if visTemplatesTable[index].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("tail") then           
-                    tailVis = visTemplatesTable[index].Visual.Visual.Attachments[i]
+        if Globals.DummyNameMap[visTemComob.Options[index]]and Globals.DummyNameMap[visTemComob.Options[index]].Visual then 
+            for i = 1, #Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments do
+                if Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("tail") then           
+                    tailVis = Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i]
                     break
                 end
             end
@@ -1926,26 +1977,29 @@ function PM:TailControls()
                 elseif axis == 'z' then
                     axisVec = {0, 0, 1}
                 end
-
                 local quat = Ext.Math.QuatRotateAxisAngle(currentQuat, axisVec, rotationAngle)
-                
                 tailVis.Visual:SetWorldRotate(quat)
             end
         end
     end
 
+
+
 end
+
 
 function PM:HornyControls()    
    
+
+
     function MoveHorns(axis, value, stepMod, index)
         local tailVis = nil
         local pos
-        if visTemplatesTable[index] and visTemplatesTable[index].Visual then 
-            for i = 1, #visTemplatesTable[index].Visual.Visual.Attachments do
-                if visTemplatesTable[index].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
-                    pos = visTemplatesTable[index].Visual.Visual.Attachments[i].Visual.WorldTransform.Translate
-                    tailVis = visTemplatesTable[index].Visual.Visual.Attachments[i]
+        if Globals.DummyNameMap[visTemComob.Options[index]]and Globals.DummyNameMap[visTemComob.Options[index]].Visual then 
+            for i = 1, #Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments do
+                if Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
+                    pos = Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.WorldTransform.Translate
+                    tailVis = Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i]
                     break
                 end
             end
@@ -1960,29 +2014,27 @@ function PM:HornyControls()
                     pos.z = value
                     pos[3] = pos[3] + (pos.z/stepMod)
                 end
-                
                 tailVis.Visual:SetWorldTranslate({pos[1], pos[2], pos[3]})
             end
         end
     end
     
 
+
     function RotateHorns(axis, value, rotMod, index)
         local tailVis = nil
-        if visTemplatesTable[index] and visTemplatesTable[index].Visual then 
-            for i = 1, #visTemplatesTable[index].Visual.Visual.Attachments do
-                if visTemplatesTable[index].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
-                    tailVis = visTemplatesTable[index].Visual.Visual.Attachments[i]
+        if Globals.DummyNameMap[visTemComob.Options[index]]and Globals.DummyNameMap[visTemComob.Options[index]].Visual then 
+            for i = 1, #Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments do
+                if Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
+                    tailVis = Globals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i]
                     break
                 end
             end
             if tailVis then 
                 local rot = tailVis.Visual.WorldTransform.RotationQuat
                 local currentQuat = {rot[1], rot[2], rot[3], rot[4]}
-                
                 local rotationAngle = value / rotMod
                 local axisVec = {0, 0, 0}
-                
                 if axis == 'x' then
                     axisVec = {1, 0, 0}
                 elseif axis == 'y' then
@@ -1990,60 +2042,11 @@ function PM:HornyControls()
                 elseif axis == 'z' then
                     axisVec = {0, 0, 1}
                 end
-
                 local quat = Ext.Math.QuatRotateAxisAngle(currentQuat, axisVec, rotationAngle)
-                
                 tailVis.Visual:SetWorldRotate(quat)
             end
         end
     end
-
-    function CameraControlls(type, value)
-        if type == 'Far_plane' then
-            local camera = Camera:GetActiveCamera()
-            if camera then
-                camera.Camera.Controller.FarPlane = value
-            end
-        end
-    end
- 
-
-    -- function fun(value)
-    --     local camera = Camera:GetActiveCamera()
-    --     -- for i = 1, #camera.Camera.Controller.Camera.CullingPlanes do
-    --     --     camera.Camera.Controller.Camera.CullingPlanes[i] = {0, 0, 0, 0}
-    --     -- end
-    --     camera.Camera.Controller.Camera.field_0 = value
-    --     Helpers.Timer:OnTicks(0, function ()
-    --         DDump(camera.Camera.Controller.Camera)
-    --     end)
-    --     Helpers.Timer:OnTicks(5, function ()
-    --         DDump(camera.Camera.Controller.Camera)
-    --     end)
-    -- end
-
-
-    -- function LODS(value)
-    --     local visuals = Ext.Entity.GetAllEntitiesWithComponent('Visual')
-    --     local l = value
-    --     for i = 1, #visuals do
-    --         if visuals[i].Visual and visuals[i].Visual.Visual and visuals[i].Visual.Visual.LODDistances then
-    --             visuals[i].Visual.Visual.LODDistances = {l,l,l,l}
-    --             visuals[i].Visual.Visual.MaxLODDistance = l
-    --             --DDump(visuals[i].Visual.Visual.LODDistances)
-    --             if #visuals[i].Visual.Visual.ObjectDescs then 
-    --                 for q = 1, #visuals[i].Visual.Visual.ObjectDescs do
-    --                     visuals[i].Visual.Visual.ObjectDescs[q].Renderable.MaxLODDistance = l
-    --                     --DDump(visuals[i].Visual.Visual.ObjectDescs[q].Renderable.MaxLODDistance)
-    --                 end
-    --             end
-    --         end
-    --         if visuals[i].Visual.Visual.Attachments[1] then
-    --             DPrint(visuals[i])
-    --         end
-    --     end
-    -- end
-
 
 
 
@@ -2054,13 +2057,14 @@ end
 
 
 
-Ext.RegisterNetListener('LL_WhenLevelGameplayStarted', function (channel, payload, user)
-end)
+
 
 
 Globals.LtnComboOptions = {}
 Globals.AtmComboOptions = {}
 function ANL:Main()
+
+
 
     function PopulateLTNOptions()
         for _, name in ipairs(Utils:MapToArray(ltn_templates2)) do
@@ -2068,6 +2072,8 @@ function ANL:Main()
         end
     end
     PopulateLTNOptions()
+
+
 
     function PopulateATMOptions()
         for _, name in ipairs(Utils:MapToArray(atm_templates2)) do
@@ -2077,11 +2083,11 @@ function ANL:Main()
     PopulateATMOptions()
 
 
+
     ---@param hardcode string #yeaaah, the code is hard af B) 
     function CreateSelectable(parent, tbl, lable, hardcode, hardcode2)
         local selectable
         local id = Ext.Math.Random(1, 9999)
-
         local delete = parent:AddButton('X')
         delete.IDContext = id
         delete.SameLine = false
@@ -2091,18 +2097,16 @@ function ANL:Main()
             selectable:Destroy()
             delete:Destroy()
         end
-
         selectable = parent:AddButton(lable)
         selectable.IDContext = id
         selectable.SameLine = true
         selectable.OnClick = function ()
             Ext.Net.PostMessageToServer(hardcode2, selectable.Label)
         end
-        
         tbl[lable] = lable
-
         Ext.IO.SaveFile('LightyLights/' .. hardcode .. '.json', Ext.Json.Stringify(tbl))
     end
+
 
 
     function PopulateLTNFavorites(imguiWindow, tbl)
@@ -2112,6 +2116,7 @@ function ANL:Main()
     end
 
 
+
     function PopulateATMFavorites(imguiWindow, tbl)
         for _,lable in pairs(tbl) do
             CreateSelectable(imguiWindow, tbl, lable, 'FavoriteAtmosphere', 'LL_AtmosphereApply')
@@ -2119,7 +2124,15 @@ function ANL:Main()
     end
 
 
+    
+
+
+
 end
 
-ANL:Main()
+
 LL:Init()
+
+-- Utils:SubUnsubToTick('sub', 'pmstuff', function ()
+--     DDump(_C().HasDummy.Entity.PhotoModeDummyTransformUpdateSingleton)
+-- end)

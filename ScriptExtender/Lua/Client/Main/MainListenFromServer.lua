@@ -291,3 +291,12 @@ end)
 Ext.RegisterNetListener("ChangeLTNValuesToClient", function(channel, payload)
     ChangeLTNValues()
 end)
+
+
+
+Ext.RegisterNetListener('LL_SendLookAtTargetUuid', function(channel, payload)
+    Globals.tragetUuid = payload
+    Helpers.Timer:OnTicks(3, function ()
+        Globals.tragetEntity = Ext.Entity.Get(Globals.tragetUuid)
+    end)
+end)

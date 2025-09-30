@@ -136,4 +136,36 @@ end
 
 
 
+-- function FindTriggers(triggerType)
+--     local entity = _C()
+--     local pos = entity.Transform.Transform.Translate
+--     local entities = Ext.Entity.GetEntitiesAroundPosition({pos[1], pos[2], pos[3]}, 900, false, true)
+--     DDump(entities)
+--     DDump(entities[1]:GetAllComponents())
+    
+--     local triggers = Ext.Entity.GetAllEntitiesWithComponent('ServerAtmosphereTrigger')
+--     --DDump(triggers[1]:GetAllComponents())
+
+--     for k, v in ipairs(entities) do
+--         if v.ServerAtmosphereTrigger then
+--             DPrint(v)
+--         end
+--     end
+
+-- end
+
+
+--e8f3b1ea-c788-1086-1906-087341430359
+
+
+Ext.RegisterConsoleCommand('entr', function (cmd, uuid)
+    triggers = Ext.Entity.GetAllEntitiesWithComponent('ServerAtmosphereTrigger')
+    for k, v in pairs(triggers) do
+        v.ServerAtmosphereTrigger.CurrentAtmosphereResourceID = uuid
+        v.ServerAtmosphereTrigger.AtmosphereResourceIDs = {}
+    end
+    --DDump(triggers[1]:GetAllComponents())
+end)
+
 LarianWhy()
+
