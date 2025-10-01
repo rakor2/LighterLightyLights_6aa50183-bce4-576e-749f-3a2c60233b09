@@ -1,3 +1,4 @@
+Ext.Require("Shared/Channels.lua")
 Ext.Require("Shared/ConstantsShared.lua")
 Ext.Require("Shared/Math.lua")
 Ext.Require("Shared/Tables.lua")

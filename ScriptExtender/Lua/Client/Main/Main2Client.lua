@@ -1,3 +1,61 @@
+Globals.CreatedLightsClient = {}
+Globals.LightsNameUuidMap = {}
+Globals.LightsNames = {}
+Globals.LightParameters = {}
+
+---@type string EntityUuid
+Globals.selectedUuid = nil
+
+Globals.selectedEntity = nil
+
+---@type LightComponent
+Globals.selectedLightEntity = nil
+
+
+local nameIndex = 0
+
+local comboIHateCombos
+
+local function getSourceTranslate()
+    local SourceTranslate = _C().Transform.Transform.Translate
+    return SourceTranslate
+end
+
+local function UpdateCreatedLightsCombo()
+    Globals.LightsNames = Utils:MapToArray(Globals.LightsNameUuidMap)
+    comboIHateCombos.Options = Globals.LightsNames
+end
+
+local function getSelectedUuid()
+    if  Globals.LightsNameUuidMap       and
+        comboIHateCombos.SelectedIndex  and
+        comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1]
+    then
+        return Globals.LightsNameUuidMap[comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1]]
+    end
+end
+
+local function getSelectedEntity()
+    if getSelectedUuid() then return Ext.Entity.Get(getSelectedUuid()) end
+end
+
+local function getSelectedLightEntity()
+    if getSelectedEntity() then return getSelectedEntity().Effect.Timeline.Components[2].LightEntity.Light end
+end
+
+local function getSelectedLightName()
+    return comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1]
+end
+
+
+local function sanitySelectedLight()
+    for name, uuid in pairs(Globals.LightsNameUuidMap) do
+        if uuid == Globals.selectedUuid then
+            DPrint('Sanity selected light: %s, %s', name, Globals.selectedUuid)
+        end
+    end
+end
+
 function MainTab(p)
     
     local checkTypePoint
@@ -38,22 +96,97 @@ function MainTab(p)
     
     local btnCreate2 = p:AddButton('Create')
     btnCreate2.SameLine = true
-    
-    
+    btnCreate2.OnClick = function ()
+        
+
+        local Position = getSourceTranslate()
 
 
-    
-    ---------------------------------------------------------
-    local comboCreatedLights = p:AddCombo('Created lights')
-    ---------------------------------------------------------
-    
+        local Data = {
+            type = type or 0,
+            Position = Position
+        }
+
+        Channels.CreateLight:RequestToServer(Data, function (Response)
 
 
-    
-    
-    local comboRenameLights = p:AddCombo('')
-    comboRenameLights.IDContext = 'poiufdhgoiufdnb'
-    
+            Globals.CreatedLightsServer = Response[1]
+            Globals.selectedUuid = Response[2]
+            
+            -- DPrint('Globals.CreatedLightsServer:')
+            -- DDump(Globals.CreatedLightsServer)
+            
+            Helpers.Timer:OnTicks(10, function () --back to tick abuse Gladge
+                
+                Globals.selectedEntity = Ext.Entity.Get(Globals.selectedUuid)
+
+                Helpers.Timer:OnTicks(5, function ()
+                    
+                    Globals.selectedLightEntity = getSelectedLightEntity()
+
+                    Globals.selectedEntity.Effect.Timeline.IsPaused = true
+                    
+                    Globals.LightParameters[Globals.selectedUuid] = Globals.LightParameters[Globals.selectedUuid] or {}
+
+                    --Utils:Dump(getSelectedLightEntity(), 'LL_LightEntity_FX')
+
+                end)
+            
+                DPrint('Callback create: %s, %s', Globals.selectedUuid, lightEntity)
+                                        
+                nameIndex = nameIndex + 1
+                                        
+                local name = 'Light #' .. nameIndex
+                
+                Globals.LightsNameUuidMap[name] = Globals.CreatedLightsServer[Globals.selectedUuid]
+                -- DPrint('Globals.LightsNameUuidMap:')
+                -- DDump(Globals.LightsNameUuidMap)
+                
+                UpdateCreatedLightsCombo()
+                comboIHateCombos.SelectedIndex = #comboIHateCombos.Options - 1
+                
+                --sanitySelectedLight()
+
+                -- Helpers.Timer:OnTicks(50, function ()
+                --     Utils:Dump(Ext.Entity.Get(Globals.selectedUuid), 'LL2_Light_Client', true)
+                -- end)
+
+            end)
+            
+
+        end)
+
+    end
+
+
+
+
+
+
+
+    comboIHateCombos = p:AddCombo('Created lights')
+    comboIHateCombos.Options = Globals.LightsNames
+    comboIHateCombos.SelectedIndex = 0
+    comboIHateCombos.OnChange = function (e)
+
+        Globals.selectedUuid = getSelectedUuid()
+        Globals.selectedEntity = getSelectedEntity()
+
+        Channels.SelectedLight:SendToServer(Globals.selectedUuid)
+        
+        UpdateCreatedLightsCombo()
+
+    end
+
+
+
+
+
+    local comboRename = p:AddCombo('')
+    comboRename.IDContext = 'adawdawdawdawd'
+    comboRename.Disabled = true
+
+
     local btnRenameLight = p:AddButton('Rename')
     btnRenameLight.SameLine = true
     
