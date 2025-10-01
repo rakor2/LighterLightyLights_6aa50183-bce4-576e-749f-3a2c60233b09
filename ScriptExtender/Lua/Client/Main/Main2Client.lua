@@ -191,9 +191,56 @@ function MainTab(p)
     btnRenameLight.SameLine = true
     
     local btnDelete = p:AddButton('Delete')
+    btnDelete.OnClick = function ()
+
+        if Globals.selectedUuid then 
+
+            -- DPrint(Globals.selectedUuid)
+
+            Globals.CreatedLightsServer[Globals.selectedUuid] = nil
+            Globals.LightsNameUuidMap[getSelectedLightName()] = nil
+            Globals.LightsNames[getSelectedLightName()] = nil
+
+            Channels.DeleteLight:SendToServer(Globals.selectedUuid)
+
+            UpdateCreatedLightsCombo()
+
+            comboIHateCombos.SelectedIndex = comboIHateCombos.SelectedIndex - 1
+
+            if comboIHateCombos.SelectedIndex < 0 then
+                comboIHateCombos.SelectedIndex = 0
+            end
+
+            if #comboIHateCombos.Options > 0 then
+                Globals.selectedUuid = Ext.Entity.Get(getSelectedUuid()).Uuid.EntityUuid
+            else
+                Globals.selectedUuid = nil
+            end
+
+            -- DDump(Globals.CreatedLightsServer)
+            -- DDump(Globals.LightsNameUuidMap)
+            -- DDump(Globals.LightsNames)
+
+        end
+
+    end
     
     local btnDeleteAll = p:AddButton('Delete all')
     btnDeleteAll.SameLine = true
+    btnDeleteAll.OnClick = function ()
+
+        Channels.DeleteLight:SendToServer('All')
+        Globals.CreatedLightsServer = {}
+        Globals.LightsNameUuidMap = {}
+        Globals.LightsNames = {}
+        
+        UpdateCreatedLightsCombo()
+
+        -- DDump(Globals.CreatedLightsServer)
+        -- DDump(Globals.LightsNameUuidMap)
+
+    end
+
     
     local btnDuplicate = p:AddButton('Duplicate')
     btnDuplicate.SameLine = true

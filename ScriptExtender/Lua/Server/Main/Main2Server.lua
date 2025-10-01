@@ -48,6 +48,21 @@ Channels.CreateLight:SetRequestHandler(function (Data)
     return Response
 
 end)
+
+Channels.DeleteLight:SetHandler(function (selectedLight)
+    if selectedLight == 'All' then
+        for _, entUuid in pairs(Globals.CreatedLightsServer) do
+            Osi.RequestDelete(entUuid)
+            Globals.CreatedLightsServer = {}
+        end
+    else
+        Osi.RequestDelete(selectedLight)
+        Globals.CreatedLightsServer[selectedLight] = nil
+    end
+    DDump(Globals.CreatedLightsServer)
+end)
+
+
 Channels.SelectedLight:SetHandler(function (selectedLight)
     Globals.selectedUuid = selectedLight
 end)
