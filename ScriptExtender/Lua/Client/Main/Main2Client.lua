@@ -270,8 +270,65 @@ function MainTab(p)
 
     function PopulateParameters(p)
         assert(false, 'Function is not implemented')
+    local collapseParameters = p:AddCollapsingHeader('Main parameters')
+    local gp = collapseParameters:AddGroup('Parameters1')
+    
+
+
+    local pickerLightColor = gp:AddColorEdit('Click me')
+    pickerLightColor.NoAlpha = true
+    pickerLightColor.Float = false
+    pickerLightColor.InputRGB = true
+    pickerLightColor.DisplayHex = true
+    pickerLightColor.OnChange = function (e)
+
+        local lightEntity = getSelectedLightEntity()
+        if lightEntity then
+            lightEntity.Color = {e.Color[1], e.Color[2], e.Color[3]}
+            Globals.LightParameters[Globals.selectedUuid]['Color'] = {e.Color[1], e.Color[2], e.Color[3]}
+        end
+
+    end
+
+
+
+    local slLightIntensity = gp:AddSlider('', 100, 0, 2000, 1)
+    slLightIntensity.IDContext = 'lkjanerfliuaern'
+    slLightIntensity.OnChange = function (e)
+
+        local lightEntity = getSelectedLightEntity()
+        if lightEntity then
+            lightEntity.Intensity = e.Value[1]
+            Globals.LightParameters[Globals.selectedUuid]['Intensity'] = e.Value[1]
+        end
+        
+    end
+
+
+    
+    local slLightTemp = gp:AddSlider('', 5600, 1000, 40000, 1)
+    slLightTemp.IDContext = 'wlekjfnlkm'
+    slLightTemp.Logarithmic = true
+    slLightTemp.OnChange = function (e)
+
+        local lightEntity = getSelectedLightEntity()
+        if lightEntity then
+            local Color = Math:KelvinToRGB(e.Value[1])
+            lightEntity.Color = {Color[1], Color[2], Color[3]}
+            Globals.LightParameters[Globals.selectedUuid]['Color'] = {Color[1], Color[2], Color[3]}
+        end
+
     end
     
+
+
+    -- LightType
+    -- SpotLightInnerAngle
+    -- SpotLightOuterAngle
+
+    
+    local collapseAddParameters = p:AddCollapsingHeader('Additional parameters')
+    local groupAddParameters = collapseAddParameters:AddGroup('AddParameters')
 
     
 end
