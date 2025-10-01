@@ -250,7 +250,6 @@ gobo_window = "4eab6f6d-5d94-4827-9331-ae3f67747410"
 
 
 
-initialLightTemlate = 'd92ed2ec-a332-4a28-ae3d-99f79ee0fa92'
 
 
 

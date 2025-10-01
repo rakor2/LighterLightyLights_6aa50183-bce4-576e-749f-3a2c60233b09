@@ -57,16 +57,20 @@ local function sanitySelectedLight()
 end
 
 function MainTab(p)
+    --local btn = p:AddButton('xddd')
     
+
     local checkTypePoint
     local checkTypeSpot
     local checkTypeDir
-    
-    --local btn = p:AddButton('xddd')
+    local type
 
     
+
     checkTypePoint = p:AddCheckbox('Point')
     checkTypePoint.OnChange = function ()
+
+        type = 0
 
         checkTypeSpot.Checked = false
         checkTypeDir.Checked = false
@@ -77,6 +81,8 @@ function MainTab(p)
     checkTypeSpot = p:AddCheckbox('Spotlight')
     checkTypeSpot.SameLine = true                     
     checkTypeSpot.OnChange = function ()
+
+        type = 1
 
         checkTypePoint.Checked = false
         checkTypeDir.Checked = false
@@ -89,10 +95,17 @@ function MainTab(p)
     checkTypeDir.Disabled = true
     checkTypeDir.OnChange = function ()
 
+        type = 2
+
         checkTypePoint.Checked = false
         checkTypeSpot.Checked = false
     
     end
+
+
+
+
+
     
     local btnCreate2 = p:AddButton('Create')
     btnCreate2.SameLine = true
@@ -189,7 +202,10 @@ function MainTab(p)
 
     local btnRenameLight = p:AddButton('Rename')
     btnRenameLight.SameLine = true
-    
+    btnRenameLight.Disabled = true
+
+
+
     local btnDelete = p:AddButton('Delete')
     btnDelete.OnClick = function ()
 
@@ -225,6 +241,9 @@ function MainTab(p)
 
     end
     
+
+
+
     local btnDeleteAll = p:AddButton('Delete all')
     btnDeleteAll.SameLine = true
     btnDeleteAll.OnClick = function ()
@@ -244,6 +263,7 @@ function MainTab(p)
     
     local btnDuplicate = p:AddButton('Duplicate')
     btnDuplicate.SameLine = true
+    btnDuplicate.Disabled = true
     
 
     
@@ -252,24 +272,30 @@ function MainTab(p)
     ---------------------------------------------------------
     p:AddSeparatorText([[Character's position source]])
     ---------------------------------------------------------
-                                                             
-
-
+    
+    
+    
     
     local checkOriginSrc = p:AddCheckbox('Origin point')
+    checkOriginSrc.Disabled = true
     
     local checkCutsceneSrc = p:AddCheckbox('Cutscene')
     checkCutsceneSrc.SameLine = true
+    checkCutsceneSrc.Disabled = true
     
     local checkClientSrc = p:AddCheckbox('Client-side')
     checkClientSrc.SameLine = true
+    checkClientSrc.Disabled = true
+    
+    
 
 
+    
+    ---------------------------------------------------------
     p:AddSeparatorText('Parameters')
+    ---------------------------------------------------------
 
 
-    function PopulateParameters(p)
-        assert(false, 'Function is not implemented')
     local collapseParameters = p:AddCollapsingHeader('Main parameters')
     local gp = collapseParameters:AddGroup('Parameters1')
     
@@ -331,9 +357,23 @@ function MainTab(p)
     local groupAddParameters = collapseAddParameters:AddGroup('AddParameters')
 
     
+
+    -- ScatteringIntensityScale
+    -- EdgeSharpening
+
+    --Flags 56 NonFill 184 Fill or
+    -- 1 Render shadows
+
 end
+
+
+Ext.RegisterConsoleCommand('lld', function (cmd, ...)
+    DDump(Globals.LightParameters)
+end)
 
     ---x,y,z = GetPosition(_C().Uuid.EntityUuid)
     ---l = CreateAt('7279c199-1f14-4bce-8740-98866d9878be',x,y+1,z, 1,0,'')
     ---l = CreateAt('7f6ca8ba-07ed-474f-b5b6-e3eefbe3dc3d',x,y+1,z, 1,0,'')
+    
     --Ext.Entity.GetAllEntitiesWithComponent('Light')[7].Light.Radius = 1
+    --_D(Ext.Entity.GetAllEntitiesWithComponent('Light'))
