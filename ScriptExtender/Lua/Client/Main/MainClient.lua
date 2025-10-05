@@ -1664,9 +1664,12 @@ function PM:VisualTemplatesControls()
     Globals.SaveLoad = {}
     
     MCM.SetKeybindingCallback('ll_move_to_cursor', function()
-        if Globals.DummyNameMap and Globals.DummyNameMap[visTemComob.SelectedIndex + 1] then
+        if Globals.DummyNameMap then     
+            local index = visTemComob.SelectedIndex + 1
+            local entity = Globals.DummyNameMap[visTemComob.Options[index]]
             local mousePos = Utils:GetMouseover().Inner.Position
-            Globals.DummyNameMap[visTemComob.SelectedIndex + 1].Visual.Visual.WorldTransform.Translate = mousePos
+            entity.Visual.Visual.WorldTransform.Translate = mousePos
+            entity.DummyOriginalTransform.Transform.Translate = mousePos
             UpdateCharacterInfo(index)
         end
     end)
