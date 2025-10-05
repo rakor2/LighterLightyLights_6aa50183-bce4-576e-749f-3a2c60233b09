@@ -52,7 +52,10 @@ Ext.RegisterNetListener("SpawnLight", function(channel, payload)
     
     -- Create light and save its UUID _ai
     local lightIndex = #ServerSpawnedLights + 1
+    -- local uuid = 'd92ed2ec-a332-4a28-ae3d-99f79ee0fa92' --data.template
     uuidServer[lightIndex] = Osi.CreateAt(data.template, posHost.x, posHost.y, posHost.z, 0, 1, "")
+    -- DPrint(uuid)
+    -- DPrint(Ext.Entity.Get(uuidServer[lightIndex]).Uuid.EntityUuid)
     -- DPrint(uuidServer[lightIndex])
     -- Mark slot as used _ai
     if data.type and data.slotIndex then

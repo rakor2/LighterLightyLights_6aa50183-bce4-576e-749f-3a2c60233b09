@@ -93,11 +93,11 @@ MCM.SetKeybindingCallback('ll_apply_anl', function()
 end)
 
 
-MCM.SetKeybindingCallback('ll_reset_anl', function()
-    Ext.Net.PostMessageToServer("sunValuesResetAll", "")
-    starsCheckbox.Checked = false
-    castLightCheckbox.Checked = false
-end)
+-- MCM.SetKeybindingCallback('ll_reset_anl', function()
+--     Ext.Net.PostMessageToServer("sunValuesResetAll", "")
+--     starsCheckbox.Checked = false
+--     castLightCheckbox.Checked = false
+-- end)
 
 
 
@@ -107,7 +107,7 @@ function MainTab2(mt2)
 
     -- Create window first _ai
     mw = Ext.IMGUI.NewWindow("Lighty Lights")
-    mw.Font = "f16_1"
+    mw.Font = 'Font'
     mw.Open = OPENQUESTIONMARK
 
     mw.Closeable = true
@@ -137,7 +137,7 @@ function MainTab2(mt2)
     local styleCombo = mt2:AddCombo("Style")
     styleCombo.IDContext = "StyleSwitchCombo"
     styleCombo.Options = StyleNames
-    styleCombo.SelectedIndex = StyleSettings.selectedStyle - 1
+    styleCombo.SelectedIndex = StyleSettings.selectedStyle - 1 or 0
 
     styleCombo.OnChange = function(widget)
         StyleSettings.selectedStyle = widget.SelectedIndex + 1
@@ -153,6 +153,26 @@ function MainTab2(mt2)
         pickerSize = GlobalsIMGUI.checkPickerSize.Checked
         SettingsSave()
     end
+    
+    ---TBD: temp
+    -- function Style.SetFont2(font, value)
+    --     local font = font or '__QuadraatOffcPro.ttf'
+    --     local size = 35
+    --     if value == 3 then size = 35 Style.buttonScale = 1
+    --     elseif value == 2 then size = 30 Style.buttonScale = 1.14
+    --     elseif value == 1 then size = 25 Style.buttonScale = 1.305
+    --     end
+    --     Ext.IMGUI.LoadFont('FontLL', 'Mods/' .. Ext.Mod.GetMod(ModuleUUID).Info.Directory .. '/ScriptExtender/Lua/Shared/LibLib/ImGui/' .. font .. '/', size)
+    -- end
+
+
+    -- GlobalsIMGUI.uidScale = mt2:AddSliderInt('UI scale', 3, 1, 3, 1)
+    -- GlobalsIMGUI.uidScale.OnChange = function (e)
+    --     Utils:AntiSpam(500, function ()
+    --         Style.SetFont2(nil, e.Value[1])
+    --         buttonSizes()
+    --     end)
+    -- end
 
 
 
@@ -176,6 +196,7 @@ function MainWindow(mw)
     end
     mw.AlwaysAutoResize = false
     mw.Scaling = 'Scaled'
+    mw.Font = 'Font'
 
 
 
@@ -212,13 +233,11 @@ function MainWindow(mw)
     dev = mainTabBar:AddTabItem("Dev")
     DevTab(dev)
 
+
     main2 = mainTabBar:AddTabItem("Main2")
     MainTab(main2)
 
 
-
-    -- mainTab2 = mainTabBar:AddTabItem("Main2")
-    -- MainWindowTab2(mainTab2)
 
     -- particles = mainTabBar:AddTabItem("Particles")
     -- PartclesTab(particles)
@@ -1460,6 +1479,7 @@ function BetterPMTab(parent)
     selectedCharacter = visTemComob.SelectedIndex + 1
 
 
+    
 
     local infoCollapse = parent:AddCollapsingHeader('Info')
     
@@ -1791,8 +1811,9 @@ function BetterPMTab(parent)
     end
     
 
+    local lookAtSlDefault = 0.1
 
-    local slLookAt = collapseLookAt:AddSlider('X Y Z', 0, -0.2, 0.2, 1)
+    local slLookAt = collapseLookAt:AddSlider('X Y Z', 0, -lookAtSlDefault, lookAtSlDefault, 1)
     slLookAt.IDContext = '131231asdad'
     slLookAt.SameLine = false
     slLookAt.Components = 3
