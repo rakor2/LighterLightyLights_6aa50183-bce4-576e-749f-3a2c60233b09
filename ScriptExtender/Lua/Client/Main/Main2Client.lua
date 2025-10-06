@@ -81,16 +81,32 @@ local function UpdateCreatedLightsCombo()
     table.sort(Globals.LightsNames, function(a, b)
         return tonumber(a:match("%d+")) < tonumber(b:match("%d+"))
     end)
+    -- Globals.LightsNames = Utils:MapToArray(Globals.LightsUuidNameMap)
+    
+    Globals.LightsNames = {}
+    for _, light in pairs(Globals.LightsUuidNameMap) do
+        table.insert(Globals.LightsNames, light.name)
+    end
+
+    -- DDump(Globals.LightsNames)
+    -- table.sort(Globals.LightsNames, function(a, b)
+    --     return tonumber(a:match("%d+")) < tonumber(b:match("%d+"))
+    -- end)
     comboIHateCombos.Options = Globals.LightsNames
 end
 
 
 local function getSelectedUuid()
-    if  Globals.LightsNameUuidMap       and
+    if  Globals.LightsUuidNameMap       and
         comboIHateCombos.SelectedIndex  and
         comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1]
     then
-        return Globals.LightsNameUuidMap[comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1]]
+        for _, light in pairs(Globals.LightsUuidNameMap) do
+            if light.name == comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1] then
+                return light.uuid
+            end   
+        end
+        -- return Globals.LightsUuidNameMap[comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1]]
     end
 end
 
@@ -253,8 +269,12 @@ function MainTab(p)
                         DPrint('Callback Create: %s, %s', Globals.selectedUuid, Globals.selectedEntity)
                         
                         nameIndex = nameIndex + 1
-                        local name = 'Light #' .. nameIndex .. ' ' .. type
-                        Globals.LightsNameUuidMap[name] = Globals.CreatedLightsServer[Globals.selectedUuid]
+                        local name = '#' .. nameIndex .. ' ' .. type
+                        
+                        table.insert(Globals.LightsUuidNameMap, {
+                            uuid = Globals.CreatedLightsServer[Globals.selectedUuid],
+                            name = name
+                        })
                         
                         UpdateCreatedLightsCombo()
                         comboIHateCombos.SelectedIndex = #comboIHateCombos.Options - 1
@@ -296,14 +316,28 @@ function MainTab(p)
 
 
 
-    local comboRename = p:AddCombo('')
-    comboRename.IDContext = 'adawdawdawdawd'
-    comboRename.Disabled = true
+    inputRename = p:AddInputText('')
+    inputRename.IDContext = 'adawdawdawdawd'
+    inputRename.Disabled = false
+    inputRename.OnChange = function ()
 
+    end
 
     local btnRenameLight = p:AddButton('Rename')
     btnRenameLight.SameLine = true
-    btnRenameLight.Disabled = true
+    btnRenameLight.Disabled = false
+    btnRenameLight.OnClick = function ()
+        
+        for k, light in pairs(Globals.LightsUuidNameMap) do
+            if light.name == comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1] then
+                light.name = '#' .. comboIHateCombos.SelectedIndex + 1 .. ' ' .. inputRename.Text
+            end
+        end
+
+        inputRename.Text = ''
+
+        UpdateCreatedLightsCombo()
+    end
 
 
 
