@@ -16,6 +16,7 @@
 
 
 Globals.CreatedLightsServer = {}
+Globals.LightParametersServer = {}
 Globals.selectedUuid = nil
 Globals.selectedEntity = nil
 
@@ -118,6 +119,46 @@ Channels.CreateLight:SetRequestHandler(function (Data)
     else
         return nil
     end
+end)
+
+
+Channels.DuplicateLight:SetRequestHandler(function ()
+    local uuid = getAvailableRootTemplate()
+    local x,y,z = table.unpack(Globals.LightParametersServer[Globals.selectedUuid].Translate)
+    local rx,ry,rz = table.unpack(Globals.LightParametersServer[Globals.selectedUuid].HumanRotation)
+
+    Globals.selectedUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
+    Osi.ToTransform(Globals.selectedUuid, x, y, z, rx, ry, rz)
+    
+
+    Globals.selectedEntity = Ext.Entity.Get(Globals.selectedUuid)
+
+
+    local HumanRotation = {rx,ry,rz}
+    Globals.LightParametersServer[Globals.selectedUuid] = {}
+    Globals.LightParametersServer[Globals.selectedUuid].Translate = {x,y,z}
+    Globals.LightParametersServer[Globals.selectedUuid].RotationQuat = Math:EulerToQuats(HumanRotation)
+    Globals.LightParametersServer[Globals.selectedUuid].HumanRotation = HumanRotation
+
+
+    Globals.CreatedLightsServer[Globals.selectedUuid] = Globals.selectedUuid
+
+    DPrint(Globals.selectedUuid)
+    
+    local Response = {
+        Globals.CreatedLightsServer,
+        Globals.selectedUuid,
+        Globals.LightParametersServer[Globals.selectedUuid]
+    }
+    
+    if Globals.markerUuid then
+        UpdateMarkerPosition()
+    else
+        CreateMarker()
+    end
+
+
+    return Response
 end)
 
 

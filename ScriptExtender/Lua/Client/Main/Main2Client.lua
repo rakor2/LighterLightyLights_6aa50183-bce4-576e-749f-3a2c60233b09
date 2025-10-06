@@ -296,8 +296,64 @@ function MainTab(p)
     end
 
 
+    --TBD: remove DUPLICATIONS HAHAHAHAH GET IT????? LMAOOOOOOOOOOOOOOOOOO
+    function DuplicateLight()
 
+        local prevoiusUuid = Globals.selectedUuid
+        local xd = Globals.LightParametersClient[prevoiusUuid]
+        
+        Channels.DuplicateLight:RequestToServer(Data, function (Response)
+            if Response then
+                Globals.CreatedLightsServer = Response[1]
+                Globals.selectedUuid = Response[2]
+                
+                Globals.LightParametersClient[Globals.selectedUuid] = Globals.LightParametersClient[Globals.selectedUuid] or {}
+                
+                nameIndex = nameIndex + 1
+                local name = '#' .. nameIndex .. ' ' .. type
+                
+                table.insert(Globals.LightsUuidNameMap, {
+                    uuid = Globals.CreatedLightsServer[Globals.selectedUuid],
+                    name = name
+                })
+            
+                Helpers.Timer:OnTicks(15, function ()
+                    
+                    SetLightType(xd.LightType)
+                    SetLightColor(xd.Color)
+                    SetLightIntensity(xd.Intensity)
+                    SetLightRadius(xd.Temperature)
+                    SetLightOuterAngle(xd.Radius)
+                    SetLightInnerAngle(xd.SpotLightOuterAngle)
+                    SetLightInnerAngle(xd.SpotLightInnerAngle)
+                    
+                    SetLightDirectionalParameters('DirectionLightAttenuationEnd', xd.DirectionLightAttenuationEnd)
+                    SetLightDirectionalParameters('DirectionLightAttenuationFunction', xd.DirectionLightAttenuationFunction)
+                    SetLightDirectionalParameters('DirectionLightAttenuationSide', xd.DirectionLightAttenuationSide)
+                    SetLightDirectionalParameters('DirectionLightAttenuationSide2', xd.DirectionLightAttenuationSide2)
+                    SetLightDirectionalParameters('DirectionLightDimensions', xd.DirectionLightDimensions)
+                    
+                    
+                    SetLightFill(xd.Flags)
+                    SetLightScattering(xd.ScatteringIntensityScale)
+                    SetLightEdgeSharp(xd.EdgeSharpening)
 
+                end)
+                
+                UpdateCreatedLightsCombo()
+                comboIHateCombos.SelectedIndex = #comboIHateCombos.Options - 1
+                
+                
+                Helpers.Timer:OnTicks(10, function ()
+                        local x,y,z = table.unpack(Response[3].Translate)
+                        local rx,ry,rz = table.unpack(Response[3].HumanRotation)
+                        UpdateElements(Globals.selectedUuid)
+                        UpdateTranformInfo(x, y, z, rx, ry, rz)
+                    end)
+                    
+            end
+        end)
+    end
 
 
 
