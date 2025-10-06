@@ -86,19 +86,6 @@ function StopPositionUpdates()
 end
 
 
-function FindTLPreviewDummyPlayer()
-    timelineActorDataEntities = Ext.Entity.GetAllEntitiesWithComponent("TimelineActorData")
-    for i = 1, #timelineActorDataEntities do
-        if timelineActorDataEntities[i].TLPreviewDummy and timelineActorDataEntities[i].TLPreviewDummy.Name ~= "DUM_" then
-            local dummyName = timelineActorDataEntities[i].TLPreviewDummy.Name
-            local star_p, end_p = string.find(dummyName, "Player")
-                if star_p then
-                    playerDummyEntity = timelineActorDataEntities[i]
-                    return playerDummyEntity
-                end
-        end
-    end
-end
 
 function FindTLPreviewDummyCompanion()
     timelineActorDataEntities = Ext.Entity.GetAllEntitiesWithComponent("TimelineActorData")
@@ -117,7 +104,7 @@ end
 Ext.RegisterConsoleCommand("tlc", FindTLPreviewDummyCompanion)
 
 function GetPlayerDummyPosition()
-    local ent = FindTLPreviewDummyPlayer()
+    local ent = Dummy:TLPreviewDummyPlayer()
     if not ent then return end
     local dummyPos = ent.Transform.Transform.Translate
     x = dummyPos[1]

@@ -220,3 +220,28 @@ RootTemplates = {
     ['6f9942c1-eb2a-42a6-8c7f-1f2c0234a96d'] = true,
     ['4e167524-a34b-42cb-977e-5d282d428667'] = true,
 }
+
+
+
+QOTD = {
+    'xqc is the best streamer',
+    'you should rest sometimes',
+    'try terraria!',
+    'what is omegilol?',
+    'xd',
+    'xqc is the best streamer',
+    'xqc is the best streamer',
+    'xqc is the best streamer',
+    'xqc is the best streamer',
+    'xqc is the best streamer',
+    'xqc is the best streamer',
+    'xqc is the best streamer',
+    'xqc is the best streamer',
+    'xqc is the best streamer',
+    'xqc is the best streamer',
+    'xqc is the best streamer',
+    'xqc is the best streamer',
+    'xqc is the best streamer',
+    'xqc is the best streamer',
+    'xqc is the best streamer',
+}
