@@ -70,6 +70,8 @@ local modPosSlider
 
 local function getSourceTranslate()
     local SourceTranslate = _C().Transform.Transform.Translate
+function setSourceTranslate(SourceTranslate)
+    -- local SourceTranslate = _C().Transform.Transform.Translate
     return SourceTranslate
 end
 
@@ -212,6 +214,7 @@ function MainTab(p)
 
 
 
+    Globals.SourceTranslate = _C().Transform.Transform.Translate
 
     
     btnCreate2 = p:AddButton('Create')
@@ -220,7 +223,7 @@ function MainTab(p)
         if Globals.States.allowLightCreation then
             Globals.States.allowLightCreation = false
             btnCreate2.Disabled = true
-            local Position = getSourceTranslate()
+            local Position = Globals.SourceTranslate
             local Data = {
                 type = type or 0,
                 Position = Position
@@ -1054,9 +1057,30 @@ function MainTab(p)
         RotateEntity(Globals.selectedEntity, nil, 0, 0)
     end
 
+    ---------------------------------------------------------
+    p:AddSeparatorText([[Position source]])
+    ---------------------------------------------------------
     
     
     
+    
+    checkOriginSrc = p:AddCheckbox('Origin point')
+    checkOriginSrc.Disabled = true
+    
+
+
+    checkCutsceneSrc = p:AddCheckbox('Cutscene')
+    checkCutsceneSrc.SameLine = true
+    checkCutsceneSrc.Disabled = false
+    checkCutsceneSrc.OnChange = function ()
+        SourceCutscene()
+    end
+    
+
+
+    checkClientSrc = p:AddCheckbox('Client-side')
+    checkClientSrc.SameLine = true
+    checkClientSrc.Disabled = true
     
     
     
