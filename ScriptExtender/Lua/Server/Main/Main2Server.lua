@@ -72,23 +72,47 @@ end
 
 
 Channels.CreateLight:SetRequestHandler(function (Data)
-
-    local offset = 1
+    local HumanRotation
+    local offset = 2
     local uuid = getAvailableRootTemplate()
 
     local x, y, z = Data.Position[1], Data.Position[2], Data.Position[3]
 
     if uuid then
-
+        
         Globals.selectedUuid = Osi.CreateAt(uuid, x, y + offset, z, 0, 0, '')
-        Globals.selectedEntity = Ext.Entity.Get(Globals.selectedUuid)
+        HumanRotation = {0, 0, 0}
+        
+        if Data.type == 'Spotlight' then
+            HumanRotation = {90, 0, 0}
+            local rx, ry, rz = table.unpack(HumanRotation)
+            Osi.ToTransform(Globals.selectedUuid, x, y + offset, z, rx, ry, rz)
+        end
+        
+        
+        Globals.LightParametersServer[Globals.selectedUuid] = {}
+        Globals.LightParametersServer[Globals.selectedUuid].Translate = {x,y + offset ,z}
+        Globals.LightParametersServer[Globals.selectedUuid].RotationQuat = Math:EulerToQuats(HumanRotation)
+        Globals.LightParametersServer[Globals.selectedUuid].HumanRotation = HumanRotation
 
+        Globals.selectedEntity = Ext.Entity.Get(Globals.selectedUuid)
+        
         Globals.CreatedLightsServer[Globals.selectedUuid] = Globals.selectedUuid
-    
+
+        -- DDump(Globals.LightParametersServer)
+        
         local Response = {
             Globals.CreatedLightsServer,
             Globals.selectedUuid
         }
+        
+        if Globals.markerUuid then
+            UpdateMarkerPosition()
+        else
+            CreateMarker()
+        end
+        
+        
         
         return Response
     else
@@ -97,6 +121,33 @@ Channels.CreateLight:SetRequestHandler(function (Data)
 end)
 
 
+function CreateMarker()
+    local rOffset = 90
+    local x,y,z = table.unpack(Globals.LightParametersServer[Globals.selectedUuid].Translate)
+    local rx,ry,rz = table.unpack(Globals.LightParametersServer[Globals.selectedUuid].HumanRotation)
+    
+    local uuid = lightMarkerGUID
+    Globals.markerUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
+    Osi.ToTransform(Globals.markerUuid, x, y, z, rx - rOffset, ry, rz)
+end
+
+
+function UpdateMarkerPosition()
+    if Globals.markerUuid and Globals.LightParametersServer[Globals.selectedUuid] then
+        local rOffset = 90    
+        local x,y,z = table.unpack(Globals.LightParametersServer[Globals.selectedUuid].Translate)
+        local rx,ry,rz = table.unpack(Globals.LightParametersServer[Globals.selectedUuid].HumanRotation)
+        Osi.ToTransform(Globals.markerUuid, x, y, z, rx - rOffset, ry, rz)
+        -- DPrint('Marker updated')
+    end
+end
+
+Channels.MarkerHandler:SetRequestHandler(function (Data)
+
+    CreateMarker()
+    
+    return nil
+end)
 
 
 Channels.SelectedLight:SetHandler(function (selectedLight)
