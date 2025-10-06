@@ -8,7 +8,7 @@
         HumanRotation = HumanRotation
     }
 
-    Channels.EntityTransform:Broadcast(Response)
+    Channels.CurrentEntityTransform:Broadcast(Response)
 
 ]]
 
@@ -59,14 +59,14 @@ local function resetAvailableRootTemplate()
         RootTemplates[uuid] = true
         -- DPrint('%s, %s', uuid, RootTemplates[uuid])
     end
-    DDump(RootTemplates)
+    -- DDump(RootTemplates)
 end
 
 
 
 local function changeRootTemplateState(uuid)
     RootTemplates[uuid] = not RootTemplates[uuid]
-    DDump(RootTemplates)
+    -- DDump(RootTemplates)
 end
 
 
@@ -191,30 +191,58 @@ Channels.MarkerHandler:SetRequestHandler(function (Data)
 end)
 
 
-Channels.SelectedLight:SetHandler(function (selectedLight)
-    Globals.selectedUuid = selectedLight
+
+
+Channels.SelectedLight:SetHandler(function (selectedUuid)
+    Globals.selectedUuid = selectedUuid
     Globals.selectedEntity = Ext.Entity.Get(Globals.selectedUuid)
+    -- DPrint('Selected light: %s', Globals.selectedUuid)
+    UpdateMarkerPosition()
 end)
 
 
 
+Channels.DeleteLight:SetHandler(function (request)
+    if request == 'All' then
 
-Channels.DeleteLight:SetHandler(function (selectedLight)
-    if selectedLight == 'All' then
-        for _, entUuid in pairs(Globals.CreatedLightsServer) do
-            Osi.RequestDelete(entUuid)
+        for _, uuid in pairs(Globals.CreatedLightsServer) do
+            Osi.RequestDelete(uuid)
             Globals.CreatedLightsServer = {}
+            Globals.LightParametersServer = {}
         end
-        resetAvailableRootTemplate()
-    else
-        local uuid = Ext.Entity.Get(selectedLight).GameObjectVisual.RootTemplateId
-        changeRootTemplateState(uuid)
-        Osi.RequestDelete(selectedLight)
-        Globals.CreatedLightsServer[selectedLight] = nil
-    end
-    DDump(Globals.CreatedLightsServer)
-end)
 
+        if Globals.markerUuid then
+            Osi.RequestDelete(Globals.markerUuid)
+            Globals.markerUuid = nil
+        end
+
+        resetAvailableRootTemplate()
+
+    else
+
+        local uuid = Ext.Entity.Get(Globals.selectedUuid).GameObjectVisual.RootTemplateId
+
+        Osi.RequestDelete(Globals.selectedUuid)
+
+        Globals.selectedUuid = Globals.selectedUuid
+        Globals.CreatedLightsServer[Globals.selectedUuid] = nil
+        Globals.LightParametersServer[Globals.selectedUuid] = nil
+
+        changeRootTemplateState(uuid)
+
+        
+        Helpers.Timer:OnTicks(2, function ()
+            if Globals.selectedUuid then
+                UpdateMarkerPosition()
+            else
+                Osi.RequestDelete(Globals.markerUuid)
+                Globals.markerUuid = nil
+            end
+        end)                               
+
+    end
+    -- DDump(Globals.CreatedLightsServer)
+end)
 
 
 
@@ -255,10 +283,16 @@ Channels.EntityTranslate:SetHandler(function (Data)
 
     entity.ServerItem.TransformChanged = true
 
-    
+
+    --- TBD: REFACTOR THESE ONES 
     local RotationQuat = entity.Transform.Transform.RotationQuat
     local Translate = entity.Transform.Transform.Translate
     local HumanRotation = {rx,ry,rz}
+
+    
+    Globals.LightParametersServer[Globals.selectedUuid].Translate = Translate
+    Globals.LightParametersServer[Globals.selectedUuid].RotationQuat = RotationQuat
+    Globals.LightParametersServer[Globals.selectedUuid].HumanRotation = HumanRotation
 
     local Response = {
         Translate = Translate,
@@ -266,8 +300,9 @@ Channels.EntityTranslate:SetHandler(function (Data)
         HumanRotation = HumanRotation
     }
 
-    Channels.EntityTransform:Broadcast(Response)
+    Channels.CurrentEntityTransform:Broadcast(Response)
 
+    UpdateMarkerPosition()
 
     -- return Response
     -- local rx, ry, rz = Osi.GetRotation(uuid)
@@ -312,13 +347,20 @@ Channels.EntityRotation:SetHandler(function (Data)
     local Translate = entity.Transform.Transform.Translate
     local HumanRotation = {rx,ry,rz}
 
+    Globals.LightParametersServer[Globals.selectedUuid].Translate = Translate
+    Globals.LightParametersServer[Globals.selectedUuid].RotationQuat = RotationQuat
+    Globals.LightParametersServer[Globals.selectedUuid].HumanRotation = HumanRotation
+
     local Response = {
         Translate = Translate,
         RotationQuat = RotationQuat,
         HumanRotation = HumanRotation
     }
 
-    Channels.EntityTransform:Broadcast(Response)
+    Channels.CurrentEntityTransform:Broadcast(Response)
+    
+    UpdateMarkerPosition()
+
 
     return Response
 
@@ -329,6 +371,12 @@ end)
 Channels.StickToCamera:SetHandler(function (Data)
     local x,y,z = table.unpack(Data.Translate)
     local rx,ry,rz = table.unpack(Helpers.Math.QuatToEuler(Data.RotationQuat))
+
+    Globals.LightParametersServer[Globals.selectedUuid].Translate = {x, y, z}
+    Globals.LightParametersServer[Globals.selectedUuid].RotationQuat = Data.RotationQuat
+    Globals.LightParametersServer[Globals.selectedUuid].HumanRotation = {rx, ry, rz}
+
+    UpdateMarkerPosition()
     Osi.ToTransform(Globals.selectedUuid, x, y, z, rx, ry, rz)
 end)
 
@@ -346,9 +394,9 @@ Channels.EntityRotationOrbit:SetHandler(function (Data)
     local character = _C()
     local uuid = Globals.selectedUuid
     local entity = Ext.Entity.Get(uuid)
-    if not uuid then return end
 
-    local centerX, centerY, centerZ = translate(_C())
+    -- local centerX, centerY, centerZ = translate(_C())
+    local centerX, centerY, centerZ = Data.Translate[1], Data.Translate[2], Data.Translate[3]
 
     local curX, curY, curZ = Osi.GetPosition(uuid)
     local curRx, curRy, curRz = Osi.GetRotation(uuid)
@@ -390,6 +438,7 @@ Channels.EntityRotationOrbit:SetHandler(function (Data)
     
     RotateAroundPoint(uuid, centerX, centerY, centerZ, params)
     LookAtCenter(uuid, centerX, centerY, centerZ, 1, params)
+
     
     params.baseX, params.baseY, params.baseZ = Osi.GetPosition(uuid)
     local arx, ary, arz = Osi.GetRotation(uuid)
@@ -397,6 +446,10 @@ Channels.EntityRotationOrbit:SetHandler(function (Data)
     params.lastActualRy = ary
     params.lastActualRz = arz
     
+
+    Globals.LightParametersServer[Globals.selectedUuid].Translate = {params.baseX, params.baseY, params.baseZ}
+    Globals.LightParametersServer[Globals.selectedUuid].RotationQuat = RotationQuat
+    Globals.LightParametersServer[Globals.selectedUuid].HumanRotation = {arx, ary, arz}
     
     
     local RotationQuat = entity.Transform.Transform.RotationQuat
@@ -407,7 +460,11 @@ Channels.EntityRotationOrbit:SetHandler(function (Data)
     }
     
 
-    Channels.EntityTransform:Broadcast(Response)
+    
+    UpdateMarkerPosition()
+
+
+    Channels.CurrentEntityTransform:Broadcast(Response)
 
     -- return Response
 end)

@@ -1,9 +1,9 @@
 Globals.CreatedLightsClient = {} --UNUSED
 
 
-Globals.LightsNameUuidMap = {}
+Globals.LightsUuidNameMap = {}
 Globals.LightsNames = {}
-Globals.LightParameters = {}
+Globals.LightParametersClient = {}
 
 Globals.States = {}
 Globals.States.allowLightCreation = {}
@@ -23,7 +23,6 @@ Globals.selectedEntity = nil
 Globals.selectedLightEntity = nil
 
 
-local LightEntities = {}
 
 local checkTypePoint
 local checkTypeSpot
@@ -68,8 +67,6 @@ local modPosSlider
 
 
 
-local function getSourceTranslate()
-    local SourceTranslate = _C().Transform.Transform.Translate
 function setSourceTranslate(SourceTranslate)
     -- local SourceTranslate = _C().Transform.Transform.Translate
     return SourceTranslate
@@ -77,10 +74,6 @@ end
 
 
 local function UpdateCreatedLightsCombo()
-    Globals.LightsNames = Utils:MapToArray(Globals.LightsNameUuidMap)
-    table.sort(Globals.LightsNames, function(a, b)
-        return tonumber(a:match("%d+")) < tonumber(b:match("%d+"))
-    end)
     -- Globals.LightsNames = Utils:MapToArray(Globals.LightsUuidNameMap)
     
     Globals.LightsNames = {}
@@ -111,14 +104,20 @@ local function getSelectedUuid()
 end
 
 
+
 local function getSelectedEntity()
     if getSelectedUuid() then return Ext.Entity.Get(getSelectedUuid()) end
 end
 
 
+
 local function getSelectedLightEntity()
-    if getSelectedEntity() then return getSelectedEntity().Effect.Timeline.Components[2].LightEntity.Light end
+    if getSelectedEntity() and getSelectedEntity().Effect and getSelectedEntity().Effect.Timeline then
+    return getSelectedEntity().Effect.Timeline.Components[2].LightEntity.Light end
 end
+
+
+
 local function getSelectedLightEntityWithoutLight()
     if getSelectedEntity() then return getSelectedEntity().Effect.Timeline.Components[2].LightEntity end
 end
@@ -128,9 +127,16 @@ local function getSelectedLightName()
     return comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1]
 end
 
+local function getSelectedLightType()
+    local type = getSelectedLightEntity().LightType
+    if      type == 2 then  return 'Directional'
+    elseif  type == 1 then  return 'Spotlight'
+    else                    return 'Point'
+    end    
+end
 
 local function sanitySelectedLight()
-    for name, uuid in pairs(Globals.LightsNameUuidMap) do
+    for name, uuid in pairs(Globals.LightsUuidNameMap) do
         if uuid == Globals.selectedUuid then
             DPrint('Sanity selected light: %s, %s', name, Globals.selectedUuid)
         end
@@ -157,7 +163,7 @@ local function UpdateTranformInfo(x, y, z, rx, ry, rz)
 end
 
 
-Channels.EntityTransform:SetHandler(function (Data)
+Channels.CurrentEntityTransform:SetHandler(function (Data)
     local rx, ry, rz = table.unpack(Data.HumanRotation)
     local x,y,z = table.unpack(Data.Translate)
     UpdateTranformInfo(x, y, z, rx, ry, rz)
@@ -166,16 +172,17 @@ end)
 
 
 local function UpdateElements(selectedUuid)
-    E.slIntLightType.Value = {Globals.LightParameters[selectedUuid]['Type'] or 0, 0, 0, 0}
-    E.pickerLightColor.Color = Globals.LightParameters[selectedUuid]['Color'] or {1, 1, 1, 0}
-    E.slLightIntensity.Value = {Globals.LightParameters[selectedUuid]['Power'] or 1, 0, 0, 0}
-    E.slLightTemp.Value = {Globals.LightParameters[selectedUuid]['Temperature'] or 5600, 0, 0, 0}
-    E.slLightRadius.Value = {Globals.LightParameters[selectedUuid]['Radius'] or 1, 0, 0, 0}
-    E.slLightOuterAngle.Value = {Globals.LightParameters[selectedUuid]['SpotLightOuterAngle'] or 45, 0, 0, 0}
-    E.slLightInnerAngle.Value = {Globals.LightParameters[selectedUuid]['SpotLightInnerAngle'] or 1, 0, 0, 0}
-    E.checkLightFill.Checked = Globals.LightParameters[selectedUuid]['Flags'] ~= 184
-    E.slLightScattering.Value = {Globals.LightParameters[selectedUuid]['ScatteringIntensityScale'] or 0, 0, 0, 0}
-    E.slLightEdgeSharp.Value = {Globals.LightParameters[selectedUuid]['EdgeSharpening'] or 0, 0, 0, 0}
+    E.slIntLightType.Value = {Globals.LightParametersClient[selectedUuid]['Type'] or 0, 0, 0, 0}
+    local Color = Globals.LightParametersClient[selectedUuid] and Globals.LightParametersClient[selectedUuid]['Color']
+    E.pickerLightColor.Color = Color and {Color[1], Color[2], Color[3], 1} or {1, 1, 1, 1}
+    E.slLightIntensity.Value = {Globals.LightParametersClient[selectedUuid]['Power'] or 1, 0, 0, 0}
+    E.slLightTemp.Value = {Globals.LightParametersClient[selectedUuid]['Temperature'] or 5600, 0, 0, 0}
+    E.slLightRadius.Value = {Globals.LightParametersClient[selectedUuid]['Radius'] or 1, 0, 0, 0}
+    E.slLightOuterAngle.Value = {Globals.LightParametersClient[selectedUuid]['SpotLightOuterAngle'] or 45, 0, 0, 0}
+    E.slLightInnerAngle.Value = {Globals.LightParametersClient[selectedUuid]['SpotLightInnerAngle'] or 1, 0, 0, 0}
+    E.checkLightFill.Checked = Globals.LightParametersClient[selectedUuid]['Flags'] ~= 184
+    E.slLightScattering.Value = {Globals.LightParametersClient[selectedUuid]['ScatteringIntensityScale'] or 0, 0, 0, 0}
+    E.slLightEdgeSharp.Value = {Globals.LightParametersClient[selectedUuid]['EdgeSharpening'] or 0, 0, 0, 0}
 
     Globals.States.allowLightCreation = true
     btnCreate2.Disabled = false
@@ -189,7 +196,7 @@ function MainTab(p)
     --local btn = p:AddButton('xddd')
     
 
-
+    p:AddSeparatorText('xd')
     
 
     checkTypePoint = p:AddCheckbox('Point')
@@ -229,7 +236,6 @@ function MainTab(p)
 
 
 
-
     Globals.SourceTranslate = _C().Transform.Transform.Translate
 
     
@@ -241,7 +247,7 @@ function MainTab(p)
             btnCreate2.Disabled = true
             local Position = Globals.SourceTranslate
             local Data = {
-                type = type or 0,
+                type = type or 'Point',
                 Position = Position
             }
             
@@ -251,19 +257,19 @@ function MainTab(p)
                     Globals.selectedUuid = Response[2]
 
                     Helpers.Timer:OnTicks(10, function ()
-                        Globals.LightParameters[Globals.selectedUuid] = Globals.LightParameters[Globals.selectedUuid] or {}
+                        Globals.LightParametersClient[Globals.selectedUuid] =  {}
                         Globals.selectedEntity = Ext.Entity.Get(Globals.selectedUuid)
                         
                         
-                        Helpers.Timer:OnTicks(4, function ()
-                            local lightEntity = getSelectedLightEntity()
+                        Helpers.Timer:OnTicks(5, function ()
                             if type == 'Spotlight' then
-                                lightEntity.LightType = 1
+                                SetLightType(1)
                             elseif type == 'Directional' then
-                                lightEntity.LightType = 2
+                                SetLightType(2)
                             else
-                                lightEntity.LightType = 0
+                                SetLightType(0)
                             end
+                            Globals.selectedLightType = type --TBD
                         end)
                         
                         DPrint('Callback Create: %s, %s', Globals.selectedUuid, Globals.selectedEntity)
@@ -275,16 +281,32 @@ function MainTab(p)
                             uuid = Globals.CreatedLightsServer[Globals.selectedUuid],
                             name = name
                         })
+
+                        -- Globals.LightsUuidNameMap[Globals.CreatedLightsServer[Globals.selectedUuid]] = name
+                        
+                        -- table.sort(Globals.LightsUuidNameMap)
+                        -- DDump(Globals.LightsUuidNameMap)
+
+
+                        -- nameIndex = nameIndex + 1
+                        -- local name = 'Light #' .. nameIndex .. ' ' .. type
+                        -- Globals.LightsUuidNameMap[name] = Globals.CreatedLightsServer[Globals.selectedUuid]
                         
                         UpdateCreatedLightsCombo()
                         comboIHateCombos.SelectedIndex = #comboIHateCombos.Options - 1
                         
                         --sanitySelectedLight()
                         Helpers.Timer:OnTicks(10, function ()
-                            UpdateElements(Globals.selectedUuid)
                             local x,y,z = table.unpack(Position)
-                            UpdateTranformInfo(x, y, z, 0, 0, 0)
+                            UpdateElements(Globals.selectedUuid)
+                            UpdateTranformInfo(x, y, z, 90, 0, 0)
                         end)
+
+                        
+                        -- DDump(Globals.LightsNames)
+                        
+
+                        -- DDump(comboIHateCombos.Options)
 
                     end)
                 else
@@ -361,11 +383,16 @@ function MainTab(p)
     comboIHateCombos.Options = Globals.LightsNames
     comboIHateCombos.SelectedIndex = 0
     comboIHateCombos.OnChange = function (e)
-        Globals.selectedUuid = getSelectedUuid()
-        Globals.selectedEntity = getSelectedEntity()
-        Channels.SelectedLight:SendToServer(Globals.selectedUuid)
-        UpdateCreatedLightsCombo()
-        UpdateElements(Globals.selectedUuid)
+        Helpers.Timer:OnTicks(3, function ()
+            Globals.selectedUuid = getSelectedUuid()
+            Globals.selectedEntity = getSelectedEntity()
+            Globals.selectedLightType = getSelectedLightType()
+            -- DPrint(Globals.selectedUuid)
+            Channels.SelectedLight:SendToServer(Globals.selectedUuid)
+            UpdateCreatedLightsCombo()
+            UpdateElements(Globals.selectedUuid)
+        end)                               
+        -- DPrint(Globals.selectedLightType)
     end
 
 
@@ -403,11 +430,11 @@ function MainTab(p)
             -- DPrint(Globals.selectedUuid)
 
             Globals.CreatedLightsServer[Globals.selectedUuid] = nil
-            Globals.LightParameters[Globals.selectedUuid] = nil
-            Globals.LightsNameUuidMap[getSelectedLightName()] = nil
+            Globals.LightParametersClient[Globals.selectedUuid] = nil
+            Globals.LightsUuidNameMap[getSelectedLightName()] = nil
             Globals.LightsNames[getSelectedLightName()] = nil
 
-            Channels.DeleteLight:SendToServer(Globals.selectedUuid)
+            Channels.DeleteLight:SendToServer()
 
             UpdateCreatedLightsCombo()
 
@@ -417,10 +444,14 @@ function MainTab(p)
             end
             if #comboIHateCombos.Options > 0 then
                 Globals.selectedUuid = Ext.Entity.Get(getSelectedUuid()).Uuid.EntityUuid
+
+                
             else
                 Globals.selectedUuid = nil
                 nameIndex = 0
             end
+
+            Channels.SelectedLight:SendToServer(Globals.selectedUuid)
             -- DDump(Globals.CreatedLightsServer)
             -- DDump(Globals.jLightsNameUuidMap)
             -- DDump(Globals.LightsNames)
@@ -436,43 +467,25 @@ function MainTab(p)
         
         Channels.DeleteLight:SendToServer('All')
         Globals.CreatedLightsServer = {}
-        Globals.LightsNameUuidMap = {}
+        Globals.LightsUuidNameMap = {}
         Globals.LightsNames = {}
-        Globals.LightParameters = {}
+        Globals.LightParametersClient = {}
         nameIndex = 0
         UpdateCreatedLightsCombo()
 
         -- DDump(Globals.CreatedLightsServer)
-        -- DDump(Globals.LightsNameUuidMap)
+        -- DDump(Globals.LightsUuidNameMap)
     end
 
     
     local btnDuplicate = p:AddButton('Duplicate')
     btnDuplicate.SameLine = true
-    btnDuplicate.Disabled = true
+    btnDuplicate.Disabled = false
+    btnDuplicate.OnClick = function ()
+        DuplicateLight()
+    end
     
 
-    
-
-    
-    ---------------------------------------------------------
-    p:AddSeparatorText([[Position source]])
-    ---------------------------------------------------------
-    
-    
-    
-    
-    local checkOriginSrc = p:AddCheckbox('Origin point')
-    checkOriginSrc.Disabled = true
-    
-    local checkCutsceneSrc = p:AddCheckbox('Cutscene')
-    checkCutsceneSrc.SameLine = true
-    checkCutsceneSrc.Disabled = true
-    
-    local checkClientSrc = p:AddCheckbox('Client-side')
-    checkClientSrc.SameLine = true
-    checkClientSrc.Disabled = true
-    
     
 
 
@@ -496,11 +509,12 @@ function MainTab(p)
     -- TYPE
 
     
-    local function SetLightType(value)
+    function SetLightType(value)
         local lightEntity = getSelectedLightEntity()
-        if lightEntity then
+        DPrint('ent: %s', lightEntity)           
+        if lightEntity and value then
             lightEntity.LightType = value
-            Globals.LightParameters[Globals.selectedUuid]['Type'] = value
+            Globals.LightParametersClient[Globals.selectedUuid].LightType = value
         end
     end
 
@@ -519,11 +533,11 @@ function MainTab(p)
     
 
 
-    local function SetLightColor(value)
+    function SetLightColor(value)
         local lightEntity = getSelectedLightEntity()
-        if lightEntity then
+        if lightEntity and value then
             lightEntity.Color = value
-            Globals.LightParameters[Globals.selectedUuid]['Color'] = value
+            Globals.LightParametersClient[Globals.selectedUuid].Color = value
         end
     end
 
@@ -542,11 +556,11 @@ function MainTab(p)
     -- INTENSITY
 
     
-    local function SetLightIntensity(value)
-
-        Globals.selectedEntity.Effect.EffectResource.Constructor.EffectComponents[1].Properties['Appearance.Intensity'].KeyFrames[1].Frames[1].Value = value
-        Globals.selectedEntity.Effect.EffectResource.Constructor.EffectComponents[1].Properties['Appearance.Intensity'].KeyFrames[1].Frames[2].Value = value
-        Globals.LightParameters[Globals.selectedUuid]['Power'] = value
+    function SetLightIntensity(value)
+        if value then
+            Globals.selectedEntity.Effect.EffectResource.Constructor.EffectComponents[1].Properties['Appearance.Intensity'].KeyFrames[1].Frames[1].Value = value
+            Globals.selectedEntity.Effect.EffectResource.Constructor.EffectComponents[1].Properties['Appearance.Intensity'].KeyFrames[1].Frames[2].Value = value
+            Globals.LightParametersClient[Globals.selectedUuid].Intensity = value
 
 
         -- local lightEntity = getSelectedLightEntityWithoutLight()
@@ -563,6 +577,7 @@ function MainTab(p)
         --         end
         --     end)
         -- end
+        end
     end
 
 
@@ -597,7 +612,7 @@ function MainTab(p)
         local Color = Math:KelvinToRGB(e.Value[1])
         SetLightColor({Color[1], Color[2], Color[3]})
         if Globals.selectedUuid then 
-            Globals.LightParameters[Globals.selectedUuid]['Temperature'] = e.Value[1] --This is just for the slidere
+            Globals.LightParametersClient[Globals.selectedUuid].Temperature = e.Value[1] --This is just for the slidere
         end
     end
     
@@ -606,7 +621,7 @@ function MainTab(p)
     ER.btnLightTempReset.SameLine = true
     ER.btnLightTempReset.OnClick = function ()
         E.slLightTemp.Value = {5600, 0, 0, 0}
-        Globals.LightParameters[Globals.selectedUuid]['Temperature'] = 5600
+        Globals.LightParametersClient[Globals.selectedUuid].Temperature = 5600
         SetLightColor({1,0.93,0.88})
     end
     
@@ -615,11 +630,11 @@ function MainTab(p)
     -- RADIUS
     
     
-    local function SetLightRadius(value)
-
-        Globals.selectedEntity.Effect.EffectResource.Constructor.EffectComponents[1].Properties['Appearance.Radius'].KeyFrames[1].Frames[1].Value = value
-        Globals.selectedEntity.Effect.EffectResource.Constructor.EffectComponents[1].Properties['Appearance.Radius'].KeyFrames[1].Frames[2].Value = value
-        Globals.LightParameters[Globals.selectedUuid]['Radius'] = value
+    function SetLightRadius(value)
+        if value then
+            Globals.selectedEntity.Effect.EffectResource.Constructor.EffectComponents[1].Properties['Appearance.Radius'].KeyFrames[1].Frames[1].Value = value
+            Globals.selectedEntity.Effect.EffectResource.Constructor.EffectComponents[1].Properties['Appearance.Radius'].KeyFrames[1].Frames[2].Value = value
+            Globals.LightParametersClient[Globals.selectedUuid].Radius = value
         
         --     -- DDump(Globals.selectedEntity.Effect.EffectResource.Constructor.EffectComponents[1])
         --     lightEntity.Light.Radius = value
@@ -634,6 +649,7 @@ function MainTab(p)
         --         end
         --     end)
         -- end
+        end
     end
 
     
@@ -654,19 +670,26 @@ function MainTab(p)
     end
 
 
+    
+    treeGen:AddSeparator('')
+
+
 
     -- OUTER ANGLE
+
+
+
 
     local treeSpot = gp:AddTree('Spotlight')
     treeSpot.IDContext = 'sodkfn'
 
 
 
-    local function SetLightOuterAngle(value)
+    function SetLightOuterAngle(value)
         local lightEntity = getSelectedLightEntity()
-        if lightEntity then
+        if lightEntity and value then
             lightEntity.SpotLightOuterAngle = value
-            Globals.LightParameters[Globals.selectedUuid]['SpotLightOuterAngle'] = value
+            Globals.LightParametersClient[Globals.selectedUuid].SpotLightOuterAngle = value
         end
     end
 
@@ -691,11 +714,11 @@ function MainTab(p)
     -- INNER ANGLE
 
 
-    local function SetLightInnerAngle(value)
+    function SetLightInnerAngle(value)
         local lightEntity = getSelectedLightEntity()
-        if lightEntity then
+        if lightEntity and value then
             lightEntity.SpotLightInnerAngle = value
-            Globals.LightParameters[Globals.selectedUuid]['SpotLightInnerAngle'] = value
+            Globals.LightParametersClient[Globals.selectedUuid].SpotLightInnerAngle = value
         end
     end
     
@@ -715,15 +738,21 @@ function MainTab(p)
         SetLightInnerAngle(E.slLightInnerAngle.Value[1])
     end
     
+
+    treeSpot:AddSeparator('')
+
     
     
     local treeDir = gp:AddTree('Directional')
     treeDir.IDContext = 'sodsdfkfn'
     
+
+
+
     
     function SetLightDirectionalParameters(parameter, value)
         local lightEntity = getSelectedLightEntity()
-        if lightEntity then
+        if lightEntity and value then
             if parameter == 'DirectionLightAttenuationEnd' then
                 lightEntity.DirectionLightAttenuationEnd = value
                 
@@ -740,7 +769,7 @@ function MainTab(p)
                 lightEntity.DirectionLightDimensions = value
                 
             end
-            Globals.LightParameters[Globals.selectedUuid][parameter] = value
+            Globals.LightParametersClient[Globals.selectedUuid][parameter] = value
         end
     end
 
@@ -753,7 +782,6 @@ function MainTab(p)
     end
 
 
-    -- ER.btnLightDirEndReset = 
 
         
     E.slIntLightDirFunc = treeDir:AddSliderInt('Function', 0, 0, 3, 1)
@@ -777,12 +805,16 @@ function MainTab(p)
     end
 
         
-    E.slLightDirDim = treeDir:AddSlider('Dim', 0, 0, 10, 1)
-    E.slLightDirDim.Components = 3
+    E.slLightDirDim = treeDir:AddSlider('Wid/Hei/Len', 0, 0, 100, 1)
     E.slLightDirDim.IDContext = 'lkasenfaolkejfn'
+    E.slLightDirDim.Components = 3
+    E.slLightDirDim.Logarithmic = true
     E.slLightDirDim.OnChange = function (e)
         SetLightDirectionalParameters('DirectionLightDimensions', {e.Value[1], e.Value[2],e.Value[3]})
     end
+
+    
+    treeDir:AddSeparator('')
 
 
 
@@ -794,11 +826,11 @@ function MainTab(p)
     
     -- 1 Render shadows
 
-    local function SetLightFill(value)
+    function SetLightFill(value)
         local lightEntity = getSelectedLightEntity()
-        if lightEntity then
+        if lightEntity and value then
             lightEntity.Flags = value
-            Globals.LightParameters[Globals.selectedUuid]['Flags'] = value
+            Globals.LightParametersClient[Globals.selectedUuid].Flags = value
         end
     end
     
@@ -815,11 +847,11 @@ function MainTab(p)
     
 
     
-    local function SetLightScattering(value)
+    function SetLightScattering(value)
         local lightEntity = getSelectedLightEntity()
-        if lightEntity then
+        if lightEntity and value then
             lightEntity.ScatteringIntensityScale = value
-            Globals.LightParameters[Globals.selectedUuid]['ScatteringIntensityScale'] = value
+            Globals.LightParametersClient[Globals.selectedUuid].ScatteringIntensityScale = value
         end
     end
 
@@ -844,11 +876,11 @@ function MainTab(p)
     -- EDGE SHARPENING
 
     
-    local function SetLightEdgeSharp(value)
+    function SetLightEdgeSharp(value)
         local lightEntity = getSelectedLightEntity()
-        if lightEntity then
+        if lightEntity and value then
             lightEntity.EdgeSharpening = value
-            Globals.LightParameters[Globals.selectedUuid]['EdgeSharpening'] = value
+            Globals.LightParametersClient[Globals.selectedUuid].EdgeSharpening = value
         end
     end
 
@@ -882,48 +914,28 @@ function MainTab(p)
             local Data = {
                 axis = axis,
                 step = step,
-                offset = offset
+                offset = offset,
+                Translate = Globals.SourceTranslate
             }
-
-
+            
             if mode == 'World' then
                 Channels.EntityTranslate:SendToServer(Data)
-                    -- local x,y,z = table.unpack(Response.Translate)
-                    -- UpdateTranformInfo(x, y, z, rx, ry, rz)
-                    -- Globals.LightTranslate = Response.Translate
-                    -- Globals.selectedEntity.Transform.Transform.Translate = {Globals.LightTranslate[1], Globals.LightTranslate[2], Globals.LightTranslate[3]}
-                    -- Globals.selectedEntity.Visual.Visual.WorldTransform.Translate = {Globals.LightTranslate[1], Globals.LightTranslate[2], Globals.LightTranslate[3]}
-                    
-                    -- Globals.selectedEntity.Visual.Visual:SetWorldTranslate({Globals.LightTranslate[1], Globals.LightTranslate[2], Globals.LightTranslate[3]})
-
-                    -- Globals.selectedLightEntity = getSelectedLightEntity()
-                    -- Globals.selectedLightEntity.Template.Transform.Translate = {Globals.LightTranslate[1], Globals.LightTranslate[2], Globals.LightTranslate[3]}
-
-
-                    -- DDebug('Transform -------------')
-                    -- -- DDump(Globals.selectedEntity.Transform.Transform.Translate)
-                    -- DDebug('World -------------')
-                    -- DDump(Globals.selectedEntity.Visual.Visual.WorldTransform.Translate)
-                -- end)
             else
                 Channels.EntityRotationOrbit:SendToServer(Data)
-
-                    -- Globals.LightRotation = Response.HumanRotation
-                    -- Globals.LightQuats = Response.RotationQuat
-                    -- Globals.selectedEntity.Transform.Transform.RotationQuat = {Globals.LightQuats[1], Globals.LightQuats[2], Globals.LightQuats[3], Globals.LightQuats[4]}
-                    -- Globals.selectedEntity.Visual.Visual.WorldTransform.RotationQuat = {Globals.LightQuats[1], Globals.LightQuats[2], Globals.LightQuats[3], Globals.LightQuats[4]}
-                -- end)
             end
+            
         end
     end
-
-
+    
+    
+    
     function RotateEntity(entity, axis, offset, step)
         if entity then
             local Data = {
                 axis = axis,
                 step = step,
-                offset = offset
+                offset = offset,
+                Translate = Globals.SourceTranslate
             }
             Channels.EntityRotation:SendToServer(Data)
                 -- local rx,ry,rz = table.unpack(Response.HumanRotation)
@@ -935,12 +947,6 @@ function MainTab(p)
     end
 
 
-    textPositionInfo = p:AddText('')
-    textPositionInfo.Label = string.format('x: %.2f, y: %.2f, z: %.2f', 0, 0, 0)
-
-    textRotationInfo = p:AddText('')
-    textRotationInfo.Label = string.format('rx: %.2f, ry: %.2f, rz: %.2f', 0, 0, 0)
-
 
 
     
@@ -949,11 +955,9 @@ function MainTab(p)
     local modPos = 20000
     local modRot = 1000
     
-    local collapsPos = p:AddCollapsingHeader('Position')
-    collapsPos.DefaultOpen = false
 
 
-    local checkStick = collapsPos:AddCheckbox('Stick to camera')
+    local checkStick = p:AddCheckbox('Stick to camera')
     checkStick.OnChange = function (e)
         if Globals.selectedUuid then
             if checkStick.Checked then
@@ -978,19 +982,10 @@ function MainTab(p)
         end
     end
     
-    modPosSlider = collapsPos:AddSlider('', modPosDefault, -modPos, modPos, 0)
-    modPosSlider.Value = {modPosDefault,0,0,0}
-    modPosSlider.IDContext = 'ModID'
 
-
-    local modPosReset = collapsPos:AddButton('Mod')
-    modPosReset.IDContext = 'MOdd'
-    modPosReset.SameLine = true
-    modPosReset.OnClick = function ()
-        modPosSlider.Value = {modPosDefault,0,0,0}
-    end
     
-    local worldTree = collapsPos:AddTree('World relative')
+    
+    local worldTree = p:AddCollapsingHeader('World relative')
 
 
 
@@ -1003,12 +998,14 @@ function MainTab(p)
         posZSlider.Value = {0,0,0,0}
     end
 
-    local textZ = worldTree:AddText('N/S')
+
+
+    local textZ = worldTree:AddText('North/South')
     textZ.IDContext = 'awdadwdawdawdawda'
     textZ.SameLine = true
 
 
-    
+
     local posYSlider = worldTree:AddSlider('', 0, -1000, 1000, 0.1)
     posYSlider.IDContext = 'DU'
     posYSlider.Value = {0,0,0,0}
@@ -1017,9 +1014,12 @@ function MainTab(p)
         posYSlider.Value = {0,0,0,0}
     end
 
-    local textY = worldTree:AddText('D/U')
+
+
+    local textY = worldTree:AddText('Down/Up')
     textY.IDContext = 'awdadwdawdawdawda'
     textY.SameLine = true
+
 
 
     local posXSlider = worldTree:AddSlider('', 0, -1000, 1000, 0)
@@ -1030,7 +1030,9 @@ function MainTab(p)
         posXSlider.Value = {0,0,0,0}
     end
 
-    local textX = worldTree:AddText('W/E')
+
+
+    local textX = worldTree:AddText('West/East')
     textX.IDContext = 'awdawdawda'
     textX.SameLine = true
 
@@ -1043,15 +1045,15 @@ function MainTab(p)
     end
 
 
-    -- p:AddSeparator('')
-
-
-
-
-    local orbitTree = collapsPos:AddTree('Character relative')
-
-
-
+    worldTree:AddSeparator('')
+    
+    
+    
+    
+    local orbitTree = p:AddCollapsingHeader('Character relative')
+    
+    
+    
     local posOrbX = orbitTree:AddSlider('Cw/Cww', 0, -1000, 1000, 0.1)
     posOrbX.IDContext = 'NawdawwwdS'
     posOrbX.Value = {0,0,0,0}
@@ -1059,17 +1061,20 @@ function MainTab(p)
         MoveEntity(Globals.selectedEntity, 'x', posOrbX.Value[1], modPosSlider.Value[1], 'Orbit')
         posOrbX.Value = {0,0,0,0}
     end
+    
+    
 
-
-    local posOrbY = orbitTree:AddSlider('Height', 0, -1000, 1000, 0.1)
+    local posOrbY = orbitTree:AddSlider('Down/Up', 0, -1000, 1000, 0.1)
     posOrbY.IDContext = 'NawawdwdawdS'
     posOrbY.Value = {0,0,0,0}
     posOrbY.OnChange = function()
         MoveEntity(Globals.selectedEntity, 'y', posOrbY.Value[1], modPosSlider.Value[1], 'Orbit')
         posOrbY.Value = {0,0,0,0}
     end
+    
 
-    local posOrbZ = orbitTree:AddSlider('Radius', 0, -1000, 1000, 0.1)
+
+    local posOrbZ = orbitTree:AddSlider('Close/Far', 0, -1000, 1000, 0.1)
     posOrbZ.IDContext = 'NawdasdawdS'
     posOrbZ.Value = {0,0,0,0}
     posOrbZ.OnChange = function()
@@ -1078,26 +1083,28 @@ function MainTab(p)
     end
 
 
+    
+    local posReset2 = orbitTree :AddButton('Reset')
+    posReset2.IDContext = 'resetPos2'
+    posReset2.OnClick = function ()
+        MoveEntity(Globals.selectedEntity, nil, nil, nil)
+    end
+    
+
+
+
+    
+    
+    orbitTree:AddSeparator('')
+
 
 
 
     local collapsRot = p:AddCollapsingHeader('Rotation')
     collapsRot.DefaultOpen = false
-
-
-
-
-    modRotSlider = collapsRot:AddSlider('', modRotDefault, -modRot, modRot, 0)
-    modRotSlider.IDContext = 'RotMiodID'    
-    modRotSlider.Value = {modRotDefault,0,0,0}
-
-    local modRotReset = collapsRot:AddButton('Mod')
-    modRotReset.IDContext = 'MOddRot'
-    modRotReset.SameLine = true
-    modRotReset.OnClick = function ()
-        modRotSlider.Value = {modRotDefault,0,0,0}
-    end
-
+    
+    
+    
     local rotTiltSlider = collapsRot:AddSlider('', 0, -1000, 1000, 0.1)
     rotTiltSlider.IDContext = 'Tilt'
     rotTiltSlider.Value = {0,0,0,0}
@@ -1105,6 +1112,8 @@ function MainTab(p)
         RotateEntity(Globals.selectedEntity, 'x', rotTiltSlider.Value[1], modRotSlider.Value[1])
         rotTiltSlider.Value = {0,0,0,0}
     end
+
+
 
     local rotTiltReset = collapsRot:AddText('Tilt')
     rotTiltReset.IDContext = 'resetTilt'
@@ -1121,6 +1130,7 @@ function MainTab(p)
     end
 
 
+
     local rotRollReset = collapsRot:AddText('Yaw')
     rotRollReset.IDContext = 'resetROll'
     rotRollReset.SameLine = true
@@ -1135,9 +1145,12 @@ function MainTab(p)
         rotYawSlider.Value = {0,0,0,0}
     end
 
+
+
     local rotYawReset = collapsRot:AddText('Roll')
     rotYawReset.IDContext = 'resetYaw'
     rotYawReset.SameLine = true
+
 
 
     local rotReset = collapsRot:AddButton('Reset')
@@ -1146,6 +1159,24 @@ function MainTab(p)
     rotReset.OnClick = function ()
         RotateEntity(Globals.selectedEntity, nil, 0, 0)
     end
+
+
+
+    collapsRot:AddSeparator('')
+
+
+
+    textPositionInfo = p:AddText('')
+    textPositionInfo.Label = string.format('x: %.2f, y: %.2f, z: %.2f', 0, 0, 0)
+
+
+
+    textRotationInfo = p:AddText('')
+    textRotationInfo.Label = string.format('rx: %.2f, ry: %.2f, rz: %.2f', 0, 0, 0)
+
+
+
+
 
     ---------------------------------------------------------
     p:AddSeparatorText([[Position source]])
@@ -1179,7 +1210,46 @@ function MainTab(p)
     p:AddSeparatorText('Utilities')
     ---------------------------------------------------------
     
+
+
     
+    modPosSlider = p:AddSlider('', modPosDefault, -modPos, modPos, 0)
+    modPosSlider.Value = {modPosDefault,0,0,0}
+    modPosSlider.IDContext = 'ModID'
+
+
+
+    local modPosReset = p:AddButton('Mod pos')
+    modPosReset.IDContext = 'MOdd'
+    modPosReset.SameLine = true
+    modPosReset.OnClick = function ()
+        modPosSlider.Value = {modPosDefault,0,0,0}
+    end
+    
+    
+
+    modRotSlider = p:AddSlider('', modRotDefault, -modRot, modRot, 0)
+    modRotSlider.IDContext = 'RotMiodID'    
+    modRotSlider.Value = {modRotDefault,0,0,0}
+
+
+    
+    local modRotReset = p:AddButton('Mod rot')
+    modRotReset.IDContext = 'MOddRot'
+    modRotReset.SameLine = true
+    modRotReset.OnClick = function ()
+        modRotSlider.Value = {modRotDefault,0,0,0}
+    end
+
+    
+    function buttonSizes()
+        for _, element in pairs(ER) do
+            element.Size = {195/Style.buttonScale, 39/Style.buttonScale}
+        end
+    end
+    buttonSizes()
+    
+    --#region
     -- checkPrePlaced = p:AddCheckbox('Disable pre-placed lights')
     -- checkPrePlaced.Checked = false
     -- checkPrePlaced.OnChange = function (e)
@@ -1195,21 +1265,13 @@ function MainTab(p)
     -- textPrePlacedNote = p:AddText('Save/Load or Load a save')
     -- textPrePlacedNote.SameLine = true
     -- textPrePlacedNote.Visible = false
-    
-    function buttonSizes()
-        for _, element in pairs(ER) do
-            element.Size = {195/Style.buttonScale, 39/Style.buttonScale}
-        end
-    end
-    buttonSizes()
-
+    --#endregion
     
 end
 
 
 Ext.RegisterConsoleCommand('lld', function (cmd, ...)
-    DDump(Globals.LightParameters)
-
+    DDump(Globals.LightParametersClient)
 end)
 
     ---x,y,z = GetPosition(_C().Uuid.EntityUuid)
