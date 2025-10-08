@@ -1,6 +1,7 @@
 atm_templates = {
     {uuid = "f9862ce8-972f-d2b6-4bf9-c37746c9eaac", name = "ATM_LLL_Blackout"}, --ATM_LLL_Blackout
     {uuid = "1b311a12-59cc-018f-e9b0-9a670cad8034", name = "ATM_AtmosphericTest"},
+    {uuid = "ab68f654-c913-6908-da4f-143665b86830", name = "ATM_TUH_HomeRun"},
     {uuid = "6d27f492-b106-cfcd-99ec-8ec5480058c0", name = "ATM_BGH_Highberrys_Cellar"},
     {uuid = "50ad498c-a452-179e-c05f-1e763feaa29c", name = "ATM_BGO_Camp_A"},
     {uuid = "71e7b22a-9501-5bc2-acc8-5fd622218c0d", name = "ATM_BGO_EV14_Noon_END_CIN_STREETS_A"},
