@@ -204,12 +204,12 @@ end)
 
 Channels.DeleteLight:SetHandler(function (request)
     if request == 'All' then
-
         for _, uuid in pairs(Globals.CreatedLightsServer) do
             Osi.RequestDelete(uuid)
-            Globals.CreatedLightsServer = {}
-            Globals.LightParametersServer = {}
         end
+
+        Globals.CreatedLightsServer = {}
+        Globals.LightParametersServer = {}
 
         if Globals.markerUuid then
             Osi.RequestDelete(Globals.markerUuid)
@@ -217,31 +217,35 @@ Channels.DeleteLight:SetHandler(function (request)
         end
 
         resetAvailableRootTemplate()
-
-    else
-
-        local uuid = Ext.Entity.Get(Globals.selectedUuid).GameObjectVisual.RootTemplateId
-
-        Osi.RequestDelete(Globals.selectedUuid)
-
-        Globals.selectedUuid = Globals.selectedUuid
-        Globals.CreatedLightsServer[Globals.selectedUuid] = nil
-        Globals.LightParametersServer[Globals.selectedUuid] = nil
-
-        changeRootTemplateState(uuid)
-
-        
-        Helpers.Timer:OnTicks(2, function ()
-            if Globals.selectedUuid then
-                UpdateMarkerPosition()
-            else
-                Osi.RequestDelete(Globals.markerUuid)
-                Globals.markerUuid = nil
-            end
-        end)                               
-
+        return
     end
-    -- DDump(Globals.CreatedLightsServer)
+
+    if request then
+
+        local ent = Ext.Entity.Get(request)
+        if ent and ent.GameObjectVisual and ent.GameObjectVisual.RootTemplateId then
+            local rootId = ent.GameObjectVisual.RootTemplateId
+            Osi.RequestDelete(request)
+
+            Globals.CreatedLightsServer[request] = nil
+            Globals.LightParametersServer[request] = nil
+
+            changeRootTemplateState(rootId)
+        end
+
+        --TBD: find a better solution later, because I'm sleepy af rn
+        local count = 0
+        for _ in pairs(Globals.CreatedLightsServer) do count = count + 1 end
+        if count == 0 and Globals.markerUuid then
+            Osi.RequestDelete(Globals.markerUuid)
+            Globals.markerUuid = nil
+        end
+    else
+        if Globals.markerUuid then
+            Osi.RequestDelete(Globals.markerUuid)
+            Globals.markerUuid = nil
+        end
+    end
 end)
 
 

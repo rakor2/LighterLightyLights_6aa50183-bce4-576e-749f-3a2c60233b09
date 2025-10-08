@@ -459,40 +459,55 @@ function MainTab(p)
 
 
 
-    local btnDelete = p:AddButton('Delete')
-    btnDelete.OnClick = function ()
-        if Globals.selectedUuid then 
-            -- DPrint(Globals.selectedUuid)
+local btnDelete = p:AddButton('Delete')
+btnDelete.OnClick = function()
 
-            Globals.CreatedLightsServer[Globals.selectedUuid] = nil
-            Globals.LightParametersClient[Globals.selectedUuid] = nil
-            Globals.LightsUuidNameMap[getSelectedLightName()] = nil
-            Globals.LightsNames[getSelectedLightName()] = nil
+    if not Globals.selectedUuid then  return end
 
-            Channels.DeleteLight:SendToServer()
+    local uuidToDelete = Globals.selectedUuid
+    local selectedName = getSelectedLightName()
 
-            UpdateCreatedLightsCombo()
+    Globals.CreatedLightsServer[uuidToDelete] = nil
+    Globals.LightParametersClient[uuidToDelete] = nil
 
-            comboIHateCombos.SelectedIndex = comboIHateCombos.SelectedIndex - 1
-            if comboIHateCombos.SelectedIndex < 0 then
-                comboIHateCombos.SelectedIndex = 0
-            end
-            if #comboIHateCombos.Options > 0 then
-                Globals.selectedUuid = Ext.Entity.Get(getSelectedUuid()).Uuid.EntityUuid
-
-                
-            else
-                Globals.selectedUuid = nil
-                nameIndex = 0
-            end
-
-            Channels.SelectedLight:SendToServer(Globals.selectedUuid)
-            -- DDump(Globals.CreatedLightsServer)
-            -- DDump(Globals.jLightsNameUuidMap)
-            -- DDump(Globals.LightsNames)
+    for k, light in pairs(Globals.LightsUuidNameMap) do
+        if light.name == selectedName then
+            Globals.LightsUuidNameMap[k] = nil
         end
     end
-    
+
+    for k, light in pairs(Globals.LightsNames) do
+        if light == selectedName then
+            Globals.LightsNames[k] = nil
+        end
+    end
+
+    UpdateCreatedLightsCombo()
+
+    comboIHateCombos.SelectedIndex = comboIHateCombos.SelectedIndex - 1
+    if comboIHateCombos.SelectedIndex < 0 then
+        comboIHateCombos.SelectedIndex = 0
+    end
+
+    if comboIHateCombos.Options and #comboIHateCombos.Options > 0 then
+        local uuid = getSelectedUuid()
+        if uuid then
+            Globals.selectedUuid = Ext.Entity.Get(uuid).Uuid.EntityUuid
+        else
+            Globals.selectedUuid = nil
+        end
+    else
+        Globals.selectedUuid = nil
+        nameIndex = 0
+    end
+
+    Channels.DeleteLight:SendToServer(uuidToDelete)
+
+    Channels.SelectedLight:SendToServer(Globals.selectedUuid)
+
+end
+
+
 
 
 
