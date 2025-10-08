@@ -106,20 +106,23 @@ end
 
 
 local function getSelectedEntity()
-    if getSelectedUuid() then return Ext.Entity.Get(getSelectedUuid()) end
+    local uuid = getSelectedUuid()
+    if uuid then return Ext.Entity.Get(uuid) end
 end
 
 
 
 local function getSelectedLightEntity()
-    if getSelectedEntity() and getSelectedEntity().Effect and getSelectedEntity().Effect.Timeline then
-    return getSelectedEntity().Effect.Timeline.Components[2].LightEntity.Light end
+    local entity = getSelectedEntity()
+    if entity and entity.Effect and entity.Effect.Timeline and entity.Effect.Timeline.Components[2] then
+    return entity.Effect.Timeline.Components[2].LightEntity.Light end
 end
 
 
 
 local function getSelectedLightEntityWithoutLight()
-    if getSelectedEntity() then return getSelectedEntity().Effect.Timeline.Components[2].LightEntity end
+    local entity = getSelectedEntity()
+    if entity then return entity.Effect.Timeline.Components[2].LightEntity end
 end
 
 
@@ -134,6 +137,16 @@ local function getSelectedLightType()
     else                    return 'Point'
     end    
 end
+
+
+local function getLightEntity(uuid)
+    local entity = Ext.Entity.Get(uuid)
+    if entity and entity.Effect and entity.Effect.Timeline then
+        return entity.Effect.Timeline.Components[2].LightEntity.Light
+    end
+end
+
+
 
 local function sanitySelectedLight()
     for name, uuid in pairs(Globals.LightsUuidNameMap) do
@@ -797,36 +810,38 @@ function MainTab(p)
 
 
 
-    E.slLightDirEnd = treeDir:AddSlider('End', 0, 0, 100, 1)
+    
+    
+    
+    E.slLightDirEnd = treeDir:AddSlider('Falloff front', 0, 0, 100, 1)
     E.slLightDirEnd.IDContext = 'olkjsdeafoiuzsrenbf'
     E.slLightDirEnd.OnChange = function (e)
         SetLightDirectionalParameters('DirectionLightAttenuationEnd', e.Value[1])
     end
 
-
-
-        
-    E.slIntLightDirFunc = treeDir:AddSliderInt('Function', 0, 0, 3, 1)
-    E.slIntLightDirFunc.IDContext = 'olkjsdsseafoiuzsrenbf'
-    E.slIntLightDirFunc.OnChange = function (e)
-        SetLightDirectionalParameters('DirectionLightAttenuationFunction', e.Value[1])
-    end
-
-        
-    E.slLightDirSide = treeDir:AddSlider('Side', 0, 0, 20, 1)
+    
+    
+    E.slLightDirSide = treeDir:AddSlider('Falloff back', 0, 0, 20, 1)
     E.slLightDirSide.IDContext = 'o12312'
     E.slLightDirSide.OnChange = function (e)
         SetLightDirectionalParameters('DirectionLightAttenuationSide', e.Value[1])
     end
-
-        
-    E.slLightDirSide2 = treeDir:AddSlider('Side2', 0, 0, 10, 1)
+    
+    
+    E.slLightDirSide2 = treeDir:AddSlider('Falloff sides', 0, 0, 10, 1)
     E.slLightDirSide2.IDContext = 'asdaw'
     E.slLightDirSide2.OnChange = function (e)
         SetLightDirectionalParameters('DirectionLightAttenuationSide2', e.Value[1])
     end
+    
 
+    E.slIntLightDirFunc = treeDir:AddSliderInt('Function (???)', 0, 0, 3, 1)
+    E.slIntLightDirFunc.IDContext = 'olkjsdsseafoiuzsrenbf'
+    E.slIntLightDirFunc.OnChange = function (e)
+        SetLightDirectionalParameters('DirectionLightAttenuationFunction', e.Value[1])
+    end
         
+
     E.slLightDirDim = treeDir:AddSlider('Wid/Hei/Len', 0, 0, 100, 1)
     E.slLightDirDim.IDContext = 'lkasenfaolkejfn'
     E.slLightDirDim.Components = 3
@@ -1128,7 +1143,7 @@ function MainTab(p)
     
     
     local rotTiltSlider = collapsRot:AddSlider('', 0, -1000, 1000, 0.1)
-    rotTiltSlider.IDContext = 'Tilt'
+    rotTiltSlider.IDContext = 'Pitch'
     rotTiltSlider.Value = {0,0,0,0}
     rotTiltSlider.OnChange = function(value)
         RotateEntity(Globals.selectedEntity, 'x', rotTiltSlider.Value[1], modRotSlider.Value[1])
@@ -1137,8 +1152,8 @@ function MainTab(p)
 
 
 
-    local rotTiltReset = collapsRot:AddText('Tilt')
-    rotTiltReset.IDContext = 'resetTilt'
+    local rotTiltReset = collapsRot:AddText('Pitch')
+    rotTiltReset.IDContext = 'resetPitch'
     rotTiltReset.SameLine = true
 
 
@@ -1153,7 +1168,7 @@ function MainTab(p)
 
 
 
-    local rotRollReset = collapsRot:AddText('Yaw')
+    local rotRollReset = collapsRot:AddText('Roll')
     rotRollReset.IDContext = 'resetROll'
     rotRollReset.SameLine = true
 
@@ -1169,7 +1184,7 @@ function MainTab(p)
 
 
 
-    local rotYawReset = collapsRot:AddText('Roll')
+    local rotYawReset = collapsRot:AddText('Yaw')
     rotYawReset.IDContext = 'resetYaw'
     rotYawReset.SameLine = true
 
