@@ -1,3 +1,18 @@
+
+--[[
+
+
+<> KEYBINDS FOR SELECTING LIGHTS
+DELETE ALL GOBO
+
+
+
+]]
+
+
+
+
+
 Globals.CreatedLightsClient = {} --UNUSED
 
 
@@ -176,11 +191,32 @@ local function UpdateTranformInfo(x, y, z, rx, ry, rz)
 end
 
 
+local function LightVisibilty()
+    Helpers.Timer:OnTicks(10, function ()
+        local lightEntity = getSelectedLightEntity()
+        -- DPrint('Light visibility entity: %s', lightEntity)
+        if lightEntity then
+            if lightEntity.LightChannelFlag == 255 then
+                textLightVisibility.Label = getSelectedLightName() .. ' is on'
+            else
+                textLightVisibility.Label = getSelectedLightName() .. ' is off'
+            end
+        end
+    end)
+end
+
+
 Channels.CurrentEntityTransform:SetHandler(function (Data)
     local rx, ry, rz = table.unpack(Data.HumanRotation)
     local x,y,z = table.unpack(Data.Translate)
     UpdateTranformInfo(x, y, z, rx, ry, rz)
 end)
+
+
+
+local function COMMON_UPDATES()
+
+end
 
 
 
@@ -270,13 +306,15 @@ function MainTab(p)
     end
 
 
-
+    
     Globals.SourceTranslate = _C().Transform.Transform.Translate
-
     
     btnCreate2 = p:AddButton('Create')
     btnCreate2.SameLine = true
     btnCreate2.OnClick = function ()
+        
+        Globals.SourceTranslate = _C().Transform.Transform.Translate
+
         if Globals.States.allowLightCreation then
             Globals.States.allowLightCreation = false
             btnCreate2.Disabled = true
@@ -296,7 +334,7 @@ function MainTab(p)
                         Globals.selectedEntity = Ext.Entity.Get(Globals.selectedUuid)
                         
                         
-                        Helpers.Timer:OnTicks(5, function ()
+                        Helpers.Timer:OnTicks(8, function ()
                             if type == 'Spotlight' then
                                 SetLightType(1)
                             elseif type == 'Directional' then
@@ -310,25 +348,18 @@ function MainTab(p)
                         DPrint('Callback Create: %s, %s', Globals.selectedUuid, Globals.selectedEntity)
                         
                         nameIndex = nameIndex + 1
-                        local name = '#' .. nameIndex .. ' ' .. type
+                        local name = '+' .. ' ' .. '#' .. nameIndex .. ' ' .. type
                         
                         table.insert(Globals.LightsUuidNameMap, {
                             uuid = Globals.CreatedLightsServer[Globals.selectedUuid],
                             name = name
                         })
 
-                        -- Globals.LightsUuidNameMap[Globals.CreatedLightsServer[Globals.selectedUuid]] = name
-                        
-                        -- table.sort(Globals.LightsUuidNameMap)
-                        -- DDump(Globals.LightsUuidNameMap)
-
-
-                        -- nameIndex = nameIndex + 1
-                        -- local name = 'Light #' .. nameIndex .. ' ' .. type
-                        -- Globals.LightsUuidNameMap[name] = Globals.CreatedLightsServer[Globals.selectedUuid]
-                        
                         UpdateCreatedLightsCombo()
+                        DPrint('Pre Selected index: %s', comboIHateCombos.SelectedIndex)
                         comboIHateCombos.SelectedIndex = #comboIHateCombos.Options - 1
+                        -- LightVisibilty()                                           
+                        DPrint('Post Selected index: %s', comboIHateCombos.SelectedIndex)
                         
                         --sanitySelectedLight()
                         Helpers.Timer:OnTicks(10, function ()
@@ -337,10 +368,7 @@ function MainTab(p)
                             UpdateTranformInfo(x, y, z, 90, 0, 0)
                         end)
 
-                        
                         -- DDump(Globals.LightsNames)
-                        
-
                         -- DDump(comboIHateCombos.Options)
 
                     end)
@@ -353,7 +381,7 @@ function MainTab(p)
     end
 
 
-    --TBD: remove DUPLICATIONS HAHAHAHAH GET IT????? LMAOOOOOOOOOOOOOOOOOO
+    --- TBD: remove DUPLICATIONS HAHAHAHAH GET IT????? LMAOOOOOOOOOOOOOOOOOO
     function DuplicateLight()
 
         local prevoiusUuid = Globals.selectedUuid
@@ -376,6 +404,8 @@ function MainTab(p)
             
                 Helpers.Timer:OnTicks(15, function ()
                     
+                    --- TBD: perhaps as a separate function? But what's the point?
+
                     SetLightType(xd.LightType)
                     SetLightColor(xd.Color)
                     SetLightIntensity(xd.Intensity)
@@ -397,17 +427,21 @@ function MainTab(p)
 
                 end)
                 
+
                 UpdateCreatedLightsCombo()
+                DPrint('Pre Selected index: %s', comboIHateCombos.SelectedIndex)
                 comboIHateCombos.SelectedIndex = #comboIHateCombos.Options - 1
+                -- LightVisibilty()                                           
+                DPrint('Post Selected index: %s', comboIHateCombos.SelectedIndex)
                 
                 
                 Helpers.Timer:OnTicks(10, function ()
-                        local x,y,z = table.unpack(Response[3].Translate)
-                        local rx,ry,rz = table.unpack(Response[3].HumanRotation)
-                        UpdateElements(Globals.selectedUuid)
-                        UpdateTranformInfo(x, y, z, rx, ry, rz)
-                    end)
-                    
+                    local x,y,z = table.unpack(Response[3].Translate)
+                    local rx,ry,rz = table.unpack(Response[3].HumanRotation)
+                    UpdateElements(Globals.selectedUuid)
+                    UpdateTranformInfo(x, y, z, rx, ry, rz)
+                end)
+                
             end
         end)
     end
@@ -424,8 +458,13 @@ function MainTab(p)
             Globals.selectedLightType = getSelectedLightType()
             -- DPrint(Globals.selectedUuid)
             Channels.SelectedLight:SendToServer(Globals.selectedUuid)
+            -- LightVisibilty()
             UpdateCreatedLightsCombo()
             UpdateElements(Globals.selectedUuid)
+            
+            DPrint('Selected index: %s', comboIHateCombos.SelectedIndex)
+
+
         end)                               
         -- DPrint(Globals.selectedLightType)
     end
@@ -441,6 +480,7 @@ function MainTab(p)
 
     end
 
+
     local btnRenameLight = p:AddButton('Rename')
     btnRenameLight.SameLine = true
     btnRenameLight.Disabled = false
@@ -448,13 +488,15 @@ function MainTab(p)
         
         for k, light in pairs(Globals.LightsUuidNameMap) do
             if light.name == comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1] then
-                light.name = '#' .. comboIHateCombos.SelectedIndex + 1 .. ' ' .. inputRename.Text
+                light.name = '+' .. ' ' ..  '#' .. comboIHateCombos.SelectedIndex + 1 .. ' ' .. inputRename.Text
             end
         end
 
         inputRename.Text = ''
 
+        -- LightVisibilty()
         UpdateCreatedLightsCombo()
+
     end
 
 
@@ -521,6 +563,8 @@ end
         Globals.LightsNames = {}
         Globals.LightParametersClient = {}
         nameIndex = 0
+
+        -- LightVisibilty()
         UpdateCreatedLightsCombo()
 
         -- DDump(Globals.CreatedLightsServer)
@@ -543,6 +587,96 @@ end
     ---------------------------------------------------------
     p:AddSeparatorText('Parameters')
     ---------------------------------------------------------
+    
+    function UpdateVisibilityStateToNames(lightName, state)
+        for _, light in pairs(Globals.LightsUuidNameMap) do
+            if light.name == lightName then
+            light.name = light.name:gsub('^[+-]%s+', '')
+                if state then
+                    light.name = '+ ' .. light.name
+                else
+                    light.name = '- ' .. light.name
+                end
+            end
+        end
+        UpdateCreatedLightsCombo()
+    end
+
+
+    -- textLightVisibility = p:AddText('No light selected ')
+
+    local toggleLightButton = p:AddButton('Toggle light')
+    toggleLightButton.IDContext = 'awdaw'
+    toggleLightButton.OnClick = function()
+
+        local lightEntity = getSelectedLightEntity()
+
+        if lightEntity then
+
+            local flag = lightEntity.LightChannelFlag ~= 0
+            local flag2 = not flag
+
+            if flag2 then
+                lightEntity.LightChannelFlag = 255
+            else
+                lightEntity.LightChannelFlag = 0
+            end
+
+            UpdateVisibilityStateToNames(getSelectedLightName(), flag2)
+            -- LightVisibilty()
+        end
+    end
+
+    -- local LightChannelFlagCount = 0 
+    -- local LightChannelFlagCount = -1
+    -- local btnLightChanneg = p:AddButton('LightChannel')
+    -- btnLightChanneg.OnClick = function ()
+    --     local lightEntity = getSelectedLightEntity()
+    --     DPrint(LightChannelFlagCount)
+    --     lightEntity.LightChannelFlag = LightChannelFlagCount
+    --     LightChannelFlagCount = LightChannelFlagCount + 8
+    -- end
+
+    local all = false
+    local toggleLightsButton = p:AddButton('Toggle all')
+    toggleLightsButton.IDContext = 'awdfdgdfg'
+    toggleLightsButton.SameLine = true
+    toggleLightsButton.OnClick = function()
+
+        all = not all
+        
+        for _, uuid in pairs(Globals.CreatedLightsServer) do
+            local lightEntity = getLightEntity(uuid)
+            
+
+            if all then
+                lightEntity.LightChannelFlag = 0
+            else
+                lightEntity.LightChannelFlag = 255
+            end
+
+            for _, name in pairs(Globals.LightsNames) do
+                UpdateVisibilityStateToNames(name, not all)
+            end
+
+        end
+        
+        -- LightVisibilty()
+
+    end
+
+    local toggleMarkerButton = p:AddButton('Toggle marker')
+    toggleMarkerButton.SameLine = true
+    toggleMarkerButton.IDContext = 'jhjkgyyutr'
+    toggleMarkerButton.OnClick = function()
+    end
+
+    local toggleAllMarkersButton = p:AddButton('Toggle all')
+    toggleAllMarkersButton.SameLine = true
+    toggleAllMarkersButton.IDContext = '456456'
+    toggleAllMarkersButton.SameLine = true
+    toggleAllMarkersButton.OnClick = function()
+    end
 
 
 
