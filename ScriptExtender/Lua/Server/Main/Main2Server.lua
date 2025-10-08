@@ -250,6 +250,7 @@ end)
 
 
 
+
 Channels.EntityTranslate:SetHandler(function (Data)
 
     local axis = Data.axis
@@ -303,6 +304,8 @@ Channels.EntityTranslate:SetHandler(function (Data)
         RotationQuat = RotationQuat,
         HumanRotation = HumanRotation
     }
+    
+    Globals.OrbitParams[uuid] = nil
 
     Channels.CurrentEntityTransform:Broadcast(Response)
 
@@ -360,6 +363,8 @@ Channels.EntityRotation:SetHandler(function (Data)
         RotationQuat = RotationQuat,
         HumanRotation = HumanRotation
     }
+    
+    Globals.OrbitParams[uuid] = nil
 
     Channels.CurrentEntityTransform:Broadcast(Response)
     
@@ -399,30 +404,39 @@ Channels.EntityRotationOrbit:SetHandler(function (Data)
     local uuid = Globals.selectedUuid
     local entity = Ext.Entity.Get(uuid)
 
-    -- local centerX, centerY, centerZ = translate(_C())
-    local centerX, centerY, centerZ = Data.Translate[1], Data.Translate[2], Data.Translate[3]
-
+    local centerX, centerY, centerZ = translate(character)
+    
     local curX, curY, curZ = Osi.GetPosition(uuid)
     local curRx, curRy, curRz = Osi.GetRotation(uuid)
 
     if not Globals.OrbitParams[uuid] then
-        Globals.OrbitParams[uuid] = { angle = 0, radius = 1, height = 0, rx = 0, ry = 0, rz = 0 }
+        Globals.OrbitParams[uuid] = { 
+            angle = 0, radius = 1, height = 0, rx = 0, ry = 0, rz = 0,
+            lastCenterX = centerX,
+            lastCenterY = centerY,
+            lastCenterZ = centerZ
+        }
         InitOrbitParamsFromCurrent(uuid, Globals.OrbitParams[uuid], centerX, centerY, centerZ)
     end
 
     local params = Globals.OrbitParams[uuid]
     
-    local epsPos = 0.001
-    local epsRot = 0.01
-    local posChanged = math.abs(curX - (params.baseX or curX)) > epsPos
-    or math.abs(curY - (params.baseY or curY)) > epsPos
-    or math.abs(curZ - (params.baseZ or curZ)) > epsPos
-    local rotChanged = math.abs(curRx - (params.lastActualRx or curRx)) > epsRot
-    or math.abs(curRy - (params.lastActualRy or curRy)) > epsRot
-    or math.abs(curRz - (params.lastActualRz or curRz)) > epsRot
+    local centerMoved = centerX ~= params.lastCenterX 
+        or centerY ~= params.lastCenterY 
+        or centerZ ~= params.lastCenterZ
     
-    if posChanged or rotChanged then
+    local posChanged = curX ~= (params.baseX or curX) 
+        or curY ~= (params.baseY or curY) 
+        or curZ ~= (params.baseZ or curZ)
+    local rotChanged = curRx ~= (params.lastActualRx or curRx) 
+        or curRy ~= (params.lastActualRy or curRy) 
+        or curRz ~= (params.lastActualRz or curRz)
+    
+    if centerMoved or posChanged or rotChanged or not params.baseX then
         InitOrbitParamsFromCurrent(uuid, params, centerX, centerY, centerZ)
+        params.lastCenterX = centerX
+        params.lastCenterY = centerY
+        params.lastCenterZ = centerZ
     end
     
     local change = Data.offset / Data.step
@@ -443,48 +457,35 @@ Channels.EntityRotationOrbit:SetHandler(function (Data)
     RotateAroundPoint(uuid, centerX, centerY, centerZ, params)
     LookAtCenter(uuid, centerX, centerY, centerZ, 1, params)
 
-    
     params.baseX, params.baseY, params.baseZ = Osi.GetPosition(uuid)
     local arx, ary, arz = Osi.GetRotation(uuid)
     params.lastActualRx = arx
     params.lastActualRy = ary
     params.lastActualRz = arz
-    
 
     Globals.LightParametersServer[Globals.selectedUuid].Translate = {params.baseX, params.baseY, params.baseZ}
+    local RotationQuat = entity.Transform.Transform.RotationQuat
     Globals.LightParametersServer[Globals.selectedUuid].RotationQuat = RotationQuat
     Globals.LightParametersServer[Globals.selectedUuid].HumanRotation = {arx, ary, arz}
     
-    
-    local RotationQuat = entity.Transform.Transform.RotationQuat
     local Response = {
         Translate = {params.baseX, params.baseY, params.baseZ},
         RotationQuat = RotationQuat,
         HumanRotation = {arx, ary, arz}
     }
-    
 
-    
     UpdateMarkerPosition()
-
-
     Channels.CurrentEntityTransform:Broadcast(Response)
-
-    -- return Response
 end)
 
 
-function ComputeLookAtRotation(x, y, z, centerX, centerY, centerZ, heightOffset)
-    local dx, dy, dz = centerX - x, centerY + (heightOffset or 0) - y, centerZ - z
-    local distance = math.sqrt(dx*dx + dy*dy + dz*dz)
-    if distance == 0 then
-        return 0, 0, 0
-    end
-    local pitch = math.deg(math.asin(-dy / distance))
-    local yaw = math.deg(Ext.Math.Atan2(dx / distance, dz / distance))
-    local roll = 0
-    return pitch, yaw, roll
+
+function GetOrbitParameters(uuid, centerX, centerY, centerZ)
+    local x, y, z = Osi.GetPosition(uuid)
+    local dx, dz = x - centerX, z - centerZ
+    return math.deg(Ext.Math.Atan2(dz, dx)), math.sqrt(dx * dx + dz * dz), y - centerY
 end
+
 
 
 function InitOrbitParamsFromCurrent(uuid, params, centerX, centerY, centerZ)
@@ -492,15 +493,10 @@ function InitOrbitParamsFromCurrent(uuid, params, centerX, centerY, centerZ)
     local rx, ry, rz = Osi.GetRotation(uuid)
 
     local angle, radius, height = GetOrbitParameters(uuid, centerX, centerY, centerZ)
-    local lookPitch, lookYaw, lookRoll = ComputeLookAtRotation(x, y, z, centerX, centerY, centerZ, 1)
 
     params.angle = angle
     params.radius = radius
     params.height = height
-
-    params.rx = rx - lookPitch
-    params.ry = ry - lookYaw
-    params.rz = rz - lookRoll
 
     params.baseX = x
     params.baseY = y
@@ -511,20 +507,16 @@ function InitOrbitParamsFromCurrent(uuid, params, centerX, centerY, centerZ)
 end
 
 
-function GetOrbitParameters(uuid, centerX, centerY, centerZ)
-    local x, y, z = Osi.GetPosition(uuid)
-    local dx, dz = x - centerX, z - centerZ
-    return math.deg(Ext.Math.Atan2(dz, dx)), math.sqrt(dx * dx + dz * dz), y - centerY
-end
-
-
 function RotateAroundPoint(uuid, centerX, centerY, centerZ, params)
     local angle = math.rad(params.angle)
     local newX = centerX + params.radius * math.cos(angle)
     local newZ = centerZ + params.radius * math.sin(angle)
     local newY = centerY + params.height
-    Osi.ToTransform(uuid, newX, newY, newZ, params.rx, params.ry, params.rz)
+    
+    local rx, ry, rz = Osi.GetRotation(uuid)
+    Osi.ToTransform(uuid, newX, newY, newZ, rx, ry, rz)
 end
+
 
 
 function LookAtCenter(uuid, centerX, centerY, centerZ, heightOffset, params)
@@ -534,10 +526,7 @@ function LookAtCenter(uuid, centerX, centerY, centerZ, heightOffset, params)
     
     local pitch = math.deg(math.asin(-dy / distance))
     local yaw = math.deg(Ext.Math.Atan2(dx / distance, dz / distance))
-    local roll = params.rz or 0
-
-    pitch = pitch + (params.rx or 0)
-    yaw = yaw + (params.ry or 0)
+    local roll = 0
 
     Osi.ToTransform(uuid, x, y, z, pitch, yaw, roll)
 end
