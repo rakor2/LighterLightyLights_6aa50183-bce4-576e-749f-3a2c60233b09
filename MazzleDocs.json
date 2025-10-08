@@ -1,0 +1,11 @@
+{
+ "SchemaVersion": 1,
+ "Windows": [
+        {
+        "ModName": "LL2",
+        "DocumentationName": "Lighty Lights Elucidator",
+        "LuaContent": "Starter_Doc_Contents",
+        "LuaConfig": "Starter_Doc_Config"
+        }
+    ]
+ }
