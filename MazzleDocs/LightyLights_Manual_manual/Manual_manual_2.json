@@ -1,0 +1,37 @@
+[
+    {
+        "Topic": "Welcome",
+        "SubTopic": "Widget Types",
+        "content": [
+            { "type": "Heading", "text": "Widget Types" },
+            { "type": "Content", "text": "The following 12 widget types are available for use in documentation slides:" },
+            { "type": "Heading", "text": "1. Heading - Large, prominent title text" },
+            { "type": "SubHeading", "text": "2. SubHeading - Medium-sized subtitle text" },
+            { "type": "Section", "text": "3. Section - Small section header text" },
+            { "type": "Content", "text": "4. Content - Standard paragraph text" },
+            { "type": "Note", "text": "5. Note - Highlighted note or tip text" },
+            { "type": "Bullet", "text": "6. Bullet point" },
+            { "type": "CallOut", "prefix": "7. CallOut", "text": "Indented block of text with a colored prefix label" },
+            { "type": "Code", "text": "8. Code - Monospaced code snippet text" },
+            { "type": "CallOut", "prefix": "9. Separator", "text_block_indent": 200, "prefix_color": "TextMain", "text": "Horizontal line separator" },
+            { "type": "CallOut", "prefix": "10. DynamicButton", "text_block_indent": 200, "prefix_color": "TextMain", "text": "Interactive button (e.g., open MCM)" },
+            { "type": "CallOut", "prefix": "11. Image", "text_block_indent": 200, "prefix_color": "TextMain", "text": "Display an image" },
+            { "type": "Separator" },
+            { 
+                "type": "Content", 
+                "text": [
+                    "Remember that most of these widgets can also take an array of text, like this!",
+                    "This is a really useful feature that you should use liberally."
+                ]
+            },
+            { 
+                "type": "CallOut", 
+                "prefix": "Note:", 
+                "text": [
+                    "See the MazzleDocs documentation for more information about creating these widgets.",
+                    "Ctrl-D will open MazzleDoc's documentation browser."
+                ]
+            }
+        ]
+    }
+]
