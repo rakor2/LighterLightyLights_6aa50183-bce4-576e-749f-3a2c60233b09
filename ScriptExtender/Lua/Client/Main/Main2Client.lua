@@ -172,17 +172,39 @@ end)
 
 
 local function UpdateElements(selectedUuid)
-    E.slIntLightType.Value = {Globals.LightParametersClient[selectedUuid]['Type'] or 0, 0, 0, 0}
-    local Color = Globals.LightParametersClient[selectedUuid] and Globals.LightParametersClient[selectedUuid]['Color']
+    
+    -- DDump(Globals.LightParametersClient[selectedUuid])
+
+    E.slIntLightType.Value = {Globals.LightParametersClient[selectedUuid].Type or 0, 0, 0, 0}
+
+    local Color = Globals.LightParametersClient[selectedUuid] and Globals.LightParametersClient[selectedUuid].Color
     E.pickerLightColor.Color = Color and {Color[1], Color[2], Color[3], 1} or {1, 1, 1, 1}
-    E.slLightIntensity.Value = {Globals.LightParametersClient[selectedUuid]['Power'] or 1, 0, 0, 0}
-    E.slLightTemp.Value = {Globals.LightParametersClient[selectedUuid]['Temperature'] or 5600, 0, 0, 0}
-    E.slLightRadius.Value = {Globals.LightParametersClient[selectedUuid]['Radius'] or 1, 0, 0, 0}
-    E.slLightOuterAngle.Value = {Globals.LightParametersClient[selectedUuid]['SpotLightOuterAngle'] or 45, 0, 0, 0}
-    E.slLightInnerAngle.Value = {Globals.LightParametersClient[selectedUuid]['SpotLightInnerAngle'] or 1, 0, 0, 0}
-    E.checkLightFill.Checked = Globals.LightParametersClient[selectedUuid]['Flags'] ~= 184
-    E.slLightScattering.Value = {Globals.LightParametersClient[selectedUuid]['ScatteringIntensityScale'] or 0, 0, 0, 0}
-    E.slLightEdgeSharp.Value = {Globals.LightParametersClient[selectedUuid]['EdgeSharpening'] or 0, 0, 0, 0}
+
+    E.slLightIntensity.Value = {Globals.LightParametersClient[selectedUuid].Intensity or 1, 0, 0, 0}
+    E.slLightTemp.Value = {Globals.LightParametersClient[selectedUuid].Temperature or 5600, 0, 0, 0}
+    E.slLightRadius.Value = {Globals.LightParametersClient[selectedUuid].Radius or 1, 0, 0, 0}
+
+
+    E.slLightDirEnd.Value = {Globals.LightParametersClient[selectedUuid].DirectionLightAttenuationEnd or 0, 0, 0, 0}
+    E.slIntLightDirFunc.Value = {Globals.LightParametersClient[selectedUuid].DirectionLightAttenuationFunction or 0, 0, 0, 0}
+    E.slLightDirSide.Value = {Globals.LightParametersClient[selectedUuid].DirectionLightAttenuationSide or 0, 0, 0, 0}
+    E.slLightDirSide2.Value = {Globals.LightParametersClient[selectedUuid].DirectionLightAttenuationSide2 or 0, 0, 0, 0}
+-- 
+    local Dim = Globals.LightParametersClient[selectedUuid] and Globals.LightParametersClient[selectedUuid].DirectionLightDimensions
+    E.slLightDirDim.Value = Dim and {Dim[1], Dim[1],Dim[1], 0} or {0, 0, 0, 0}
+
+
+    E.slLightOuterAngle.Value = {Globals.LightParametersClient[selectedUuid].SpotLightOuterAngle or 45, 0, 0, 0}
+    E.slLightInnerAngle.Value = {Globals.LightParametersClient[selectedUuid].SpotLightInnerAngle or 1, 0, 0, 0}
+
+
+    E.checkLightFill.Checked = Globals.LightParametersClient[selectedUuid].Flags ~= 184
+    E.slLightScattering.Value = {Globals.LightParametersClient[selectedUuid].ScatteringIntensityScale or 0, 0, 0, 0}
+    E.slLightEdgeSharp.Value = {Globals.LightParametersClient[selectedUuid].EdgeSharpening or 0, 0, 0, 0}
+
+    
+
+
 
     Globals.States.allowLightCreation = true
     btnCreate2.Disabled = false
