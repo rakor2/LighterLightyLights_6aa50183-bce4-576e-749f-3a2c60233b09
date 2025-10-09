@@ -569,7 +569,25 @@ end
     local btnDeleteAll = p:AddButton('Delete all')
     btnDeleteAll.SameLine = true
     btnDeleteAll.OnClick = function ()
+
+        btnDeleteAll.Visible = false
+        btnConfirmDeleteAll.Visible = true
+
         
+        confirmTimer = Ext.Timer.WaitFor(1000, function()
+            btnConfirmDeleteAll.Visible = false
+            btnDeleteAll.Visible = true
+        end)
+
+    end
+
+    
+    btnConfirmDeleteAll = p:AddButton('Confirm')
+    btnConfirmDeleteAll.Visible = false
+    btnConfirmDeleteAll.SameLine = true
+    Style.buttonConfirm.default(btnConfirmDeleteAll)
+    btnConfirmDeleteAll.OnClick = function ()
+
         Channels.DeleteLight:SendToServer('All')
         Globals.CreatedLightsServer = {}
         Globals.LightsUuidNameMap = {}
@@ -577,11 +595,15 @@ end
         Globals.LightParametersClient = {}
         nameIndex = 0
 
-        -- LightVisibilty()
         UpdateCreatedLightsCombo()
 
-        -- DDump(Globals.CreatedLightsServer)
-        -- DDump(Globals.LightsUuidNameMap)
+
+        Ext.Timer.Cancel(confirmTimer)
+
+        
+        btnDeleteAll.Visible = true
+        btnConfirmDeleteAll.Visible = false
+
     end
 
     
