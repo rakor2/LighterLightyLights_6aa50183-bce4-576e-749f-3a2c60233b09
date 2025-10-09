@@ -90,20 +90,15 @@ function setSourceTranslate(SourceTranslate)
 end
 
 
-local function UpdateCreatedLightsCombo()
-    -- Globals.LightsNames = Utils:MapToArray(Globals.LightsUuidNameMap)
-    
+
+local function UpdateCreatedLightsCombo()    
     Globals.LightsNames = {}
     for _, light in pairs(Globals.LightsUuidNameMap) do
         table.insert(Globals.LightsNames, light.name)
     end
-
-    -- DDump(Globals.LightsNames)
-    -- table.sort(Globals.LightsNames, function(a, b)
-    --     return tonumber(a:match("%d+")) < tonumber(b:match("%d+"))
-    -- end)
     comboIHateCombos.Options = Globals.LightsNames
 end
+
 
 
 local function getSelectedUuid()
@@ -116,7 +111,6 @@ local function getSelectedUuid()
                 return light.uuid
             end   
         end
-        -- return Globals.LightsUuidNameMap[comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1]]
     end
 end
 
@@ -143,9 +137,12 @@ local function getSelectedLightEntityWithoutLight()
 end
 
 
+
 local function getSelectedLightName()
     return comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1]
 end
+
+
 
 local function getSelectedLightType()
     local type = getSelectedLightEntity().LightType
@@ -154,6 +151,7 @@ local function getSelectedLightType()
     else                    return 'Point'
     end    
 end
+
 
 
 local function getLightEntity(uuid)
@@ -174,10 +172,12 @@ local function sanitySelectedLight()
 end
 
 
+
 local function translate(entity)
     local Translate = entity.Transform.Transform.Translate
     return Translate[1], Translate[2], Translate[3]
 end
+
 
 
 local function rotation(entity)
@@ -187,10 +187,12 @@ local function rotation(entity)
 end
 
 
+
 local function UpdateTranformInfo(x, y, z, rx, ry, rz)
     textPositionInfo.Label = string.format('x: %.2f, y: %.2f, z: %.2f', x, y, z)
     textRotationInfo.Label = string.format('rx: %.2f, ry: %.2f, rz: %.2f', rx, ry, rz)
 end
+
 
 
 local function LightVisibilty()
@@ -208,17 +210,13 @@ local function LightVisibilty()
 end
 
 
+
 Channels.CurrentEntityTransform:SetHandler(function (Data)
     local rx, ry, rz = table.unpack(Data.HumanRotation)
     local x,y,z = table.unpack(Data.Translate)
     UpdateTranformInfo(x, y, z, rx, ry, rz)
 end)
 
-
-
-local function COMMON_UPDATES()
-
-end
 
 
 
@@ -315,8 +313,6 @@ function MainTab(p)
     btnCreate2.SameLine = true
     btnCreate2.OnClick = function ()
         
-        Globals.SourceTranslate = _C().Transform.Transform.Translate
-
         if Globals.States.allowLightCreation then
             Globals.States.allowLightCreation = false
             btnCreate2.Disabled = true
@@ -330,6 +326,7 @@ function MainTab(p)
                 if Response then
                     Globals.CreatedLightsServer = Response[1]
                     Globals.selectedUuid = Response[2]
+                    Globals.markerUuid = Response[3]
 
                     Helpers.Timer:OnTicks(10, function ()
                         Globals.LightParametersClient[Globals.selectedUuid] =  {}
@@ -393,6 +390,8 @@ function MainTab(p)
             if Response then
                 Globals.CreatedLightsServer = Response[1]
                 Globals.selectedUuid = Response[2]
+
+                
                 
                 Globals.LightParametersClient[Globals.selectedUuid] = Globals.LightParametersClient[Globals.selectedUuid] or {}
                 
@@ -403,17 +402,18 @@ function MainTab(p)
                     uuid = Globals.CreatedLightsServer[Globals.selectedUuid],
                     name = name
                 })
-            
+                
                 Helpers.Timer:OnTicks(15, function ()
+                    Globals.selectedEntity = Ext.Entity.Get(Globals.selectedUuid)
                     
                     --- TBD: perhaps as a separate function? But what's the point?
+                    
 
                     SetLightType(xd.LightType)
                     SetLightColor(xd.Color)
                     SetLightIntensity(xd.Intensity)
-                    SetLightRadius(xd.Temperature)
-                    SetLightOuterAngle(xd.Radius)
-                    SetLightInnerAngle(xd.SpotLightOuterAngle)
+                    SetLightRadius(xd.Radius)
+                    SetLightOuterAngle(xd.SpotLightOuterAngle)
                     SetLightInnerAngle(xd.SpotLightInnerAngle)
                     
                     SetLightDirectionalParameters('DirectionLightAttenuationEnd', xd.DirectionLightAttenuationEnd)
@@ -431,13 +431,13 @@ function MainTab(p)
                 
 
                 UpdateCreatedLightsCombo()
-                DPrint('Pre Selected index: %s', comboIHateCombos.SelectedIndex)
+                -- DPrint('Pre Selected index: %s', comboIHateCombos.SelectedIndex)
                 comboIHateCombos.SelectedIndex = #comboIHateCombos.Options - 1
                 -- LightVisibilty()                                           
-                DPrint('Post Selected index: %s', comboIHateCombos.SelectedIndex)
+                -- DPrint('Post Selected index: %s', comboIHateCombos.SelectedIndex)
                 
                 
-                Helpers.Timer:OnTicks(10, function ()
+                Helpers.Timer:OnTicks(16, function ()
                     local x,y,z = table.unpack(Response[3].Translate)
                     local rx,ry,rz = table.unpack(Response[3].HumanRotation)
                     UpdateElements(Globals.selectedUuid)
@@ -660,7 +660,6 @@ end
         
         for _, uuid in pairs(Globals.CreatedLightsServer) do
             local lightEntity = getLightEntity(uuid)
-            
 
             if all then
                 lightEntity.LightChannelFlag = 0
@@ -736,7 +735,9 @@ end
     
     E.slIntLightType = treeGen:AddSliderInt('Type', 0,0,2,1)
     E.slIntLightType.OnChange = function (e)
-        SetLightType(e.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            SetLightType(e.Value[1])
+        end
     end
     
 
@@ -763,7 +764,9 @@ end
     E.pickerLightColor.InputRGB = true
     E.pickerLightColor.DisplayHex = true
     E.pickerLightColor.OnChange = function (e)
-        SetLightColor({e.Color[1], e.Color[2], e.Color[3]})
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            SetLightColor({e.Color[1], e.Color[2], e.Color[3]})
+        end
     end
 
 
@@ -803,15 +806,19 @@ end
     E.slLightIntensity.IDContext = 'lkjanerfliuaern'
     E.slLightIntensity.Logarithmic = true
     E.slLightIntensity.OnChange = function (e)
-        SetLightIntensity(e.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            SetLightIntensity(e.Value[1])
+        end
     end
     
     
     ER.btnLightIntensityReset = treeGen:AddButton('Power')
     ER.btnLightIntensityReset.SameLine = true
     ER.btnLightIntensityReset.OnClick = function ()
-        E.slLightIntensity.Value = {1, 0, 0, 0}
-        SetLightIntensity(E.slLightIntensity.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            E.slLightIntensity.Value = {1, 0, 0, 0}
+            SetLightIntensity(E.slLightIntensity.Value[1])
+        end
     end
     
     
@@ -824,9 +831,9 @@ end
     E.slLightTemp.IDContext = 'wlekjfnlkm'
     E.slLightTemp.Logarithmic = true
     E.slLightTemp.OnChange = function (e)
-        local Color = Math:KelvinToRGB(e.Value[1])
-        SetLightColor({Color[1], Color[2], Color[3]})
-        if Globals.selectedUuid then 
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            local Color = Math:KelvinToRGB(e.Value[1])
+            SetLightColor({Color[1], Color[2], Color[3]})
             Globals.LightParametersClient[Globals.selectedUuid].Temperature = e.Value[1] --This is just for the slidere
         end
     end
@@ -835,9 +842,11 @@ end
     ER.btnLightTempReset = treeGen:AddButton('Temperature')
     ER.btnLightTempReset.SameLine = true
     ER.btnLightTempReset.OnClick = function ()
-        E.slLightTemp.Value = {5600, 0, 0, 0}
-        Globals.LightParametersClient[Globals.selectedUuid].Temperature = 5600
-        SetLightColor({1,0.93,0.88})
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            E.slLightTemp.Value = {5600, 0, 0, 0}
+            Globals.LightParametersClient[Globals.selectedUuid].Temperature = 5600
+            SetLightColor({1,0.93,0.88})
+        end
     end
     
     
@@ -873,15 +882,19 @@ end
     E.slLightRadius.IDContext = 'adwadqw3d'
     E.slLightRadius.Logarithmic = true
     E.slLightRadius.OnChange = function (e)
-        SetLightRadius(e.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            SetLightRadius(e.Value[1])
+        end
     end
     
     
     ER.btnLightRadiusReset = treeGen:AddButton('Distance')
     ER.btnLightRadiusReset.SameLine = true
     ER.btnLightRadiusReset.OnClick = function ()
-        E.slLightRadius.Value = {1, 0, 0, 0}
-        SetLightRadius(E.slLightRadius.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            E.slLightRadius.Value = {1, 0, 0, 0}
+            SetLightRadius(E.slLightRadius.Value[1])
+        end
     end
 
 
@@ -903,6 +916,10 @@ end
     function SetLightOuterAngle(value)
         local lightEntity = getSelectedLightEntity()
         if lightEntity and value then
+
+            -- DPrint('Current angle: %s', lightEntity.SpotLightOuterAngle)
+            -- DPrint('New angle: %s', value)
+
             lightEntity.SpotLightOuterAngle = value
             Globals.LightParametersClient[Globals.selectedUuid].SpotLightOuterAngle = value
         end
@@ -913,15 +930,19 @@ end
     E.slLightOuterAngle = treeSpot:AddSlider('', 45, 0, 360, 1)
     E.slLightOuterAngle.IDContext = '123dwfsefa'
     E.slLightOuterAngle.OnChange = function (e)
-        SetLightOuterAngle(e.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            SetLightOuterAngle(e.Value[1])
+        end
     end
     
     
     ER.btnLightOuterReset = treeSpot:AddButton('Outer angle')
     ER.btnLightOuterReset.SameLine = true
     ER.btnLightOuterReset.OnClick = function ()
-        E.slLightOuterAngle.Value = {45, 0, 0, 0}
-        SetLightOuterAngle(E.slLightOuterAngle.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            E.slLightOuterAngle.Value = {45, 0, 0, 0}
+            SetLightOuterAngle(E.slLightOuterAngle.Value[1])
+        end
     end
 
 
@@ -942,15 +963,19 @@ end
     E.slLightInnerAngle = treeSpot:AddSlider('', 1, 0, 360, 1)
     E.slLightInnerAngle.IDContext = 'rfgrtynj5r6'
     E.slLightInnerAngle.OnChange = function (e)
-        SetLightInnerAngle(e.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            SetLightInnerAngle(e.Value[1])
+        end
     end
     
     
     ER.btnLightInnerReset = treeSpot:AddButton('Inner angle')
     ER.btnLightInnerReset.SameLine = true
     ER.btnLightInnerReset.OnClick = function ()
-        E.slLightInnerAngle.Value = {45, 0, 0, 0}
-        SetLightInnerAngle(E.slLightInnerAngle.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            E.slLightInnerAngle.Value = {1, 0, 0, 0}
+            SetLightInnerAngle(E.slLightInnerAngle.Value[1])
+        end
     end
     
 
@@ -996,7 +1021,9 @@ end
     E.slLightDirEnd = treeDir:AddSlider('Falloff front', 0, 0, 100, 1)
     E.slLightDirEnd.IDContext = 'olkjsdeafoiuzsrenbf'
     E.slLightDirEnd.OnChange = function (e)
-        SetLightDirectionalParameters('DirectionLightAttenuationEnd', e.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            SetLightDirectionalParameters('DirectionLightAttenuationEnd', e.Value[1])
+        end
     end
 
     
@@ -1004,21 +1031,27 @@ end
     E.slLightDirSide = treeDir:AddSlider('Falloff back', 0, 0, 20, 1)
     E.slLightDirSide.IDContext = 'o12312'
     E.slLightDirSide.OnChange = function (e)
-        SetLightDirectionalParameters('DirectionLightAttenuationSide', e.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            SetLightDirectionalParameters('DirectionLightAttenuationSide', e.Value[1])
+        end
     end
     
     
     E.slLightDirSide2 = treeDir:AddSlider('Falloff sides', 0, 0, 10, 1)
     E.slLightDirSide2.IDContext = 'asdaw'
     E.slLightDirSide2.OnChange = function (e)
-        SetLightDirectionalParameters('DirectionLightAttenuationSide2', e.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            SetLightDirectionalParameters('DirectionLightAttenuationSide2', e.Value[1])
+        end
     end
     
 
     E.slIntLightDirFunc = treeDir:AddSliderInt('Function (???)', 0, 0, 3, 1)
     E.slIntLightDirFunc.IDContext = 'olkjsdsseafoiuzsrenbf'
     E.slIntLightDirFunc.OnChange = function (e)
-        SetLightDirectionalParameters('DirectionLightAttenuationFunction', e.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            SetLightDirectionalParameters('DirectionLightAttenuationFunction', e.Value[1])
+        end
     end
         
 
@@ -1027,7 +1060,9 @@ end
     E.slLightDirDim.Components = 3
     E.slLightDirDim.Logarithmic = true
     E.slLightDirDim.OnChange = function (e)
-        SetLightDirectionalParameters('DirectionLightDimensions', {e.Value[1], e.Value[2],e.Value[3]})
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            SetLightDirectionalParameters('DirectionLightDimensions', {e.Value[1], e.Value[2],e.Value[3]})
+        end
     end
 
     
@@ -1055,7 +1090,9 @@ end
     E.checkLightFill = gap:AddCheckbox('Fill')
     E.checkLightFill.Checked = true
     E.checkLightFill.OnChange = function ()
-        SetLightFill(E.checkLightFill.Checked and 184 or 56)
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            SetLightFill(E.checkLightFill.Checked and 184 or 56)
+        end
     end
 
 
@@ -1077,15 +1114,19 @@ end
     E.slLightScattering.IDContext = 'esrgsrengsrg'
     E.slLightScattering.Logarithmic = true
     E.slLightScattering.OnChange = function (e)
-        SetLightScattering(e.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            SetLightScattering(e.Value[1])
+        end
     end
     
     
     ER.btnLightScatterReset = gap:AddButton('Scattering')
     ER.btnLightScatterReset.SameLine = true
     ER.btnLightScatterReset.OnClick = function ()
-        E.slLightScattering.Value = {0, 0, 0, 0}
-        SetLightScattering(E.slLightScattering.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            E.slLightScattering.Value = {0, 0, 0, 0}
+            SetLightScattering(E.slLightScattering.Value[1])
+        end
     end
 
 
@@ -1106,15 +1147,19 @@ end
     E.slLightEdgeSharp.IDContext = 'sdfwerw34'
     E.slLightEdgeSharp.Logarithmic = false
     E.slLightEdgeSharp.OnChange = function (e)
-        SetLightEdgeSharp(e.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            SetLightEdgeSharp(e.Value[1])
+        end
     end
     
     
     ER.btnLightSharpReset = gap:AddButton('Edge sharpening')
     ER.btnLightSharpReset.SameLine = true
     ER.btnLightSharpReset.OnClick = function ()
-        E.slLightEdgeSharp.Value = {0, 0, 0, 0}
-        SetLightEdgeSharp(E.slLightEdgeSharp.Value[1])
+        if Globals.selectedUuid and Globals.LightParametersClient[Globals.selectedUuid] then 
+            E.slLightEdgeSharp.Value = {0, 0, 0, 0}
+            SetLightEdgeSharp(E.slLightEdgeSharp.Value[1])
+        end
     end
 
 
@@ -1172,6 +1217,22 @@ end
     local modPos = 20000
     local modRot = 1000
     
+    
+    
+    local posReset = p:AddButton('Reset position')
+    posReset.IDContext = 'resetPos'
+    posReset.SameLine = false
+    posReset.OnClick = function ()
+        MoveEntity(Globals.selectedEntity, nil, nil, nil)
+    end
+
+
+    local rotReset = p:AddButton('Reset rotation')
+    rotReset.IDContext = 'resetRos'
+    rotReset.SameLine = true
+    rotReset.OnClick = function ()
+        RotateEntity(Globals.selectedEntity, nil, 0, 0)
+    end
 
 
     local checkStick = p:AddCheckbox('Stick to camera')
@@ -1255,11 +1316,6 @@ end
 
 
 
-    local posReset = worldTree :AddButton('Reset')
-    posReset.IDContext = 'resetPos'
-    posReset.OnClick = function ()
-        MoveEntity(Globals.selectedEntity, nil, nil, nil)
-    end
 
 
     worldTree:AddSeparator('')
@@ -1300,13 +1356,6 @@ end
     end
 
 
-    
-    local posReset2 = orbitTree :AddButton('Reset')
-    posReset2.IDContext = 'resetPos2'
-    posReset2.OnClick = function ()
-        MoveEntity(Globals.selectedEntity, nil, nil, nil)
-    end
-    
 
 
 

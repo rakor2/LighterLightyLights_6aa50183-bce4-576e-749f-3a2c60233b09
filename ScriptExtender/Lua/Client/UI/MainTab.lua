@@ -206,36 +206,40 @@ function MainWindow(mw)
     -- Create one TabBar for all tabs _ai
     mainTabBar = mw:AddTabBar("LL")
 
-    -- Add Main tab _ai
-    mainTab = mainTabBar:AddTabItem("Main")
-    MainWindowTab(mainTab)
+
+    main2 = mainTabBar:AddTabItem("Main")
+    MainTab(main2)
 
 
-
+    
+    
+    
     -- Add AnL tab to the same TabBar _ai
     -- anlTab = mainTabBar:AddTabItem("AnL")
     -- AnLWindowTab(anlTab)
-
+    
     anal2Tab = mainTabBar:AddTabItem("AnL")
     Anal2Tab(anal2Tab)
-
-
+    
+    
     betterPM = mainTabBar:AddTabItem("PM")
     BetterPMTab(betterPM)
 
-    originPointTab = mainTabBar:AddTabItem("Origin point")
-    OriginPointTab(originPointTab)
 
-    goboTab = mainTabBar:AddTabItem("Gobo")
-    GoboWindowTab(goboTab)
-
-
+    -- mainTab = mainTabBar:AddTabItem("Main_old")
+    -- MainWindowTab(mainTab)
+    
+    -- originPointTab = mainTabBar:AddTabItem("Origin point")
+    -- OriginPointTab(originPointTab)
+    
+    -- goboTab = mainTabBar:AddTabItem("Gobo")
+    -- GoboWindowTab(goboTab)
+    
+    
     dev = mainTabBar:AddTabItem("Dev")
     DevTab(dev)
-
-
-    main2 = mainTabBar:AddTabItem("Main2")
-    MainTab(main2)
+    
+    
 
 
 

@@ -35,9 +35,14 @@ Channels.CurrentEntityTransform = Ext.Net.CreateChannel(ModuleUUID, 'CurrentEnti
 Channels.EntityTranslate = Ext.Net.CreateChannel(ModuleUUID, 'EntityTranslate')
 Channels.EntityRotation = Ext.Net.CreateChannel(ModuleUUID, 'EntityRotation')
 Channels.EntityRotationOrbit = Ext.Net.CreateChannel(ModuleUUID, 'EntityRotationOrbit')
+                                                                                       
 
-Channels.EntityLookAt = Ext.Net.CreateChannel(ModuleUUID, 'EntityLookAt')
+Channels.OriginPoint = Ext.Net.CreateChannel(ModuleUUID, 'OriginPoint')
+
 
 Channels.StickToCamera = Ext.Net.CreateChannel(ModuleUUID, 'StickToCamera')
 
 Channels.MarkerHandler = Ext.Net.CreateChannel(ModuleUUID, 'MarkerHandler')       
+
+
+Channels.EntityLookAt = Ext.Net.CreateChannel(ModuleUUID, 'EntityLookAt') --UNUSED

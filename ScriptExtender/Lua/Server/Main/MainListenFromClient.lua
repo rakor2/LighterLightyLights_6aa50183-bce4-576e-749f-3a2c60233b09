@@ -1459,6 +1459,7 @@ Ext.RegisterNetListener("ScaleOriginPoint", function(channel, payload)
     end
 end)
 
+
 Ext.RegisterNetListener("MoveOriginPoint", function(channel, payload)
     if originPoint.entity then
         local data = Ext.Json.Parse(payload)

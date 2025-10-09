@@ -1,7 +1,3 @@
-local xd
-
-
-
 function SourceCutscene(state)
     if state then
             Utils:SubUnsubToTick('sub', 'SourceCutscene', function ()
@@ -24,8 +20,14 @@ function SourceCutscene(state)
     end
 end
 
+
+
 function SourceOrigin()
-    return
+    return 0
+end
+
+
+
 function SourceClient(state)
     if state then
         Utils:SubUnsubToTick('sub', 'SourceClient', function ()
@@ -44,6 +46,3 @@ function SourceClient(state)
     end
 end
 
-function SourceClient()
-    return
-end

@@ -107,10 +107,6 @@ Channels.CreateLight:SetRequestHandler(function (Data)
 
         -- DDump(Globals.LightParametersServer)
         
-        local Response = {
-            Globals.CreatedLightsServer,
-            Globals.selectedUuid
-        }
         
         if Globals.markerUuid then
             UpdateMarkerPosition()
@@ -125,7 +121,9 @@ Channels.CreateLight:SetRequestHandler(function (Data)
             Globals.markerUuid
         }
         
+
         return Response
+        
     else
         return nil
     end
@@ -230,6 +228,7 @@ function CreateAllMarkers()
 end
 
 
+
 function UpdateMarkerPosition()
     if Globals.markerUuid and Globals.LightParametersServer[Globals.selectedUuid] then
         local rOffset = 90    
@@ -240,11 +239,19 @@ function UpdateMarkerPosition()
     end
 end
 
-Channels.MarkerHandler:SetRequestHandler(function (Data)
 
-    CreateMarker()
-    
-    return nil
+
+
+Channels.MarkerHandler:SetRequestHandler(function (Data)
+    -- if Data.single then
+    --     CreateMarker()
+    -- else
+
+        CreateMarker(false)
+
+    -- end
+    -- local Reseponse = 0
+    return Reseponse
 end)
 
 
@@ -627,3 +634,5 @@ function LookAtCenter(uuid, centerX, centerY, centerZ, heightOffset, params)
 
     Osi.ToTransform(uuid, x, y, z, pitch, yaw, roll)
 end
+
+
