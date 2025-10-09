@@ -493,6 +493,14 @@ end)
 
 
 
+Channels.DeleteEverything:SetHandler(function (Data)
+    for _, uuid in ipairs(Data) do
+        Osi.RequestDelete(uuid)
+    end
+end)
+
+
+
 
 
 

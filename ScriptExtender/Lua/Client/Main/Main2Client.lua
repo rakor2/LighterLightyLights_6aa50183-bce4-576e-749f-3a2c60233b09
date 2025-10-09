@@ -211,6 +211,33 @@ end
 
 
 
+function GatherLightsAndMarkers()
+
+    local EntitiesToDelete = {}
+
+    local gov = Ext.Entity.GetAllEntitiesWithComponent('GameObjectVisual')
+    for _, entity in ipairs(gov) do
+        if entity.GameObjectVisual.RootTemplateId:find('62a459e2') or entity.GameObjectVisual.RootTemplateId:find('cabc9b70')then
+            table.insert(EntitiesToDelete, entity.Uuid.EntityUuid)
+        end
+    end
+
+
+    local effects = Ext.Entity.GetAllEntitiesWithComponent('Effect')
+    for _, entity in ipairs(effects) do
+        if entity.Effect.EffectName:find('LLL_') then
+            table.insert(EntitiesToDelete, entity.Uuid.EntityUuid)
+        end
+    end
+    
+    
+    Channels.DeleteEverything:SendToServer(EntitiesToDelete)
+
+
+end
+
+
+
 Channels.CurrentEntityTransform:SetHandler(function (Data)
     local rx, ry, rz = table.unpack(Data.HumanRotation)
     local x,y,z = table.unpack(Data.Translate)
@@ -597,6 +624,7 @@ end
 
         UpdateCreatedLightsCombo()
 
+        GatherLightsAndMarkers()
 
         Ext.Timer.Cancel(confirmTimer)
 
