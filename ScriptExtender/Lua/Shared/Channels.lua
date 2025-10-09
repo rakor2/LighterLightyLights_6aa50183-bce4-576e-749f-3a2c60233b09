@@ -31,18 +31,22 @@ Channels.DeleteLight = Ext.Net.CreateChannel(ModuleUUID, 'DeleteLight')
 Channels.DuplicateLight = Ext.Net.CreateChannel(ModuleUUID, 'DuplicateLight')
 
 Channels.CurrentEntityTransform = Ext.Net.CreateChannel(ModuleUUID, 'CurrentEntityTransform')
-
 Channels.EntityTranslate = Ext.Net.CreateChannel(ModuleUUID, 'EntityTranslate')
 Channels.EntityRotation = Ext.Net.CreateChannel(ModuleUUID, 'EntityRotation')
 Channels.EntityRotationOrbit = Ext.Net.CreateChannel(ModuleUUID, 'EntityRotationOrbit')
-                                                                                       
-
-Channels.OriginPoint = Ext.Net.CreateChannel(ModuleUUID, 'OriginPoint')
-
 
 Channels.StickToCamera = Ext.Net.CreateChannel(ModuleUUID, 'StickToCamera')
 
-Channels.MarkerHandler = Ext.Net.CreateChannel(ModuleUUID, 'MarkerHandler')       
+Channels.MarkerHandler = Ext.Net.CreateChannel(ModuleUUID, 'MarkerHandler')  
 
 
-Channels.EntityLookAt = Ext.Net.CreateChannel(ModuleUUID, 'EntityLookAt') --UNUSED
+
+
+Channels.CreateOriginPoint = Ext.Net.CreateChannel(ModuleUUID, 'CreateOriginPoint')
+Channels.DeleteOriginPoint = Ext.Net.CreateChannel(ModuleUUID, 'DeleteOriginPoint')
+Channels.MoveOriginPoint = Ext.Net.CreateChannel(ModuleUUID, 'MoveOriginPoint')
+Channels.ToCamOriginPoint = Ext.Net.CreateChannel(ModuleUUID, 'ToCamOriginPoint')
+
+
+
+Channels.DeleteEverything =Ext.Net.CreateChannel(ModuleUUID, 'DeleteEverything')

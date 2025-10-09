@@ -1221,7 +1221,7 @@ end
 
 
 
-    function MoveEntity(entity, axis, offset, step, mode)
+    function MoveEntity(entity, axis, offset, step, mode, type)
         if entity then
             local Data = {
                 axis = axis,
@@ -1229,11 +1229,20 @@ end
                 offset = offset,
                 Translate = Globals.SourceTranslate
             }
-            
-            if mode == 'World' then
-                Channels.EntityTranslate:SendToServer(Data)
-            else
-                Channels.EntityRotationOrbit:SendToServer(Data)
+
+            if type == 'Light' then 
+                
+                if mode == 'World' then
+                    Channels.EntityTranslate:SendToServer(Data)
+                else
+                    Channels.EntityRotationOrbit:SendToServer(Data)
+                end
+
+            elseif type == 'Point' then
+                Channels.MoveOriginPoint:SendToServer(Data)
+
+            elseif type == 'GObo' then
+
             end
             
         end
@@ -1241,7 +1250,7 @@ end
     
     
     
-    function RotateEntity(entity, axis, offset, step)
+    function RotateEntity(entity, axis, offset, step, type)
         if entity then
             local Data = {
                 axis = axis,
@@ -1249,7 +1258,15 @@ end
                 offset = offset,
                 Translate = Globals.SourceTranslate
             }
-            Channels.EntityRotation:SendToServer(Data)
+
+            if type == 'Light' then
+                Channels.EntityRotation:SendToServer(Data)
+                
+            elseif type == 'Point' then
+
+            elseif type == 'GObo' then
+                return 0
+            end
                 -- local rx,ry,rz = table.unpack(Response.HumanRotation)
                 -- -- UpdateTranformInfo(x, y, z, rx, ry, rz)
                 -- Globals.LightQuats = Response.RotationQuat
@@ -1273,7 +1290,7 @@ end
     posReset.IDContext = 'resetPos'
     posReset.SameLine = false
     posReset.OnClick = function ()
-        MoveEntity(Globals.selectedEntity, nil, nil, nil)
+        MoveEntity(Globals.selectedEntity, nil, nil, nil, 'Light')
     end
 
 
@@ -1324,6 +1341,7 @@ end
     posZSlider.OnChange = function()
         MoveEntity(Globals.selectedEntity, 'z', posZSlider.Value[1], modPosSlider.Value[1], 'World')
         posZSlider.Value = {0,0,0,0}
+        MoveEntity(Globals.selectedEntity, 'z', slPosZSlider.Value[1], modPosSlider.Value[1], 'World', 'Light')
     end
 
 
@@ -1340,6 +1358,7 @@ end
     posYSlider.OnChange = function()
         MoveEntity(Globals.selectedEntity, 'y', posYSlider.Value[1], modPosSlider.Value[1], 'World')
         posYSlider.Value = {0,0,0,0}
+        MoveEntity(Globals.selectedEntity, 'y', slPosYSlider.Value[1], modPosSlider.Value[1], 'World', 'Light')
     end
 
 
@@ -1356,6 +1375,7 @@ end
     posXSlider.OnChange = function()
         MoveEntity(Globals.selectedEntity, 'x', posXSlider.Value[1], modPosSlider.Value[1], 'World')
         posXSlider.Value = {0,0,0,0}
+        MoveEntity(Globals.selectedEntity, 'x', slPosXSlider.Value[1], modPosSlider.Value[1], 'World', 'Light')
     end
 
 
@@ -1383,6 +1403,7 @@ end
     posOrbX.OnChange = function()
         MoveEntity(Globals.selectedEntity, 'x', posOrbX.Value[1], modPosSlider.Value[1], 'Orbit')
         posOrbX.Value = {0,0,0,0}
+        MoveEntity(Globals.selectedEntity, 'x', slPosOrbX.Value[1], modPosSlider.Value[1], 'Orbit', 'Light')
     end
     
     
@@ -1403,6 +1424,7 @@ end
     posOrbZ.OnChange = function()
         MoveEntity(Globals.selectedEntity, 'z', posOrbZ.Value[1], modPosSlider.Value[1], 'Orbit')
         posOrbZ.Value = {0,0,0,0}
+        MoveEntity(Globals.selectedEntity, 'z', slPosOrbZ.Value[1], modPosSlider.Value[1], 'Orbit', 'Light')
     end
 
 
@@ -1427,6 +1449,7 @@ end
     rotTiltSlider.OnChange = function(value)
         RotateEntity(Globals.selectedEntity, 'x', rotTiltSlider.Value[1], modRotSlider.Value[1])
         rotTiltSlider.Value = {0,0,0,0}
+        RotateEntity(Globals.selectedEntity, 'x', slRotTiltSlider.Value[1], modRotSlider.Value[1])
     end
 
 
@@ -1443,6 +1466,7 @@ end
     rotRollSlider.OnChange = function()
         RotateEntity(Globals.selectedEntity, 'z', rotRollSlider.Value[1], modRotSlider.Value[1])
         rotRollSlider.Value = {0,0,0,0}
+        RotateEntity(Globals.selectedEntity, 'z', slRotRollSlider.Value[1], modRotSlider.Value[1])
     end
 
 
@@ -1459,6 +1483,7 @@ end
     rotYawSlider.OnChange = function()
         RotateEntity(Globals.selectedEntity, 'y', rotYawSlider.Value[1], modRotSlider.Value[1])
         rotYawSlider.Value = {0,0,0,0}
+        RotateEntity(Globals.selectedEntity, 'y', slRotYawSlider.Value[1], modRotSlider.Value[1])
     end
 
 
@@ -1504,6 +1529,10 @@ end
     checkOriginSrc = p:AddCheckbox('Origin point')
     checkOriginSrc.Disabled = true
     
+    checkOriginSrc.Disabled = false
+    checkOriginSrc.OnChange = function (e)
+        SourcePoint(e.Checked)
+    end
 
 
     checkCutsceneSrc = p:AddCheckbox('Cutscene')
