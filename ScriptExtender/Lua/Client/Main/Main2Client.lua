@@ -38,6 +38,8 @@ Globals.selectedEntity = nil
 Globals.selectedLightEntity = nil
 
 
+MARKER_SCALE = 0.699999988079071
+
 
 local checkTypePoint
 local checkTypeSpot
@@ -395,7 +397,7 @@ function MainTab(p)
                 Globals.LightParametersClient[Globals.selectedUuid] = Globals.LightParametersClient[Globals.selectedUuid] or {}
                 
                 nameIndex = nameIndex + 1
-                local name = '#' .. nameIndex .. ' ' .. type
+                local name = '+' .. ' ' .. '#' .. nameIndex .. ' ' .. type
                 
                 table.insert(Globals.LightsUuidNameMap, {
                     uuid = Globals.CreatedLightsServer[Globals.selectedUuid],
@@ -485,10 +487,21 @@ function MainTab(p)
     btnRenameLight.SameLine = true
     btnRenameLight.Disabled = false
     btnRenameLight.OnClick = function ()
+
+        local lightEntity = getSelectedLightEntity()
+
         
         for k, light in pairs(Globals.LightsUuidNameMap) do
             if light.name == comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1] then
-                light.name = '+' .. ' ' ..  '#' .. comboIHateCombos.SelectedIndex + 1 .. ' ' .. inputRename.Text
+                
+                --- TBD: temporary
+                if lightEntity.LightChannelFlag == 255 then
+                    light.name = '+' .. ' ' ..  '#' .. comboIHateCombos.SelectedIndex + 1 .. ' ' .. inputRename.Text
+                else
+                    lightEntity.LightChannelFlag = 0
+                    light.name = '-' .. ' ' ..  '#' .. comboIHateCombos.SelectedIndex + 1 .. ' ' .. inputRename.Text
+                end
+
             end
         end
 
@@ -665,10 +678,23 @@ end
 
     end
 
+    function ToggleMarker(uuid)
+        local newScaleX
+        local entity = Ext.Entity.Get(uuid)
+        if entity and entity.Visual then
+            local scaleX = entity.Visual.Visual.WorldTransform.Scale[1]
+            newScaleX = scaleX == 0 and MARKER_SCALE or 0
+            entity.Visual.Visual:SetWorldScale({newScaleX,newScaleX,newScaleX})
+        end
+    end
+
     local toggleMarkerButton = p:AddButton('Toggle marker')
     toggleMarkerButton.SameLine = true
     toggleMarkerButton.IDContext = 'jhjkgyyutr'
     toggleMarkerButton.OnClick = function()
+        
+        ToggleMarker(Globals.markerUuid)
+
     end
 
     local toggleAllMarkersButton = p:AddButton('Toggle all')
@@ -676,6 +702,11 @@ end
     toggleAllMarkersButton.IDContext = '456456'
     toggleAllMarkersButton.SameLine = true
     toggleAllMarkersButton.OnClick = function()
+        
+        Channels.MarkerHandler:RequestToServer({}, function (Response)
+
+        end)
+
     end
 
 

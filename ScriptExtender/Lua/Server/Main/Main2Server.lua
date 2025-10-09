@@ -20,6 +20,11 @@ Globals.LightParametersServer = {}
 Globals.selectedUuid = nil
 Globals.selectedEntity = nil
 
+Globals.States = {}
+
+Globals.CreatedAllMakers = {}
+
+
 INITIAL_LIGHT_TEMPLATE_0_POINT = 'd92ed2ec-a332-4a28-ae3d-99f79ee0fa92'
 INITIAL_LIGHT_TEMPLATE_1_SPOT = '8b02ea30-6dcc-4b45-b6b4-d174f07bb2a1' --'fd55b15f-d82b-4743-a9fb-629b8b7c6636'
 INITIAL_LIGHT_TEMPLATE_2_DIR = 'e4e90f6d-aa3e-4fb7-af3a-2ec279368083'
@@ -110,10 +115,15 @@ Channels.CreateLight:SetRequestHandler(function (Data)
         if Globals.markerUuid then
             UpdateMarkerPosition()
         else
-            CreateMarker()
+            CreateMarker(true)
         end
         
         
+        local Response = {
+            Globals.CreatedLightsServer,
+            Globals.selectedUuid,
+            Globals.markerUuid
+        }
         
         return Response
     else
@@ -145,31 +155,78 @@ Channels.DuplicateLight:SetRequestHandler(function ()
 
     DPrint(Globals.selectedUuid)
     
+    if Globals.markerUuid then
+        UpdateMarkerPosition()
+    else
+        CreateMarker(true)
+    end
+    
     local Response = {
         Globals.CreatedLightsServer,
         Globals.selectedUuid,
         Globals.LightParametersServer[Globals.selectedUuid]
     }
     
-    if Globals.markerUuid then
-        UpdateMarkerPosition()
-    else
-        CreateMarker()
-    end
-
 
     return Response
 end)
 
 
-function CreateMarker()
-    local rOffset = 90
-    local x,y,z = table.unpack(Globals.LightParametersServer[Globals.selectedUuid].Translate)
-    local rx,ry,rz = table.unpack(Globals.LightParametersServer[Globals.selectedUuid].HumanRotation)
+
+Globals.States.AllMarkers = false
+function CreateMarker(single)
     
-    local uuid = lightMarkerGUID
-    Globals.markerUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
-    Osi.ToTransform(Globals.markerUuid, x, y, z, rx - rOffset, ry, rz)
+    local rOffset = 90
+
+    if single then
+        local x,y,z = table.unpack(Globals.LightParametersServer[Globals.selectedUuid].Translate)
+        local rx,ry,rz = table.unpack(Globals.LightParametersServer[Globals.selectedUuid].HumanRotation)
+        
+        local uuid = lightMarkerGUID
+        Globals.markerUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
+        Osi.ToTransform(Globals.markerUuid, x, y, z, rx - rOffset, ry, rz)
+    else
+        
+        Globals.States.AllMarkers = not Globals.States.AllMarkers
+
+        if Globals.States.AllMarkers then
+            for k,v in pairs(Globals.CreatedLightsServer) do
+
+                local x,y,z = table.unpack(Globals.LightParametersServer[v].Translate)
+                local rx,ry,rz = table.unpack(Globals.LightParametersServer[v].HumanRotation)
+                
+                local uuid = lightMarker2GUID
+
+                local markerUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
+                Osi.ToTransform(markerUuid, x, y, z, rx - rOffset, ry, rz)
+                table.insert(Globals.CreatedAllMakers, markerUuid)
+            end
+        else
+            for _, markerUuid in pairs(Globals.CreatedAllMakers) do
+                Osi.RequestDelete(markerUuid)
+            end
+            Globals.CreatedAllMakers = {}
+        end
+
+    end
+end
+
+
+
+function CreateAllMarkers()
+
+    for k, v in pairs(Globals.CreatedLightsServer) do
+        DPrint(k)
+        DPrint(v)
+    end
+
+    -- local rOffset = 90
+    -- local x,y,z = table.unpack(Globals.LightParametersServer[Globals.selectedUuid].Translate)
+    -- local rx,ry,rz = table.unpack(Globals.LightParametersServer[Globals.selectedUuid].HumanRotation)
+    
+    -- local uuid = lightMarkerGUID
+    -- Globals.markerUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
+    -- Osi.ToTransform(Globals.markerUuid, x, y, z, rx - rOffset, ry, rz)
 end
 
 
@@ -204,12 +261,21 @@ end)
 
 Channels.DeleteLight:SetHandler(function (request)
     if request == 'All' then
-        for _, uuid in pairs(Globals.CreatedLightsServer) do
-            Osi.RequestDelete(uuid)
+
+        for _, lightUuid in pairs(Globals.CreatedLightsServer) do
+            Osi.RequestDelete(lightUuid)
         end
+        
+
+        for _, markerUuid in pairs(Globals.CreatedAllMakers) do
+            Osi.RequestDelete(markerUuid)
+        end
+
 
         Globals.CreatedLightsServer = {}
         Globals.LightParametersServer = {}
+        Globals.CreatedAllMakers = {}
+        Globals.States.AllMarkers = false
 
         if Globals.markerUuid then
             Osi.RequestDelete(Globals.markerUuid)

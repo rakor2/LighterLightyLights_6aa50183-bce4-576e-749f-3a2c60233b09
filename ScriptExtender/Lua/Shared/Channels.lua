@@ -40,4 +40,4 @@ Channels.EntityLookAt = Ext.Net.CreateChannel(ModuleUUID, 'EntityLookAt')
 
 Channels.StickToCamera = Ext.Net.CreateChannel(ModuleUUID, 'StickToCamera')
 
-Channels.MarkerHandler = Ext.Net.CreateChannel(ModuleUUID, 'MarkerHandler')
+Channels.MarkerHandler = Ext.Net.CreateChannel(ModuleUUID, 'MarkerHandler')       
