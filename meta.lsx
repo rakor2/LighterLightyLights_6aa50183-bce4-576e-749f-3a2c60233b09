@@ -24,7 +24,7 @@
                     <attribute id="FileSize" type="uint64" value="8861740"/>
                     <attribute id="Folder" type="LSString" value="LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09"/>
                     <attribute id="LobbyLevelName" type="FixedString" value=""/>
-                    <attribute id="MD5" type="LSString" value="c999603d0ad860a82c78e1fd263d9665"/>
+                    <attribute id="MD5" type="LSString" value="3b3e3e5d197fa2f9f7cfde5162292897"/>
                     <attribute id="MenuLevelName" type="FixedString" value=""/>
                     <attribute id="Name" type="LSString" value="LighterLightyLights"/>
                     <attribute id="NumPlayers" type="uint8" value="4"/>
@@ -32,7 +32,7 @@
                     <attribute id="PublishHandle" type="uint64" value="0"/>
                     <attribute id="StartupLevelName" type="FixedString" value=""/>
                     <attribute id="UUID" type="FixedString" value="6aa50183-bce4-576e-749f-3a2c60233b09"/>
-                    <attribute id="Version64" type="int64" value="36310289175543810"/>
+                    <attribute id="Version64" type="int64" value="36310289175543811"/>
                     <children>
                         <node id="PublishVersion">
                             <attribute id="Version64" type="int64" value="144255927717549775"/>

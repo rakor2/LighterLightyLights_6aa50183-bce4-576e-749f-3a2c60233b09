@@ -775,7 +775,6 @@ end
     
     function SetLightType(value)
         local lightEntity = getSelectedLightEntity()
-        DPrint('ent: %s', lightEntity)           
         if lightEntity and value then
             lightEntity.LightType = value
             Globals.LightParametersClient[Globals.selectedUuid].LightType = value
@@ -1244,7 +1243,6 @@ end
             elseif type == 'GObo' then
 
             end
-            
         end
     end
     
@@ -1335,30 +1333,28 @@ end
 
 
 
-    local posZSlider = worldTree:AddSlider('', 0, -1000, 1000, 0.1)
-    posZSlider.IDContext = 'NS'
-    posZSlider.Value = {0,0,0,0}
-    posZSlider.OnChange = function()
-        MoveEntity(Globals.selectedEntity, 'z', posZSlider.Value[1], modPosSlider.Value[1], 'World')
-        posZSlider.Value = {0,0,0,0}
+    local slPosZSlider = worldTree:AddSlider('', 0, -1000, 1000, 0.1)
+    slPosZSlider.IDContext = 'NS'
+    slPosZSlider.Value = {0,0,0,0}
+    slPosZSlider.OnChange = function()
         MoveEntity(Globals.selectedEntity, 'z', slPosZSlider.Value[1], modPosSlider.Value[1], 'World', 'Light')
+        slPosZSlider.Value = {0,0,0,0}
     end
 
 
 
-    local textZ = worldTree:AddText('North/South')
+    local textZ = worldTree:AddText('South/North')
     textZ.IDContext = 'awdadwdawdawdawda'
     textZ.SameLine = true
 
 
 
-    local posYSlider = worldTree:AddSlider('', 0, -1000, 1000, 0.1)
-    posYSlider.IDContext = 'DU'
-    posYSlider.Value = {0,0,0,0}
-    posYSlider.OnChange = function()
-        MoveEntity(Globals.selectedEntity, 'y', posYSlider.Value[1], modPosSlider.Value[1], 'World')
-        posYSlider.Value = {0,0,0,0}
+    local slPosYSlider = worldTree:AddSlider('', 0, -1000, 1000, 0.1)
+    slPosYSlider.IDContext = 'DU'
+    slPosYSlider.Value = {0,0,0,0}
+    slPosYSlider.OnChange = function()
         MoveEntity(Globals.selectedEntity, 'y', slPosYSlider.Value[1], modPosSlider.Value[1], 'World', 'Light')
+        slPosYSlider.Value = {0,0,0,0}
     end
 
 
@@ -1369,13 +1365,12 @@ end
 
 
 
-    local posXSlider = worldTree:AddSlider('', 0, -1000, 1000, 0)
-    posXSlider.IDContext = 'WE'
-    posXSlider.Value = {0,0,0,0}
-    posXSlider.OnChange = function()
-        MoveEntity(Globals.selectedEntity, 'x', posXSlider.Value[1], modPosSlider.Value[1], 'World')
-        posXSlider.Value = {0,0,0,0}
+    local slPosXSlider = worldTree:AddSlider('', 0, -1000, 1000, 0)
+    slPosXSlider.IDContext = 'WE'
+    slPosXSlider.Value = {0,0,0,0}
+    slPosXSlider.OnChange = function()
         MoveEntity(Globals.selectedEntity, 'x', slPosXSlider.Value[1], modPosSlider.Value[1], 'World', 'Light')
+        slPosXSlider.Value = {0,0,0,0}
     end
 
 
@@ -1397,34 +1392,32 @@ end
     
     
     
-    local posOrbX = orbitTree:AddSlider('Cw/Cww', 0, -1000, 1000, 0.1)
-    posOrbX.IDContext = 'NawdawwwdS'
-    posOrbX.Value = {0,0,0,0}
-    posOrbX.OnChange = function()
-        MoveEntity(Globals.selectedEntity, 'x', posOrbX.Value[1], modPosSlider.Value[1], 'Orbit')
-        posOrbX.Value = {0,0,0,0}
+    local slPosOrbX = orbitTree:AddSlider('Cw/Cww', 0, -1000, 1000, 0.1)
+    slPosOrbX.IDContext = 'NawdawwwdS'
+    slPosOrbX.Value = {0,0,0,0}
+    slPosOrbX.OnChange = function()
         MoveEntity(Globals.selectedEntity, 'x', slPosOrbX.Value[1], modPosSlider.Value[1], 'Orbit', 'Light')
+        slPosOrbX.Value = {0,0,0,0}
     end
     
     
 
-    local posOrbY = orbitTree:AddSlider('Down/Up', 0, -1000, 1000, 0.1)
-    posOrbY.IDContext = 'NawawdwdawdS'
-    posOrbY.Value = {0,0,0,0}
-    posOrbY.OnChange = function()
-        MoveEntity(Globals.selectedEntity, 'y', posOrbY.Value[1], modPosSlider.Value[1], 'Orbit')
-        posOrbY.Value = {0,0,0,0}
+    local slPosOrbY = orbitTree:AddSlider('Down/Up', 0, -1000, 1000, 0.1)
+    slPosOrbY.IDContext = 'NawawdwdawdS'
+    slPosOrbY.Value = {0,0,0,0}
+    slPosOrbY.OnChange = function()
+        MoveEntity(Globals.selectedEntity, 'y', slPosOrbY.Value[1], modPosSlider.Value[1], 'Orbit', 'Light')
+        slPosOrbY.Value = {0,0,0,0}
     end
     
 
 
-    local posOrbZ = orbitTree:AddSlider('Close/Far', 0, -1000, 1000, 0.1)
-    posOrbZ.IDContext = 'NawdasdawdS'
-    posOrbZ.Value = {0,0,0,0}
-    posOrbZ.OnChange = function()
-        MoveEntity(Globals.selectedEntity, 'z', posOrbZ.Value[1], modPosSlider.Value[1], 'Orbit')
-        posOrbZ.Value = {0,0,0,0}
+    local slPosOrbZ = orbitTree:AddSlider('Close/Far', 0, -1000, 1000, 0.1)
+    slPosOrbZ.IDContext = 'NawdasdawdS'
+    slPosOrbZ.Value = {0,0,0,0}
+    slPosOrbZ.OnChange = function()
         MoveEntity(Globals.selectedEntity, 'z', slPosOrbZ.Value[1], modPosSlider.Value[1], 'Orbit', 'Light')
+        slPosOrbZ.Value = {0,0,0,0}
     end
 
 
@@ -1443,13 +1436,12 @@ end
     
     
     
-    local rotTiltSlider = collapsRot:AddSlider('', 0, -1000, 1000, 0.1)
-    rotTiltSlider.IDContext = 'Pitch'
-    rotTiltSlider.Value = {0,0,0,0}
-    rotTiltSlider.OnChange = function(value)
-        RotateEntity(Globals.selectedEntity, 'x', rotTiltSlider.Value[1], modRotSlider.Value[1])
-        rotTiltSlider.Value = {0,0,0,0}
+    local slRotTiltSlider = collapsRot:AddSlider('', 0, -1000, 1000, 0.1)
+    slRotTiltSlider.IDContext = 'Pitch'
+    slRotTiltSlider.Value = {0,0,0,0}
+    slRotTiltSlider.OnChange = function(value)
         RotateEntity(Globals.selectedEntity, 'x', slRotTiltSlider.Value[1], modRotSlider.Value[1])
+        slRotTiltSlider.Value = {0,0,0,0}
     end
 
 
@@ -1460,13 +1452,12 @@ end
 
 
 
-    local rotRollSlider = collapsRot:AddSlider('', 0, -1000, 1000, 0.1)
-    rotRollSlider.IDContext = 'Yaw'
-    rotRollSlider.Value = {0,0,0,0}
-    rotRollSlider.OnChange = function()
-        RotateEntity(Globals.selectedEntity, 'z', rotRollSlider.Value[1], modRotSlider.Value[1])
-        rotRollSlider.Value = {0,0,0,0}
+    local slRotRollSlider = collapsRot:AddSlider('', 0, -1000, 1000, 0.1)
+    slRotRollSlider.IDContext = 'Yaw'
+    slRotRollSlider.Value = {0,0,0,0}
+    slRotRollSlider.OnChange = function()
         RotateEntity(Globals.selectedEntity, 'z', slRotRollSlider.Value[1], modRotSlider.Value[1])
+        slRotRollSlider.Value = {0,0,0,0}
     end
 
 
@@ -1477,13 +1468,12 @@ end
 
     
     
-    local rotYawSlider = collapsRot:AddSlider('', 0, -1000, 1000, 0.1)
-    rotYawSlider.IDContext = 'Roll'
-    rotYawSlider.Value = {0,0,0,0}
-    rotYawSlider.OnChange = function()
-        RotateEntity(Globals.selectedEntity, 'y', rotYawSlider.Value[1], modRotSlider.Value[1])
-        rotYawSlider.Value = {0,0,0,0}
+    local slRotYawSlider = collapsRot:AddSlider('', 0, -1000, 1000, 0.1)
+    slRotYawSlider.IDContext = 'Roll'
+    slRotYawSlider.Value = {0,0,0,0}
+    slRotYawSlider.OnChange = function()
         RotateEntity(Globals.selectedEntity, 'y', slRotYawSlider.Value[1], modRotSlider.Value[1])
+        slRotYawSlider.Value = {0,0,0,0}
     end
 
 
@@ -1527,8 +1517,6 @@ end
     
     
     checkOriginSrc = p:AddCheckbox('Origin point')
-    checkOriginSrc.Disabled = true
-    
     checkOriginSrc.Disabled = false
     checkOriginSrc.OnChange = function (e)
         SourcePoint(e.Checked)
@@ -1595,6 +1583,7 @@ end
         end
     end
     buttonSizes()
+
     
     --#region
     -- checkPrePlaced = p:AddCheckbox('Disable pre-placed lights')
@@ -1617,14 +1606,18 @@ end
 end
 
 
+
+Ext.RegisterNetListener('LL_SendLookAtTargetUuid', function(channel, payload)
+    Globals.tragetUuid = payload
+    Helpers.Timer:OnTicks(3, function ()
+        Globals.tragetEntity = Ext.Entity.Get(Globals.tragetUuid)
+    end)
+end)
+
+
 Ext.RegisterConsoleCommand('lld', function (cmd, ...)
     DDump(Globals.LightParametersClient)
 end)
 
-    ---x,y,z = GetPosition(_C().Uuid.EntityUuid)
-    ---l = CreateAt('7279c199-1f14-4bce-8740-98866d9878be',x,y+1,z, 1,0,'')
-    ---l = CreateAt('7f6ca8ba-07ed-474f-b5b6-e3eefbe3dc3d',x,y+1,z, 1,0,'')
-    
-    --Ext.Entity.GetAllEntitiesWithComponent('Light')[7].Light.Radius = 1
-    --_D(Ext.Entity.GetAllEntitiesWithComponent('Light'))
+
 

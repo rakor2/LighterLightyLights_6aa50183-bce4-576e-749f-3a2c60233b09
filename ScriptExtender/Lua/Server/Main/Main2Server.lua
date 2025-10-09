@@ -385,24 +385,24 @@ Channels.EntityTranslate:SetHandler(function (Data)
     if axis == 'x' then
         local x = x + offset / step
         Osi.ToTransform(uuid, x, y, z, rx, ry, rz)
-        entity.Transform.Transform.Translate = {x,y,z}
+        -- entity.Transform.Transform.Translate = {x,y,z}
         
     elseif  axis == 'y' then
         local y = y + offset / step
         Osi.ToTransform(uuid, x, y, z, rx, ry, rz)
-        entity.Transform.Transform.Translate = {x,y,z}
+        -- entity.Transform.Transform.Translate = {x,y,z}
         
     elseif  axis == 'z' then
         local z = z + offset / step
         Osi.ToTransform(uuid, x, y, z, rx, ry, rz)
-        entity.Transform.Transform.Translate = {x,y,z}
+        -- entity.Transform.Transform.Translate = {x,y,z}
 
     else
-        local pos = table.unpack(getSourcePosition())
-        Osi.ToTransform(uuid, pos[1], pos[2], pos[3], rx, ry, rz)
+        local x, y, z = table.unpack(getSourcePosition())
+        Osi.ToTransform(uuid, x, y, z, rx, ry, rz)
     end
 
-    entity.ServerItem.TransformChanged = true
+    -- entity.ServerItem.TransformChanged = true
 
 
     --- TBD: REFACTOR THESE ONES 
@@ -657,5 +657,6 @@ function LookAtCenter(uuid, centerX, centerY, centerZ, heightOffset, params)
 
     Osi.ToTransform(uuid, x, y, z, pitch, yaw, roll)
 end
+
 
 

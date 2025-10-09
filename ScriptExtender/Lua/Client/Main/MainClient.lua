@@ -1889,38 +1889,7 @@ end
 
 
 
-function IFuckedUp:GatherLightsAndMarkers()
 
-    local EntitiesToDelete = {}
-    local x = 0
-
-    local gov = Ext.Entity.GetAllEntitiesWithComponent('GameObjectVisual')
-    --DDump(gov)
-    for _, entity in ipairs(gov) do
-        if entity.GameObjectVisual.RootTemplateId:find('62a459e2') or entity.GameObjectVisual.RootTemplateId:find('cabc9b70')then
-            -- DPrint('--------------------------------------------------------------')
-            -- DPrint('Marker found: %s, Template: %s', entity, entity.Visual.Visual.VisualResource.Template)
-            table.insert(EntitiesToDelete, entity.Uuid.EntityUuid)
-        end
-    end
-    -- DPrint('Iterations: %s, #gov entities: %s', x, y)
-    -- DPrint('Markers')
-    -- DDump(EntitiesToDelete)
-
-
-    local effects = Ext.Entity.GetAllEntitiesWithComponent('Effect')
-    for _, entity in ipairs(effects) do
-        if entity.Effect.EffectName:find('LLL_') then
-            -- DPrint('Light found: %s', entity)
-            table.insert(EntitiesToDelete, entity.Uuid.EntityUuid)
-        end
-    end
-    -- DPrint('Markers and lights')
-    -- DDump(EntitiesToDelete)
-    
-    Ext.Net.PostMessageToServer('LL_EntitiesToDelete', Ext.Json.Stringify(EntitiesToDelete))
-
-end
 
 
 
