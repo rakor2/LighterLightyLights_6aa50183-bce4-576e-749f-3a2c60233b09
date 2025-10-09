@@ -13,6 +13,21 @@
 ]]
 
 
+Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function(levelName, isEditorMode)
+    
+    getLevelAvailableLTNTriggers()
+    getLevelAvailableATMTriggers()
+
+    -- DWarn('LL AnL triggers:------')
+    -- DDump(Globals.LightingTriggers)
+    -- DDump(Globals.AtmosphereTriggers)
+    -- DPrint('-------------------')
+
+    Ext.Net.BroadcastMessage('LL_WhenLevelGameplayStarted', Ext.Json.Stringify(data))
+end)
+
+
+
 
 
 Globals.CreatedLightsServer = {}
