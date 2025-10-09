@@ -250,6 +250,34 @@ end)
 
 
 
+Globals.States.sourceClient = false
+        
+
+
+Channels.CurrentEntityTransform:SetHandler(function (Data)
+    if Data then
+        -- DPrint('Client source: %s', Globals.States.sourceClient)
+        Globals.States.sourceClient = true
+        Globals.SourceClientTranslate = Data
+    else
+        -- DPrint('Client source: %s', Globals.States.sourceClient)
+        Globals.States.sourceClient = false
+    end
+end)
+
+
+
+function getSourcePosition()
+    -- DPrint('Client source: %s', Globals.States.sourceClient)
+    if Globals.States.sourceClient then
+        SourceTranslate = Globals.SourceClientTranslate
+    else
+        SourceTranslate = _C().Transform.Transform.Translate
+    end
+    return SourceTranslate
+end
+
+
 
 Channels.EntityTranslate:SetHandler(function (Data)
 
@@ -282,7 +310,7 @@ Channels.EntityTranslate:SetHandler(function (Data)
         entity.Transform.Transform.Translate = {x,y,z}
 
     else
-        local pos = character.Transform.Transform.Translate
+        local pos = table.unpack(getSourcePosition())
         Osi.ToTransform(uuid, pos[1], pos[2], pos[3], rx, ry, rz)
     end
 
@@ -400,11 +428,14 @@ end)
 Globals.OrbitParams = Globals.OrbitParams or {}
 
 Channels.EntityRotationOrbit:SetHandler(function (Data)
-    local character = _C()
+    -- local character = _C()
+    
+    -- local Translate = table.unpack(Globals.SourceTranslate)
+
     local uuid = Globals.selectedUuid
     local entity = Ext.Entity.Get(uuid)
 
-    local centerX, centerY, centerZ = translate(character)
+    local centerX, centerY, centerZ = table.unpack(getSourcePosition())
     
     local curX, curY, curZ = Osi.GetPosition(uuid)
     local curRx, curRy, curRz = Osi.GetRotation(uuid)
@@ -448,7 +479,7 @@ Channels.EntityRotationOrbit:SetHandler(function (Data)
     elseif Data.axis == 'z' then
         params.radius = math.max(0.1, params.radius + change)
     else
-        local charX, charY, charZ = translate(character)
+        local charX, charY, charZ = table.unpack(getSourcePosition())
         Osi.ToTransform(uuid, charX, charY, charZ, curRx, curRy, curRz)
         Globals.OrbitParams[uuid] = nil
         return

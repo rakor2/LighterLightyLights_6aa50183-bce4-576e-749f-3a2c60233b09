@@ -1379,16 +1379,18 @@ end
     checkCutsceneSrc = p:AddCheckbox('Cutscene')
     checkCutsceneSrc.SameLine = true
     checkCutsceneSrc.Disabled = false
-    checkCutsceneSrc.OnChange = function ()
-        SourceCutscene()
+    checkCutsceneSrc.OnChange = function (e)
+        SourceCutscene(e.Checked)
     end
     
 
 
     checkClientSrc = p:AddCheckbox('Client-side')
     checkClientSrc.SameLine = true
-    checkClientSrc.Disabled = true
-    
+    checkClientSrc.Disabled = false
+    checkClientSrc.OnChange = function (e)
+        SourceClient(e.Checked)
+    end
     
     
     
