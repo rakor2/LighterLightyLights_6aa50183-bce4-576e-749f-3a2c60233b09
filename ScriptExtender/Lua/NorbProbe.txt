@@ -1,0 +1,328 @@
+Entity (01c0000100000089)
+[
+    "ls::LightProbeHierarchySingletonComponent"
+]
+---------------------
+Entity (01c000010000008a)
+[
+    "ls::LightProbeRTreeSingletonComponent"
+]
+---------------------
+Entity (01c0000100004aa1)
+[
+    "ecl::level::PresenceComponent",
+    "ls::LevelComponent",
+    "ls::LevelIsOwnerComponent",
+    "ls::LightProbeComponent",
+    "ls::LightProbeLoadComponent",
+    "ls::LightProbeLoadedComponent",
+    "ls::LocalBoundComponent",
+    "ls::SceneAttachComponent",
+    "ls::TransformComponent"
+]
+---------------------
+Entity (01c0000100004aa1)
+[
+    "ecl::level::PresenceComponent",
+    "ls::LevelComponent",
+    "ls::LevelIsOwnerComponent",
+    "ls::LightProbeComponent",
+    "ls::LightProbeLoadComponent",
+    "ls::LightProbeLoadedComponent",
+    "ls::LocalBoundComponent",
+    "ls::SceneAttachComponent",
+    "ls::TransformComponent"
+]
+---------------------
+Entity (01c0000100004aa1)
+[
+    "ecl::level::PresenceComponent",
+    "ls::LevelComponent",
+    "ls::LevelIsOwnerComponent",
+    "ls::LightProbeComponent",
+    "ls::LightProbeLoadComponent",
+    "ls::LightProbeLoadedComponent",
+    "ls::LocalBoundComponent",
+    "ls::SceneAttachComponent",
+    "ls::TransformComponent"
+]
+---------------------
+
+
+
+--[[
+t = Ext.Entity.GetAllEntities()
+for k,v in pairs(t) do
+    for q,y in pairs(v:GetAllComponentNames(true)) do
+        if y:lower():find('probe') then
+            _P(v)
+            _D(v:GetAllComponents())
+            _P('---------------------')
+
+        end
+    end
+end
+]]--
+
+
+
+struct LightProbeComponent : public BaseComponent
+{
+    DEFINE_PROXY_COMPONENT(LightProbe, "ls::LightProbeComponent")
+
+    FixedString MapKey;
+    FixedString Name;
+    FixedString LevelName;
+    FixedString Type;
+    FixedString TemplateName;
+    int32_t Flag;
+    uint8_t RenderChannel;
+    float Intensity;
+    float ScatteringIntensityScale;
+    float Radius;
+    glm::vec3 Size;
+    float TransitionDistance;
+    bool InfiniteCapture;
+    uint8_t LightProbeType;
+    uint8_t LightProbeShape;
+    uint8_t CaptureType;
+    bool Enabled;
+    FixedString TriggerLighting;
+    [[bg3::hidden]] uint8_t _Pad1[2];
+    [[bg3::hidden]] std::array<uint8_t, 186> _Unknown;
+};
+
+S >> _D(t[1]:GetAllComponents())
+{
+    "Level": {
+        "LevelName": "CMP_GithCrecheCave_A",
+        "field_0": "Entity (0200000100004f78)"
+    },
+    "Net": {},
+    "Savegame": {},
+    "ServerAnubisTag": {
+        "Tags": []
+    },
+    "ServerBoostTag": {
+        "Tags": []
+    },
+    "ServerDialogTag": {
+        "Tags": []
+    },
+    "ServerLightingTrigger": {
+        "CurrentLightingResourceID": "",
+        "CustomPointTransform": {
+            "RotationQuat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "Scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "Entity": "Entity (0200000100004f80)",
+        "Flags": 6,
+        "HasCustomPoint": false,
+        "IsGlobal": false,
+        "Level": "CMP_GithCrecheCave_A",
+        "LightingResourceIDs": [
+            ""
+        ],
+        "PreviousLevel": "",
+        "SyncFlags": 0,
+        "Template": {
+            "AllowReceiveDecalWhenAnimated": false,
+            "CastShadow": true,
+            "Color": [
+                0.5,
+                0.0,
+                1.0,
+                0.0
+            ],
+            "ConstellationConfigName": "",
+            "CustomPointTransform": {
+                "RotationQuat": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "Scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Translate": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "EventSendingMode": 0,
+            "FadeChildren": [],
+            "FadeGroup": "",
+            "FadeGroupOnly": false,
+            "Fadeable": false,
+            "FileName": "I:/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/GustavDev/Levels/CMP_GithCrecheCave_A/Triggers/_merged.lsf",
+            "GizmoColorOverride": [
+                0.5,
+                0.5,
+                0.5,
+                0.5
+            ],
+            "GlobalDeletedFlag": 0,
+            "GroupID": 36613,
+            "HasCustomPoint": false,
+            "HierarchyOnlyFade": false,
+            "Id": "82ec925d-3f26-4913-989a-0bbc523de902",
+            "IgnoreRaycast": false,
+            "IsReflecting": false,
+            "IsShadowProxy": false,
+            "LevelName": "CMP_GithCrecheCave_A",
+            "Name": "S_LTN_GithCrecheCave",
+            "OnlyCharacterEvents": false,
+            "ParentTemplateFlags": 1,
+            "ParentTemplateId": "",
+            "PhysicsTemplate": "",
+            "PhysicsType": "Box",
+            "ReceiveDecal": true,
+            "RenderChannel": "NearForeground",
+            "Tags": {
+                "DirectTags": [],
+                "Tags": []
+            },
+            "TemplateHandle": 1073744129,
+            "TemplateName": "1a4cfe92-0a55-4253-b856-44cd0b0e8f8f",
+            "TemplateType": "trigger",
+            "Transform": {
+                "RotationQuat": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "Scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "Translate": [
+                    29.175676345825195,
+                    29.111560821533203,
+                    100.6470947265625
+                ]
+            },
+            "TriggerGizmoOverride": "",
+            "TriggerType": "TriggerLighting",
+            "UsingGizmoColorOverride": false,
+            "VisualTemplate": ""
+        },
+        "TriggerEntity": "Entity (0200000100004f80)",
+        "TriggerType": "TriggerLighting",
+        "field_84": 1.0
+    },
+    "ServerOsirisTag": {
+        "Tags": []
+    },
+    "ServerRegistrationSettings": {
+        "Registered": false
+    },
+    "ServerTemplateTag": {
+        "Tags": []
+    },
+    "ServerTriggerEventConfig": {
+        "Config": 0
+    },
+    "ServerTriggerLoadedHandled": {},
+    "Tag": {
+        "Tags": []
+    },
+    "Transform": {
+        "Transform": {
+            "RotationQuat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "Scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "Translate": [
+                29.175676345825195,
+                29.111560821533203,
+                100.6470947265625
+            ]
+        }
+    },
+    "TriggerArea": {
+        "Bounds": {
+            "Area": 110.83492279052734,
+            "AreaExp": 12284.380859375,
+            "AreaXZ": 105.47502136230469,
+            "AreaXZExp": 12284.380859375,
+            "BoundsMax": [
+                77.99990844726563,
+                34.04998779296875,
+                70.99995422363281
+            ],
+            "BoundsMin": [
+                -77.99990844726563,
+                -34.04998779296875,
+                -70.99995422363281
+            ],
+            "Position": [
+                29.175676345825195,
+                29.111560821533203,
+                100.6470947265625
+            ],
+            "field_10": 0,
+            "field_40": [
+                -48.82423400878906,
+                -4.938426971435547,
+                29.647140502929688
+            ],
+            "field_4C": [
+                107.17558288574219,
+                63.16154861450195,
+                171.6470489501953
+            ],
+            "field_8": 0
+        },
+        "Physics": {
+            "Extents": [
+                77.99990844726563,
+                34.04998779296875,
+                70.99995422363281
+            ]
+        },
+        "RotationInv": [
+            -0.0,
+            -0.0,
+            -0.0,
+            1.0
+        ]
+    },
+    "TriggerContainer": {
+        "Events": [],
+        "field_0": []
+    },
+    "TriggerType": {
+        "Type": 0
+    },
+    "Uuid": {
+        "EntityUuid": "82ec925d-3f26-4913-989a-0bbc523de902"
+    }
+}
+S >>

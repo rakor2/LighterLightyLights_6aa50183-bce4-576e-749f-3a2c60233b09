@@ -1,0 +1,4 @@
+-- -- Test button _ai
+-- Ext.RegisterNetListener("TestButtonClicked", function(channel, payload)
+--     --DPrint("[MainServer]", "Test button clicked")
+-- end)

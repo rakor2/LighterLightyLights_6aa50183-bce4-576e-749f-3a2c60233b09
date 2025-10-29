@@ -1,161 +1,13 @@
--- Store client-side spawned lights list _ai
-ClientSpawnedLights = {}
 
--- Store server-side spawned lights list _ai
-ServerSpawnedLights = {}
+LLGlobals = LLGlobals or {}
 
--- Store light UUIDs on server _ai
-uuidServer = {}
-
--- Store light UUIDs on client _ai
-uuidClient = {}
-
--- Store light entities _ai
-entClient = {}
-
--- Store light VFX entities _ai
-vfxEntClient = {}
-
--- Store VFX ready states _ai
-vfxEntClientReady = {}
-
--- Add this to store color values for each light _ai
-LightColorValues = {}
-
--- Add this to store intensity values for each light _ai
-LightIntensityValues = {}
-
--- Add this to store radius values for each light _ai
-LightRadiusValues = {}
-
--- Store saved positions for each light _ai
-SavedLightPositions = {}
-
--- Store saved intensities for each light _ai
-savedIntensities = {}
-
--- Global styles table _ai
 Styles = {}
-
-
-LightTemperatureValues = {}
 
 
 VeRsIoNs = {
     ["1.1.5.10"] = "1.1.5_crab"
 }
 
--- Hotkey settings storage _ai
-HotkeySettings = {
-    selectedKey = "None",
-    selectedModifier = "None"
-}
-
-
--- SDL key modifier values _ai
-KeyModifiers = {
-    SHIFT = 0x0001,
-    CTRL = 0x0040,
-    ALT = 0x0100
-}
-
--- Keyboard keys table _ai
-KeyboardKeys = {
-    "None",
-    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-    "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-    "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-    "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12",
-    "NUMPAD0", "NUMPAD1", "NUMPAD2", "NUMPAD3", "NUMPAD4", "NUMPAD5", "NUMPAD6", "NUMPAD7", "NUMPAD8", "NUMPAD9",
-    "BACKSLASH", "SLASH", "MINUS", "EQUALS", "LBRACKET", "RBRACKET",
-    "SEMICOLON", "APOSTROPHE", "PERIOD", "COMMA", "GRAVE"
-}
-
--- Keyboard modifiers _ai
-KeyboardModifiers = {
-    "None",
-    "Ctrl",
-    "Alt",
-    "Shift",
-    "Ctrl+Alt",
-    "Ctrl+Shift",
-    "Alt+Shift",
-    "Ctrl+Alt+Shift"
-}
-
--- Light type options _ai
-lightTypes = {
-    "Point",
-    "Directional_5",
-    "Directional_10", 
-    "Directional_20",
-    "Directional_30",
-    "Directional_40",
-    "Directional_60",
-    "Directional_90",
-    "Directional_150",
-    "Directional_180"
-}
-
-lightTypeNames = {
-    "Point",
-    "Directional 5°",
-    "Directional 10°",
-    "Directional 20°",
-    "Directional 30°",
-    "Directional 40°",
-    "Directional 60°",
-    "Directional 90°",
-    "Directional 150°",
-    "Directional 180°"
-}
-
--- Initialize UsedLightSlots with empty tables for each type _ai
-UsedLightSlots = {
-    ["Directional_5"] = {},
-    ["Directional_10"] = {},
-    ["Directional_20"] = {},
-    ["Directional_30"] = {},
-    ["Directional_40"] = {},
-    ["Directional_60"] = {},
-    ["Directional_90"] = {},
-    ["Directional_150"] = {},
-    ["Directional_180"] = {},
-    ["Point"] = {},
-    ["Torch"] = {}
-}
-
--- Store orbit state for each light _ai
-currentAngle = {}
-currentRadius = {}
-currentHeight = {}
-
--- Store rotation offsets for each light _ai
-lightRotation = {
-    tilt = {},  -- rx offset
-    yaw = {},   -- ry offset
-    roll = {}   -- rz offset
-}
-
--- Store last movement mode for each light _ai
-lastMode = {} -- "orbit" or "default"
-
--- Favorites lists for ATM and LTN templates _ai
-ATMFavoritesList = {}
-LTNFavoritesList = {}
-
--- Storage for current values _ai
-currentValues = {
-    intensity = {},
-    radius = {}
-}
-
--- Origin point variables _ai
-originPoint = {
-    entity = nil,
-    enabled = false,
-    position = {x = 0, y = 0, z = 0}
-}
 
 
 RootTemplates = {
@@ -224,24 +76,298 @@ RootTemplates = {
 
 
 QOTD = {
-    'xqc is the best streamer',
-    'you should rest sometimes',
-    'try terraria!',
-    'what is omegilol?',
+    'xQc is the best streamer',
+    'Try terraria!',
+    'What is omegilol?',
+    'You should rest sometimes',
+    'Fnesrkljtnesilurng',
+    'Try minecraft!',
+    'Thank you all!',
+    'Thank you Alithea!',
+    'AahzCoreX inside',
+    'Im a bumlord, lets go!',
+    'Dispatching MCM took 261.167 ms',
+    'rakor1.bsky.social',
+    'youtube.com/watch?v=GLve9nwtRNA',
+    'The password is Love',
+    'Janky ahh game',
+    'Katzennicken',
+    'The heater broke and now it`s cold. Good.',
+    'discord/BG3 Modding Community',
+    'discord/Faerun Fashionistas',
+    'discord/Eclipsed Heaven',
+    'Stop Astarion posting smh',
+    'Stop Gale posting smh',
+    'I love being dramatic',
+    'aw;odiajwdoiuawhdnjoiuh',
+    'Thank you #scripting-and-programming',
+    'What if we ... ? Unless?',
+    'Stop limiting yourself; play with lighting more!',
+    'Stop limiting yourself; play with lighting more!',
+    'Dont be afraid of lighting',
     'xd',
-    'xqc is the best streamer',
-    'xqc is the best streamer',
-    'xqc is the best streamer',
-    'xqc is the best streamer',
-    'xqc is the best streamer',
-    'xqc is the best streamer',
-    'xqc is the best streamer',
-    'xqc is the best streamer',
-    'xqc is the best streamer',
-    'xqc is the best streamer',
-    'xqc is the best streamer',
-    'xqc is the best streamer',
-    'xqc is the best streamer',
-    'xqc is the best streamer',
-    'xqc is the best streamer',
+    '<3',
+    'xd',
+    'xd',
+    'xd',
+    'xd',
+    'xd',
+    'xd',
+    'xd',
+    'xd',
+    'xd',
+    'xd',
+    'xd',
+    'xd',
+    'xd',
+    'xd',
+    'xd',
+    'xd',
+}
+
+
+LTN_ORDER = {
+            "Enabled",
+            "Intensity",
+            "Kelvin",
+            "UseTemperature",
+            
+            "Color",
+            "Albedo",
+            "BaseColor",
+            "TopColor",
+            "ColorAdjustedForIntensity",
+            "ColorTemperatureAdjustment",
+            "SunColor",
+            "ScatteringSunColor",
+            "CirrusCloudsColor",
+            
+            "Pitch",
+            "Yaw",
+            "RotationAsVec3",
+            "Distance",
+            "Radius",
+            "LightDistance",
+            "LightSize",
+            
+            "Density",
+            "Density0",
+            "Density1",
+            "Height0",
+            "Height1",
+            
+            "NoiseCoverage",
+            "NoiseFrequency",
+            "NoiseRotation",
+            "NoiseWind",
+            
+            "Phase",
+            "RenderDistance",
+            
+            "ShadowEnabled",
+            "ShadowBias",
+            "ShadowFade",
+            "ShadowNearPlane",
+            "ShadowFarPlane",
+            "ShadowObscurity",
+            "ShadowFactor",
+            
+            "CascadeCount",
+            "CascadeSpeed",
+            
+            "CoverageSettings",
+            "LocalCoverageEnabled",
+            "LocalCoverageScalar",
+            "CoverageStartDistance",
+            "CoverageEndDistance",
+            "CoverageWindSpeed",
+            
+            "ScatteringEnabled",
+            "ScatteringIntensity",
+            "ScatteringSunIntensity",
+            "ScatteringIntensityScale",
+            
+            "SkydomeEnabled",
+            "SkydomeTex",
+            "RotateSkydomeEnabled",
+            
+            "CirrusCloudsEnabled",
+            "CirrusCloudsIntensity",
+            "CirrusCloudsAmount",
+            
+            "ProcStarsEnabled",
+            "ProcStarsIntensity",
+            "ProcStarsAmount",
+            "ProcStarsSaturation",
+            "ProcStarsShimmer",
+            
+            "AmbientLightFactor",
+            "SunLightFactor",
+            "DirectLightInfluence",
+            
+            "ForwardScatteringG",
+            "BackwardScatteringG",
+            
+            "HorizonFade",
+            "BottomFade",
+            
+            "ConeRadius",
+            "DetailScale",
+            "Distortion",
+            "DistortionScale",
+            "ErosionEdgeSize",
+            "DarkOutline",
+            
+            "LODDistance",
+            "SampleScalar",
+            "SampleThreshold",
+            
+            "RainCoverageMaxInfluence",
+            
+            "SunIntensity",
+            "SunlightObscurity",
+            "SunRayLength",
+            
+            "Earthshine",
+            "MoonGlare",
+            "CastLightEnabled",
+            
+            "Bias",
+            
+            "TearsRotate",
+            "TearsScale",
+            
+            "PhysicalModel",
+            
+            "Offset",
+            
+            "AlbedoTexResourceGUID",
+            "NormalTexResourceGUID",
+            "TearsAlbedoTexResourceGUID",
+            "TearsNormalTexResourceGUID",
+            "TexResourceGUID",
+            
+            "ParentGUID",
+            "LinearClearColor",
+            "LinearClearColorOverride",
+            "TimelineFogOverride"
+}
+
+
+
+ATM_ORDER = {
+    "GUID",
+    "InheritanceFlags",
+    
+    "Atmosphere",
+    
+    "NearPlane",
+    "FarPlane",
+    
+    "WindDirection",
+    "WindSpeed",
+    "ClothWindSpeed",
+    "ClothWindVariance",
+    "ClothMainWindSpeed",
+    "ClothMainWindFrequency",
+    "ClothMaxWindDirectionOffset",
+    "ClothWindDirectionOffsetFrequency",
+    
+    "LocalLightSourceEnabled",
+    "LocalLightSourceOverrideSettings",
+    "LocalLightSourceIntensity",
+    "LocalLightSourceColor",
+    
+    "EnvironmentEffectGlobalEnabled",
+    "EnvironmentEffect",
+    "EnvironmentEffectEnabled",
+    "EnvironmentEffectEnabledForTimeline",
+    "EnvironmentEffectOffset",
+    
+    "TimelineAutomaticLightingDefaultSetup",
+    "TimelineAutomaticLightingDisableFlip",
+    
+    "PostProcess",
+    
+    "Camera",
+    
+    "DOF",
+    "DOFForcedSettingsEnabled",
+    "AlternateDOF",
+    "FocalDistance",
+    "Aperture",
+    "NearSharpDistance",
+    "FarSharpDistance",
+    "NearOnly",
+    "FarOnly",
+    
+    "Exposure",
+    "ExposureCompensation",
+    "ExposureMin",
+    "ExposureMax",
+    "ExposureMinPercentile",
+    "ExposureMaxPercentile",
+    "ExposureMeteringMode",
+    
+    "Delta",
+    "Enabled",
+    "Settings",
+    "DeltaCompensation",
+    "DeltaMin",
+    "DeltaMax",
+    
+    "LensFlareEnabled",
+    "LensFlareIntensity",
+    "LensFlareTreshold",
+    "LensFlareGhostDispersal",
+    "LensFlareHaloWidth",
+    "LensFlareChromaticDistortion",
+    
+    "ColorCorrection",
+    "BlendedColorCorrection",
+    "ColorCorrectionInterpolationFactor",
+    
+    "Contrast",
+    "Saturation",
+    "Hue",
+    "Pivot",
+    "Shadows",
+    "Highlights",
+    
+    "GlobalRange",
+    "DarkRange",
+    "ShadowRange",
+    "MidtonesRange",
+    "HighlightRange",
+    "SpecularRange",
+    "ExposureShift",
+    "XYOffset",
+    
+    "LutApplyMode",
+    "LutBlendFactors",
+    "GradingLut",
+    "GradingLutEnabled",
+    
+    "Bloom",
+    "BloomAmount",
+    "BloomThreshold",
+    
+    "GodRaysEnabled",
+    "GodRaysPower",
+    "GodRaysRayIntensity",
+    "GodRaysThreshold",
+    
+    "Vignette",
+    "VignetteColor",
+    "VignetteIntensity",
+    "VignettePower",
+    
+    "Brightness",
+    "FadeOut",
+    "ToneMapHighlightsFixAmount",
+    "UseViewModeHDRSettings",
+    
+    "WhiteTemperature",
+    "WhiteBalanceTint",
+    "WhiteBalanceMatrix"
 }
