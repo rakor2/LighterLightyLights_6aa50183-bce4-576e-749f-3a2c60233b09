@@ -1,201 +1,214 @@
 {
-    "SchemaVersion": 1,
-    "ModName": "Lighty Lights",
-    "Tabs": [
+  "SchemaVersion": 1,
+  "ModName": "Lighty Lights",
+  "Tabs": [
+    {
+      "TabId": "LightyLights-main",
+      "TabName": "Lighty Lights",
+      "Sections": [
         {
-            "TabId": "LightyLights-main",
-            "TabName": "Lighty Lights",
-            "Sections": [
-                {
-                    "SectionId": "general_settings",
-                    "SectionName": "",
-                    "Settings": [
-                        {
-                            "Id": "ll_toggle_window",
-                            "Name": "! Toggle window",
-                            "Type": "keybinding_v2",
-                            "Default": {
-                                "Keyboard": {
-                                    "Key": "",
-                                    "ModifierKeys": []
-                                }
-                            },
-                            "Options": {
-                                "BlockIfLevelNotStarted": true
-                            }
-                        },
-                        {
-                            "Id": "ll_toggle_light",
-                            "Name": "Toggle selected light",
-                            "Type": "keybinding_v2",
-                            "Default": {
-                                "Keyboard": {
-                                    "Key": "",
-                                    "ModifierKeys": []
-                                }
-                            },
-                            "Options": {
-                                "BlockIfLevelNotStarted": true
-                            }
-                        },
-                        {
-                            "Id": "ll_toggle_all_lights",
-                            "Name": "Toggle all lights",
-                            "Type": "keybinding_v2",
-                            "Default": {
-                                "Keyboard": {
-                                    "Key": "",
-                                    "ModifierKeys": []
-                                }
-                            },
-                            "Options": {
-                                "BlockIfLevelNotStarted": true
-                            }
-                            
-                        },
-                        {
-                            "Id": "ll_toggle_marker",
-                            "Name": "Toggle marker",
-                            "Type": "keybinding_v2",
-                            "Default": {
-                                "Keyboard": {
-                                    "Key": "",
-                                    "ModifierKeys": []
-                                }
-                            },
-                            "Options": {
-                                "BlockIfLevelNotStarted": true
-                            }
-                        },
-                        {
-                            "Id": "ll_toggle_all_markers",
-                            "Name": "Toggle all markers",
-                            "Type": "keybinding_v2",
-                            "Default": {
-                                "Keyboard": {
-                                    "Key": "",
-                                    "ModifierKeys": []
-                                }
-                            },
-                            "Options": {
-                                "BlockIfLevelNotStarted": true
-                            }
-                        },
-                        {
-                            "Id": "ll_duplicate",
-                            "Name": "Duplicate selected light",
-                            "Type": "keybinding_v2",
-                            "Default": {
-                                "Keyboard": {
-                                    "Key": "",
-                                    "ModifierKeys": []
-                                }
-                            },
-                            "Options": {
-                                "BlockIfLevelNotStarted": true
-                            }
-                        },
-                        {
-                            "Id": "ll_stick",
-                            "Name": "Stick light to camera",
-                            "Type": "keybinding_v2",
-                            "Default": {
-                                "Keyboard": {
-                                    "Key": "",
-                                    "ModifierKeys": []
-                                }
-                            },
-                            "Options": {
-                                "BlockIfLevelNotStarted": true
-                            }
-                        },
-                        {
-                            "Id": "ll_prev",
-                            "Name": "Previous light",
-                            "Type": "keybinding_v2",
-                            "Default": {
-                                "Keyboard": {
-                                    "Key": "",
-                                    "ModifierKeys": []
-                                }
-                            },
-                            "Options": {
-                                "BlockIfLevelNotStarted": true
-                            }
-                        },
-                        {
-                            "Id": "ll_next",
-                            "Name": "Next light",
-                            "Type": "keybinding_v2",
-                            "Default": {
-                                "Keyboard": {
-                                    "Key": "",
-                                    "ModifierKeys": []
-                                }
-                            },
-                            "Options": {
-                                "BlockIfLevelNotStarted": true
-                            }
-                        },
-                        {
-                            "Id": "ll_selected_popup",
-                            "Name": "Toggle selected light popup",
-                            "Type": "keybinding_v2",
-                            "Default": {
-                                "Keyboard": {
-                                    "Key": "",
-                                    "ModifierKeys": []
-                                }
-                            },
-                            "Options": {
-                                "BlockIfLevelNotStarted": true
-                            }
-                        },
-                        {
-                            "Id": "ll_beam",
-                            "Name": "Toggle Mazzle beam",
-                            "Type": "keybinding_v2",
-                            "Default": {
-                                "Keyboard": {
-                                    "Key": "",
-                                    "ModifierKeys": []
-                                }
-                            },
-                            "Options": {
-                                "BlockIfLevelNotStarted": true
-                            }
-                        },
-                        {
-                            "Id": "ll_apply_anl",
-                            "Name": "Apply AnL",
-                            "Type": "keybinding_v2",
-                            "Default": {
-                                "Keyboard": {
-                                    "Key": "",
-                                    "ModifierKeys": []
-                                }
-                            },
-                            "Options": {
-                                "BlockIfLevelNotStarted": true
-                            }
-                        },
-                        {
-                            "Id": "ll_move_to_cursor",
-                            "Name": "Move selected character to cursor",
-                            "Type": "keybinding_v2",
-                            "Default": {
-                                "Keyboard": {
-                                    "Key": "",
-                                    "ModifierKeys": []
-                                }
-                            },
-                            "Options": {
-                                "BlockIfLevelNotStarted": true
-                            }
-                        }
-                    ]
+          "SectionId": "general_settings",
+          "SectionName": "",
+          "Settings": [
+            {
+              "Id": "ll_toggle_window",
+              "Name": "! Toggle window",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "NUM_4",
+                  "ModifierKeys": ["LAlt"]
                 }
-            ]
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_toggle_light",
+              "Name": "Toggle selected light",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "X",
+                  "ModifierKeys": ["LAlt"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_toggle_all_lights",
+              "Name": "Toggle all lights",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "",
+                  "ModifierKeys": []
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_toggle_marker",
+              "Name": "Toggle marker",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "",
+                  "ModifierKeys": []
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_toggle_all_markers",
+              "Name": "Toggle all markers",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "",
+                  "ModifierKeys": []
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_duplicate",
+              "Name": "Duplicate selected light",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "C",
+                  "ModifierKeys": ["LAlt"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_stick",
+              "Name": "Stick light to camera",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "R",
+                  "ModifierKeys": ["LAlt"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_prev",
+              "Name": "Previous light",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "Q",
+                  "ModifierKeys": ["LAlt"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_next",
+              "Name": "Next light",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "E",
+                  "ModifierKeys": ["LAlt"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_selected_popup",
+              "Name": "Toggle selected light popup",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "S",
+                  "ModifierKeys": ["LAlt"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_beam",
+              "Name": "Toggle Mazzle beam",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "A",
+                  "ModifierKeys": ["LAlt"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_apply_anl",
+              "Name": "Apply AnL",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "NUM_3",
+                  "ModifierKeys": ["LShift"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_hide_gobo",
+              "Name": "Hide gobo",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "",
+                  "ModifierKeys": [""]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_move_to_cursor",
+              "Name": "Move selected character to cursor",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "",
+                  "ModifierKeys": []
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }

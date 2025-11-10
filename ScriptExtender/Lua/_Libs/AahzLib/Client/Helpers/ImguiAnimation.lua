@@ -54,11 +54,12 @@ function Imgui.FadeColor(el, colorProp, initialColor, fadeColor, fadeTime)
     local framesPassed = 0
     local totalFrames = fadeTime * 60  -- Assuming 60 fps
 
-    -- Cancel any ongoing fade for this element
-    if currentFadeMap[el.Handle] then
-        currentFadeMap[el.Handle]:Unsubscribe()
-        currentFadeMap[el.Handle] = nil
-        -- DWarn("Fade Reset")
+    local fadeKey = el.Handle .. '_' .. Ext.Math.Random(1,10000)
+
+    -- Cancel any ongoing fade for this element and color property
+    if currentFadeMap[fadeKey] then
+        currentFadeMap[fadeKey]:Unsubscribe()
+        currentFadeMap[fadeKey] = nil
     end
 
     -- based on frame number, lerp between initial color and fade color
@@ -70,13 +71,14 @@ function Imgui.FadeColor(el, colorProp, initialColor, fadeColor, fadeTime)
             -- RPrint(("Fading... %s"):format(percent))
         end
     end
+    
     local function resetColor()
         el:SetColor(colorProp, fadeColor)
-        currentFadeMap[el.Handle] = nil
+        currentFadeMap[fadeKey] = nil
     end
 
     -- Subscribe to the fade animation and store the subscription
-    currentFadeMap[el.Handle] = Imgui.MainTick:Take(totalFrames):Subscribe(fadeTween, resetColor, resetColor)
+    currentFadeMap[fadeKey] = Imgui.MainTick:Take(totalFrames):Subscribe(fadeTween, resetColor, resetColor)
 end
 
 --- Tracks original pre-jiggle position of imgui element, by handle

@@ -21,12 +21,12 @@ function Settings2Tab(p)
     textSad.Visible = false
 
 
+    p:AddSeparatorText('UI')
 
 
 
 
-
-    local collapseDefault = p:AddCollapsingHeader('Open by default')
+    local collapseDefault = p:AddCollapsingHeader('Opened by default')
     
 
 
@@ -180,13 +180,6 @@ function Settings2Tab(p)
 
 
     
-    E.checkDefaultType = p:AddCombo('Default type')
-    E.checkDefaultType.Options = {'Point', 'Spotlight', 'Directional'}
-    E.checkDefaultType.SelectedIndex = table.find(E.checkDefaultType.Options, defaultLightType) - 1
-    E.checkDefaultType.OnChange = function (e)
-        defaultLightType = E.checkDefaultType.Options[E.checkDefaultType.SelectedIndex +1]
-        SettingsSave()
-    end
 
     local c = 0
     E.checkPickerSize = p:AddCheckbox('Bigger color picker')
@@ -194,7 +187,7 @@ function Settings2Tab(p)
         if LLGlobals.selectedUuid then
             e.Checked = not e.Checked
             c = c + 1
-            if c < 3 then 
+            if c < 3 then
                 local textColorWarning = p:AddText([[Can not apply this setting, you have lights on the scene]])
                     Helpers.Timer:OnTicks(200, function ()
                         textColorWarning:Destroy()
@@ -219,5 +212,64 @@ function Settings2Tab(p)
 
     end
     E.checkPickerSize.Checked = biggerPicker
+
+    
+    -- E.slFadeTime = p:AddSlider('Elements fade time')
+    -- E.slFadeTime.Value = {fadeTime, 0, 0, 0}
+    -- E.slFadeTime.OnChange = function (e)
+    --     fadeTime = e.Value[1]
+    --     SettingsSave()
+    -- end
+
+    p:AddSeparatorText('Mod')
+
+    
+    E.checkDefaultType = p:AddCombo('Default type')
+    E.checkDefaultType.Options = {'Point', 'Spotlight', 'Directional'}
+    E.checkDefaultType.SelectedIndex = table.find(E.checkDefaultType.Options, defaultLightType) - 1
+    E.checkDefaultType.OnChange = function (e)
+        defaultLightType = E.checkDefaultType.Options[E.checkDefaultType.SelectedIndex +1]
+        SettingsSave()
+    end
+
+
+    -- why do I heve this E? I don't remember...
+    E.slMarkerSize = p:AddSlider('Default marker size', DEFAULT_MARKER_SCALE, 0.01, DEFAULT_MARKER_SCALE, 1)
+    E.slMarkerSize.Value = {markerScale, 0, 0, 0}
+    E.slMarkerSize.OnChange = function (e)
+        markerScale = e.Value[1]
+        SettingsSave()
+        if not LLGlobals.markerEntity then return end
+        LLGlobals.markerEntity.Visual.Visual:SetWorldScale({markerScale, markerScale, markerScale})
+    end
+
+    E.slDefCamSpeed = p:AddSlider('Default camera speed', 0, 0.1, 10, 1)
+    E.slDefCamSpeed.Value = {defaultCameraSpeed, 0, 0, 0}
+    E.slDefCamSpeed.OnChange = function (e)
+        defaultCameraSpeed = e.Value[1] 
+        SettingsSave()
+    end
+
+    E.checkLightSetupState = p:AddCheckbox('CharacterLight setup off by default')
+    E.checkLightSetupState.Checked = lightSetupState
+    E.checkLightSetupState.OnChange = function (e)
+        lightSetupState = e.Checked
+        SettingsSave()
+    end
+    
+
+    E.checkToggleMarker = p:AddCheckbox('Marker off by default')
+    E.checkToggleMarker.Checked = markerOff
+    E.checkToggleMarker.OnChange = function (e)
+        markerOff = e.Checked
+        SettingsSave()
+    end
+
+    E.checkStickToggle = p:AddCheckbox('Disable stick on light creation')
+    E.checkStickToggle.Checked = stickToggleOff
+    E.checkStickToggle.OnChange = function (e)
+        stickToggleOff = e.Checked
+        SettingsSave()
+    end
 
 end

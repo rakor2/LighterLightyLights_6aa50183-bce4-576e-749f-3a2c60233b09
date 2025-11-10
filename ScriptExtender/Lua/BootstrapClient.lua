@@ -1,89 +1,119 @@
-Ext.Require("_Libs/_InitLibs.lua")
-Ext.Require("Client/ManualManual/_init.lua")
-Ext.Require("Shared/_init.lua")
+Ext.Require('_Libs/_InitLibs.lua')
+Ext.Require('Shared/_init.lua')
 
 
 ZipBomb = ZipBomb or {}
 
 
-currentCacheVersion = "1.7.Bober"
+currentCacheVersion = '1.7.Bober'
 
 Settings = {}
 
---TBD:unhardcode
+--- TBD:unhardcode
+
+local function bool(v, default)
+    if v == nil then return default end
+    return v
+end
+
 function SettingsSave()
     local settings = {
         style = StyleSettings.selectedStyle or 1,
-        picker = pickerSize or false,
+        picker = bool(pickerSize, false),
 
-        openByDefaultPMCamera = openByDefaultPMCamera or false,
-        openByDefaultPMInfo = openByDefaultPMInfo or false,
-        openByDefaultPMPos = openByDefaultPMPos or false,
-        openByDefaultPMRot = openByDefaultPMRot or false,
-        openByDefaultPMScale = openByDefaultPMScale or false,
-        openByDefaultPMLook = openByDefaultPMLook or false,
-        openByDefaultPMSave = openByDefaultPMSave or false,
+        openByDefaultPMCamera = bool(openByDefaultPMCamera, false),
+        openByDefaultPMInfo = bool(openByDefaultPMInfo, false),
+        openByDefaultPMPos = bool(openByDefaultPMPos, false),
+        openByDefaultPMRot = bool(openByDefaultPMRot, false),
+        openByDefaultPMScale = bool(openByDefaultPMScale, false),
+        openByDefaultPMLook = bool(openByDefaultPMLook, false),
+        openByDefaultPMSave = bool(openByDefaultPMSave, false),
 
-        openByDefaultMainGen = openByDefaultMainGen or false,
-        openByDefaultMainPoint = openByDefaultMainPoint or false,
-        openByDefaultMainSpot = openByDefaultMainSpot or false,
-        openByDefaultMainDir = openByDefaultMainDir or false,
-        openByDefaultMainAdd = openByDefaultMainAdd or false,
-        openByDefaultMainWorld = openByDefaultMainWorld or false,
-        openByDefaultMainChar = openByDefaultMainChar or false,
-        openByDefaultMainRot = openByDefaultMainRot or false,
+        openByDefaultMainGen = bool(openByDefaultMainGen, false),
+        openByDefaultMainPoint = bool(openByDefaultMainPoint, false),
+        openByDefaultMainSpot = bool(openByDefaultMainSpot, false),
+        openByDefaultMainDir = bool(openByDefaultMainDir, false),
+        openByDefaultMainAdd = bool(openByDefaultMainAdd, false),
+        openByDefaultMainWorld = bool(openByDefaultMainWorld, false),
+        openByDefaultMainChar = bool(openByDefaultMainChar, false),
+        openByDefaultMainRot = bool(openByDefaultMainRot, false),
         
         defaultLightType = defaultLightType or 'Point',
 
-        biggerPicker = biggerPicker or false
+        biggerPicker = bool(biggerPicker, false),
 
+        markerScale = markerScale or 0.699999988079071,
+
+        fadeTime = fadeTime or 0,
+
+        defaultCameraSpeed = defaultCameraSpeed or 6,
+
+        lightSetupState = bool(lightSetupState, true),
+        
+        markerOff = bool(markerOff, false),
+
+        stickToggleOff = bool(stickToggleOff, false),
 
     }
+
     local json = Ext.Json.Stringify(settings)
-    Ext.IO.SaveFile("LightyLights/settings.json", json)
+    Ext.IO.SaveFile('LightyLights/settings.json', json)
+    
+    return settings
 end
 
 
 function SettingsLoad()
-    local json = Ext.IO.LoadFile("LightyLights/settings.json")
-    if json then
-        local settings = Ext.Json.Parse(json)
-        StyleSettings.selectedStyle = settings.style
-        pickerSize = settings.picker or false
+    local json = Ext.IO.LoadFile('LightyLights/settings.json')
+    if not json then return end
 
-        openByDefaultPMCamera = settings.openByDefaultPMCamera or false
-        openByDefaultPMInfo = settings.openByDefaultPMInfo or false
-        openByDefaultPMPos = settings.openByDefaultPMPos or false
-        openByDefaultPMRot = settings.openByDefaultPMRot or false
-        openByDefaultPMScale = settings.openByDefaultPMScale or false
-        openByDefaultPMLook = settings.openByDefaultPMLook or false
-        openByDefaultPMSave = settings.openByDefaultPMSave or false
+    local settings = Ext.Json.Parse(json)
+    if not settings then return end
 
-        openByDefaultMainGen = settings.openByDefaultMainGen or false
-        openByDefaultMainPoint = settings.openByDefaultMainPoint or false
-        openByDefaultMainSpot = settings.openByDefaultMainSpot or false
-        openByDefaultMainDir = settings.openByDefaultMainDir or false
-        openByDefaultMainAdd = settings.openByDefaultMainAdd or false
-        openByDefaultMainWorld = settings.openByDefaultMainWorld or false
-        openByDefaultMainChar = settings.openByDefaultMainChar or false
-        openByDefaultMainRot = settings.openByDefaultMainRot or false
+    StyleSettings.selectedStyle = settings.style or 1
+    pickerSize = bool(settings.picker, false)
 
-        defaultLightType = settings.defaultLightType or 'Point'
-        
-        biggerPicker = settings.biggerPicker or false
+    openByDefaultPMCamera = bool(settings.openByDefaultPMCamera, false)
+    openByDefaultPMInfo = bool(settings.openByDefaultPMInfo, false)
+    openByDefaultPMPos = bool(settings.openByDefaultPMPos, false)
+    openByDefaultPMRot = bool(settings.openByDefaultPMRot, false)
+    openByDefaultPMScale = bool(settings.openByDefaultPMScale, false)
+    openByDefaultPMLook = bool(settings.openByDefaultPMLook, false)
+    openByDefaultPMSave = bool(settings.openByDefaultPMSave, false)
 
-    end
+    openByDefaultMainGen = bool(settings.openByDefaultMainGen, false)
+    openByDefaultMainPoint = bool(settings.openByDefaultMainPoint, false)
+    openByDefaultMainSpot = bool(settings.openByDefaultMainSpot, false)
+    openByDefaultMainDir = bool(settings.openByDefaultMainDir, false)
+    openByDefaultMainAdd = bool(settings.openByDefaultMainAdd, false)
+    openByDefaultMainWorld = bool(settings.openByDefaultMainWorld, false)
+    openByDefaultMainChar = bool(settings.openByDefaultMainChar, false)
+    openByDefaultMainRot = bool(settings.openByDefaultMainRot, false)
+
+    defaultLightType = settings.defaultLightType or 'Point'
+    biggerPicker = bool(settings.biggerPicker, false)
+
+    markerScale = settings.markerScale or 0.699999988079071
+    fadeTime = settings.fadeTime or 0.3
+    defaultCameraSpeed = settings.defaultCameraSpeed or 6
+    lightSetupState = bool(settings.lightSetupState, true)
+    
+    markerOff = bool(settings.markerOff, false)
+
+    stickToggleOff = bool(settings.stickToggleOff, false)
+
 end
 
 
-if Ext.IO.LoadFile("LightyLights/settings.json") then
+
+if Ext.IO.LoadFile('LightyLights/settings.json') then
     SettingsLoad()
-    print("")
-    DPrint(" Settings loaded")
+    print('')
+    DPrint(' Settings loaded')
 else
 
-    print("")
-    DPrint("Settings file not found. The file will be created after changing UI style")
+    print('')
+    DPrint('Settings file not found. The file will be created after changing UI style')
     
     SettingsSave()
     SettingsLoad()
@@ -91,7 +121,7 @@ else
 end
 
 
-Ext.Require("Client/_init.lua")
+Ext.Require('Client/_init.lua')
 
 
 
@@ -203,72 +233,72 @@ SaveCacheToFile()
 
 --- UNUSED
 
-local function CacheSavedValues()
-    savedValuesTable.Version = currentCacheVersion
+-- local function CacheSavedValues()
+--     savedValuesTable.Version = currentCacheVersion
 
-    local json = Ext.Json.Stringify(savedValuesTable)
-    Ext.IO.SaveFile("LightyLights/LTN_Cache.json", json)
+--     local json = Ext.Json.Stringify(savedValuesTable)
+--     Ext.IO.SaveFile('LightyLights/LTN_Cache.json', json)
 
-    if Ext.IO.LoadFile("LightyLights/LTN_Cache.json") then
-        -- DPrint(" LTN cached successfully with verison " .. Ext.Json.Parse(Ext.IO.LoadFile("LightyLights/LTN_Cache.json")).Version)
-        CacheCheck()
-    else
-        return
-    end
+--     if Ext.IO.LoadFile('LightyLights/LTN_Cache.json') then
+--         -- DPrint(' LTN cached successfully with verison ' .. Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/LTN_Cache.json')).Version)
+--         CacheCheck()
+--     else
+--         return
+--     end
 
-end
+-- end
 
 
 
-savedValuesTable = {}
-function SavedValuesTable()
-    for k, template in pairs(ltn_templates) do
-        local lightingValue = Ext.Resource.Get(template.uuid, "Lighting").Lighting
+-- savedValuesTable = {}
+-- function SavedValuesTable()
+--     for k, template in pairs(ltn_templates) do
+--         local lightingValue = Ext.Resource.Get(template.uuid, 'Lighting').Lighting
         
-        savedValuesTable = {
-            'UNUSED FILE'
-        }
-    end
-    DPrint(" Caching LTN values . . . ")
-    -- DDump(savedValuesTable[ltn_templates[1].uuid])
-    -- print("")
-    CacheSavedValues()
-end
+--         savedValuesTable = {
+--             'UNUSED FILE'
+--         }
+--     end
+--     DPrint(' Caching LTN values . . . ')
+--     -- DDump(savedValuesTable[ltn_templates[1].uuid])
+--     -- print('')
+--     CacheSavedValues()
+-- end
 
 
 
-Ext.RegisterNetListener("ManualCache", function()
-    SavedValuesTable()
-end)
+-- Ext.RegisterNetListener('ManualCache', function()
+--     SavedValuesTable()
+-- end)
 
-Ext.RegisterNetListener("LLL_LevelStarted", function()
-    if Ext.IO.LoadFile("LightyLights/LTN_Cache.json") == nil then
-    -- DPrint(" Caching LTN values . . . ")
-    SavedValuesTable()
-    end
-end)
+-- Ext.RegisterNetListener('LLL_LevelStarted', function()
+--     if Ext.IO.LoadFile('LightyLights/LTN_Cache.json') == nil then
+--     -- DPrint(' Caching LTN values . . . ')
+--     SavedValuesTable()
+--     end
+-- end)
 
 
-function CacheCheck()
-    if Ext.IO.LoadFile("LightyLights/LTN_Cache.json") then
-        versionCheck = Ext.Json.Parse(Ext.IO.LoadFile("LightyLights/LTN_Cache.json")).Version
-        if versionCheck ~= currentCacheVersion then
-            -- DWarn("LTN cache version check not passed")
-            SavedValuesTable()
-        else
-            -- DPrint(" LTN cache loaded with verison " .. Ext.Json.Parse(Ext.IO.LoadFile("LightyLights/LTN_Cache.json")).Version)
-        end
+-- function CacheCheck()
+--     if Ext.IO.LoadFile('LightyLights/LTN_Cache.json') then
+--         versionCheck = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/LTN_Cache.json')).Version
+--         if versionCheck ~= currentCacheVersion then
+--             -- DWarn('LTN cache version check not passed')
+--             SavedValuesTable()
+--         else
+--             -- DPrint(' LTN cache loaded with verison ' .. Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/LTN_Cache.json')).Version)
+--         end
 
-    else
-        DPrint("LTN cache file not found. The file will be created after loading a save or by manually using !cacheltn console command while a save is loaded")
-    end
-end
+--     else
+--         DPrint('LTN cache file not found. The file will be created after loading a save or by manually using !cacheltn console command while a save is loaded')
+--     end
+-- end
 
-CacheCheck()
+-- CacheCheck()
 
-print("")
-DPrint("files location: AppData\\Local\\Larian Studios\\Baldur's Gate 3\\Script Extender\\LightyLights")
-print("")
+print('')
+DPrint([[files location: AppData\\Local\\Larian Studios\\Baldur's Gate 3\\Script Extender\\LightyLights]])
+print('')
 
-Ext.RegisterConsoleCommand("cacheltnC", SaveValuesToTable)
+-- Ext.RegisterConsoleCommand('cacheltnC', SaveValuesToTable)
 

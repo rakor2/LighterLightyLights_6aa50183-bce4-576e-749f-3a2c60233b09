@@ -5,6 +5,8 @@ local dummyCounter = 0
 
 Ext.Entity.OnCreate('PhotoModeSession', function ()
     Helpers.Timer:OnTicks(30, function ()
+        
+        LLGlobals.States.inPhotoMode = true
 
         dummyCounter = 0
         
@@ -16,21 +18,27 @@ Ext.Entity.OnCreate('PhotoModeSession', function ()
             LLGlobals.DummyNameMap[Dummy:Name(dummy) .. '##' .. dummyCounter] = dummy
         end
         
+        
         LLGlobals.DummyNames = Utils:MapToArray(LLGlobals.DummyNameMap)
-        visTemComob.Options = LLGlobals.DummyNames
-        UpdateCharacterInfo(visTemComob.SelectedIndex + 1)
+        E.visTemComob.Options = LLGlobals.DummyNames
+        
+        CharacterLightSetupState(E.checkLightSetupState.Checked)
+        UpdateCharacterInfo(E.visTemComob.SelectedIndex + 1)
     end)
 end)
 
 
 
 Ext.Entity.OnDestroy('PhotoModeSession', function ()
+    
+    LLGlobals.States.inPhotoMode = false
+
     --DPrint('PhotoModeSession OnDestroy')
     LLGlobals.DummyNameMap = nil
     LLGlobals.DummyNames = nil
-    visTemComob.Options = {'Not in Photo Mode'}
-    visTemComob.SelectedIndex = 0
-    checkPMSrc.Checked = false
+    E.visTemComob.Options = {'Not in Photo Mode'}
+    E.visTemComob.SelectedIndex = 0
+    E.checkPMSrc.Checked = false
     
     if Utils.subID and Utils.subID['SourcePhotoMode'] then
         Utils:SubUnsubToTick('unsub', 'SourcePhotoMode',_)

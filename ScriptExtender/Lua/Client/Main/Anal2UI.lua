@@ -6,10 +6,10 @@ function Anal2Tab(p)
     local winAtmFav
 
 
-    -- local valuesApplyButton = p:AddButton("Apply 2")
-    -- valuesApplyButton.IDContext = "sunValuesDayLoad"
-    -- valuesApplyButton.SameLine = false
-    -- valuesApplyButton.OnClick = function()
+    -- local valuesE.applyButton = p:AddButton("Apply 2")
+    -- valuesE.applyButton.IDContext = "sunValuesDayLoad"
+    -- valuesE.applyButton.SameLine = false
+    -- valuesE.applyButton.OnClick = function()
     --     Ext.Net.PostMessageToServer("valuesApplyDay", "")
     -- end
 
@@ -26,90 +26,80 @@ function Anal2Tab(p)
 
 
     
-    local inpSearchLighting = p:AddInputText('')
-    inpSearchLighting.IDContext = 'o9irtqjwno9485839c'
-    inpSearchLighting.OnChange = function()
-        LLGlobals.FilteredLTNOptions = UI:FilterOptions(inpSearchLighting.Text, LLGlobals.LtnComboOptions)
-        GlobalsIMGUI.comboLighting.Options = LLGlobals.FilteredLTNOptions
-        GlobalsIMGUI.comboLighting.SelectedIndex = 0
+    E.inpSearchLighting = p:AddInputText('')
+    E.inpSearchLighting.IDContext = 'o9irtqjwno9485839c'
+    E.inpSearchLighting.OnChange = function()
+        LLGlobals.FilteredLTNOptions = UI:FilterOptions(E.inpSearchLighting.Text, LLGlobals.LtnComboOptions)
+        E.comboLighting.Options = LLGlobals.FilteredLTNOptions
+        E.comboLighting.SelectedIndex = 0
     end
 
 
 
-    local btnClearSearch = p:AddButton('Search')
-    btnClearSearch.SameLine = true
-    btnClearSearch.OnClick = function ()
-        inpSearchLighting.Text = ''
+    E.btnClearSearch = p:AddButton('Search')
+    E.btnClearSearch.SameLine = true
+    E.btnClearSearch.OnClick = function ()
+        E.inpSearchLighting.Text = ''
         LLGlobals.FilteredLTNOptions = LLGlobals.LtnComboOptions
-        GlobalsIMGUI.comboLighting.Options = LLGlobals.LtnComboOptions
+        E.comboLighting.Options = LLGlobals.LtnComboOptions
     end
     
     
-    -- local btnApplyLtn = p:AddButton('Apply')
-    -- btnApplyLtn.IDContext = ''
-    -- btnApplyLtn.SameLine = true
-    -- btnApplyLtn.OnClick = function ()
-    --     Ext.Net.PostMessageToServer('LL_LightingApply', UI:SelectedOpt(GlobalsIMGUI.comboLighting))
-    --     ChangeLTNValues()
-    -- end
 
 
-
-
-
-    GlobalsIMGUI.comboLighting = p:AddCombo('')
-    GlobalsIMGUI.comboLighting.IDContext = ';oeirj4eiouh'
-    GlobalsIMGUI.comboLighting.Options = LLGlobals.LtnComboOptions or {}
-    GlobalsIMGUI.comboLighting.SelectedIndex = 0
-    GlobalsIMGUI.comboLighting.OnChange = function ()
+    E.comboLighting = p:AddCombo('')
+    E.comboLighting.IDContext = ';oeirj4eiouh'
+    E.comboLighting.Options = LLGlobals.LtnComboOptions or {}
+    E.comboLighting.SelectedIndex = 0
+    E.comboLighting.OnChange = function ()
         comboLightingFunc()
     end
-    GlobalsIMGUI.comboLighting.OnRightClick = function ()
+    E.comboLighting.OnRightClick = function ()
         comboLightingFunc()
     end
 
     
     
-    local btnPrevLtn = p:AddButton('<')
-    btnPrevLtn.IDContext = ';olsikefnlieurhn'
-    btnPrevLtn.SameLine = true
-    btnPrevLtn.OnClick = function ()
-        UI:PrevOption(GlobalsIMGUI.comboLighting)
+    E.btnPrevLtn = p:AddButton('<')
+    E.btnPrevLtn.IDContext = ';olsikefnlieurhn'
+    E.btnPrevLtn.SameLine = true
+    E.btnPrevLtn.OnClick = function ()
+        UI:PrevOption(E.comboLighting)
         comboLightingFunc()
     end
 
 
 
-    local btnNextLtn = p:AddButton('>')
-    btnNextLtn.IDContext = ';olsikefnlieur3402934u20934uhn'
-    btnNextLtn.SameLine = true
-    btnNextLtn.OnClick = function ()
-        UI:NextOption(GlobalsIMGUI.comboLighting)
+    E.btnNextLtn = p:AddButton('>')
+    E.btnNextLtn.IDContext = ';olsikefnlieur3402934u20934uhn'
+    E.btnNextLtn.SameLine = true
+    E.btnNextLtn.OnClick = function ()
+        UI:NextOption(E.comboLighting)
         comboLightingFunc()
     end
 
 
 
 
-    local btnAddToFav = p:AddButton('Add')
-    btnAddToFav.IDContext = 'oiurfhaieowurhi4wh5iu'
-    btnAddToFav.SameLine = true
-    btnAddToFav.OnClick = function ()
-        if LLGlobals.FavLighting[UI:SelectedOpt(GlobalsIMGUI.comboLighting)] == UI:SelectedOpt(GlobalsIMGUI.comboLighting) then
+    E.btnAddToFav = p:AddButton('Add')
+    E.btnAddToFav.IDContext = 'oiurfhaieowurhi4wh5iu'
+    E.btnAddToFav.SameLine = true
+    E.btnAddToFav.OnClick = function ()
+        if LLGlobals.FavLighting[UI:SelectedOpt(E.comboLighting)] == UI:SelectedOpt(E.comboLighting) then
             return
         else
-            CreateSelectable(winLtnFav, LLGlobals.FavLighting, LLGlobals.FilteredLTNOptions[GlobalsIMGUI.comboLighting.SelectedIndex + 1], 'FavoriteLighting', 'LL_LightingApply')
+            CreateSelectable(winLtnFav, LLGlobals.FavLighting, LLGlobals.FilteredLTNOptions[E.comboLighting.SelectedIndex + 1], 'FavoriteLighting', 'LL_LightingApply')
         end
     end
 
 
 
-    local colFav = p:AddCollapsingHeader('Favorites')
-    colFav.IDContext = 'iaeuhkbnkwbriyuwg34iy'
+    E.colFav = p:AddCollapsingHeader('Favorites')
+    E.colFav.IDContext = 'iaeuhkbnkwbriyuwg34iy'
     
 
 
-    winLtnFav = colFav:AddChildWindow('')
+    winLtnFav = E.colFav:AddChildWindow('')
     winLtnFav.Size = CHILD_WIN_SIZE
 
 
@@ -131,85 +121,76 @@ function Anal2Tab(p)
 
 
 
-    local inpSearchAtmosphere = p:AddInputText('')
-    inpSearchAtmosphere.IDContext = 'pfkjawpo3i4rho83hr'
-    inpSearchAtmosphere.OnChange = function()
-        LLGlobals.FilteredATMOptions = UI:FilterOptions(inpSearchAtmosphere.Text, LLGlobals.AtmComboOptions)
-        GlobalsIMGUI.comboAtmosphere.Options = LLGlobals.FilteredATMOptions
-        GlobalsIMGUI.comboAtmosphere.SelectedIndex = 0
+    E.inpSearchAtmosphere = p:AddInputText('')
+    E.inpSearchAtmosphere.IDContext = 'pfkjawpo3i4rho83hr'
+    E.inpSearchAtmosphere.OnChange = function()
+        LLGlobals.FilteredATMOptions = UI:FilterOptions(E.inpSearchAtmosphere.Text, LLGlobals.AtmComboOptions)
+        E.comboAtmosphere.Options = LLGlobals.FilteredATMOptions
+        E.comboAtmosphere.SelectedIndex = 0
     end
 
 
 
-    local btnClearSearchAtm = p:AddButton('Search')
-    btnClearSearchAtm.IDContext = 'oweifjw3oiufhn'
-    btnClearSearchAtm.SameLine = true
-    btnClearSearchAtm.OnClick = function ()
-        inpSearchAtmosphere.Text = ''
+    E.btnClearSearchAtm = p:AddButton('Search')
+    E.btnClearSearchAtm.IDContext = 'oweifjw3oiufhn'
+    E.btnClearSearchAtm.SameLine = true
+    E.btnClearSearchAtm.OnClick = function ()
+        E.inpSearchAtmosphere.Text = ''
         LLGlobals.FilteredATMOptions = LLGlobals.AtmComboOptions
-        GlobalsIMGUI.comboAtmosphere.Options = LLGlobals.AtmComboOptions
+        E.comboAtmosphere.Options = LLGlobals.AtmComboOptions
     end
 
 
-    -- local btnApplyAtm = p:AddButton('Apply')
-    -- btnApplyAtm.IDContext = 'awdawdawd'
-    -- btnApplyAtm.SameLine = true
-    -- btnApplyAtm.OnClick = function ()
-    --     Ext.Net.PostMessageToServer('LL_AtmosphereApply', UI:SelectedOpt(GlobalsIMGUI.comboAtmosphere))
-    -- end
-
-
-
-    GlobalsIMGUI.comboAtmosphere = p:AddCombo('')
-    GlobalsIMGUI.comboAtmosphere.IDContext = ';o342342etm'
-    GlobalsIMGUI.comboAtmosphere.Options = LLGlobals.AtmComboOptions or {}
-    GlobalsIMGUI.comboAtmosphere.SelectedIndex = 0
-    GlobalsIMGUI.comboAtmosphere.OnChange = function (e)
+    E.comboAtmosphere = p:AddCombo('')
+    E.comboAtmosphere.IDContext = ';o342342etm'
+    E.comboAtmosphere.Options = LLGlobals.AtmComboOptions or {}
+    E.comboAtmosphere.SelectedIndex = 0
+    E.comboAtmosphere.OnChange = function (e)
         comboAtmosphereFunc()
     end
-    GlobalsIMGUI.comboAtmosphere.OnRightClick = function (e)
+    E.comboAtmosphere.OnRightClick = function (e)
         comboAtmosphereFunc()
     end
 
 
 
-    local btnPrevAtm = p:AddButton('<')
-    btnPrevAtm.IDContext = ';olsikefnli4444444eurhnatm'
-    btnPrevAtm.SameLine = true
-    btnPrevAtm.OnClick = function ()
-        UI:PrevOption(GlobalsIMGUI.comboAtmosphere)
+    E.btnPrevAtm = p:AddButton('<')
+    E.btnPrevAtm.IDContext = ';olsikefnli4444444eurhnatm'
+    E.btnPrevAtm.SameLine = true
+    E.btnPrevAtm.OnClick = function ()
+        UI:PrevOption(E.comboAtmosphere)
         comboAtmosphereFunc()
     end
 
 
 
-    local btnNextAtm = p:AddButton('>')
-    btnNextAtm.IDContext = ';ol123123sik34uhnatm'
-    btnNextAtm.SameLine = true
-    btnNextAtm.OnClick = function ()
-        UI:NextOption(GlobalsIMGUI.comboAtmosphere)
+    E.btnNextAtm = p:AddButton('>')
+    E.btnNextAtm.IDContext = ';ol123123sik34uhnatm'
+    E.btnNextAtm.SameLine = true
+    E.btnNextAtm.OnClick = function ()
+        UI:NextOption(E.comboAtmosphere)
         comboAtmosphereFunc()
     end
 
 
 
-    local btnAddToFavAtm = p:AddButton('Add')
-    btnAddToFavAtm.IDContext = 'oiu12312354125m'
-    btnAddToFavAtm.SameLine = true
-    btnAddToFavAtm.OnClick = function ()
-        if LLGlobals.FavAtmosphere[UI:SelectedOpt(GlobalsIMGUI.comboAtmosphere)] == UI:SelectedOpt(GlobalsIMGUI.comboAtmosphere) then
+    E.btnAddToFavAtm = p:AddButton('Add')
+    E.btnAddToFavAtm.IDContext = 'oiu12312354125m'
+    E.btnAddToFavAtm.SameLine = true
+    E.btnAddToFavAtm.OnClick = function ()
+        if LLGlobals.FavAtmosphere[UI:SelectedOpt(E.comboAtmosphere)] == UI:SelectedOpt(E.comboAtmosphere) then
             return
         else
-            CreateSelectable(winAtmFav, LLGlobals.FavAtmosphere, LLGlobals.FilteredATMOptions[GlobalsIMGUI.comboAtmosphere.SelectedIndex + 1], 'FavoriteAtmosphere', 'LL_AtmosphereApply')
+            CreateSelectable(winAtmFav, LLGlobals.FavAtmosphere, LLGlobals.FilteredATMOptions[E.comboAtmosphere.SelectedIndex + 1], 'FavoriteAtmosphere', 'LL_AtmosphereApply')
         end
     end
 
 
 
-    local colFavAtm = p:AddCollapsingHeader('Favorites')
-    colFavAtm.IDContext = 'iae1231231235156646hgdtm'
+    E.colFavAtm = p:AddCollapsingHeader('Favorites')
+    E.colFavAtm.IDContext = 'iae1231231235156646hgdtm'
 
-    winAtmFav = colFavAtm:AddChildWindow('')
+    winAtmFav = E.colFavAtm:AddChildWindow('')
     winAtmFav.Size = CHILD_WIN_SIZE
 
 
@@ -227,16 +208,16 @@ function Anal2Tab(p)
 
 
 
-    local resetLtnBtn = p:AddButton('Lighting')
-    resetLtnBtn.OnClick = function ()
+    E.resetLtnBtn = p:AddButton('Lighting')
+    E.resetLtnBtn.OnClick = function ()
         Channels.ResetANL:SendToServer('Lighting')
     end
     
 
 
-    local resetAtmBtn = p:AddButton('Atmosphere')
-    resetAtmBtn.SameLine = true
-    resetAtmBtn.OnClick = function ()
+    E.resetAtmBtn = p:AddButton('Atmosphere')
+    E.resetAtmBtn.SameLine = true
+    E.resetAtmBtn.OnClick = function ()
         Channels.ResetANL:SendToServer('Atmosphere')
     end
 
@@ -249,9 +230,9 @@ function Anal2Tab(p)
 
     p:AddSeparatorText('Parameters')
 
-    local btnApplyParam = p:AddButton('Apply')
-    btnApplyParam.OnClick = function (e)
-        Apply_TheOptimizationIsUnspoken()
+    E.btnApplyParam = p:AddButton('Apply')
+    E.btnApplyParam.OnClick = function (e)
+        ApplyParameters()
     end
 
     -- local btnCacheLTN = p:AddButton('Cache')
@@ -259,47 +240,47 @@ function Anal2Tab(p)
     --     CacheLTN()
     -- end
     
-    local btnResetCLTN = p:AddButton('Reset lighting')
-    btnResetCLTN.SameLine = true
-    btnResetCLTN.OnClick = function ()
+    E.btnResetCLTN = p:AddButton('Reset lighting')
+    E.btnResetCLTN.SameLine = true
+    E.btnResetCLTN.OnClick = function ()
         ResetLTN(false)
-        Apply_TheOptimizationIsUnspoken()
+        ApplyParameters()
     end
-    btnResetCLTN.OnRightClick = function ()
+    E.btnResetCLTN.OnRightClick = function ()
         ResetLTN(true)
-        Apply_TheOptimizationIsUnspoken()
+        ApplyParameters()
     end
     
-    local btnResetCATM = p:AddButton('Reset atmosphere')
-    btnResetCATM.SameLine = true
-    btnResetCATM.OnClick = function ()
+    E.btnResetCATM = p:AddButton('Reset atmosphere')
+    E.btnResetCATM.SameLine = true
+    E.btnResetCATM.OnClick = function ()
         ResetATM(false)
-        Apply_TheOptimizationIsUnspoken()
+        ApplyParameters()
     end
-    btnResetCATM.OnRightClick = function ()
+    E.btnResetCATM.OnRightClick = function ()
         ResetATM(true)
-        Apply_TheOptimizationIsUnspoken()
+        ApplyParameters()
     end
     
     -- local btnResetALTN = p:AddButton('Reset lightin all')
     -- btnResetALTN.OnClick = function ()
     --     ResetLTN(true)
-    --     Apply_TheOptimizationIsUnspoken()
+    --     ApplyParameters()
     -- end
 
     -- local btnResetAATM = p:AddButton('Reset atmosphere all')
     -- btnResetAATM.SameLine = true
     -- btnResetAATM.OnClick = function ()
     --     ResetATM(true)
-    --     Apply_TheOptimizationIsUnspoken()
+    --     ApplyParameters()
     -- end
 
 
-    local collapseParamsLTN = p:AddCollapsingHeader('Lighting')
-    collapseParamsLTN.IDContext = 'awdaowikdn'
+    E.collapseParamsLTN = p:AddCollapsingHeader('Lighting')
+    E.collapseParamsLTN.IDContext = 'awdaowikdn'
 
-    local collapseParamsATM = p:AddCollapsingHeader('Atmosphere') 
-    collapseParamsATM.IDContext = 'awdaowikdn'
+    E.collapseParamsATM = p:AddCollapsingHeader('Atmosphere') 
+    E.collapseParamsATM.IDContext = 'awdaowikdn'
 
 
     --half(80%)-slop
@@ -411,7 +392,7 @@ function Anal2Tab(p)
 
         local function isIntParam(key)
             local intKeys = {
-                "ShadowObscurity", "SunlightObscurity", "CascadeCount", "PhysicalModel", 'DirectLightInfluence'
+                "ShadowObscurity", "SunlightObscurity", "CascadeCount", "PhysicalModel",
             }
             for _, intKey in ipairs(intKeys) do
                 if key == intKey or string.find(key, intKey) then
@@ -696,37 +677,43 @@ function Anal2Tab(p)
 
     local uuid = '375af627-6f3c-19e8-1046-29265ae9e8f7'
     local resource = 'Lighting'
-    local mainParent = collapseParamsLTN
+    local mainParent = E.collapseParamsLTN
     CreateUI(uuid, resource, mainParent, LTN_ORDER)
 
     local uuid = '73e03af9-7ab1-47a7-906b-a4e0362045ef'
     local resource = 'Atmosphere'
-    local mainParent = collapseParamsATM
+    local mainParent = E.collapseParamsATM
     CreateUI(uuid, resource, mainParent, LTN_ORDER)
 
 
     function comboLightingFunc()
-        Ext.Net.PostMessageToServer('LL_LightingApply', UI:SelectedOpt(GlobalsIMGUI.comboLighting))
-        CreateUI(ltn_templates2[UI:SelectedOpt(GlobalsIMGUI.comboLighting)], 'Lighting', collapseParamsLTN, LTN_ORDER) --yes.
+        Ext.Net.PostMessageToServer('LL_LightingApply', UI:SelectedOpt(E.comboLighting))
+        CreateUI(ltn_templates2[UI:SelectedOpt(E.comboLighting)], 'Lighting', E.collapseParamsLTN, LTN_ORDER) --yes.
     end
 
     function comboAtmosphereFunc()
-        Ext.Net.PostMessageToServer('LL_AtmosphereApply', UI:SelectedOpt(GlobalsIMGUI.comboAtmosphere))
-        CreateUI(atm_templates2[UI:SelectedOpt(GlobalsIMGUI.comboAtmosphere)], 'Atmosphere', collapseParamsATM, ATM_ORDER) --yes.
+        Ext.Net.PostMessageToServer('LL_AtmosphereApply', UI:SelectedOpt(E.comboAtmosphere))
+        CreateUI(atm_templates2[UI:SelectedOpt(E.comboAtmosphere)], 'Atmosphere', E.collapseParamsATM, ATM_ORDER) --yes.
     end
 
     
-    function Apply_TheOptimizationIsUnspoken()
-        UI:PrevOption(GlobalsIMGUI.comboLighting)
+    function ApplyParameters()
+        -- UI:PrevOption(E.comboLighting)
         comboLightingFunc()
         comboAtmosphereFunc()
-        Helpers.Timer:OnTicks(5, function ()
-            UI:NextOption(GlobalsIMGUI.comboLighting)
-            comboLightingFunc()
-            comboAtmosphereFunc()
+        
+        local Data = {
+            uuid = ltn_templates2[UI:SelectedOpt(E.comboLighting)]
+        }
+        Channels.ApplyANL:RequestToServer(Data, function (Response)
+            if Response then
+                comboLightingFunc()
+                comboAtmosphereFunc()
+            end
+
         end)
     end
-
+    
     
     function ResetLTN(all)
         if all then
@@ -734,7 +721,7 @@ function Anal2Tab(p)
                 ApplyCachedLighting(uuid, ZipBomb.CachedLighting)
             end
         else
-            local uuid = ltn_templates2[UI:SelectedOpt(GlobalsIMGUI.comboLighting)]
+            local uuid = ltn_templates2[UI:SelectedOpt(E.comboLighting)]
             ApplyCachedLighting(uuid, ZipBomb.CachedLighting)
         end
     end
@@ -746,7 +733,7 @@ function Anal2Tab(p)
                 ApplyCachedAtmosphere(uuid, ZipBomb.CachedAtmosphere)
             end
         else
-            local uuid = atm_templates2[UI:SelectedOpt(GlobalsIMGUI.comboAtmosphere)]
+            local uuid = atm_templates2[UI:SelectedOpt(E.comboAtmosphere)]
             ApplyCachedAtmosphere(uuid, ZipBomb.CachedAtmosphere)
         end
     end

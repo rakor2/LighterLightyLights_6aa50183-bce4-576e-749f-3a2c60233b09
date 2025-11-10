@@ -16,7 +16,7 @@ StyleDefinitions = {
     },
     {
         name = "Velvet Glow of a Forgotten Amethyst Star",
-        funcName = "Main2"
+        funcName = "E.main2"
     },
     {
         name = "Arctic Breeze Dancing Over the Moonlit Waves",
@@ -159,7 +159,7 @@ Style.MainWindow = {
 }
 
 Style.MainWindow2 = {
-    Main2 = function(mainWindow)
+    E.main2 = function(mainWindow)
         -- Colors settings _ai
         mainWindow:SetColor("Text", {0.90, 0.85, 0.95, 1.00})
         mainWindow:SetColor("TextDisabled", {0.60, 0.55, 0.65, 1.00}) 

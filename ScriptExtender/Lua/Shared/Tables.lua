@@ -107,9 +107,9 @@ QOTD = {
     'Dont be afraid of lighting',
     'xd',
     '<3',
-    'xd',
-    'xd',
-    'xd',
+    'who is qsat',
+    'Janky ahh code',
+    'Under the same one',
     'xd',
     'xd',
     'xd',
@@ -127,130 +127,130 @@ QOTD = {
 
 
 LTN_ORDER = {
-            "Enabled",
-            "Intensity",
-            "Kelvin",
-            "UseTemperature",
-            
-            "Color",
-            "Albedo",
-            "BaseColor",
-            "TopColor",
-            "ColorAdjustedForIntensity",
-            "ColorTemperatureAdjustment",
-            "SunColor",
-            "ScatteringSunColor",
-            "CirrusCloudsColor",
-            
-            "Pitch",
-            "Yaw",
-            "RotationAsVec3",
-            "Distance",
-            "Radius",
-            "LightDistance",
-            "LightSize",
-            
-            "Density",
-            "Density0",
-            "Density1",
-            "Height0",
-            "Height1",
-            
-            "NoiseCoverage",
-            "NoiseFrequency",
-            "NoiseRotation",
-            "NoiseWind",
-            
-            "Phase",
-            "RenderDistance",
-            
-            "ShadowEnabled",
-            "ShadowBias",
-            "ShadowFade",
-            "ShadowNearPlane",
-            "ShadowFarPlane",
-            "ShadowObscurity",
-            "ShadowFactor",
-            
-            "CascadeCount",
-            "CascadeSpeed",
-            
-            "CoverageSettings",
-            "LocalCoverageEnabled",
-            "LocalCoverageScalar",
-            "CoverageStartDistance",
-            "CoverageEndDistance",
-            "CoverageWindSpeed",
-            
-            "ScatteringEnabled",
-            "ScatteringIntensity",
-            "ScatteringSunIntensity",
-            "ScatteringIntensityScale",
-            
-            "SkydomeEnabled",
-            "SkydomeTex",
-            "RotateSkydomeEnabled",
-            
-            "CirrusCloudsEnabled",
-            "CirrusCloudsIntensity",
-            "CirrusCloudsAmount",
-            
-            "ProcStarsEnabled",
-            "ProcStarsIntensity",
-            "ProcStarsAmount",
-            "ProcStarsSaturation",
-            "ProcStarsShimmer",
-            
-            "AmbientLightFactor",
-            "SunLightFactor",
-            "DirectLightInfluence",
-            
-            "ForwardScatteringG",
-            "BackwardScatteringG",
-            
-            "HorizonFade",
-            "BottomFade",
-            
-            "ConeRadius",
-            "DetailScale",
-            "Distortion",
-            "DistortionScale",
-            "ErosionEdgeSize",
-            "DarkOutline",
-            
-            "LODDistance",
-            "SampleScalar",
-            "SampleThreshold",
-            
-            "RainCoverageMaxInfluence",
-            
-            "SunIntensity",
-            "SunlightObscurity",
-            "SunRayLength",
-            
-            "Earthshine",
-            "MoonGlare",
-            "CastLightEnabled",
-            
-            "Bias",
-            
-            "TearsRotate",
-            "TearsScale",
-            
-            "PhysicalModel",
-            
-            "Offset",
-            
-            "AlbedoTexResourceGUID",
-            "NormalTexResourceGUID",
-            "TearsAlbedoTexResourceGUID",
-            "TearsNormalTexResourceGUID",
-            "TexResourceGUID",
-            
-            "ParentGUID",
-            "LinearClearColor",
-            "LinearClearColorOverride",
-            "TimelineFogOverride"
+    "Enabled",
+    "Intensity",
+    "Kelvin",
+    "UseTemperature",
+    
+    "Color",
+    "Albedo",
+    "BaseColor",
+    "TopColor",
+    "ColorAdjustedForIntensity",
+    "ColorTemperatureAdjustment",
+    "SunColor",
+    "ScatteringSunColor",
+    "CirrusCloudsColor",
+    
+    "Pitch",
+    "Yaw",
+    "RotationAsVec3",
+    "Distance",
+    "Radius",
+    "LightDistance",
+    "LightSize",
+    
+    "Density",
+    "Density0",
+    "Density1",
+    "Height0",
+    "Height1",
+    
+    "NoiseCoverage",
+    "NoiseFrequency",
+    "NoiseRotation",
+    "NoiseWind",
+    
+    "Phase",
+    "RenderDistance",
+    
+    "ShadowEnabled",
+    "ShadowBias",
+    "ShadowFade",
+    "ShadowNearPlane",
+    "ShadowFarPlane",
+    "ShadowObscurity",
+    "ShadowFactor",
+    
+    "CascadeCount",
+    "CascadeSpeed",
+    
+    "CoverageSettings",
+    "LocalCoverageEnabled",
+    "LocalCoverageScalar",
+    "CoverageStartDistance",
+    "CoverageEndDistance",
+    "CoverageWindSpeed",
+    
+    "ScatteringEnabled",
+    "ScatteringIntensity",
+    "ScatteringSunIntensity",
+    "ScatteringIntensityScale",
+    
+    "SkydomeEnabled",
+    "SkydomeTex",
+    "RotateSkydomeEnabled",
+    
+    "CirrusCloudsEnabled",
+    "CirrusCloudsIntensity",
+    "CirrusCloudsAmount",
+    
+    "ProcStarsEnabled",
+    "ProcStarsIntensity",
+    "ProcStarsAmount",
+    "ProcStarsSaturation",
+    "ProcStarsShimmer",
+    
+    "AmbientLightFactor",
+    "SunLightFactor",
+    "DirectLightInfluence",
+    
+    "ForwardScatteringG",
+    "BackwardScatteringG",
+    
+    "HorizonFade",
+    "BottomFade",
+    
+    "ConeRadius",
+    "DetailScale",
+    "Distortion",
+    "DistortionScale",
+    "ErosionEdgeSize",
+    "DarkOutline",
+    
+    "LODDistance",
+    "SampleScalar",
+    "SampleThreshold",
+    
+    "RainCoverageMaxInfluence",
+    
+    "SunIntensity",
+    "SunlightObscurity",
+    "SunRayLength",
+    
+    "Earthshine",
+    "MoonGlare",
+    "CastLightEnabled",
+    
+    "Bias",
+    
+    "TearsRotate",
+    "TearsScale",
+    
+    "PhysicalModel",
+    
+    "Offset",
+    
+    "AlbedoTexResourceGUID",
+    "NormalTexResourceGUID",
+    "TearsAlbedoTexResourceGUID",
+    "TearsNormalTexResourceGUID",
+    "TexResourceGUID",
+    
+    "ParentGUID",
+    "LinearClearColor",
+    "LinearClearColorOverride",
+    "TimelineFogOverride"
 }
 
 

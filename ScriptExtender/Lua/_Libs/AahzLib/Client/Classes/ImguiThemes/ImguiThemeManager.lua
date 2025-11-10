@@ -251,10 +251,10 @@ function ThemeManager:CreateUpdateableDisplay(holder)
     themeDropdown.Options = optionNames
     themeDropdown.SelectedIndex = 0
 
-    local globalApplyButton = themeChild:AddButton("Apply")
-    globalApplyButton.SameLine = true
-    globalApplyButton:Tooltip():AddText("Applies selected theme to all AahzLib-made windows.")
-    globalApplyButton.OnClick = function()
+    local globalE.applyButton = themeChild:AddButton("Apply")
+    globalE.applyButton.SameLine = true
+    globalE.applyButton:Tooltip():AddText("Applies selected theme to all AahzLib-made windows.")
+    globalE.applyButton.OnClick = function()
         -- TODO rethink AahzLib multiple project imgui support
         -- if Scribe and Scribe.AllWindows then
         --     local themeName = Imgui.Combo.GetSelected(themeDropdown)

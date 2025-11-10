@@ -18,7 +18,7 @@ function Gobo2Tab(p)
         ['13c358b1-9afc-4acf-b121-fa38994d72d2'] = 'Stars',
         ['34329d13-f74d-46ac-928c-c6b40b87b644'] = 'Star',
         ['0435655f-4c3b-48dc-970e-55afc2956cd6'] = 'Asstation',
-        ['213674c9-8606-4f08-aaea-7ef3b7339e6e'] = 'Asstation2',
+        ['213674c9-8606-4f08-aaea-7ef3b7339e6e'] = 'Bhaal bs',
         ['fc270e8b-7192-47af-b440-f5a87dd3d2cf'] = 'Water',
         ['1b86fb4a-330e-413e-ba8f-fbb1e51846fe'] = 'Blinds',
         ['08a26239-974d-4837-88be-f0365792cad9'] = 'Dots',
@@ -38,50 +38,50 @@ function Gobo2Tab(p)
     end
 
     
-    comboIHateCombos2 = p:AddCombo('')
-    comboIHateCombos2.Options = LLGlobals.LightsNames
-    comboIHateCombos2.SelectedIndex = LLGlobals.syncedSelectedIndex
-    comboIHateCombos2.OnChange = function (e)
+    E.comboIHateCombos2 = p:AddCombo('')
+    E.comboIHateCombos2.Options = LLGlobals.LightsNames
+    E.comboIHateCombos2.SelectedIndex = LLGlobals.syncedSelectedIndex
+    E.comboIHateCombos2.OnChange = function (e)
         
         if not LLGlobals.selectedUuid then return end
 
-        LLGlobals.syncedSelectedIndex = comboIHateCombos2.SelectedIndex
-        comboIHateCombos.SelectedIndex = LLGlobals.syncedSelectedIndex
+        LLGlobals.syncedSelectedIndex = E.comboIHateCombos2.SelectedIndex
+        E.comboIHateCombos.SelectedIndex = LLGlobals.syncedSelectedIndex
         SelectLight()
     end
 
 
-    local txtCreateLight2 = p:AddText('Created lights')
-    txtCreateLight2.SameLine = true
+    E.txtCreateLight2 = p:AddText('Created lights')
+    E.txtCreateLight2.SameLine = true
 
 
 
-    local goboList = p:AddCombo('')
-    goboList.IDContext = 'GoboMasksList'
-    goboList.HeightLargest = true
-    goboList.Options = GoboNames
-    goboList.SelectedIndex = 0
-    goboList.OnChange = function (e)
+    E.goboList = p:AddCombo('')
+    E.goboList.IDContext = 'GoboMasksList'
+    E.goboList.HeightLargest = true
+    E.goboList.Options = GoboNames
+    E.goboList.SelectedIndex = 0
+    E.goboList.OnChange = function (e)
         
         if not LLGlobals.selectedUuid then return end
         
         for guid, name in pairs(GoboUuidNameMap) do
-            if name == goboList.Options[goboList.SelectedIndex + 1] then
+            if name == E.goboList.Options[E.goboList.SelectedIndex + 1] then
                 LLGlobals.selectedGobo = guid
             end
         end
     end
 
-    local goboPrev = p:AddButton('<')
-    goboPrev.SameLine = true
-    goboPrev.IDContext = 'a;leksfmn'
-    goboPrev.OnClick = function (e)
+    E.goboPrev = p:AddButton('<')
+    E.goboPrev.SameLine = true
+    E.goboPrev.IDContext = 'a;leksfmn'
+    E.goboPrev.OnClick = function (e)
         if not LLGlobals.selectedUuid then return end
 
-        UI:PrevOption(goboList)
+        UI:PrevOption(E.goboList)
         
         for guid, name in pairs(GoboUuidNameMap) do
-            if name == goboList.Options[goboList.SelectedIndex + 1] then
+            if name == E.goboList.Options[E.goboList.SelectedIndex + 1] then
                 LLGlobals.selectedGobo = guid
             end
         end
@@ -93,21 +93,23 @@ function Gobo2Tab(p)
                 goboGuid = LLGlobals.selectedGobo
             }
             
-            Channels.CreateGobo:SendToServer(Data)
+            Channels.CreateGobo:RequestToServer(Data, function (Response)
+                LLGlobals.selectedGoboUuid = Response
+            end)
         end)
 
     end
 
-    local goboNext = p:AddButton('>')
-    goboNext.SameLine = true
-    goboNext.IDContext = 'a;leksawdfmn'
-    goboNext.OnClick = function (e)
+    E.goboNext = p:AddButton('>')
+    E.goboNext.SameLine = true
+    E.goboNext.IDContext = 'a;leksawdfmn'
+    E.goboNext.OnClick = function (e)
         if not LLGlobals.selectedUuid then return end
 
-        UI:NextOption(goboList)
+        UI:NextOption(E.goboList)
         
         for guid, name in pairs(GoboUuidNameMap) do
-            if name == goboList.Options[goboList.SelectedIndex + 1] then
+            if name == E.goboList.Options[E.goboList.SelectedIndex + 1] then
                 LLGlobals.selectedGobo = guid
             end
         end
@@ -119,18 +121,20 @@ function Gobo2Tab(p)
                 goboGuid = LLGlobals.selectedGobo
             }
             
-            Channels.CreateGobo:SendToServer(Data)
+            Channels.CreateGobo:RequestToServer(Data, function (Response)
+                LLGlobals.selectedGoboUuid = Response
+            end)
         end)
 
     end
 
     
-    local textMask = p:AddText('Masks')
+    textMask = p:AddText('Masks')
     textMask.SameLine = true
 
-    local goboDistanceSlider = p:AddSlider('Distance', 0.1, 0.1, 10, 1)
-    goboDistanceSlider.IDContext = 'GoboDistanceSlider'
-    goboDistanceSlider.OnChange = function(e)
+    E.goboDistanceSlider = p:AddSlider('Distance', 0.1, 0.1, 10, 1)
+    E.goboDistanceSlider.IDContext = 'E.goboDistanceSlider'
+    E.goboDistanceSlider.OnChange = function(e)
 
         if not LLGlobals.selectedUuid then return end
         
@@ -142,9 +146,9 @@ function Gobo2Tab(p)
         Channels.GoboTranslate:SendToServer(Data)
     end
 
-    local createGoboButton = p:AddButton('Create gobo')
-    createGoboButton.IDContext = 'CreateGoboButton'
-    createGoboButton.OnClick = function()
+    E.createGoboButton = p:AddButton('Create gobo')
+    E.createGoboButton.IDContext = 'E.createGoboButton'
+    E.createGoboButton.OnClick = function()
 
         if not LLGlobals.selectedUuid then return end
                 
@@ -153,14 +157,17 @@ function Gobo2Tab(p)
             goboGuid = LLGlobals.selectedGobo
         }
 
-        Channels.CreateGobo:SendToServer(Data)
+        Channels.CreateGobo:RequestToServer(Data, function (Response)
+            LLGlobals.selectedGoboUuid = Response
+        end)
+
     end
 
 
-    local deleteGoboButton = p:AddButton('Delete')
-    deleteGoboButton.IDContext = 'DeleteGoboButton'
-    deleteGoboButton.SameLine = true
-    deleteGoboButton.OnClick = function()
+    E.deleteGoboButton = p:AddButton('Delete')
+    E.deleteGoboButton.IDContext = 'E.deleteGoboButton'
+    E.deleteGoboButton.SameLine = true
+    E.deleteGoboButton.OnClick = function()
         
         if not LLGlobals.selectedUuid then return end
 
@@ -169,16 +176,39 @@ function Gobo2Tab(p)
     end
 
 
-
-    local deleteGoboButton = p:AddButton('Delete all')
-    deleteGoboButton.IDContext = 'DeleteGoboButton'
-    deleteGoboButton.SameLine = true
-    deleteGoboButton.OnClick = function()
+    E.deleteGoboButtonAll = p:AddButton('Delete all')
+    E.deleteGoboButtonAll.IDContext = 'E.deleteGoboButton'
+    E.deleteGoboButtonAll.SameLine = true
+    E.deleteGoboButtonAll.OnClick = function()
 
         if not LLGlobals.selectedUuid then return end
 
         Channels.DeleteGobo:SendToServer('All')
     end
+
+    
+    function hideGobo()
+        if not LLGlobals.selectedUuid then return end
+
+        local uuid = LLGlobals.selectedGoboUuid
+        local newScaleX
+        local defaultScale = 0.07
+        local entity = Ext.Entity.Get(uuid)
+        if entity and entity.Visual then
+            local scaleX = entity.Visual.Visual.WorldTransform.Scale[1]
+            newScaleX = scaleX == 0 and defaultScale or 0
+            entity.Visual.Visual:SetWorldScale({newScaleX,newScaleX,newScaleX})
+        end
+    end
+
+    
+    E.btnHideGobo = p:AddButton('Hide')
+    E.btnHideGobo.IDContext = 'E.wdzawdawdawdw'
+    E.btnHideGobo.SameLine = false
+    E.btnHideGobo.OnClick = function()
+        hideGobo()
+    end
+
 
 end
 

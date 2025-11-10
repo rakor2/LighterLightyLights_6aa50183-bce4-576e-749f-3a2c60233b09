@@ -66,8 +66,8 @@ local function getAvailableRootTemplate()
     for uuid, state in pairs(RootTemplates) do
         if state == true then
             RootTemplates[uuid] = false
-            DPrint('Available RootTemplates ---------------------')
-            DDump(RootTemplates)
+            -- DPrint('Available RootTemplates ---------------------')
+            -- DDump(RootTemplates)
             return uuid
         end
     end
@@ -106,7 +106,7 @@ Channels.CreateLight:SetRequestHandler(function (Data)
     
     if not uuid then return end
 
-    DPrint('Creating new light using: %s', uuid)
+    -- DPrint('Creating new light using: %s', uuid)
 
     local x, y, z = table.unpack(getSourcePosition())
 
@@ -215,6 +215,10 @@ function CreateMarker(single)
         local uuid = lightMarkerGUID
         LLGlobals.markerUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
         Osi.ToTransform(LLGlobals.markerUuid, x, y, z, rx - rOffset, ry, rz)
+        
+        Data = LLGlobals.markerUuid
+        Channels.MarkerHandler:Broadcast(Data)
+
     else
         
         LLGlobals.States.allMarkersExisting = not LLGlobals.States.allMarkersExisting
@@ -896,3 +900,13 @@ Ext.RegisterConsoleCommand('lldg', function (cmd, ...)
     DDump(LLGlobals)
 
 end)
+
+
+
+
+---@type table<string, ResourceLevelMap>
+local levelMaps = {}
+for _,uuid in pairs(Ext.StaticData.GetAll(Ext.Enums.ExtResourceManagerType.LevelMap)) do
+    local map = Ext.StaticData.Get(uuid, Ext.Enums.ExtResourceManagerType.LevelMap) --[[@as ResourceLevelMap]]
+    levelMaps[map.Name] = map
+end

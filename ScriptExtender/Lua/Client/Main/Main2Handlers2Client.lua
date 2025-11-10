@@ -1,11 +1,18 @@
+LLGlobals.States = LLGlobals.States or {}
 
-Ext.Stats.GetStatsManager().ExtraData["PhotoModeCameraFloorDistance"] = -99887766
-Ext.Stats.GetStatsManager().ExtraData["PhotoModeCameraRange"] = 11223344
 
 
 Ext.RegisterNetListener('LL_WhenLevelGameplayStarted', function (channel, payload, user)
     LLGlobals.SourceTranslate = _C().Transform.Transform.Translate
+    
+    Ext.Stats.GetStatsManager().ExtraData["PhotoModeCameraFloorDistance"] = -99887766
+    Ext.Stats.GetStatsManager().ExtraData["PhotoModeCameraRange"] = 11223344
+
+    CharacterLightSetupState(lightSetupState)
 end)
+
+
+
 
 
 Ext.Events.ResetCompleted:Subscribe(function()
@@ -13,21 +20,21 @@ Ext.Events.ResetCompleted:Subscribe(function()
 end)
 
 
-function setSourceTranslate(SourceTranslate)
-    -- local SourceTranslate = _C().Transform.Transform.Translate
-    return SourceTranslate
-end
+-- function setSourceTranslate(SourceTranslate)
+--     -- local SourceTranslate = _C().Transform.Transform.Translate
+--     return SourceTranslate
+-- end
 
 
 
 
 function getSelectedUuid()
     if  LLGlobals.LightsUuidNameMap       and
-        comboIHateCombos.SelectedIndex  and
-        comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1]
+        E.comboIHateCombos.SelectedIndex  and
+        E.comboIHateCombos.Options[E.comboIHateCombos.SelectedIndex + 1]
     then
         for _, light in pairs(LLGlobals.LightsUuidNameMap) do
-            if light.name == comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1] then
+            if light.name == E.comboIHateCombos.Options[E.comboIHateCombos.SelectedIndex + 1] then
                 return light.uuid
             end   
         end
@@ -59,7 +66,7 @@ end
 
 
 function getSelectedLightName()
-    return comboIHateCombos.Options[comboIHateCombos.SelectedIndex + 1]
+    return E.comboIHateCombos.Options[E.comboIHateCombos.SelectedIndex + 1]
 end
 
 
@@ -88,41 +95,41 @@ end
 function sanitySelectedLight()
     for name, uuid in pairs(LLGlobals.LightsUuidNameMap) do
         if uuid == LLGlobals.selectedUuid then
-            DPrint('Sanity selected light: %s, %s', name, LLGlobals.selectedUuid)
+            -- DPrint('Sanity selected light: %s, %s', name, LLGlobals.selectedUuid)
         end
     end
 end
 
 
 
-function translate(entity)
-    local Translate = entity.Transform.Transform.Translate
-    return Translate[1], Translate[2], Translate[3]
-end
+-- function translate(entity)
+--     local Translate = entity.Transform.Transform.Translate
+--     return Translate[1], Translate[2], Translate[3]
+-- end
 
 
 
-function rotation(entity)
-    local RotationQuat = entity.Transform.Transform.RotationQuat
-    local Deg = Helpers.Math.QuatToEuler(RotationQuat)
-    return Deg[1], Deg[2], Deg[3]
-end
+-- function rotation(entity)
+--     local RotationQuat = entity.Transform.Transform.RotationQuat
+--     local Deg = Helpers.Math.QuatToEuler(RotationQuat)
+--     return Deg[1], Deg[2], Deg[3]
+-- end
 
 
 
-local function LightVisibilty()
-    Helpers.Timer:OnTicks(10, function ()
-        local lightEntity = getSelectedLightEntity()
-        -- DPrint('Light visibility entity: %s', lightEntity)
-        if lightEntity then
-            if lightEntity.LightChannelFlag == 255 then
-                textLightVisibility.Label = getSelectedLightName() .. ' is on'
-            else
-                textLightVisibility.Label = getSelectedLightName() .. ' is off'
-            end
-        end
-    end)
-end
+-- local function LightVisibilty()
+--     Helpers.Timer:OnTicks(10, function ()
+--         local lightEntity = getSelectedLightEntity()
+--         -- DPrint('Light visibility entity: %s', lightEntity)
+--         if lightEntity then
+--             if lightEntity.LightChannelFlag == 255 then
+--                 textLightVisibility.Label = getSelectedLightName() .. ' is on'
+--             else
+--                 textLightVisibility.Label = getSelectedLightName() .. ' is off'
+--             end
+--         end
+--     end)
+-- end
 
 
 function SelectLight() 
@@ -135,15 +142,16 @@ function SelectLight()
     UpdateElements(LLGlobals.selectedUuid)
     
     
-    DPrint('Selected light uuid', LLGlobals.selectedUuid)
-    DPrint('Selected light name', name)
-    DPrint('Selected light entity', LLGlobals.selectedEntity)
-    DPrint('Selected light type', LLGlobals.selectedLightType)
+    -- DPrint('Selected light uuid', LLGlobals.selectedUuid)
+    -- DPrint('Selected light name', name)
+    -- DPrint('Selected light entity', LLGlobals.selectedEntity)
+    -- DPrint('Selected light type', LLGlobals.selectedLightType)
 
-    DPrint('Selected light parameters -----------------------')
-    DDump(LLGlobals.LightParametersClient[LLGlobals.selectedUuid])
-
+    -- DPrint('Selected light parameters -----------------------')
+    -- DDump(LLGlobals.LightParametersClient[LLGlobals.selectedUuid])
     
+
+    if not LLGlobals.selectedEntity then return end
     local x,y,z = table.unpack(LLGlobals.selectedEntity.Transform.Transform.Translate)
     local rx,ry,rz = table.unpack(Helpers.Math.QuatToEuler(LLGlobals.selectedEntity.Transform.Transform.RotationQuat))
     UpdateTranformInfo(x,y,z,rx,ry,rz)
@@ -166,8 +174,8 @@ function UpdateCreatedLightsCombo()
         table.insert(LLGlobals.LightsNames, light.name)
     end
 
-    comboIHateCombos.Options = LLGlobals.LightsNames
-    comboIHateCombos2.Options = LLGlobals.LightsNames
+    E.comboIHateCombos.Options = LLGlobals.LightsNames
+    E.comboIHateCombos2.Options = LLGlobals.LightsNames
     
 
     
@@ -183,7 +191,7 @@ end
 
 function RegisterNewLight(uuid, lightType)
     nameIndex = nameIndex + 1
-    DPrint('nameIndex in Register: %s', nameIndex)
+    -- DPrint('nameIndex in Register: %s', nameIndex)
     local name = '+' .. ' ' .. '#' .. nameIndex .. ' ' .. lightType
     
     table.insert(LLGlobals.LightsUuidNameMap, {
@@ -196,7 +204,7 @@ function RegisterNewLight(uuid, lightType)
     -- DDump(LLGlobals.LightsUuidNameMap)
 
     UpdateCreatedLightsCombo()
-    comboIHateCombos.SelectedIndex = #comboIHateCombos.Options - 1
+    E.comboIHateCombos.SelectedIndex = #E.comboIHateCombos.Options - 1
 
 end
 
@@ -213,7 +221,7 @@ lightType = defaultLightType
 function CreateLight()
     if LLGlobals.States.allowLightCreation then
         LLGlobals.States.allowLightCreation = false
-        btnCreate2.Disabled = true
+        E.btnCreate2.Disabled = true
         local Position = LLGlobals.SourceTranslate
         local Data = {
             lightType = lightType or 'Point',
@@ -260,20 +268,27 @@ function CreateLight()
 
 
                     -- UpdateCreatedLightsCombo()
-                    -- comboIHateCombos.SelectedIndex = #comboIHateCombos.Options - 1
+                    -- E.comboIHateCombos.SelectedIndex = #E.comboIHateCombos.Options - 1
                     
+                    if stickToggleOff and Utils.subID and Utils.subID['Stick'] then
+                        E.checkStick.Checked = false
+                        stickToCameraCheck()
+                    end
 
                     Helpers.Timer:OnTicks(10, function ()
                         local x,y,z = table.unpack(Position)
                         UpdateElements(LLGlobals.selectedUuid)
                         UpdateTranformInfo(x, y, z, 90, 0, 0)
+                        if markerOff then
+                            ToggleMarker(LLGlobals.markerUuid)
+                        end
                     end)
-
+                    
 
                 end)
             else
             LLGlobals.States.allowLightCreation = true
-            btnCreate2.Disabled = false
+            E.btnCreate2.Disabled = false
             end
         end)
     end
@@ -313,7 +328,7 @@ function DuplicateLight()
             -- })
 
             -- UpdateCreatedLightsCombo()
-            -- comboIHateCombos.SelectedIndex = #comboIHateCombos.Options - 1
+            -- E.comboIHateCombos.SelectedIndex = #E.comboIHateCombos.Options - 1
             
             Helpers.Timer:OnTicks(15, function ()
                 LLGlobals.selectedEntity = Ext.Entity.Get(LLGlobals.selectedUuid)
@@ -339,10 +354,15 @@ function DuplicateLight()
                 SetLightScattering(xd.ScatteringIntensityScale)
                 SetLightEdgeSharp(xd.EdgeSharpening)
 
+                SetLightChannel(xd.SliderLightChannelFlag)
+
             end)
             
 
-            
+            if stickToggleOff and Utils.subID and Utils.subID['Stick'] then
+                E.checkStick.Checked = false
+                stickToCameraCheck()
+            end
             
             Helpers.Timer:OnTicks(16, function ()
                 local x,y,z = table.unpack(Response[3].Translate)
@@ -396,7 +416,7 @@ function GatherLightsAndMarkers()
     for _, entity in ipairs(gov) do
         for _, guid in pairs(Guido) do
             if entity.GameObjectVisual.RootTemplateId:find(guid) then
-                DPrint(entity)
+                -- DPrint(entity)
                 table.insert(EntitiesToDelete, entity.Uuid.EntityUuid)
             end
         end
@@ -468,13 +488,25 @@ function UpdateElements(selectedUuid)
     E.slLightOuterAngle.Value = {LLGlobals.LightParametersClient[selectedUuid].SpotLightOuterAngle or 45, 0, 0, 0}
     E.slLightInnerAngle.Value = {LLGlobals.LightParametersClient[selectedUuid].SpotLightInnerAngle or 1, 0, 0, 0}
 
+    
 
-    E.checkLightFill.Checked = LLGlobals.LightParametersClient[selectedUuid].Flags ~= 184
+    E.checkLightFill.Checked = (LLGlobals.LightParametersClient[selectedUuid].Flags or 184) == 184
+    
+
+    E.checkLightChannel.Value = {LLGlobals.LightParametersClient[selectedUuid].SliderLightChannelFlag or 1, 0, 0, 0}
+
+    local value = E.checkLightChannel.Value[1]
+    if value == 1 then channelType = 'Character + world' end
+    if value == 2 then channelType = 'Character' end
+    if value == 3 then channelType = 'World' end
+    textChannel.Label = channelType
+    
+
     E.slLightScattering.Value = {LLGlobals.LightParametersClient[selectedUuid].ScatteringIntensityScale or 0, 0, 0, 0}
     E.slLightEdgeSharp.Value = {LLGlobals.LightParametersClient[selectedUuid].EdgeSharpening or 0, 0, 0, 0}
 
     LLGlobals.States.allowLightCreation = true
-    btnCreate2.Disabled = false
+    E.btnCreate2.Disabled = false
 end
 
 
@@ -494,14 +526,23 @@ function UpdateVisibilityStateToNames(lightName, state)
 end
 
 
+Channels.MarkerHandler:SetHandler(function (Data)
+    Helpers.Timer:OnTicks(15, function ()
+        LLGlobals.markerEntity = Ext.Entity.Get(Data)
+        LLGlobals.markerEntity.Visual.Visual:SetWorldScale({markerScale, markerScale, markerScale})
+    end)
+end)
 
+
+LLGlobals.States.markerToggled = false
 function ToggleMarker(uuid)
     local newScaleX
     local entity = Ext.Entity.Get(uuid)
     if entity and entity.Visual then
         local scaleX = entity.Visual.Visual.WorldTransform.Scale[1]
-        newScaleX = scaleX == 0 and MARKER_SCALE or 0
+        newScaleX = scaleX == 0 and markerScale or 0
         entity.Visual.Visual:SetWorldScale({newScaleX,newScaleX,newScaleX})
+        LLGlobals.States.markerToggled = not LLGlobals.States.markerToggled
     end
 end
 
@@ -581,10 +622,6 @@ end
 function SetLightOuterAngle(value)
     local lightEntity = getSelectedLightEntity()
     if lightEntity and value then
-
-        -- DPrint('Current angle: %s', lightEntity.SpotLightOuterAngle)
-        -- DPrint('New angle: %s', value)
-
         lightEntity.SpotLightOuterAngle = value
         LLGlobals.LightParametersClient[LLGlobals.selectedUuid].SpotLightOuterAngle = value
     end
@@ -646,6 +683,19 @@ function SetLightFill(value)
 end
 
 
+function SetLightChannel(value)
+    local lightEntity = getSelectedLightEntity()
+    if lightEntity and value then
+        LLGlobals.LightParametersClient[LLGlobals.selectedUuid].SliderLightChannelFlag = value
+        if value == 1 then value = 255; textChannel.Label = 'Character + world' end
+        if value == 2 then value = 32;  textChannel.Label = 'Character' end
+        if value == 3 then value = 1 ;  textChannel.Label = 'World' end
+        lightEntity.LightChannelFlag = value
+        LLGlobals.LightParametersClient[LLGlobals.selectedUuid].LightChannelFlag = value
+    end
+end
+
+
 
 function SetLightScattering(value)
     local lightEntity = getSelectedLightEntity()
@@ -666,7 +716,7 @@ function MoveEntity(entity, axis, offset, step, mode, objectType)
             Translate = LLGlobals.SourceTranslate
         }
 
-        if objectType == 'Light' then 
+        if objectType == 'Light' then
             if mode == 'World' then
                 Channels.EntityTranslate:SendToServer(Data)
             else
@@ -710,10 +760,15 @@ function SourceCutscene(state)
     
     if not entity then return end
 
+    E.checkPMSrc.Checked = false
+    E.checkClientSrc.Checked = false
+    E.checkOriginSrc.Checked = false
 
     if state then
         Utils:SubUnsubToTick('sub', 'SourceCutscene', function ()
-            -- DPrint('SourceCutscene on')
+
+        if not E.checkCutsceneSrc.Checked then return end
+
         if Dummy:TLPreviewDummyPlayer() then
             local Transform = Dummy:TLPreviewDummyPlayerTransform()
             LLGlobals.SourceTranslate = Transform.Translate
@@ -721,7 +776,7 @@ function SourceCutscene(state)
         else
             Utils:SubUnsubToTick('unsub', 'SourceCutscene',_)
             -- DPrint('SourceCutscene off')
-            checkCutsceneSrc.Checked = false
+            E.checkCutsceneSrc.Checked = false
             LLGlobals.SourceTranslate = entity.Transform.Transform.Translate
             Channels.CurrentEntityTransform:SendToServer(nil)
         end
@@ -741,14 +796,19 @@ end
 function SourcePoint(state)
     local entity = LLGlobals.pointEntity
 
-    if not entity then checkOriginSrc.Checked = false return end
+    if not entity then E.checkOriginSrc.Checked = false return end
+    
+    E.checkPMSrc.Checked = false
+    E.checkClientSrc.Checked = false
+    E.checkCutsceneSrc.Checked = false
 
     if state then
 
         Utils:SubUnsubToTick('sub', 'SourcePoint', function ()
-        -- DPrint('SourcePoint on')
-        -- local Transform = entity.Visual.Visual.WorldTransform
+
+        if not E.checkOriginSrc.Checked then return end
         if not entity.Transform then return end
+
         local Transform = entity.Transform.Transform
         LLGlobals.SourceTranslate = Transform.Translate
         Channels.CurrentEntityTransform:SendToServer(LLGlobals.SourceTranslate)
@@ -756,7 +816,6 @@ function SourcePoint(state)
     else
         if Utils.subID and Utils.subID['SourcePoint'] then
             Utils:SubUnsubToTick('unsub', 'SourcePoint',_)
-            -- DPrint('SourcePoint off')
             LLGlobals.SourceTranslate = _C().Transform.Transform.Translate
         end
         Channels.CurrentEntityTransform:SendToServer(nil)
@@ -766,13 +825,20 @@ end
 
 --- TBD: fix this garbo
 function SourcePhotoMode(state)
-    if not LLGlobals.DummyNameMap then checkPMSrc.Checked = false return end
+    if not LLGlobals.DummyNameMap then E.checkPMSrc.Checked = false return end
     
+    E.checkClientSrc.Checked = false
+    E.checkCutsceneSrc.Checked = false
+    E.checkOriginSrc.Checked = false
+
     if state then
         
         Utils:SubUnsubToTick('sub', 'SourcePhotoMode', function ()
-        local entity = LLGlobals.DummyNameMap[visTemComob.Options[selectedCharacter]]
-        if not entity or not entity.Visual then checkPMSrc.Checked = false return end
+
+        if not E.checkPMSrc.Checked then return end
+
+        local entity = LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]]
+        if not entity or not entity.Visual then E.checkPMSrc.Checked = false return end
         local Transform = entity.Visual.Visual.WorldTransform
         LLGlobals.SourceTranslate = Transform.Translate
         Channels.CurrentEntityTransform:SendToServer(LLGlobals.SourceTranslate)
@@ -789,10 +855,33 @@ end
 
 
 
+function SourceClient(state)
+    
+    E.checkPMSrc.Checked = false
+    E.checkCutsceneSrc.Checked = false
+    E.checkOriginSrc.Checked = false
+
+    if state then
+        Utils:SubUnsubToTick('sub', 'SourceClient', function ()
+        if not E.checkClientSrc.Checked then return end
+        if _C() and _C().Visual and _C().Visual.Visual.WorldTransform then
+            local Transform = _C().Visual.Visual.WorldTransform
+            LLGlobals.SourceTranslate = Transform.Translate
+            Channels.CurrentEntityTransform:SendToServer(LLGlobals.SourceTranslate)
+        end
+    end)
+    else
+        if Utils.subID['SourceClient'] then
+            Utils:SubUnsubToTick('unsub', 'SourceClient',_)
+            LLGlobals.SourceTranslate = _C().Transform.Transform.Translate
+        end
+        Channels.CurrentEntityTransform:SendToServer(nil)
+    end
+end
 
 function stickToCameraCheck()
     Utils:SubUnsubToTick('sub', 'Stick', function ()
-        if checkStick.Checked then
+        if E.checkStick.Checked then
 
             local Translate = Camera:GetActiveCamera().Transform.Transform.Translate
             local RotationQuat = Camera:GetActiveCamera().Transform.Transform.RotationQuat
@@ -815,25 +904,6 @@ end
 
 
 
-function SourceClient(state)
-    if state then
-        Utils:SubUnsubToTick('sub', 'SourceClient', function ()
-        -- DPrint('SourceClient on')
-        if _C() and _C().Visual and _C().Visual.Visual.WorldTransform then
-            local Transform = _C().Visual.Visual.WorldTransform
-            LLGlobals.SourceTranslate = Transform.Translate
-            Channels.CurrentEntityTransform:SendToServer(LLGlobals.SourceTranslate)
-        end
-    end)
-    else
-        if Utils.subID['SourceClient'] then
-            Utils:SubUnsubToTick('unsub', 'SourceClient',_)
-            -- DPrint('SourceClient off')
-            LLGlobals.SourceTranslate = _C().Transform.Transform.Translate
-        end
-        Channels.CurrentEntityTransform:SendToServer(nil)
-    end
-end
 
 
 
@@ -855,7 +925,16 @@ CreateLightNumberNotification()
 
 
 
-
+function CharacterLightSetupState(state)
+    local entities
+    local _, e = pcall(function ()
+        entities = Ext.Entity.GetAllEntitiesWithComponent('CharacterLight')
+        for _, entity in pairs(entities) do
+            entity.CharacterLight.Enabled = state
+        end
+    end)
+    if e then return DPrint('Only available for SE Devel') end
+end
 
 
 
@@ -911,7 +990,7 @@ scaleMod = 1500
 --                     -- DDump(visTemplatesOptionsIndex)
 --             end
 --     end
---     visTemComob.Options = visTemplatesOptionsIndex
+--     E.visTemComob.Options = visTemplatesOptionsIndex
 -- end
 
 
@@ -920,15 +999,15 @@ LLGlobals.CameraPositions = {}
 function CameraSaveLoadPosition(index)
     local activeCam = Camera:GetActiveCamera()
     local pmCamera = Camera:GetPhotoModeCamera()
+    
     if pmCamera and activeCam then
-        
-        
         LLGlobals.CameraPositions[tostring(index)] = {
             activeTranslate = activeCam.Transform.Transform.Translate,
             activeRotationQuat = activeCam.Transform.Transform.RotationQuat,
             activeScale = activeCam.Transform.Transform.Scale,
         }
     end
+    
     return LLGlobals.CameraPositions
 end
 
@@ -952,8 +1031,8 @@ LLGlobals.SaveLoad = {}
 
 MCM.SetKeybindingCallback('ll_move_to_cursor', function()
     if LLGlobals.DummyNameMap then     
-        local index = visTemComob.SelectedIndex + 1
-        local entity = LLGlobals.DummyNameMap[visTemComob.Options[index]]
+        local index = E.visTemComob.SelectedIndex + 1
+        local entity = LLGlobals.DummyNameMap[E.visTemComob.Options[index]]
         local mousePos = Utils:GetMouseover().Inner.Position
         entity.Visual.Visual.WorldTransform.Translate = mousePos
         entity.DummyOriginalTransform.Transform.Translate = mousePos
@@ -964,20 +1043,20 @@ end)
 
 function UpdateCharacterInfo(index)
     Helpers.Timer:OnTicks(5, function ()
-    if index and LLGlobals.DummyNameMap and LLGlobals.DummyNameMap[visTemComob.Options[index]]  and
-    LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual                                 and 
-    LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual                          then
+    if index and LLGlobals.DummyNameMap and LLGlobals.DummyNameMap[E.visTemComob.Options[index]]  and
+    LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual                                 and 
+    LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual                          then
 
             
-            local transform = LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.WorldTransform
-            posInput.Value = {transform.Translate[1], transform.Translate[2], transform.Translate[3], 0}
-            scaleInput.Value = {transform.Scale[1], transform.Scale[2], transform.Scale[3], 0}
+            local transform = LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.WorldTransform
+            E.posInput.Value = {transform.Translate[1], transform.Translate[2], transform.Translate[3], 0}
+            E.scaleInput.Value = {transform.Scale[1], transform.Scale[2], transform.Scale[3], 0}
             local deg = Helpers.Math.QuatToEuler(transform.RotationQuat)
-            rotInput.Value = {deg[1], deg[2], deg[3], 0}
+            E.rotInput.Value = {deg[1], deg[2], deg[3], 0}
         else
-            posInput.Value = {0,0,0,0}
-            rotInput.Value = {0,0,0,0}
-            scaleInput.Value = {0,0,0,0}
+            E.posInput.Value = {0,0,0,0}
+            E.rotInput.Value = {0,0,0,0}
+            E.scaleInput.Value = {0,0,0,0}
         end
     end)
 end
@@ -986,7 +1065,7 @@ end
 
 function MoveCharacter(axis, value, stepMod, index)
     if LLGlobals.DummyNameMap then
-        local entity = LLGlobals.DummyNameMap[visTemComob.Options[index]]
+        local entity = LLGlobals.DummyNameMap[E.visTemComob.Options[index]]
         if entity then
             local pos = entity.Visual.Visual.WorldTransform.Translate
             local original_pos = entity.DummyOriginalTransform.Transform.Translate
@@ -1012,7 +1091,18 @@ function MoveCharacter(axis, value, stepMod, index)
                         objDesc.Renderable.WorldTransform.Translate = {pos[1], pos[2], pos[3]}
                     end
                 end
+            end   
+            
+            for k,v in pairs(Ext.Entity.GetAllEntitiesWithComponent('PhotoModeDummy')) do
+                if v.PhotoModeDummy.Entity == _C() then
+                    v.PhotoModeDummyTransform.Transform.Translate = {pos[1], pos[2], pos[3]}
+                    -- DDump(v.PhotoModeDummyTransform.Transform.Translate)
+                end
             end
+
+            Ext.Entity.GetAllEntitiesWithComponent('PhotoModeDummy')[4]:GetAllComponents()
+
+            
             UpdateCharacterInfo(index)
         end
     end
@@ -1021,7 +1111,7 @@ end
 
 function RotateCharacter(axis, value, rotMod, index)
     if LLGlobals.DummyNameMap then
-        local entity = LLGlobals.DummyNameMap[visTemComob.Options[index]]
+        local entity = LLGlobals.DummyNameMap[E.visTemComob.Options[index]]
         if entity then
             local rot = entity.Visual.Visual.WorldTransform.RotationQuat
             local original_rot = entity.DummyOriginalTransform.Transform.RotationQuat
@@ -1056,7 +1146,7 @@ end
 
 function ScaleCharacter(axis, value, scaleMod, index)
     if LLGlobals.DummyNameMap then
-        local entity = LLGlobals.DummyNameMap[visTemComob.Options[index]]
+        local entity = LLGlobals.DummyNameMap[E.visTemComob.Options[index]]
         if entity then
             local scale = entity.Visual.Visual.WorldTransform.Scale
             local original_scale = entity.DummyOriginalTransform.Transform.Scale
@@ -1101,67 +1191,75 @@ end
 
 
 local size = 38
-local savedPos = {}
-local savedRot = {}
-local savedScale = {}
-local loadButtones = {}
-local deleteButtones = {}
-local deleteButtonesCounter = 0
---wtf
+local savedTransforms = {}
+local buttons = {}
+local buttonCount = 0
+
+--refactored by slop. too lazy
 function SaveVisTempCharacterPosition()
-    local index = visTemComob.SelectedIndex + 1
-    if visTemComob.Options[index] then
-        savedPos[visTemComob.Options[index]] = LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.WorldTransform.Translate
-        savedRot[visTemComob.Options[index]] = LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.WorldTransform.RotationQuat
-        savedScale[visTemComob.Options[index]] = LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.WorldTransform.Scale
-        if loadButtones[visTemComob.Options[index]] then
-            loadButtones[visTemComob.Options[index]].Label = (
-                string.gsub(tostring((visTemComob.Options[index])), "##.*", "") .. '; ' ..
-                'x = ' .. string.format("%.2f", savedPos[visTemComob.Options[index]][1]) .. '; ' ..
-                'y = ' .. string.format("%.2f", savedPos[visTemComob.Options[index]][2]) .. '; ' ..
-                'z = ' .. string.format("%.2f", savedPos[visTemComob.Options[index]][3]))
-            loadButtones[visTemComob.Options[index]].OnClick = function ()
-                local actualSelected = visTemComob.SelectedIndex + 1
-                LLGlobals.DummyNameMap[visTemComob.Options[actualSelected]].Visual.Visual.WorldTransform.Translate = savedPos[visTemComob.Options[index]]
-                LLGlobals.DummyNameMap[visTemComob.Options[actualSelected]].Visual.Visual.WorldTransform.RotationQuat = savedRot[visTemComob.Options[index]]
-                LLGlobals.DummyNameMap[visTemComob.Options[actualSelected]].Visual.Visual.WorldTransform.Scale = savedScale[visTemComob.Options[index]]
+    local index = E.visTemComob.SelectedIndex + 1
+    local selectedName = E.visTemComob.Options[index]
+    
+    if not selectedName or not LLGlobals.DummyNameMap[selectedName] then return end
+    
+    local worldTransform = LLGlobals.DummyNameMap[selectedName].Visual.Visual.WorldTransform
+    
+    savedTransforms[selectedName] = {
+        pos = worldTransform.Translate,
+        rot = worldTransform.RotationQuat,
+        scale = worldTransform.Scale
+    }
+    
+    local saved = savedTransforms[selectedName]
+    local buttonLabel = string.format("%s; x = %.2f; y = %.2f; z = %.2f",
+        string.gsub(selectedName, "##.*", ""),
+        saved.pos[1], saved.pos[2], saved.pos[3])
+    
+    local function LoadTransform()
+        local currentIndex = E.visTemComob.SelectedIndex + 1
+        local currentName = E.visTemComob.Options[currentIndex]
+        local dummy = LLGlobals.DummyNameMap[currentName]
+        
+        dummy.Visual.Visual.WorldTransform.Translate = saved.pos
+        dummy.Visual.Visual.WorldTransform.RotationQuat = saved.rot
+        dummy.Visual.Visual.WorldTransform.Scale = saved.scale
+        dummy.DummyOriginalTransform.Transform.Translate = saved.pos
+        dummy.DummyOriginalTransform.Transform.RotationQuat = saved.rot
+        dummy.DummyOriginalTransform.Transform.Scale = saved.scale
+        
+        UpdateCharacterInfo(index)
+    end
+    
+
+    if buttons[selectedName] then
+        buttons[selectedName].load.Label = buttonLabel
+        buttons[selectedName].load.OnClick = LoadTransform
+    else
+        saveLoadWindow.Size = {saveLoadWindow.Size[1], saveLoadWindow.Size[2] + size}
+        buttonCount = buttonCount + 1
+        
+        local deleteBtn = saveLoadWindow:AddButton('x')
+        deleteBtn.IDContext = 'xBtn' .. Ext.Math.Random()
+        deleteBtn.OnClick = function()
+            buttonCount = buttonCount - 1
+            buttons[selectedName].load:Destroy()
+            buttons[selectedName].delete:Destroy()
+            buttons[selectedName] = nil
+            
+            if buttonCount == 0 then
+                savedTransforms = {}
+                buttons = {}
             end
-        else
-            saveLoadWindow.Size = {saveLoadWindow.Size[1], saveLoadWindow.Size[2] + size}
-            local buttonIndex = visTemComob.Options[index]
-            deleteButtones[visTemComob.Options[index]] = saveLoadWindow:AddButton('x')
-            deleteButtones[visTemComob.Options[index]].IDContext = 'xBtn' .. tostring(Ext.Math.Random())
-            deleteButtones[visTemComob.Options[index]].OnClick = function ()
-                deleteButtonesCounter = deleteButtonesCounter - 1
-                loadButtones[visTemComob.Options[index]]:Destroy()
-                deleteButtones[visTemComob.Options[index]]:Destroy()
-                loadButtones[visTemComob.Options[index]] = nil
-                deleteButtones[visTemComob.Options[index]] = nil
-                if deleteButtonesCounter == 0 then
-                    savedPos = {}
-                    savedRot = {}
-                    savedScale = {}
-                    loadButtones = {}
-                    deleteButtones = {}
-                end
-                saveLoadWindow.Size = {saveLoadWindow.Size[1], saveLoadWindow.Size[2] - size}
-            end
-            deleteButtonesCounter = deleteButtonesCounter + 1
-            loadButtones[visTemComob.Options[index]] = (saveLoadWindow:AddButton(
-                string.gsub(tostring((visTemComob.Options[index])), "##.*", "") .. '; ' ..
-                'x = ' .. string.format("%.2f", savedPos[visTemComob.Options[index]][1]) .. '; ' ..
-                'y = ' .. string.format("%.2f", savedPos[visTemComob.Options[index]][2]) .. '; ' ..
-                'z = ' .. string.format("%.2f", savedPos[visTemComob.Options[index]][3])))
-            loadButtones[visTemComob.Options[index]].IDContext = 'loadBtn' .. tostring(Ext.Math.Random())
-            loadButtones[visTemComob.Options[index]].SameLine = true
-            loadButtones[visTemComob.Options[index]].OnClick = function ()
-                local actualSelected = visTemComob.SelectedIndex + 1
-                LLGlobals.DummyNameMap[visTemComob.Options[actualSelected]].Visual.Visual.WorldTransform.Translate = savedPos[buttonIndex]
-                LLGlobals.DummyNameMap[visTemComob.Options[actualSelected]].Visual.Visual.WorldTransform.RotationQuat = savedRot[buttonIndex]
-                LLGlobals.DummyNameMap[visTemComob.Options[actualSelected]].Visual.Visual.WorldTransform.Scale = savedScale[buttonIndex]
-                UpdateCharacterInfo(index)
-            end
+            
+            saveLoadWindow.Size = {saveLoadWindow.Size[1], saveLoadWindow.Size[2] - size}
         end
+        
+        local loadBtn = saveLoadWindow:AddButton(buttonLabel)
+        loadBtn.IDContext = 'loadBtn' .. Ext.Math.Random()
+        loadBtn.SameLine = true
+        loadBtn.OnClick = LoadTransform
+        
+        buttons[selectedName] = {delete = deleteBtn, load = loadBtn}
     end
 end
 
@@ -1171,11 +1269,11 @@ end
 function MoveTail(axis, value, stepMod, index)
     local tailVis = nil
     local pos
-    if LLGlobals.DummyNameMap[visTemComob.Options[index]]and LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual then 
-        for i = 1, #LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments do
-            if LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("tail") then
-                pos = LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.WorldTransform.Translate
-                tailVis = LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i]
+    if LLGlobals.DummyNameMap[E.visTemComob.Options[index]]and LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual then 
+        for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments do
+            if LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("tail") then
+                pos = LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.WorldTransform.Translate
+                tailVis = LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments[i]
                 break
             end
         end
@@ -1199,10 +1297,10 @@ end
 
 function RotateTail(axis, value, rotMod, index)
     local tailVis = nil
-    if LLGlobals.DummyNameMap[visTemComob.Options[index]]and LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual then 
-        for i = 1, #LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments do
-            if LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("tail") then           
-                tailVis = LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i]
+    if LLGlobals.DummyNameMap[E.visTemComob.Options[index]]and LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual then 
+        for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments do
+            if LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("tail") then           
+                tailVis = LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments[i]
                 break
             end
         end
@@ -1232,11 +1330,11 @@ end
 function MoveHorns(axis, value, stepMod, index)
     local tailVis = nil
     local pos
-    if LLGlobals.DummyNameMap[visTemComob.Options[index]]and LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual then 
-        for i = 1, #LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments do
-            if LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
-                pos = LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.WorldTransform.Translate
-                tailVis = LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i]
+    if LLGlobals.DummyNameMap[E.visTemComob.Options[index]]and LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual then 
+        for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments do
+            if LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
+                pos = LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.WorldTransform.Translate
+                tailVis = LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments[i]
                 break
             end
         end
@@ -1260,10 +1358,10 @@ end
 
 function RotateHorns(axis, value, rotMod, index)
     local tailVis = nil
-    if LLGlobals.DummyNameMap[visTemComob.Options[index]]and LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual then 
-        for i = 1, #LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments do
-            if LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
-                tailVis = LLGlobals.DummyNameMap[visTemComob.Options[index]].Visual.Visual.Attachments[i]
+    if LLGlobals.DummyNameMap[E.visTemComob.Options[index]]and LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual then 
+        for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments do
+            if LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
+                tailVis = LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments[i]
                 break
             end
         end

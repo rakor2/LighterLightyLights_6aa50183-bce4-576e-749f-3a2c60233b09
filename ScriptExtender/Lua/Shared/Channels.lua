@@ -56,6 +56,7 @@ Channels.ToCamOriginPoint = Ext.Net.CreateChannel(ModuleUUID, 'ToCamOriginPoint'
 Channels.SelectedGobo = Ext.Net.CreateChannel(ModuleUUID, 'SelectedGobo')
 Channels.CreateGobo = Ext.Net.CreateChannel(ModuleUUID, 'CreateGobo')
 Channels.DeleteGobo = Ext.Net.CreateChannel(ModuleUUID, 'DeleteGobo')
+Channels.HideGobo = Ext.Net.CreateChannel(ModuleUUID, 'HideGobo')
 Channels.GoboTranslate = Ext.Net.CreateChannel(ModuleUUID, 'GoboTranslate')
 Channels.GoboRotation = Ext.Net.CreateChannel(ModuleUUID, 'GoboRotation')
 
@@ -71,4 +72,5 @@ Channels.SceneLoad = Ext.Net.CreateChannel(ModuleUUID, 'SceneLoad')
 
 Channels.GetTriggers = Ext.Net.CreateChannel(ModuleUUID, 'GetTriggers')
 
+Channels.ApplyANL = Ext.Net.CreateChannel(ModuleUUID, 'ApplyANL')
 Channels.ResetANL = Ext.Net.CreateChannel(ModuleUUID, 'ResetANL')

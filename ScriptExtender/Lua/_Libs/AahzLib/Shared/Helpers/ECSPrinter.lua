@@ -148,6 +148,11 @@ local SpamComponents = {
     ['eoc::GameplayLightComponent'] = true,
     ['esv::light::GameplayLightChangesComponent'] = true,
     ['eoc::item::ISClosedAnimationFinishedOneFrameComponent'] = true,
+
+
+    ['SoundCameraVolumeChangedEventOneFrameComponent'] = true
+
+    
 }
 
 

@@ -2,7 +2,7 @@ LLGlobals.GoboLightMap = {}
 
 
 
-Channels.CreateGobo:SetHandler(function (Data)
+Channels.CreateGobo:SetRequestHandler(function (Data)
 
     if not LLGlobals.selectedUuid then return end
     if LLGlobals.GoboLightMap[LLGlobals.selectedUuid] then return end
@@ -12,7 +12,6 @@ Channels.CreateGobo:SetHandler(function (Data)
     local x, y, z = Osi.GetPosition(LLGlobals.selectedUuid)
     local rx, ry, rz = Osi.GetRotation(LLGlobals.selectedUuid)
     local uuid = tostring(Data.goboGuid)
-    -- 
 
     local goboUuid = Osi.CreateAt(uuid, x, y, z, 0, 0,'')
     
@@ -25,6 +24,7 @@ Channels.CreateGobo:SetHandler(function (Data)
     
     UpdateGoboPosition()
 
+    return goboUuid
 
 end)
 
@@ -62,7 +62,8 @@ Channels.DeleteGobo:SetHandler(function (Data)
 
 end)
 
-
+Channels.HideGobo:SetHandler(function (Data)
+end)
 
 
 -- tasty slopppppppppp
