@@ -50,7 +50,7 @@ Channels.ApplyANL:SetRequestHandler(function(Data)
         Osi.TriggerSetLighting(trigger.Uuid.EntityUuid, uuid)
     end
 
-    local uuid = LLGlobals.SelectedLighting
+    local uuid = LLGlobals.SelectedLighting or '6e3f3623-5c84-a681-6131-2da753fa2c8f'
 
     Helpers.Timer:OnTicks(3, function ()
         for _, trigger in pairs(LLGlobals.LightingTriggers) do
