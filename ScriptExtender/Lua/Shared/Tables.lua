@@ -4,11 +4,6 @@ LLGlobals = LLGlobals or {}
 Styles = {}
 
 
-VeRsIoNs = {
-    ["1.1.5.10"] = "1.1.5_crab"
-}
-
-
 
 RootTemplates = {
     ['b8305734-4f4a-4699-a0b5-91a735a5783a'] = true,
@@ -105,24 +100,28 @@ QOTD = {
     'Stop limiting yourself; play with lighting more!',
     'Stop limiting yourself; play with lighting more!',
     'Dont be afraid of lighting',
-    'xd',
+    'Dont be afraid of yourself',
+    'What Power art thou',
     '<3',
     'who is qsat',
     'Janky ahh code',
     'Under the same one',
-    'xd',
-    'xd',
-    'xd',
-    'xd',
-    'xd',
-    'xd',
-    'xd',
-    'xd',
-    'xd',
-    'xd',
-    'xd',
-    'xd',
-    'xd',
+    'empty text',
+    '...',
+    '7:02',
+    'Daniela Artista @ LL',
+    'Alyona Artist @ LL',
+    'satanfish Artist @ LL',
+    'aini Artist @ LL',
+    'LawyerOfRules QA @ LL',
+    'Stop typing reset',
+    'August 12 2036',
+    'Solitude is agony',
+    '20 years at PC',
+    'If you see me irl, gift me a flower',
+    'Stop reading this bs',
+    'Stop typing this bs',
+    'ok!',
 }
 
 
