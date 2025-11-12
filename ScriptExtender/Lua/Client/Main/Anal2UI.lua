@@ -668,7 +668,8 @@ function Anal2Tab(p)
         
         -- DPrint(uuid)
         -- DPrint(resource)
-        trev(Resource:GetResource(uuid, resource))
+        -- trev(Resource:GetResource(uuid, resource))
+        trev(Resource:GetResource(uuid, resource), {}, 1, mainParent, {})
 
     end
 
