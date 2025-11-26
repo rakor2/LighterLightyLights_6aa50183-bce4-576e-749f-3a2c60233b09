@@ -213,7 +213,7 @@ function SimplePrinter:RunningRainbowPrint(data, depth, includeTime)
         local result = {}
         for line in infoString:gmatch("([^\n]+)\n?") do
             -- select() to hopefully cut down on some overhead for convenientcount :gladge:
-            local indentCount = select(2, string.gsub(line,"\t","\t"))
+            local indentCount = select(2, string.gsub(line,"    ","    "))
 
             local hue = (indentCount*36) % 360 -- rotations based on indent
             local r,g,b = HSVToRGB(hue, .65, 1)
@@ -234,6 +234,7 @@ function SimplePrinter:RunningRainbowPrint(data, depth, includeTime)
     Ext.Utils.Print(full)
 end
 
+
 local modName = Ext.Mod.GetMod(ModuleUUID).Info.Name
 
 SimplePrint = SimplePrinter:New{Prefix = tostring(modName), ApplyColor = true}
@@ -248,25 +249,3 @@ function DDumpArray(...) SimplePrint:DumpArray(...) end
 
 function DRPrint(...) SimplePrint:RunningRainbowPrint(..., 12, false) end
 function DRPrintS(...) SimplePrint:RunningRainbowPrint(..., 1, false) end
-
--- local printcolor    = rgb(58, 183, 255)
--- local testcolor     = rgb(202, 63, 109)
--- local debugcolor    = rgb(216, 106, 189)
--- local warncolor     = rgb(221, 116, 18)
--- local dumpcolor     = rgb(37, 161, 85)
--- local dumpscolor    = rgb(241, 177, 225)
-
--- DPrint("Print")
--- STest("Test")
--- local dmp = {"DUMP", {["Dump"] = "dumpies", 42, ["Other"] = { 33, ["42"] = 69}}}
--- SDump(dmp)
--- SDebug("Debug")
--- DWarn("Warning")
--- SDumpS(dmp)
--- local td = {}
--- for i = 1, 10, 1 do
---     table.insert(td, i)
---     RPrint("Testing... "..i)
--- end
--- RPrint(td)
--- RPrint(dmp)
