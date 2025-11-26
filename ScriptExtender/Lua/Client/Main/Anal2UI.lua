@@ -1,6 +1,6 @@
 function Anal2Tab(p)
 
-    
+
     local CHILD_WIN_SIZE = {554, 200}
     local winLtnFav
     local winAtmFav
@@ -20,12 +20,12 @@ function Anal2Tab(p)
 
     p:AddSeparatorText('Lighting')
 
-    
+
 
     LLGlobals.FilteredLTNOptions = LLGlobals.LtnComboOptions
 
 
-    
+
     E.inpSearchLighting = p:AddInputText('')
     E.inpSearchLighting.IDContext = 'o9irtqjwno9485839c'
     E.inpSearchLighting.OnChange = function()
@@ -43,8 +43,8 @@ function Anal2Tab(p)
         LLGlobals.FilteredLTNOptions = LLGlobals.LtnComboOptions
         E.comboLighting.Options = LLGlobals.LtnComboOptions
     end
-    
-    
+
+
 
 
     E.comboLighting = p:AddCombo('')
@@ -58,8 +58,8 @@ function Anal2Tab(p)
         comboLightingFunc()
     end
 
-    
-    
+
+
     E.btnPrevLtn = p:AddButton('<')
     E.btnPrevLtn.IDContext = ';olsikefnlieurhn'
     E.btnPrevLtn.SameLine = true
@@ -96,7 +96,7 @@ function Anal2Tab(p)
 
     E.colFav = p:AddCollapsingHeader('Favorites')
     E.colFav.IDContext = 'iaeuhkbnkwbriyuwg34iy'
-    
+
 
 
     winLtnFav = E.colFav:AddChildWindow('')
@@ -105,8 +105,10 @@ function Anal2Tab(p)
 
 
     if Ext.IO.LoadFile('LightyLights/FavoriteLighting.json') then
-        LLGlobals.FavLighting = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/FavoriteLighting.json'))
-        PopulateLTNFavorites(winLtnFav, LLGlobals.FavLighting)
+        pcall(function ()
+            LLGlobals.FavLighting = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/FavoriteLighting.json'))
+            PopulateLTNFavorites(winLtnFav, LLGlobals.FavLighting)
+        end)
     else
         LLGlobals.FavLighting = {}
     end
@@ -123,8 +125,8 @@ function Anal2Tab(p)
 
     E.inpSearchAtmosphere = p:AddInputText('')
     E.inpSearchAtmosphere.IDContext = 'pfkjawpo3i4rho83hr'
-    E.inpSearchAtmosphere.OnChange = function()
-        LLGlobals.FilteredATMOptions = UI:FilterOptions(E.inpSearchAtmosphere.Text, LLGlobals.AtmComboOptions)
+    E.inpSearchAtmosphere.OnChange = function(e)
+        LLGlobals.FilteredATMOptions = UI:FilterOptions(e.Text, LLGlobals.AtmComboOptions)
         E.comboAtmosphere.Options = LLGlobals.FilteredATMOptions
         E.comboAtmosphere.SelectedIndex = 0
     end
@@ -196,8 +198,10 @@ function Anal2Tab(p)
 
 
     if Ext.IO.LoadFile('LightyLights/FavoriteAtmosphere.json') then
-        LLGlobals.FavAtmosphere = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/FavoriteAtmosphere.json'))
-        PopulateATMFavorites(winAtmFav, LLGlobals.FavAtmosphere)
+        pcall(function ()
+            LLGlobals.FavAtmosphere = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/FavoriteAtmosphere.json'))
+            PopulateATMFavorites(winAtmFav, LLGlobals.FavAtmosphere)
+        end)
     else
         LLGlobals.FavAtmosphere = {}
     end
@@ -212,7 +216,7 @@ function Anal2Tab(p)
     E.resetLtnBtn.OnClick = function ()
         Channels.ResetANL:SendToServer('Lighting')
     end
-    
+
 
 
     E.resetAtmBtn = p:AddButton('Atmosphere')
@@ -221,9 +225,9 @@ function Anal2Tab(p)
         Channels.ResetANL:SendToServer('Atmosphere')
     end
 
-    
 
-    
+
+
 
 
 
@@ -239,7 +243,7 @@ function Anal2Tab(p)
     -- btnCacheLTN.OnClick = function ()
     --     CacheLTN()
     -- end
-    
+
     E.btnResetCLTN = p:AddButton('Reset lighting')
     E.btnResetCLTN.SameLine = true
     E.btnResetCLTN.OnClick = function ()
@@ -250,7 +254,7 @@ function Anal2Tab(p)
         ResetLTN(true)
         ApplyParameters()
     end
-    
+
     E.btnResetCATM = p:AddButton('Reset atmosphere')
     E.btnResetCATM.SameLine = true
     E.btnResetCATM.OnClick = function ()
@@ -261,7 +265,7 @@ function Anal2Tab(p)
         ResetATM(true)
         ApplyParameters()
     end
-    
+
     -- local btnResetALTN = p:AddButton('Reset lightin all')
     -- btnResetALTN.OnClick = function ()
     --     ResetLTN(true)
@@ -276,10 +280,153 @@ function Anal2Tab(p)
     -- end
 
 
+    function SaveAsPreset(fileName, type)
+        local uuid
+
+        if type == 'Lighting' then
+            uuid = ltn_templates2[UI:SelectedOpt(E.comboLighting)]
+        elseif type == 'Atmosphere' then
+            uuid = atm_templates2[UI:SelectedOpt(E.comboAtmosphere)]
+        end
+
+        local Lighting = Ext.Resource.Get(uuid, type)[type]
+        local Serialized = Ext.Types.Serialize(Lighting)
+        local Stringify = Ext.Json.Stringify(Serialized)
+        Ext.IO.SaveFile('LightyLights/AnLPresets/'.. type .. '/' .. fileName .. '.json', Stringify)
+    end
+
+
+
+    function LoadPreset(fileName, type)
+        local uuid
+
+        if type == 'Lighting' then
+            uuid = ltn_templates2[UI:SelectedOpt(E.comboLighting)]
+        elseif type == 'Atmosphere' then
+            uuid = atm_templates2[UI:SelectedOpt(E.comboAtmosphere)]
+        end
+
+        local Json = Ext.IO.LoadFile('LightyLights/AnLPresets/'.. type .. '/' .. fileName .. '.json')
+        local Parsed = Ext.Json.Parse(Json)
+        local Serialized = Ext.Types.Serialize(Ext.Resource.Get(uuid, type)[type])
+        Serialized = Parsed
+        Ext.Types.Unserialize(Ext.Resource.Get(uuid, type)[type], Serialized)
+
+        ApplyParameters()
+    end
+
+
+
+    local collapsePreset = p:AddCollapsingHeader('Preset manager')
+
+
+
+    E.inputPresetNameLighting = collapsePreset:AddInputText('')
+    E.inputPresetNameLighting.IDContext = 'awsdawd'
+    E.inputPresetNameLighting.Text = ''
+
+
+
+    E.btnSavePresetLighting = collapsePreset:AddButton('Save lighting')
+    E.btnSavePresetLighting.IDContext = 'awdawd'
+    E.btnSavePresetLighting.SameLine = true
+    E.btnSavePresetLighting.OnClick = function(e)
+        local presetName = E.inputPresetNameLighting.Text
+        if presetName == '' then
+            DWarn('Enter a valid preset name')
+            return
+        end
+
+        if LLGlobals.LightingPresets[presetName] == presetName then
+            DWarn('Preset already exists')
+            return
+        end
+
+        SaveAsPreset(presetName, 'Lighting')
+        CreatePresetSelectable(winLightingPresets, LLGlobals.LightingPresets, presetName, 'Lighting')
+    end
+
+
+
+    E.colPresetsLighting = collapsePreset:AddTree('Lighting presets')
+    E.colPresetsLighting.IDContext = 'adawdadad'
+
+
+
+    winLightingPresets = E.colPresetsLighting:AddChildWindow('')
+    winLightingPresets.Size = CHILD_WIN_SIZE
+
+
+
+    if Ext.IO.LoadFile('LightyLights/AnLPresets/_LightingNames.json') then
+        pcall(function()
+            LLGlobals.LightingPresets = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/AnLPresets/_LightingNames.json'))
+            PopulatePresets(winLightingPresets, LLGlobals.LightingPresets, 'Lighting')
+        end)
+    else
+        LLGlobals.LightingPresets = {}
+    end
+
+
+
+    --------------------------------
+
+
+
+    E.inputPresetNameAtmosphere = collapsePreset:AddInputText('')
+    E.inputPresetNameAtmosphere.IDContext = 'awdawdawdawd'
+    E.inputPresetNameAtmosphere.Text = ''
+
+
+
+    E.btnSavePresetAtmosphere = collapsePreset:AddButton('Save atmosphere')
+    E.btnSavePresetAtmosphere.IDContext = 'dawdawda2323'
+    E.btnSavePresetAtmosphere.SameLine = true
+    E.btnSavePresetAtmosphere.OnClick = function(e)
+        local presetName = E.inputPresetNameAtmosphere.Text
+
+        if presetName == '' then
+            DWarn('Enter a valid preset name!')
+            return
+        end
+
+        if LLGlobals.AtmospherePresets[presetName] == presetName then
+            DWarn('Preset already exists')
+            return
+        end
+
+        SaveAsPreset(presetName, 'Atmosphere')
+        CreatePresetSelectable(winAtmospherePresets, LLGlobals.AtmospherePresets, presetName, 'Atmosphere')
+    end
+
+
+
+    E.colPresetsAtmosphere = collapsePreset:AddTree('Atmosphere Presets')
+    E.colPresetsAtmosphere.IDContext = 'adwwdawdawd'
+
+
+
+    winAtmospherePresets = E.colPresetsAtmosphere:AddChildWindow('')
+    winAtmospherePresets.Size = CHILD_WIN_SIZE
+
+
+
+    if Ext.IO.LoadFile('LightyLights/AnLPresets/_AtmosphereNames.json') then
+        pcall(function()
+            LLGlobals.AtmospherePresets = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/AnLPresets/_AtmosphereNames.json'))
+            PopulatePresets(winAtmospherePresets, LLGlobals.AtmospherePresets, 'Atmosphere')
+        end)
+    else
+        LLGlobals.AtmospherePresets = {}
+    end
+
+
+    p:AddSeparator()
+
     E.collapseParamsLTN = p:AddCollapsingHeader('Lighting')
     E.collapseParamsLTN.IDContext = 'awdaowikdn'
 
-    E.collapseParamsATM = p:AddCollapsingHeader('Atmosphere') 
+    E.collapseParamsATM = p:AddCollapsingHeader('Atmosphere')
     E.collapseParamsATM.IDContext = 'awdaowikdn'
 
 
@@ -290,32 +437,32 @@ function Anal2Tab(p)
 
         local treeParameterName
         local treeSubParameterName
-        
+
         local PARAMETER_ORDER = order
 
         local function getSortedKeys(tbl)
             local keys = {}
             local orderMap = {}
-            
+
             for i, key in ipairs(PARAMETER_ORDER) do
                 orderMap[key] = i
             end
-            
+
             for k in pairs(tbl) do
                 table.insert(keys, k)
             end
-            
+
             table.sort(keys, function(a, b)
                 local orderA = orderMap[a] or 9999
                 local orderB = orderMap[b] or 9999
-                
+
                 if orderA ~= orderB then
                     return orderA < orderB
                 else
                     return a < b
                 end
             end)
-            
+
             return keys
         end
 
@@ -326,7 +473,7 @@ function Anal2Tab(p)
                 "ColorCorrection",
                 "ColorCorrectionInterpolationFactor"
             }
-            
+
             for _, excludeKey in ipairs(excludeKeys) do
                 if key == excludeKey or string.find(key, excludeKey) then
                     return false
@@ -414,7 +561,7 @@ function Anal2Tab(p)
             ["Fog.FogLayer0.Height1"]  = {min = -100, max = 100, log = true},
             ["Fog.FogLayer0.NoiseCoverage"] = {min = 0, max = 100},
             ["Fog.FogLayer0.NoiseFrequency"] = {min = 0, max = 1},
-            
+
             ["Fog.FogLayer1.Density0"] = {min = 0, max = 100, log = true},
             ["Fog.FogLayer1.Density1"] = {min = 0, max = 100, log = true},
             ["Fog.FogLayer1.Height0"]  = {min = -100, max = 100, log = true},
@@ -491,7 +638,7 @@ function Anal2Tab(p)
             ["VolumetricCloudSettings.SunLightFactor"] = {min = 0, max = 1},
             ["VolumetricCloudSettings.SunRayLength"] = {min = 0, max = 100},
 
-            
+
             ["PostProcess.Camera.LensFlareChromaticDistortion"] = {min = 0, max = 5},
             ["PostProcess.Camera.LensFlareGhostDispersal"] = {min = 0, max = 1},
             ["PostProcess.Camera.LensFlareHaloWidth"] = {min = 0, max = 1},
@@ -501,15 +648,15 @@ function Anal2Tab(p)
             ["PostProcess.Camera.GodRaysPower"] = {min = 0, max = 50},
             ["PostProcess.Camera.GodRaysRayIntensity"] = {min = 0, max = 10},
             ["PostProcess.Camera.GodRaysThreshold"] = {min = 0, max = 10},
-            
-            
+
+
         }
 
         local function trev(tbl, tbl2, depth, parent, path)
             tbl2 = tbl2 or {}
             depth = depth or 1
             path = path or {}
-            
+
             for _, k in ipairs(getSortedKeys(tbl)) do
                 local v = tbl[k]
                 local currentPath = {}
@@ -517,7 +664,7 @@ function Anal2Tab(p)
                     currentPath[i] = p
                 end
                 table.insert(currentPath, k)
-                
+
                 if type(v) == 'table' or type(v) == 'userdata' then
                     if isColorParam(k) then
                         if parent then
@@ -550,8 +697,8 @@ function Anal2Tab(p)
                             slider.IDContext = Ext.Math.Random(1,1000)
                             slider.Value = {v[1] or 0, v[2] or 0, v[3] or 0, 0}
                             if isLog then slider.Logarithmic = true end
-                            
-                            
+
+
                             if k == 'ProcStarsSaturation' or k == 'Offset' or k == 'XYOffset' then --haha
                                 slider.Components = 2
                                 slider.OnChange = function(e)
@@ -665,7 +812,7 @@ function Anal2Tab(p)
             end
             return tbl2
         end
-        
+
         -- DPrint(uuid)
         -- DPrint(resource)
         -- trev(Resource:GetResource(uuid, resource))
@@ -697,12 +844,12 @@ function Anal2Tab(p)
         CreateUI(atm_templates2[UI:SelectedOpt(E.comboAtmosphere)], 'Atmosphere', E.collapseParamsATM, ATM_ORDER) --yes.
     end
 
-    
+
     function ApplyParameters()
         -- UI:PrevOption(E.comboLighting)
         comboLightingFunc()
         comboAtmosphereFunc()
-        
+
         local Data = {
             uuid = ltn_templates2[UI:SelectedOpt(E.comboLighting)]
         }
@@ -714,8 +861,8 @@ function Anal2Tab(p)
 
         end)
     end
-    
-    
+
+
     function ResetLTN(all)
         if all then
             for name, uuid in pairs(ltn_templates2) do
@@ -727,7 +874,7 @@ function Anal2Tab(p)
         end
     end
 
-        
+
     function ResetATM(all)
         if all then
             for name, uuid in pairs(atm_templates2) do
@@ -751,7 +898,7 @@ function Anal2Tab(p)
         end
     end
 
-    
+
     function ApplyCachedAtmosphere(uuid, CachedTable)
         local CachedATM = CachedTable[uuid]
         if CachedATM then
@@ -762,5 +909,8 @@ function Anal2Tab(p)
             end
         end
     end
+
+
+
 
 end
