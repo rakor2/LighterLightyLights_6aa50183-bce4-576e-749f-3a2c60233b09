@@ -30,19 +30,19 @@ function Gobo2Tab(p)
     end
     table.sort(GoboNames)
 
-    
+
     for uuid, name in pairs(GoboUuidNameMap) do
         if name == GoboNames[1] then
             LLGlobals.selectedGobo = uuid
         end
     end
 
-    
+
     E.comboIHateCombos2 = p:AddCombo('')
     E.comboIHateCombos2.Options = LLGlobals.LightsNames
     E.comboIHateCombos2.SelectedIndex = LLGlobals.syncedSelectedIndex
     E.comboIHateCombos2.OnChange = function (e)
-        
+
         if not LLGlobals.selectedUuid then return end
 
         LLGlobals.syncedSelectedIndex = E.comboIHateCombos2.SelectedIndex
@@ -62,9 +62,9 @@ function Gobo2Tab(p)
     E.goboList.Options = GoboNames
     E.goboList.SelectedIndex = 0
     E.goboList.OnChange = function (e)
-        
+
         if not LLGlobals.selectedUuid then return end
-        
+
         for guid, name in pairs(GoboUuidNameMap) do
             if name == E.goboList.Options[E.goboList.SelectedIndex + 1] then
                 LLGlobals.selectedGobo = guid
@@ -79,7 +79,7 @@ function Gobo2Tab(p)
         if not LLGlobals.selectedUuid then return end
 
         UI:PrevOption(E.goboList)
-        
+
         for guid, name in pairs(GoboUuidNameMap) do
             if name == E.goboList.Options[E.goboList.SelectedIndex + 1] then
                 LLGlobals.selectedGobo = guid
@@ -87,12 +87,12 @@ function Gobo2Tab(p)
         end
 
         Channels.DeleteGobo:SendToServer({})
-        
+
         Helpers.Timer:OnTicks(3, function ()
             local Data = {
                 goboGuid = LLGlobals.selectedGobo
             }
-            
+
             Channels.CreateGobo:RequestToServer(Data, function (Response)
                 LLGlobals.selectedGoboUuid = Response
             end)
@@ -107,7 +107,7 @@ function Gobo2Tab(p)
         if not LLGlobals.selectedUuid then return end
 
         UI:NextOption(E.goboList)
-        
+
         for guid, name in pairs(GoboUuidNameMap) do
             if name == E.goboList.Options[E.goboList.SelectedIndex + 1] then
                 LLGlobals.selectedGobo = guid
@@ -115,12 +115,12 @@ function Gobo2Tab(p)
         end
 
         Channels.DeleteGobo:SendToServer({})
-        
+
         Helpers.Timer:OnTicks(3, function ()
             local Data = {
                 goboGuid = LLGlobals.selectedGobo
             }
-            
+
             Channels.CreateGobo:RequestToServer(Data, function (Response)
                 LLGlobals.selectedGoboUuid = Response
             end)
@@ -128,7 +128,7 @@ function Gobo2Tab(p)
 
     end
 
-    
+
     textMask = p:AddText('Masks')
     textMask.SameLine = true
 
@@ -137,7 +137,7 @@ function Gobo2Tab(p)
     E.goboDistanceSlider.OnChange = function(e)
 
         if not LLGlobals.selectedUuid then return end
-        
+
         local Data = {
             step = 1,
             offset = e.Value[1],
@@ -151,7 +151,7 @@ function Gobo2Tab(p)
     E.createGoboButton.OnClick = function()
 
         if not LLGlobals.selectedUuid then return end
-                
+
 
         local Data = {
             goboGuid = LLGlobals.selectedGobo
@@ -168,11 +168,11 @@ function Gobo2Tab(p)
     E.deleteGoboButton.IDContext = 'E.deleteGoboButton'
     E.deleteGoboButton.SameLine = true
     E.deleteGoboButton.OnClick = function()
-        
+
         if not LLGlobals.selectedUuid then return end
 
 
-        Channels.DeleteGobo:SendToServer({})
+        Channels.DeleteGobo:SendToServer('Single')
     end
 
 
@@ -186,7 +186,7 @@ function Gobo2Tab(p)
         Channels.DeleteGobo:SendToServer('All')
     end
 
-    
+
     function hideGobo()
         if not LLGlobals.selectedUuid then return end
 
@@ -201,7 +201,7 @@ function Gobo2Tab(p)
         end
     end
 
-    
+
     E.btnHideGobo = p:AddButton('Hide')
     E.btnHideGobo.IDContext = 'E.wdzawdawdawdw'
     E.btnHideGobo.SameLine = false

@@ -1,9 +1,13 @@
 ltn_templates = {
     {uuid = "308e4292-f1e7-dc5e-9680-a66f28d1a869", name = "LTN_LLL_Blackout"}, --LTN_LLL_Blackout
+
     {uuid = "f020d4cd-18b5-68bb-cad1-c427fa1c1dd2", name = "LTN_LII"},
+    {uuid = "5ad10360-89bf-b8e2-7d38-410df3b191bd", name = "TUH_LTN_Icy"},
     {uuid = "5622e370-2873-984f-b68f-3b306bf57c44", name = "LTN_TUH_HomeRun"},
-    {uuid = "1002530d-57b7-0f5d-d5eb-8cd2380bdf93", name = "LTN_TUH_Mad2"},   
-    {uuid = "1002530d-57b7-0f5d-d5eb-8cd2380bdf93", name = "LTN_TUH_Ella"},   
+    {uuid = "1002530d-57b7-0f5d-d5eb-8cd2380bdf93", name = "LTN_TUH_Mad2"},
+    {uuid = "1002530d-57b7-0f5d-d5eb-8cd2380bdf93", name = "LTN_TUH_Ella"},
+    {uuid = "4e730f51-3b58-4792-c092-11bf4a301465", name = "LTN_TUH_Snow_Field"},
+
     {uuid = "4ffe46ad-b46b-0a3a-c739-d71f1bf209d9", name = "LTN_BGH_Highberrys_Cellar_A"},
     {uuid = "f2c0d648-869a-dee1-4842-8ec9e37b0441", name = "LTN_BGO_Camp_A"},
     {uuid = "f8551744-5846-a40e-d03e-778662463fd4", name = "LTN_BGO_HouseofHope_A"},
@@ -170,6 +174,10 @@ ltn_templates = {
 
 ltn_templates2 = {
     --["LTN_LLL_Blackout"] = "308e4292-f1e7-dc5e-9680-a66f28d1a869",
+
+    ["TUH_LTN_Icy"] = "5ad10360-89bf-b8e2-7d38-410df3b191bd",
+    ["LTN_TUH_Snow_Field"] = "4e730f51-3b58-4792-c092-11bf4a301465",
+
     ["LTN_BGH_Highberrys_Cellar_A"] = "4ffe46ad-b46b-0a3a-c739-d71f1bf209d9",
     ["LTN_BGO_Camp_A"] = "f2c0d648-869a-dee1-4842-8ec9e37b0441",
     ["LTN_BGO_HouseofHope_A"] = "f8551744-5846-a40e-d03e-778662463fd4",

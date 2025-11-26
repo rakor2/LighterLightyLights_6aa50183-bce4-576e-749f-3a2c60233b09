@@ -5,6 +5,8 @@ Ext.Require('Client/Main/Anal2HandlersClient.lua')
 Ext.Require('Client/Main/Anal2UI.lua')
 Ext.Require('Client/Main/Origin2UI.lua')
 Ext.Require('Client/Main/Gobo2UI.lua')
+Ext.Require('Client/Main/Utils2HandlersClient.lua')
+Ext.Require('Client/Main/Utils2Tab.lua')
 Ext.Require('Client/Main/Settings2UI.lua')
 -- Ext.Require('Client/Main/Saver2UI.lua')
 

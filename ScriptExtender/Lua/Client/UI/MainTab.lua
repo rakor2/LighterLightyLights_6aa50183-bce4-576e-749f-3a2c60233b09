@@ -102,12 +102,12 @@ end)
 
 
 MCM.SetKeybindingCallback('ll_selected_popup', function()
-    
+
 
     local lightName = getSelectedLightName() or 'None'
     if lightName then selectedLightNotification.Label = lightName end
 
-    windowNotification.Visible = not windowNotification.Visible 
+    windowNotification.Visible = not windowNotification.Visible
     E.checkSelectedLightNotification.Checked = not E.checkSelectedLightNotification.Checked
 
 end)
@@ -141,7 +141,7 @@ function MainTab2(mt2)
     mw.Open = OPENQUESTIONMARK
 
     mw.Closeable = true
-    
+
 
     -- if mw then
     --     EnableMCMHotkeys()
@@ -171,13 +171,13 @@ function MainTab2(mt2)
     styleCombo.OnChange = function(widget)
         StyleSettings.selectedStyle = widget.SelectedIndex + 1
         ApplyStyle(mw, StyleSettings.selectedStyle)
-        
+
         if windowNotification then
             E.checkSelectedLightNotification.Checked = false
             windowNotification:Destroy()
             CreateLightNumberNotification()
         end
-        
+
         if Mods.Mazzle_Docs then
             initMazzleColors()
             API.Rebuild('LL2', 'Lighty Lights Elucidator')
@@ -210,16 +210,16 @@ function MainWindow(mw)
     mw.Closeable = true
 
     mainTabBar = mw:AddTabBar('LL')
-    
-    
+
+
     E.main2 = mainTabBar:AddTabItem('Main')
     MainTab(E.main2)
 
-    
+
     E.anal2Tab = mainTabBar:AddTabItem('AnL')
     Anal2Tab(E.anal2Tab)
-    
-    
+
+
     E.betterPM = mainTabBar:AddTabItem('PM')
     BetterPMTab(E.betterPM)
 
@@ -230,6 +230,9 @@ function MainWindow(mw)
 
     E.goboTab = mainTabBar:AddTabItem('Gobo')
     Gobo2Tab(E.goboTab)
+
+    E.utilsTab = mainTabBar:AddTabItem('Utils')
+    Utils2Tab(E.utilsTab)
 
 
     -- saverTab = mainTabBar:AddTabItem('Saver')
@@ -245,7 +248,7 @@ function MainWindow(mw)
             element.Size = {180/Style.buttonScale, 39/Style.buttonScale}
         end
     end
-    
+
 
 
     -- function funnyStuff()
@@ -256,11 +259,11 @@ function MainWindow(mw)
     --     for _, element in pairs(ER) do
     --         table.insert(allElements, element)
     --     end
-        
+
     --     for _, element in pairs(allElements) do
     --         element.OnHoverEnter = function(e)
     --             local elementType = tostring(e):match('^(%w+)')
-                
+
     --             if elementType == 'Button' then
     --                 Imgui.FadeColor(e, 'Button', Style.buttonHovered, Style.button, fadeTime)
     --             elseif elementType == 'Checkbox' then
@@ -284,7 +287,7 @@ function MainWindow(mw)
     --         end
     --         element.OnHoverLeave = function(e)
     --             local elementType = tostring(e):match('^(%w+)')
-                
+
     --             if elementType == 'Button' then
     --                 Imgui.FadeColor(e, 'Button', Style.buttonHovered, Style.button, fadeTime)
     --             elseif elementType == 'Checkbox' then
@@ -308,7 +311,7 @@ function MainWindow(mw)
     --         end
     --         -- element.OnClick = function(e)
     --         --     local elementType = tostring(e):match('^(%w+)')
-                
+
     --         --     if elementType == 'Button' then
     --         --         -- Imgui.FadeColor(e, 'Button', Style.buttonHovered, Style.button, fadeTime)
     --         --         Imgui.FadeColor(e, 'ButtonActive', Style.buttonHovered, Style.buttonActive, fadeTime)
@@ -336,28 +339,28 @@ function MainWindow(mw)
     -- end
     -- funnyStuff()
     buttonSizes()
-    
+
     -- dev = mainTabBar:AddTabItem("Dev")
     -- DevTab(dev)
-    
-    
-    
+
+
+
     -- Add AnL tab to the same TabBar _ai
     -- anlTab = mainTabBar:AddTabItem("AnL")
     -- AnLWindowTab(anlTab)
-    
+
 
 
     -- mainTab = mainTabBar:AddTabItem("Main_old")
     -- MainWindowTab(mainTab)
-    
+
     -- originPointTab = E.mainTabBar:AddTabItem("Origin point")
     -- OriginPointTab(originPointTab)
-    
-    
-    
-    
-    
+
+
+
+
+
 
 
 
@@ -398,7 +401,7 @@ function BetterPMTab(parent)
     E.slFarPlane.OnChange = function(e)
         CameraControlls('Far_plane', e.Value[1])
     end
-    
+
 
     E.slNearPlane = E.camCollapse:AddSlider('Near plane distance', 0.025, 0.001, 0.025, 1)
     E.slNearPlane.Logarithmic = true
@@ -446,7 +449,7 @@ function BetterPMTab(parent)
 
         if success and result then
             Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFDistance = value
-        end    
+        end
     end
 
     E.dofDistance = E.dofCollapse:AddSlider("", 0, 0, 30, 0.001)
@@ -465,7 +468,7 @@ function BetterPMTab(parent)
     E.btnDofDistanceDec.OnClick = function ()
         dofChange(E.dofDistance.Value[1] + 0.0005)
     end
-    
+
     E.btnDofDistanceInc = E.dofCollapse:AddButton('>')
     E.btnDofDistanceInc.SameLine = true
     E.btnDofDistanceInc.OnClick = function ()
@@ -492,12 +495,12 @@ function BetterPMTab(parent)
 
 
 local btnCounter = 0
-local savedButtons = {} 
+local savedButtons = {}
 
 E.btnSavePos = E.collapseSavePos:AddButton('Save')
 E.btnSavePos.IDContext = '238492kjndflkjsdnf'
 E.btnSavePos.OnClick = function ()
-    
+
     if not LLGlobals.States.inPhotoMode then return end
 
     btnCounter = btnCounter + 1
@@ -506,34 +509,34 @@ E.btnSavePos.OnClick = function ()
 
     CameraSaveLoadPosition(currentIndex)
 
-    GlobalsIMGUI.windowLoadPos.Size = {
-        GlobalsIMGUI.windowLoadPos.Size[1],
-        GlobalsIMGUI.windowLoadPos.Size[2] + size
+    E.windowLoadPos.Size = {
+        E.windowLoadPos.Size[1],
+        E.windowLoadPos.Size[2] + size
     }
-    
-    local btnDelete = GlobalsIMGUI.windowLoadPos:AddButton('X')
+
+    local btnDelete = E.windowLoadPos:AddButton('X')
     btnDelete.IDContext = 'delete_' .. currentIndex
-    
-    local btnLoad = GlobalsIMGUI.windowLoadPos:AddButton('')
+
+    local btnLoad = E.windowLoadPos:AddButton('')
     btnLoad.IDContext = 'load_' .. currentIndex
     btnLoad.SameLine = true
     btnLoad.Label = tostring(currentIndex)
-    
+
     savedButtons[currentIndex] = {
         load = btnLoad,
         delete = btnDelete
     }
-    
+
     btnDelete.OnClick = function ()
         if savedButtons[currentIndex] then
             savedButtons[currentIndex].load:Destroy()
             savedButtons[currentIndex].delete:Destroy()
             savedButtons[currentIndex] = nil
             LLGlobals.CameraPositions[tostring(currentIndex)] = nil
-            
-            GlobalsIMGUI.windowLoadPos.Size = {
-                GlobalsIMGUI.windowLoadPos.Size[1], 
-                GlobalsIMGUI.windowLoadPos.Size[2] - size
+
+            E.windowLoadPos.Size = {
+                E.windowLoadPos.Size[1],
+                E.windowLoadPos.Size[2] - size
             }
         end
     end
@@ -545,7 +548,7 @@ E.btnSavePos.OnClick = function ()
             camera.PhotoModeCameraSavedTransform.field_0.Translate = LLGlobals.CameraPositions[index].activeTranslate
             camera.PhotoModeCameraSavedTransform.field_0.RotationQuat = LLGlobals.CameraPositions[index].activeRotationQuat
             camera.PhotoModeCameraSavedTransform.field_0.Scale = LLGlobals.CameraPositions[index].activeScale
-                
+
             Helpers.Timer:OnTicks(5, function ()
                 Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.RecallCameraTransform:Execute()
             end)
@@ -554,8 +557,8 @@ E.btnSavePos.OnClick = function ()
 end
 
 
-    GlobalsIMGUI.windowLoadPos = E.collapseSavePos:AddChildWindow('Load')
-    GlobalsIMGUI.windowLoadPos.Size = {0, 1}
+    E.windowLoadPos = E.collapseSavePos:AddChildWindow('Load')
+    E.windowLoadPos.Size = {0, 1}
 
     local sepa2 = parent:AddSeparatorText('Dummy controls')
 
@@ -568,18 +571,22 @@ end
     E.visTemComob.HeightLargest = true
     E.visTemComob.SameLine = false
     E.visTemComob.OnChange = function()
+
         selectedCharacter = E.visTemComob.SelectedIndex + 1
+
+        DPrint('Combo option: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
+        DPrint('Selected character combo: %s', selectedCharacter)
         UpdateCharacterInfo(E.visTemComob.SelectedIndex + 1)
     end
     selectedCharacter = E.visTemComob.SelectedIndex + 1
 
 
-    
+
 
     E.infoCollapse = parent:AddCollapsingHeader('Info')
     E.infoCollapse.DefaultOpen = openByDefaultPMInfo
 
-    
+
     E.posInput = E.infoCollapse:AddInputScalar('Position')
     E.posInput.Components = 3
     E.posInput.Value = {0, 0, 0, 0}
@@ -612,7 +619,7 @@ end
             --UpdateCharacterInfo(index)
         end
     end
-    
+
 
 
 
@@ -650,11 +657,18 @@ end
     E.posX.SameLine = false
     E.posX.Components = 1
     E.posX.Value = { 0, 0, 0, 0 }
-    E.posX.OnChange = function()
-        local value = E.posX.Value[1]
-        -- DPrint(E.visTemComob.Options[selectedCharacter])
-        MoveCharacter("x", value, stepMod, selectedCharacter)
-        E.posX.Value = { 0, 0, 0, 0 }
+    E.posX.OnChange = function(e)
+        -- local value = E.posX.Value[1]
+
+        DPrint('Selected character name selectedCharacter: %s', E.visTemComob.Options[selectedCharacter])
+        DPrint('Selected character name Index: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
+        DPrint('Selected character W/E: %s', selectedCharacter)
+
+        MoveCharacter("x", e.Value[1], stepMod, selectedCharacter)
+
+        DPrint('Pre SliderValue W/E: %s', e.Value[1])
+        E.posX.Value = {0, 0, 0, 0}
+        DPrint('Post SliderValue W/E: %s', e.Value[1])
     end
 
 
@@ -664,10 +678,19 @@ end
     E.posY.SameLine = false
     E.posY.Components = 1
     E.posY.Value = { 0, 0, 0, 0 }
-    E.posY.OnChange = function()
-        local value = E.posY.Value[1]
-        MoveCharacter("y", value, stepMod, selectedCharacter)
+    E.posY.OnChange = function(e)
+        -- local value = E.posY.Value[1]
+
+        DPrint('Selected character name selectedCharacter: %s', E.visTemComob.Options[selectedCharacter])
+        DPrint('Selected character name Index: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
+        DPrint('Selected character D/U: %s', selectedCharacter)
+
+
+        MoveCharacter("y", e.Value[1], stepMod, selectedCharacter)
+        DPrint('Pre SliderValue D/U: %s', e.Value[1])
         E.posY.Value = { 0, 0, 0, 0 }
+        DPrint('Post SliderValue D/U: %s', e.Value[1])
+
     end
 
 
@@ -677,10 +700,19 @@ end
     E.posZ.SameLine = false
     E.posZ.Components = 1
     E.posZ.Value = { 0, 0, 0, 0 }
-    E.posZ.OnChange = function()
-        local value = E.posZ.Value[1]
-        MoveCharacter("z", value, stepMod, selectedCharacter)
+    E.posZ.OnChange = function(e)
+        -- local value = E.posZ.Value[1]
+
+        DPrint('Selected character name selectedCharacter: %s', E.visTemComob.Options[selectedCharacter])
+        DPrint('Selected character name Index: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
+        DPrint('Selected character S/N: %s', selectedCharacter)
+
+
+        MoveCharacter("z", e.Value[1], stepMod, selectedCharacter)
+        DPrint('Pre SliderValue S/N: %s', e.Value[1])
         E.posZ.Value = { 0, 0, 0, 0 }
+        DPrint('Post SliderValue S/N: %s', e.Value[1])
+
     end
 
 
@@ -842,7 +874,7 @@ end
     E.resetScale.SameLine = false
     E.resetScale.OnClick = function()
         LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Scale = { 1, 1, 1 }
-        GlobalsIMGUI.infoScale.Label = string.format('L: %.2f  H: %.2f  W: %.2f', 1, 1, 1)
+        E.infoScale.Label = string.format('L: %.2f  H: %.2f  W: %.2f', 1, 1, 1)
         UpdateCharacterInfo(selectedCharacter)
     end
 
@@ -1046,7 +1078,7 @@ end
     E.hornsRotCollapse.DefaultOpen = false
 
 
-    
+
     E.hrotX = E.hornsRotCollapse:AddSlider("Pitch", 0, -100, 100, 1)
     E.hrotX.IDContext = "ro1312323tX"
     E.hrotX.SameLine = false
@@ -1139,18 +1171,18 @@ end
 
 
 
-    
-    
-    
+
+
+
     local targetPos
-    
+
     E.btnMoveToCamLookAt = E.collapseLookAt:AddButton('Move to cam')
     E.btnMoveToCamLookAt.SameLine = false
     E.btnMoveToCamLookAt.OnClick = function ()
         targetPos = Camera:GetActiveCamera().Transform.Transform.Translate
         Ext.Net.PostMessageToServer('LL_MoveLookAtTargetToCam', Ext.Json.Stringify(targetPos))
     end
-    
+
 
 
     E.btnCreateLookAt = E.collapseLookAt:AddButton('Marker')
@@ -1158,18 +1190,18 @@ end
     E.btnCreateLookAt.OnClick = function ()
         Ext.Net.PostMessageToServer('LL_CreateLookAtTarget', '')
     end
-    
+
 
     E.btnDeleteLookAt = E.collapseLookAt:AddButton('Delete')
     E.btnDeleteLookAt.SameLine = true
     E.btnDeleteLookAt.OnClick = function ()
         Ext.Net.PostMessageToServer('LL_DeleteLookAtTarget', '')
     end
-    
+
     E.btnUpdateCamPos = E.collapseLookAt:AddCheckbox('Disable head follow the camera thing')
     E.btnUpdateCamPos.SameLine = true
     E.btnUpdateCamPos.OnChange = function (e)
-        
+
         if not Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1] then e.Checked = false return end
 
         if e.Checked then
@@ -1178,7 +1210,7 @@ end
                     Utils:SubUnsubToTick('unsub','LL_LookAt', _)
                     e.Checked = false
                     return
-                end  
+                end
                 targetPos = targetPos or _C().Transform.Transform.Translate
                 Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1].PhotoModeCameraTransform.Transform.Translate = {targetPos[1],targetPos[2],targetPos[3]}
             end)
@@ -1190,7 +1222,7 @@ end
             Utils:SubUnsubToTick('unsub','LL_LookAt', _)
             e.Checked = false
         end
-            
+
     end
 
 
@@ -1233,7 +1265,7 @@ end
 function DevTab(parent)
 
 
-    
+
     parent:AddSeparatorText('AnL')
     E.getTriggersBtn = parent:AddButton('Update triggers')
     E.getTriggersBtn.OnClick = function ()
@@ -1244,5 +1276,5 @@ function DevTab(parent)
 
 end
 
+MCM.InsertModMenuTab('Lighty Lights', MainTab2, ModuleUUID)
 
-Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Lighty Lights", MainTab2)

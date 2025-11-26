@@ -1,6 +1,6 @@
 --[[
     TBD:
-    
+
     AS SEPARATE FUNCTION
     local Response = {
         Translate = Translate,
@@ -38,7 +38,7 @@ MAZZLE_BEAM = 'ee3cf097-6e5f-40a2-8ed7-68073d50225f'
 
 
 Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function(levelName, isEditorMode)
-    
+
     getLevelAvailableLTNTriggers()
     getLevelAvailableATMTriggers()
 
@@ -103,7 +103,7 @@ Channels.CreateLight:SetRequestHandler(function (Data)
     local HumanRotation
     local offset = 2
     local uuid = getAvailableRootTemplate()
-    
+
     if not uuid then return end
 
     -- DPrint('Creating new light using: %s', uuid)
@@ -111,48 +111,48 @@ Channels.CreateLight:SetRequestHandler(function (Data)
     local x, y, z = table.unpack(getSourcePosition())
 
     if uuid then
-        
+
         LLGlobals.selectedUuid = Osi.CreateAt(uuid, x, y + offset, z, 0, 0, '')
         HumanRotation = {0, 0, 0}
-        
+
         if Data.lightType == 'Spotlight' then
             HumanRotation = {90, 0, 0}
             local rx, ry, rz = table.unpack(HumanRotation)
             Osi.ToTransform(LLGlobals.selectedUuid, x, y + offset, z, rx, ry, rz)
         end
-        
-        
+
+
         LLGlobals.LightParametersServer[LLGlobals.selectedUuid] = {}
         LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate = {x,y + offset ,z}
         LLGlobals.LightParametersServer[LLGlobals.selectedUuid].RotationQuat = Math:EulerToQuats(HumanRotation)
         LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = HumanRotation
 
         LLGlobals.selectedEntity = Ext.Entity.Get(LLGlobals.selectedUuid)
-        
+
         LLGlobals.CreatedLightsServer[LLGlobals.selectedUuid] = LLGlobals.selectedUuid
 
         -- DDump(LLGlobals.LightParametersServer)
-        
-        
+
+
         if LLGlobals.markerUuid then
             UpdateMarkerPosition()
             UpdateBeamPosition()
         else
             CreateMarker(true)
         end
-        
-        
+
+
         local Response = {
             LLGlobals.CreatedLightsServer,
             LLGlobals.selectedUuid,
             LLGlobals.markerUuid
         }
-        
+
         LLGlobals.States.lastMode[LLGlobals.selectedUuid] = 'World'
 
 
         return Response
-        
+
     else
         return nil
     end
@@ -164,12 +164,12 @@ Channels.DuplicateLight:SetRequestHandler(function ()
     local uuid = getAvailableRootTemplate()
     local x,y,z = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate)
     local rx,ry,rz = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation)
-    
+
     local PreviousOrbitParams = LLGlobals.OrbitParams[LLGlobals.selectedUuid]
 
     LLGlobals.selectedUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
     Osi.ToTransform(LLGlobals.selectedUuid, x, y, z, rx, ry, rz)
-    
+
 
     LLGlobals.selectedEntity = Ext.Entity.Get(LLGlobals.selectedUuid)
 
@@ -183,14 +183,14 @@ Channels.DuplicateLight:SetRequestHandler(function ()
 
     LLGlobals.CreatedLightsServer[LLGlobals.selectedUuid] = LLGlobals.selectedUuid
 
-    
+
     if LLGlobals.markerUuid then
         UpdateMarkerPosition()
         UpdateBeamPosition()
     else
         CreateMarker(true)
     end
-    
+
     local Response = {
         LLGlobals.CreatedLightsServer,
         LLGlobals.selectedUuid,
@@ -198,29 +198,29 @@ Channels.DuplicateLight:SetRequestHandler(function ()
     }
 
     LLGlobals.States.lastMode[LLGlobals.selectedUuid] = 'World'
-    
+
     return Response
 end)
 
 
 
 function CreateMarker(single)
-    
+
     local rOffset = 90
 
     if single then
         local x,y,z = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate)
         local rx,ry,rz = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation)
-        
+
         local uuid = lightMarkerGUID
         LLGlobals.markerUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
         Osi.ToTransform(LLGlobals.markerUuid, x, y, z, rx - rOffset, ry, rz)
-        
+
         Data = LLGlobals.markerUuid
         Channels.MarkerHandler:Broadcast(Data)
 
     else
-        
+
         LLGlobals.States.allMarkersExisting = not LLGlobals.States.allMarkersExisting
 
         if LLGlobals.States.allMarkersExisting then
@@ -228,7 +228,7 @@ function CreateMarker(single)
 
                 local x,y,z = table.unpack(LLGlobals.LightParametersServer[v].Translate)
                 local rx,ry,rz = table.unpack(LLGlobals.LightParametersServer[v].HumanRotation)
-                
+
                 local uuid = lightMarker2GUID
 
                 local markerUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
@@ -249,7 +249,7 @@ end
 
 function UpdateMarkerPosition()
     if LLGlobals.markerUuid and LLGlobals.LightParametersServer[LLGlobals.selectedUuid] then
-        local rOffset = 90    
+        local rOffset = 90
         local x,y,z = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate)
         local rx,ry,rz = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation)
         Osi.ToTransform(LLGlobals.markerUuid, x, y, z, rx - rOffset, ry, rz)
@@ -259,7 +259,7 @@ end
 
 
 function UpdateBeamPosition()
-    
+
     if not LLGlobals.beamUuid then return end
 
     local uuid = LLGlobals.selectedUuid
@@ -305,7 +305,7 @@ Channels.DeleteLight:SetHandler(function (request)
         for _, lightUuid in pairs(LLGlobals.CreatedLightsServer) do
             Osi.RequestDelete(lightUuid)
         end
-        
+
 
         for _, markerUuid in pairs(LLGlobals.CreatedAllMakers) do
             Osi.RequestDelete(markerUuid)
@@ -315,7 +315,7 @@ Channels.DeleteLight:SetHandler(function (request)
         LLGlobals.CreatedLightsServer = {}
         LLGlobals.LightParametersServer = {}
 
-        
+
         LLGlobals.beamUuid = nil
         LLGlobals.selectedEntity = nil
         LLGlobals.selectedUuid = nil
@@ -326,9 +326,9 @@ Channels.DeleteLight:SetHandler(function (request)
 
         LLGlobals.GoboLightMap = {}
         LLGlobals.GoboDistances = {}
-        
 
-        
+
+
         LLGlobals.beamUuid = nil
         LLGlobals.States.beamExisting = false
 
@@ -347,7 +347,7 @@ Channels.DeleteLight:SetHandler(function (request)
 
 
     if request then
-        
+
         local lightUuidFromClientJustToMakeSureBecauseIHadProblemsForSomeReasonImProbablyDumb = request
 
         local ent = Ext.Entity.Get(lightUuidFromClientJustToMakeSureBecauseIHadProblemsForSomeReasonImProbablyDumb)
@@ -369,7 +369,7 @@ Channels.DeleteLight:SetHandler(function (request)
         --TBD: find a better solution later, because I'm sleepy af rn
         local count = 0
         for _ in pairs(LLGlobals.CreatedLightsServer) do
-            count = count + 1  
+            count = count + 1
         end
         if count == 0 and LLGlobals.markerUuid then
             Osi.RequestDelete(LLGlobals.markerUuid)
@@ -381,7 +381,7 @@ Channels.DeleteLight:SetHandler(function (request)
             LLGlobals.markerUuid = nil
         end
     end
-    
+
 end)
 
 
@@ -402,7 +402,7 @@ end)
 
 
 LLGlobals.States.sourceClient = false
-        
+
 
 
 Channels.CurrentEntityTransform:SetHandler(function (Data)
@@ -432,7 +432,7 @@ end
 
 
 Channels.StickToCamera:SetHandler(function (Data)
-    
+
     if not LLGlobals.selectedUuid then return end
     if not LLGlobals.LightParametersServer  then return end
     if not LLGlobals.LightParametersServer[LLGlobals.selectedUuid] then return end
@@ -458,10 +458,10 @@ end)
 
 
 Channels.SaveLoadLightPos:SetHandler(function (Data)
-    
+
     if Data == 'Save' then
         LLGlobals.LightParametersServer[LLGlobals.selectedUuid].SavedPosition = LLGlobals.LightParametersServer[LLGlobals.selectedUuid.SavedPosition] or {}
-        
+
         LLGlobals.LightParametersServer[LLGlobals.selectedUuid].SavedPosition.Translate = LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate
         LLGlobals.LightParametersServer[LLGlobals.selectedUuid].SavedPosition.RotationQuat = LLGlobals.LightParametersServer[LLGlobals.selectedUuid].RotationQuat
         LLGlobals.LightParametersServer[LLGlobals.selectedUuid].SavedPosition.HumanRotation = LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation
@@ -471,7 +471,7 @@ Channels.SaveLoadLightPos:SetHandler(function (Data)
         local x,y,z = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].SavedPosition.Translate)
         local rx,ry,rz = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].SavedPosition.HumanRotation)
 
-        
+
         LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate = {x,y,z}
         LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = {rx,ry,rz}
 
@@ -485,7 +485,7 @@ Channels.SaveLoadLightPos:SetHandler(function (Data)
         Channels.CurrentEntityTransform:Broadcast(Response)
 
         Osi.ToTransform(LLGlobals.selectedUuid, x, y, z, rx, ry, rz)
-        
+
         UpdateMarkerPosition()
         UpdateGoboPosition()
         UpdateBeamPosition()
@@ -507,7 +507,7 @@ end)
 
 
 Channels.MazzleBeam:SetHandler(function (Data)
-    
+
     if not LLGlobals.selectedUuid then return end
 
 
@@ -515,18 +515,18 @@ Channels.MazzleBeam:SetHandler(function (Data)
 
 
     if LLGlobals.States.beamExisting then
-    
+
         local uuid = LLGlobals.selectedUuid
 
         local rx, ry, rz = Osi.GetRotation(uuid)
         local x, y, z = Osi.GetPosition(uuid)
 
         local rOffset = 180
-        
+
         LLGlobals.beamUuid =  Osi.CreateAt(MAZZLE_BEAM, x, y, z, 0, 0, '')
-        
+
         Helpers.Timer:OnTicks(1, function ()
-            
+
             Osi.ToTransform(LLGlobals.beamUuid, x, y, z, rx + rOffset, ry, rz)
         end)
 
@@ -554,15 +554,15 @@ Channels.EntityTranslate:SetHandler(function (Data)
     local x, y, z = Osi.GetPosition(uuid)
 
 
-    
+
     if axis == 'x' then
         local x = x + offset / step
         Osi.ToTransform(uuid, x, y, z, rx, ry, rz)
-        
+
     elseif  axis == 'y' then
         local y = y + offset / step
         Osi.ToTransform(uuid, x, y, z, rx, ry, rz)
-        
+
     elseif  axis == 'z' then
         local z = z + offset / step
         Osi.ToTransform(uuid, x, y, z, rx, ry, rz)
@@ -574,12 +574,12 @@ Channels.EntityTranslate:SetHandler(function (Data)
 
 
 
-    --- TBD: REFACTOR THESE ONES 
+    --- TBD: REFACTOR THESE ONES
     local RotationQuat = entity.Transform.Transform.RotationQuat
     local Translate = entity.Transform.Transform.Translate
     local HumanRotation = {rx,ry,rz}
 
-    
+
     LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate = Translate
     LLGlobals.LightParametersServer[LLGlobals.selectedUuid].RotationQuat = RotationQuat
     LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = HumanRotation
@@ -589,7 +589,7 @@ Channels.EntityTranslate:SetHandler(function (Data)
         RotationQuat = RotationQuat,
         HumanRotation = HumanRotation
     }
-    
+
     -- LLGlobals.OrbitParams[uuid] = nil
 
     Channels.CurrentEntityTransform:Broadcast(Response)
@@ -679,18 +679,18 @@ Channels.EntityRotation:SetHandler(function (Data)
             Osi.ToTransform(uuid, x, y, z, 0, 0, 0)
             LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = {0,0,0}
             LLGlobals.OrbitParams[LLGlobals.selectedUuid] = nil
-            
+
             local Response = {
                 Translate = Translate,
                 RotationQuat = RotationQuat,
                 HumanRotation = {0,0,0}
             }
-            
+
             Channels.CurrentEntityTransform:Broadcast(Response)
             UpdateMarkerPosition()
             UpdateGoboPosition()
             UpdateBeamPosition()
-            
+
             return Response
         -- end
     end
@@ -736,24 +736,24 @@ end)
 
 
 
---- mmmmmmmm slop tasty slop m m m m :P 
+--- mmmmmmmm slop tasty slop m m m m :P
 
 LLGlobals.OrbitParams = LLGlobals.OrbitParams or {}
 
 Channels.EntityRotationOrbit:SetHandler(function (Data)
-    
+
     if not LLGlobals.selectedUuid then return end
 
     local uuid = LLGlobals.selectedUuid
     local entity = Ext.Entity.Get(uuid)
 
     local centerX, centerY, centerZ = table.unpack(getSourcePosition())
-    
+
     local curX, curY, curZ = Osi.GetPosition(uuid)
     local curRx, curRy, curRz = Osi.GetRotation(uuid)
 
     if not LLGlobals.OrbitParams[uuid] then
-        LLGlobals.OrbitParams[uuid] = { 
+        LLGlobals.OrbitParams[uuid] = {
             angle = 0, radius = 1, height = 0,
             -- rx = 0, ry = 0, rz = 0,
             lastCenterX = centerX,
@@ -764,18 +764,18 @@ Channels.EntityRotationOrbit:SetHandler(function (Data)
     end
 
     local params = LLGlobals.OrbitParams[uuid]
-    
-    local centerMoved = centerX ~= params.lastCenterX 
-        or centerY ~= params.lastCenterY 
+
+    local centerMoved = centerX ~= params.lastCenterX
+        or centerY ~= params.lastCenterY
         or centerZ ~= params.lastCenterZ
-    
-    local posChanged = curX ~= (params.baseX or curX) 
-        or curY ~= (params.baseY or curY) 
+
+    local posChanged = curX ~= (params.baseX or curX)
+        or curY ~= (params.baseY or curY)
         or curZ ~= (params.baseZ or curZ)
-    local rotChanged = curRx ~= (params.lastActualRx or curRx) 
-        or curRy ~= (params.lastActualRy or curRy) 
+    local rotChanged = curRx ~= (params.lastActualRx or curRx)
+        or curRy ~= (params.lastActualRy or curRy)
         or curRz ~= (params.lastActualRz or curRz)
-    
+
 
     if centerMoved or posChanged or rotChanged or not params.baseX then
         InitOrbitParamsFromCurrent(uuid, params, centerX, centerY, centerZ)
@@ -785,9 +785,9 @@ Channels.EntityRotationOrbit:SetHandler(function (Data)
     end
 
 
-    
+
     local change = Data.offset / Data.step
-    
+
     if Data.axis == 'x' then
         params.angle = params.angle + change*50
     elseif Data.axis == 'y' then
@@ -800,7 +800,7 @@ Channels.EntityRotationOrbit:SetHandler(function (Data)
         LLGlobals.OrbitParams[uuid] = nil
         return
     end
-    
+
     RotateAroundPoint(uuid, centerX, centerY, centerZ, params)
     LookAtCenter(uuid, centerX, centerY, centerZ, 1, params)
 
@@ -814,7 +814,7 @@ Channels.EntityRotationOrbit:SetHandler(function (Data)
     local RotationQuat = entity.Transform.Transform.RotationQuat
     LLGlobals.LightParametersServer[LLGlobals.selectedUuid].RotationQuat = RotationQuat
     LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = {arx, ary, arz}
-    
+
     local Response = {
         Translate = {params.baseX, params.baseY, params.baseZ},
         RotationQuat = RotationQuat,
@@ -864,7 +864,7 @@ function RotateAroundPoint(uuid, centerX, centerY, centerZ, params)
     local newX = centerX + params.radius * math.cos(angle)
     local newZ = centerZ + params.radius * math.sin(angle)
     local newY = centerY + params.height
-    
+
     local rx, ry, rz = Osi.GetRotation(uuid)
     Osi.ToTransform(uuid, newX, newY, newZ, rx, ry, rz)
 end
@@ -876,7 +876,7 @@ function LookAtCenter(uuid, centerX, centerY, centerZ, heightOffset, params)
     local heightOffset = 0 -- I FIXED SLOP.
     local dx, dy, dz = centerX - x, centerY + heightOffset - y, centerZ - z
     local distance = math.sqrt(dx * dx + dy * dy + dz * dz)
-    
+
     local pitch = math.deg(math.asin(-dy / distance))
     local yaw = math.deg(Ext.Math.Atan2(dx / distance, dz / distance))
     local roll = 0

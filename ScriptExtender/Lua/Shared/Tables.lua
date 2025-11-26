@@ -72,11 +72,7 @@ RootTemplates = {
 
 QOTD = {
     'xQc is the best streamer',
-    'Try terraria!',
-    'What is omegilol?',
-    'You should rest sometimes',
     'Fnesrkljtnesilurng',
-    'Try minecraft!',
     'Thank you all!',
     'Thank you Alithea!',
     'AahzCoreX inside',
@@ -97,19 +93,15 @@ QOTD = {
     'aw;odiajwdoiuawhdnjoiuh',
     'Thank you #scripting-and-programming',
     'What if we ... ? Unless?',
-    'Stop limiting yourself; play with lighting more!',
-    'Stop limiting yourself; play with lighting more!',
+    'Stop limiting yourself - play with lighting more!',
     'Dont be afraid of lighting',
-    'Dont be afraid of yourself',
     'What Power art thou',
     '<3',
     'who is qsat',
     'Janky ahh code',
     'Under the same one',
-    'empty text',
-    '...',
-    '7:02',
-    'Daniela Artista @ LL',
+    'Empty text',
+    'Daniela aka Luna Girl Artista @ LL',
     'Alyona Artist @ LL',
     'satanfish Artist @ LL',
     'aini Artist @ LL',
@@ -122,6 +114,19 @@ QOTD = {
     'Stop reading this bs',
     'Stop typing this bs',
     'ok!',
+    'Oh hi Mark',
+    'Living of borrowed time',
+    'the clock ticks faster',
+    'Your first and last step',
+    'to playing yourself like accordion',
+    'Empty thoughts',
+    [[Lawyer's cat Support @ LL]],
+    'Sometimes I need to keep my mouth shut',
+    'Maybe not, actually',
+    'uwu',
+    'meow',
+    'Dont be afraid of ligtning',
+    'Lightly Lights'
 }
 
 
@@ -130,7 +135,7 @@ LTN_ORDER = {
     "Intensity",
     "Kelvin",
     "UseTemperature",
-    
+
     "Color",
     "Albedo",
     "BaseColor",
@@ -140,112 +145,112 @@ LTN_ORDER = {
     "SunColor",
     "ScatteringSunColor",
     "CirrusCloudsColor",
-    
+
     "Pitch",
     "Yaw",
-    "RotationAsVec3",
     "Distance",
-    "Radius",
-    "LightDistance",
-    "LightSize",
-    
+    "RotationAsVec3",
+
     "Density",
     "Density0",
     "Density1",
     "Height0",
     "Height1",
-    
+
     "NoiseCoverage",
     "NoiseFrequency",
     "NoiseRotation",
     "NoiseWind",
-    
+
     "Phase",
     "RenderDistance",
-    
+
     "ShadowEnabled",
+    "Radius",
+    "LightDistance",
+    "LightSize",
     "ShadowBias",
     "ShadowFade",
     "ShadowNearPlane",
     "ShadowFarPlane",
     "ShadowObscurity",
     "ShadowFactor",
-    
+
     "CascadeCount",
     "CascadeSpeed",
-    
+
     "CoverageSettings",
     "LocalCoverageEnabled",
     "LocalCoverageScalar",
     "CoverageStartDistance",
     "CoverageEndDistance",
     "CoverageWindSpeed",
-    
+
     "ScatteringEnabled",
     "ScatteringIntensity",
     "ScatteringSunIntensity",
     "ScatteringIntensityScale",
-    
+
     "SkydomeEnabled",
     "SkydomeTex",
     "RotateSkydomeEnabled",
-    
+
     "CirrusCloudsEnabled",
     "CirrusCloudsIntensity",
     "CirrusCloudsAmount",
-    
+
     "ProcStarsEnabled",
     "ProcStarsIntensity",
     "ProcStarsAmount",
     "ProcStarsSaturation",
     "ProcStarsShimmer",
-    
+
     "AmbientLightFactor",
     "SunLightFactor",
     "DirectLightInfluence",
-    
+
     "ForwardScatteringG",
     "BackwardScatteringG",
-    
+
     "HorizonFade",
     "BottomFade",
-    
+
     "ConeRadius",
     "DetailScale",
     "Distortion",
     "DistortionScale",
     "ErosionEdgeSize",
     "DarkOutline",
-    
+
     "LODDistance",
     "SampleScalar",
     "SampleThreshold",
-    
+
     "RainCoverageMaxInfluence",
-    
+
     "SunIntensity",
     "SunlightObscurity",
     "SunRayLength",
-    
+
     "Earthshine",
     "MoonGlare",
     "CastLightEnabled",
-    
+
     "Bias",
-    
+
     "TearsRotate",
     "TearsScale",
-    
+
     "PhysicalModel",
-    
+
     "Offset",
-    
+
     "AlbedoTexResourceGUID",
     "NormalTexResourceGUID",
     "TearsAlbedoTexResourceGUID",
     "TearsNormalTexResourceGUID",
     "TexResourceGUID",
-    
+
     "ParentGUID",
     "LinearClearColor",
     "LinearClearColorOverride",
@@ -257,12 +262,12 @@ LTN_ORDER = {
 ATM_ORDER = {
     "GUID",
     "InheritanceFlags",
-    
+
     "Atmosphere",
-    
+
     "NearPlane",
     "FarPlane",
-    
+
     "WindDirection",
     "WindSpeed",
     "ClothWindSpeed",
@@ -271,25 +276,25 @@ ATM_ORDER = {
     "ClothMainWindFrequency",
     "ClothMaxWindDirectionOffset",
     "ClothWindDirectionOffsetFrequency",
-    
+
     "LocalLightSourceEnabled",
     "LocalLightSourceOverrideSettings",
     "LocalLightSourceIntensity",
     "LocalLightSourceColor",
-    
+
     "EnvironmentEffectGlobalEnabled",
     "EnvironmentEffect",
     "EnvironmentEffectEnabled",
     "EnvironmentEffectEnabledForTimeline",
     "EnvironmentEffectOffset",
-    
+
     "TimelineAutomaticLightingDefaultSetup",
     "TimelineAutomaticLightingDisableFlip",
-    
+
     "PostProcess",
-    
+
     "Camera",
-    
+
     "DOF",
     "DOFForcedSettingsEnabled",
     "AlternateDOF",
@@ -299,7 +304,7 @@ ATM_ORDER = {
     "FarSharpDistance",
     "NearOnly",
     "FarOnly",
-    
+
     "Exposure",
     "ExposureCompensation",
     "ExposureMin",
@@ -307,32 +312,32 @@ ATM_ORDER = {
     "ExposureMinPercentile",
     "ExposureMaxPercentile",
     "ExposureMeteringMode",
-    
+
     "Delta",
     "Enabled",
     "Settings",
     "DeltaCompensation",
     "DeltaMin",
     "DeltaMax",
-    
+
     "LensFlareEnabled",
     "LensFlareIntensity",
     "LensFlareTreshold",
     "LensFlareGhostDispersal",
     "LensFlareHaloWidth",
     "LensFlareChromaticDistortion",
-    
+
     "ColorCorrection",
     "BlendedColorCorrection",
     "ColorCorrectionInterpolationFactor",
-    
+
     "Contrast",
     "Saturation",
     "Hue",
     "Pivot",
     "Shadows",
     "Highlights",
-    
+
     "GlobalRange",
     "DarkRange",
     "ShadowRange",
@@ -341,31 +346,31 @@ ATM_ORDER = {
     "SpecularRange",
     "ExposureShift",
     "XYOffset",
-    
+
     "LutApplyMode",
     "LutBlendFactors",
     "GradingLut",
     "GradingLutEnabled",
-    
+
     "Bloom",
     "BloomAmount",
     "BloomThreshold",
-    
+
     "GodRaysEnabled",
     "GodRaysPower",
     "GodRaysRayIntensity",
     "GodRaysThreshold",
-    
+
     "Vignette",
     "VignetteColor",
     "VignetteIntensity",
     "VignettePower",
-    
+
     "Brightness",
     "FadeOut",
     "ToneMapHighlightsFixAmount",
     "UseViewModeHDRSettings",
-    
+
     "WhiteTemperature",
     "WhiteBalanceTint",
     "WhiteBalanceMatrix"

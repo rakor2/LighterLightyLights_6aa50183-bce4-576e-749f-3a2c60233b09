@@ -5,6 +5,14 @@
 Is it possible to have the new implemented square colour open/close (which most people will likely prefer) and something more like what we have in the current version of LL? It's annoying to have to keep clicking (or a keybind to open it would be great in lieu of a open/closable colour selection).
 
 
+
+
+
+
+GOGO BUUG
+STICK LOOK AT SNAP
+PREC DIS POWE
+
 ]]
 
 
@@ -30,7 +38,7 @@ Settings = Settings or {}
 ---@type string EntityUuid
 LLGlobals.selectedUuid = nil
 
----@type EntityHandle 
+---@type EntityHandle
 LLGlobals.selectedEntity = nil
 
 ---@type LightComponent
@@ -81,11 +89,11 @@ ER = {
 function MainTab(p)
 
     --local btn = p:AddButton('xddd')
-    
+
 
     local rngMax = #QOTD
     p:AddSeparatorText(QOTD[Ext.Math.Random(1, rngMax)])
-    -- 
+    --
 
     E.checkTypePoint = p:AddCheckbox('Point')
     E.checkTypePoint.Checked = defaultLightType == 'Point'
@@ -97,8 +105,8 @@ function MainTab(p)
         E.checkTypeDir.Checked = false
 
     end
-    
-    
+
+
     E.checkTypeSpot = p:AddCheckbox('Spotlight')
     E.checkTypeSpot.Checked = defaultLightType == 'Spotlight'
     E.checkTypeSpot.SameLine = true
@@ -108,9 +116,9 @@ function MainTab(p)
 
         E.checkTypePoint.Checked = false
         E.checkTypeDir.Checked = false
-        
+
     end
-    
+
 
     E.checkTypeDir = p:AddCheckbox('Directional')
     E.checkTypeDir.Checked = defaultLightType == 'Directional'
@@ -121,11 +129,11 @@ function MainTab(p)
 
         E.checkTypePoint.Checked = false
         E.checkTypeSpot.Checked = false
-    
+
     end
 
-    
-    
+
+
     E.btnCreate2 = p:AddButton('Create')
     E.btnCreate2.SameLine = true
     E.btnCreate2.OnClick = function ()
@@ -167,8 +175,8 @@ function MainTab(p)
         if not LLGlobals.selectedUuid then return end
         prevOptionBtn()
     end
-        
-    
+
+
 
     --- for keybind
     function nextOptionBtn()
@@ -195,17 +203,17 @@ function MainTab(p)
 
 
 
-    
+
     txtCreateLight = p:AddText('Created lights')
     txtCreateLight.SameLine = true
 
-    
+
 
     E.inputRename = p:AddInputText('')
     E.inputRename.IDContext = 'adawdawdawdawd'
     E.inputRename.Disabled = false
     E.inputRename.OnChange = function ()
-        
+
     end
 
 
@@ -216,7 +224,7 @@ function MainTab(p)
         if not LLGlobals.selectedUuid then return end
         local lightEntity = getSelectedLightEntity()
 
-        
+
         for k, light in pairs(LLGlobals.LightsUuidNameMap) do
             if light.name == E.comboIHateCombos.Options[E.comboIHateCombos.SelectedIndex + 1] then
                 local index = light.nameIndex
@@ -258,7 +266,7 @@ ER.btnDelete.OnClick = function()
            table.remove(LLGlobals.LightsUuidNameMap, k)
         end
     end
-    
+
     for k, light in pairs(LLGlobals.LightsNames) do
         if light == selectedName then
             LLGlobals.LightsNames[k] = nil
@@ -294,7 +302,7 @@ ER.btnDelete.OnClick = function()
     Channels.DeleteLight:SendToServer(uuidToDelete)
 
     Channels.SelectedLight:SendToServer(LLGlobals.selectedUuid)
-    
+
 end
 
 
@@ -307,20 +315,20 @@ end
 
         ER.btnDeleteAll.Visible = false
         ER.btnConfirmDeleteAll.Visible = true
-        
+
         confirmTimer = Ext.Timer.WaitFor(1000, function()
             ER.btnConfirmDeleteAll.Visible = false
             ER.btnDeleteAll.Visible = true
         end)
     end
 
-    
+
     ER.btnConfirmDeleteAll = p:AddButton('Confirm')
     ER.btnConfirmDeleteAll.Visible = false
     ER.btnConfirmDeleteAll.SameLine = true
     Style.buttonConfirm.default(ER.btnConfirmDeleteAll)
     ER.btnConfirmDeleteAll.OnClick = function ()
-        
+
         E.checkStick.Checked = false
 
         Channels.DeleteLight:SendToServer('All')
@@ -334,7 +342,7 @@ end
         LLGlobals.markerUuid = {}
         LLGlobals.markerEntity = nil
         nameIndex = 0
-        
+
         Channels.CurrentEntityTransform:SendToServer(nil)
 
         UpdateCreatedLightsCombo()
@@ -344,7 +352,7 @@ end
         GatherLightsAndMarkers()
 
         Ext.Timer.Cancel(confirmTimer)
-        
+
         ER.btnDeleteAll.Visible = true
         ER.btnConfirmDeleteAll.Visible = false
 
@@ -368,10 +376,10 @@ end
         DPrint('nameIndex ----------------------------------------')
         DDump(nameIndex)
     end)
-    
 
 
-    
+
+
     ER.btnDuplicate = p:AddButton('Duplicate')
     ER.btnDuplicate.SameLine = true
     ER.btnDuplicate.Disabled = false
@@ -379,7 +387,7 @@ end
         if not LLGlobals.selectedUuid then return end
         DuplicateLight()
     end
-    
+
 
     E.checkSelectedLightNotification = p:AddCheckbox('Selected light popup')
     E.checkSelectedLightNotification.SameLine = true
@@ -388,11 +396,11 @@ end
     end
 
 
-    
+
     ---------------------------------------------------------
     p:AddSeparatorText('Parameters')
     ---------------------------------------------------------
-    
+
 
 
 
@@ -402,7 +410,7 @@ end
         local selectedUuid = getSelectedUuid()
 
         if lightEntity then
-            
+
 
 
             local flag = lightEntity.LightChannelFlag ~= 0
@@ -425,7 +433,7 @@ end
             else
                 lightEntity.ScatteringIntensityScale = 0
             end
-            
+
             UpdateVisibilityStateToNames(getSelectedLightName(), flag2)
 
         end
@@ -439,12 +447,12 @@ end
         toggleLightBtn()
     end
 
-    
+
     function toggleAllLightsBtn()
         if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
 
             all = not all
-            
+
             for _, uuid in pairs(LLGlobals.CreatedLightsServer) do
                 local lightEntity = getLightEntity(uuid)
 
@@ -454,7 +462,7 @@ end
                 else
                     local savedFlag = LLGlobals.LightParametersClient[uuid].LightChannelFlag
                     lightEntity.LightChannelFlag = (savedFlag ~= nil) and savedFlag or 255
-                    
+
                     if LLGlobals.LightParametersClient[uuid].ScatteringIntensityScale then
                         local value = LLGlobals.LightParametersClient[uuid].ScatteringIntensityScale
                         lightEntity.ScatteringIntensityScale = value
@@ -484,7 +492,7 @@ end
     E.toggleMarkerButton.SameLine = true
     E.toggleMarkerButton.IDContext = 'jhjkgyyutr'
     E.toggleMarkerButton.OnClick = function()
-        
+
         ToggleMarker(LLGlobals.markerUuid)
 
     end
@@ -494,7 +502,7 @@ end
     E.toggleAllMarkersButton.IDContext = '456456'
     E.toggleAllMarkersButton.SameLine = true
     E.toggleAllMarkersButton.OnClick = function()
-        
+
         Channels.MarkerHandler:RequestToServer({}, function (Response)
         end)
 
@@ -514,8 +522,8 @@ end
     E.collapseParameters = p:AddCollapsingHeader('Main parameters')
     E.collapseParameters.DefaultOpen = true
     -- E.collapseParameters = E.collapseParameters:AddGroup('Parameters1')
-    
-    
+
+
     E.treeGen = E.collapseParameters:AddTree('General')
     E.treeGen.DefaultOpen = openByDefaultMainGen
 
@@ -523,13 +531,13 @@ end
 
 
 
-    
+
     -- TYPE
 
-    
 
 
-    
+
+
     E.slIntLightType = E.treeGen:AddSliderInt('', 0,0,2,1)
     E.slIntLightType.IDContext = 'aojwdnakwol;n'
     E.slIntLightType.OnChange = function (e)
@@ -538,21 +546,21 @@ end
 
 
 
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             SetLightType(e.Value[1])
-            
-            
+
+
             -- TBD: temporary
             local selectedName = getSelectedLightName()
             if selectedName and (selectedName:find('Point') or selectedName:find('Spotlight') or selectedName:find('Directional')) then
                 if e.Value[1] == 0 then localLightType = 'Point' end
                 if e.Value[1] == 1 then localLightType = 'Spotlight' end
                 if e.Value[1] == 2 then localLightType = 'Directional' end
-                
+
                 local lightEntity = getSelectedLightEntity()
 
                 if not lightEntity then return end
-                
+
                 if lightEntity.LightChannelFlag == 255 then
                     local newName = LLGlobals.LightsUuidNameMap[E.comboIHateCombos.SelectedIndex + 1].name
                     newName = newName:gsub('Point', localLightType):gsub('Spotlight', localLightType):gsub('Directional', localLightType)
@@ -599,7 +607,7 @@ end
     E.pickerLightColor.InputRGB = true
     E.pickerLightColor.DisplayHex = true
     E.pickerLightColor.OnChange = function (e)
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             SetLightColor({e.Color[1], e.Color[2], e.Color[3]})
         end
     end
@@ -609,38 +617,38 @@ end
 
     -- INTENSITY
 
-    
 
-    
-    
+
+
+
     E.slLightIntensity = E.treeGen:AddSlider('', 1, 0, 60, 1)
     E.slLightIntensity.IDContext = 'lkjanerfliuaern'
     E.slLightIntensity.Logarithmic = true
     E.slLightIntensity.OnChange = function (e)
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             SetLightIntensity(e.Value[1])
         end
     end
-    
-    
+
+
     ER.btnLightIntensityReset = E.treeGen:AddButton('Power')
     ER.btnLightIntensityReset.SameLine = true
     ER.btnLightIntensityReset.OnClick = function ()
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             E.slLightIntensity.Value = {1, 0, 0, 0}
             SetLightIntensity(E.slLightIntensity.Value[1])
         end
     end
-    
-    
 
 
 
-    
+
+
+
     -- TEMPERATURE
-    
-    
-    
+
+
+
 
 
 
@@ -648,56 +656,56 @@ end
     E.slLightTemp.IDContext = 'wlekjfnlkm'
     E.slLightTemp.Logarithmic = true
     E.slLightTemp.OnChange = function (e)
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             local Color = Math:KelvinToRGB(e.Value[1])
             SetLightColor({Color[1], Color[2], Color[3]})
             E.pickerLightColor.Color = {Color[1], Color[2], Color[3], 0}
             LLGlobals.LightParametersClient[LLGlobals.selectedUuid].Temperature = e.Value[1] --This is just for the slidere
         end
     end
-    
-    
+
+
     ER.btnLightTempReset = E.treeGen:AddButton('Temperature')
     ER.btnLightTempReset.SameLine = true
     ER.btnLightTempReset.OnClick = function ()
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             E.slLightTemp.Value = {5600, 0, 0, 0}
             LLGlobals.LightParametersClient[LLGlobals.selectedUuid].Temperature = 5600
             SetLightColor({1,0.93,0.88})
         end
     end
-    
 
 
 
-    
-    
+
+
+
     -- RADIUS
-    
-    
 
 
-    
+
+
+
 
     E.slLightRadius = E.treeGen:AddSlider('', 1, 0, 60, 1)
     E.slLightRadius.IDContext = 'adwadqw3d'
     E.slLightRadius.Logarithmic = true
     E.slLightRadius.OnChange = function (e)
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             SetLightRadius(e.Value[1])
         end
     end
-    
-    
+
+
     ER.btnLightRadiusReset = E.treeGen:AddButton('Distance')
     ER.btnLightRadiusReset.SameLine = true
     ER.btnLightRadiusReset.OnClick = function ()
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             E.slLightRadius.Value = {1, 0, 0, 0}
             SetLightRadius(E.slLightRadius.Value[1])
         end
     end
-    
+
 
 
     E.checkLightChannel = E.treeGen:AddSliderInt('', 1, 1, 3, 1)
@@ -705,56 +713,56 @@ end
     E.checkLightChannel.OnChange = function (e)
         SetLightChannel(e.Value[1])
     end
-    
 
-    
+
+
     textChannel = E.treeGen:AddText('Light channel')
     textChannel.SameLine = true
 
 
-    
+
     E.slLightScattering = E.treeGen:AddSlider('', 0, 0, 100, 1)
     E.slLightScattering.IDContext = 'esrgsrengsrg'
     E.slLightScattering.Logarithmic = true
     E.slLightScattering.OnChange = function (e)
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             SetLightScattering(e.Value[1])
         end
     end
-    
+
 
 
     ER.btnLightScatterReset = E.treeGen:AddButton('Scattering')
     ER.btnLightScatterReset.SameLine = true
     ER.btnLightScatterReset.OnClick = function ()
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             E.slLightScattering.Value = {0, 0, 0, 0}
             SetLightScattering(E.slLightScattering.Value[1])
         end
     end
-    
+
     E.checkLightFill = E.treeGen:AddCheckbox('Scattering fill-light')
     E.checkLightFill.Checked = true
     E.checkLightFill.OnChange = function ()
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             SetLightFill(E.checkLightFill.Checked and 184 or 56)
         end
     end
-    
 
 
 
-    
+
+
     E.treeGen:AddSeparator('')
 
 
 
     E.treePoint = E.collapseParameters:AddTree('Point')
-    E.treePoint.IDContext = 'soawdawddkfn' 
+    E.treePoint.IDContext = 'soawdawddkfn'
     E.treePoint.DefaultOpen = openByDefaultMainPoint
 
 
-    
+
     function SetLightEdgeSharp(value)
         local lightEntity = getSelectedLightEntity()
         if lightEntity and value then
@@ -768,23 +776,23 @@ end
     E.slLightEdgeSharp.IDContext = 'sdfwerw34'
     E.slLightEdgeSharp.Logarithmic = false
     E.slLightEdgeSharp.OnChange = function (e)
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             SetLightEdgeSharp(e.Value[1])
         end
     end
-    
 
-    
+
+
     ER.btnLightSharpReset = E.treePoint:AddButton('Sharpening')
     ER.btnLightSharpReset.SameLine = true
     ER.btnLightSharpReset.OnClick = function ()
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             E.slLightEdgeSharp.Value = {0, 0, 0, 0}
             SetLightEdgeSharp(E.slLightEdgeSharp.Value[1])
         end
     end
-    
-    
+
+
     -- OUTER ANGLE
 
 
@@ -797,17 +805,17 @@ end
     E.slLightOuterAngle = E.treeSpot:AddSlider('', 45, 0, 179, 1)
     E.slLightOuterAngle.IDContext = '123dwfsefa'
     E.slLightOuterAngle.OnChange = function (e)
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             SetLightOuterAngle(e.Value[1])
         end
-        
+
     end
-    
-    
+
+
     ER.btnLightOuterReset = E.treeSpot:AddButton('Outer angle')
     ER.btnLightOuterReset.SameLine = true
     ER.btnLightOuterReset.OnClick = function ()
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             E.slLightOuterAngle.Value = {45, 0, 0, 0}
             SetLightOuterAngle(E.slLightOuterAngle.Value[1])
         end
@@ -822,27 +830,27 @@ end
 
 
 
-    
-    
-    
+
+
+
     E.slLightInnerAngle = E.treeSpot:AddSlider('', 1, 0, 179, 1)
     E.slLightInnerAngle.IDContext = 'rfgrtynj5r6'
     E.slLightInnerAngle.OnChange = function (e)
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             SetLightInnerAngle(e.Value[1])
         end
     end
-    
-    
+
+
     ER.btnLightInnerReset = E.treeSpot:AddButton('Inner angle')
     ER.btnLightInnerReset.SameLine = true
     ER.btnLightInnerReset.OnClick = function ()
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             E.slLightInnerAngle.Value = {1, 0, 0, 0}
             SetLightInnerAngle(E.slLightInnerAngle.Value[1])
         end
     end
-    
+
 
 
 
@@ -855,36 +863,36 @@ end
     E.treeDir.IDContext = 'sodsdfkfn'
     E.treeDir.DefaultOpen = openByDefaultMainDir
 
-    
-    
-    
+
+
+
     E.slLightDirEnd = E.treeDir:AddSlider('Falloff front', 0, 0, 20, 1)
     E.slLightDirEnd.IDContext = 'olkjsdeafoiuzsrenbf'
     E.slLightDirEnd.OnChange = function (e)
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             SetLightDirectionalParameters('DirectionLightAttenuationEnd', e.Value[1])
         end
     end
 
-    
-    
+
+
     E.slLightDirSide = E.treeDir:AddSlider('Falloff back', 0, 0, 20, 1)
     E.slLightDirSide.IDContext = 'o12312'
     E.slLightDirSide.OnChange = function (e)
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             SetLightDirectionalParameters('DirectionLightAttenuationSide', e.Value[1])
         end
     end
-    
-    
+
+
     E.slLightDirSide2 = E.treeDir:AddSlider('Falloff sides', 0, 0, 10, 1)
     E.slLightDirSide2.IDContext = 'asdaw'
     E.slLightDirSide2.OnChange = function (e)
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             SetLightDirectionalParameters('DirectionLightAttenuationSide2', e.Value[1])
         end
     end
-    
+
 
     E.slIntLightDirFunc = E.treeDir:AddSliderInt('', 0, 0, 3, 1)
     E.slIntLightDirFunc.IDContext = 'olkjsdsseafoiuzsrenbf'
@@ -897,19 +905,19 @@ end
 
     textFunc = E.treeDir:AddText('Attenuation')
     textFunc.SameLine = true
-        
+
 
     E.slLightDirDim = E.treeDir:AddSlider('Wid/Hei/Len', 0, 0, 100, 1)
     E.slLightDirDim.IDContext = 'lkasenfaolkejfn'
     E.slLightDirDim.Components = 3
     E.slLightDirDim.Logarithmic = true
     E.slLightDirDim.OnChange = function (e)
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then 
+        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             SetLightDirectionalParameters('DirectionLightDimensions', {e.Value[1], e.Value[2],e.Value[3]})
         end
     end
 
-    
+
 
     -- E.collapseParameters:AddSeparator('')
 
@@ -928,14 +936,14 @@ end
 
 
     -- FILL
-    
+
     -- 1 Render shadows
 
 
 
-    
 
-    
+
+
 
 
 
@@ -946,7 +954,7 @@ end
 
     ER.btnSavePos = p:AddButton('Save')
     ER.btnSavePos.OnClick = function (e)
-        
+
         if not LLGlobals.selectedUuid then return end
 
         Channels.SaveLoadLightPos:SendToServer('Save')
@@ -955,7 +963,7 @@ end
     ER.btnLoadPos = p:AddButton('Load')
     ER.btnLoadPos.SameLine = true
     ER.btnLoadPos.OnClick = function (e)
-        
+
         if not LLGlobals.selectedUuid then return end
 
         Channels.SaveLoadLightPos:SendToServer('Load')
@@ -963,14 +971,14 @@ end
 
 
 
-    
+
     local modPosDefault = 8000
     local modPos = 50000
     local modRot = 5000
     local modRotDefault = 1000
-    
-    
-    
+
+
+
     ER.posReset = p:AddButton('Reset position')
     ER.posReset.IDContext = 'resetPos'
     ER.posReset.SameLine = true
@@ -994,10 +1002,10 @@ end
         if not LLGlobals.selectedUuid then e.Checked = false return end
         stickToCameraCheck()
     end
-    
 
-    
-    
+
+
+
     E.worldTree = p:AddCollapsingHeader('World relative')
     E.worldTree.DefaultOpen = openByDefaultMainWorld
 
@@ -1011,12 +1019,12 @@ end
         MoveEntity(LLGlobals.selectedEntity, 'z', E.slPosZSlider.Value[1], E.modPosSlider.Value[1], 'World', 'Light')
         E.slPosZSlider.Value = {0,0,0,0}
     end
-    
 
 
-    
+
+
     E.btnPosZ_S = E.worldTree:AddButton('<')
-    E.btnPosZ_S.IDContext = ' safj;woeifmn'     
+    E.btnPosZ_S.IDContext = ' safj;woeifmn'
     E.btnPosZ_S.SameLine = true
     E.btnPosZ_S.OnClick = function (e)
         MoveEntity(LLGlobals.selectedEntity, 'z', -100, E.modPosSlider.Value[1], 'World', 'Light')
@@ -1024,7 +1032,7 @@ end
 
 
 
-    
+
     E.btnPosZ_N = E.worldTree:AddButton('>')
     E.btnPosZ_N.IDContext = ' safj;awdawdwoeifmn'
     E.btnPosZ_N.SameLine = true
@@ -1050,14 +1058,14 @@ end
 
 
 
-    
+
     E.btnPosY_D = E.worldTree:AddButton('<')
-    E.btnPosY_D.IDContext = ' safj;awffdawoeifmn'     
+    E.btnPosY_D.IDContext = ' safj;awffdawoeifmn'
     E.btnPosY_D.SameLine = true
     E.btnPosY_D.OnClick = function (e)
         MoveEntity(LLGlobals.selectedEntity, 'y', -100, E.modPosSlider.Value[1], 'World', 'Light')
     end
-    
+
 
 
     E.btnPosY_U = E.worldTree:AddButton('>')
@@ -1084,14 +1092,14 @@ end
     end
 
 
-    
+
     E.btnPosX_W = E.worldTree:AddButton('<')
-    E.btnPosX_W.IDContext = ' safj;awdawoeifmn'     
+    E.btnPosX_W.IDContext = ' safj;awdawoeifmn'
     E.btnPosX_W.SameLine = true
     E.btnPosX_W.OnClick = function (e)
         MoveEntity(LLGlobals.selectedEntity, 'x', -100, E.modPosSlider.Value[1], 'World', 'Light')
     end
-    
+
 
 
     E.btnPosX_E = E.worldTree:AddButton('>')
@@ -1113,15 +1121,15 @@ end
 
 
     E.worldTree:AddSeparator('')
-    
-    
-    
-    
+
+
+
+
     E.orbitTree = p:AddCollapsingHeader('Character relative')
     E.orbitTree.DefaultOpen = openByDefaultMainChar
-    
-    
-    
+
+
+
     E.slPosOrbX = E.orbitTree:AddSlider('', 0, -1000, 1000, 0.1)
     E.slPosOrbX.IDContext = 'NawdawwwdS'
     E.slPosOrbX.Value = {0,0,0,0}
@@ -1129,16 +1137,16 @@ end
         MoveEntity(LLGlobals.selectedEntity, 'x', E.slPosOrbX.Value[1], E.modPosSlider.Value[1], 'Orbit', 'Light')
         E.slPosOrbX.Value = {0,0,0,0}
     end
-    
+
 
 
     E.btnPosX_CW = E.orbitTree:AddButton('<')
-    E.btnPosX_CW.IDContext = ' safj;awffdahwoeifmn'     
+    E.btnPosX_CW.IDContext = ' safj;awffdahwoeifmn'
     E.btnPosX_CW.SameLine = true
     E.btnPosX_CW.OnClick = function (e)
         MoveEntity(LLGlobals.selectedEntity, 'x', -100, E.modPosSlider.Value[1], 'Orbit', 'Light')
     end
-    
+
 
 
     E.btnPosX_CCW = E.orbitTree:AddButton('>')
@@ -1147,17 +1155,17 @@ end
     E.btnPosX_CCW.OnClick = function (e)
         MoveEntity(LLGlobals.selectedEntity, 'x', 100, E.modPosSlider.Value[1], 'Orbit', 'Light')
     end
-    
+
 
 
     textCCW = E.orbitTree:AddText('Cw/Ccw')
     textCCW.SameLine = true
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
     E.slPosOrbY = E.orbitTree:AddSlider('', 0, -1000, 1000, 0.1)
     E.slPosOrbY.IDContext = 'NawawdwdawdS'
     E.slPosOrbY.Value = {0,0,0,0}
@@ -1165,32 +1173,32 @@ end
         MoveEntity(LLGlobals.selectedEntity, 'y', E.slPosOrbY.Value[1], E.modPosSlider.Value[1], 'Orbit', 'Light')
         E.slPosOrbY.Value = {0,0,0,0}
     end
-    
 
-    
+
+
     E.btnPosY_D2 = E.orbitTree:AddButton('<')
-    E.btnPosY_D2.IDContext = ' safj;awffdqeawwoeifmn'     
+    E.btnPosY_D2.IDContext = ' safj;awffdqeawwoeifmn'
     E.btnPosY_D2.SameLine = true
     E.btnPosY_D2.OnClick = function (e)
         MoveEntity(LLGlobals.selectedEntity, 'y', -100, E.modPosSlider.Value[1], 'Orbit', 'Light')
     end
-    
-    
-    
+
+
+
     E.btnPosY_U2 = E.orbitTree:AddButton('>')
     E.btnPosY_U2.IDContext = ' safj;awdfefawqawdawwdwoeifmn'
     E.btnPosY_U2.SameLine = true
     E.btnPosY_U2.OnClick = function (e)
         MoveEntity(LLGlobals.selectedEntity, 'y', 100, E.modPosSlider.Value[1], 'Orbit', 'Light')
     end
-    
-    
+
+
     textDU = E.orbitTree:AddText('Down/Up')
     textDU.SameLine = true
-    
 
-    
-    
+
+
+
     E.slPosOrbZ = E.orbitTree:AddSlider('', 0, -1000, 1000, 0.1)
     E.slPosOrbZ.IDContext = 'NawdasdawdS'
     E.slPosOrbZ.Value = {0,0,0,0}
@@ -1199,29 +1207,29 @@ end
         E.slPosOrbZ.Value = {0,0,0,0}
     end
 
-    
-    
+
+
     E.btnPosZ_C = E.orbitTree:AddButton('<')
-    E.btnPosZ_C.IDContext = ' safj;awffdawwoeifmn'     
+    E.btnPosZ_C.IDContext = ' safj;awffdawwoeifmn'
     E.btnPosZ_C.SameLine = true
     E.btnPosZ_C.OnClick = function (e)
         MoveEntity(LLGlobals.selectedEntity, 'z', -100, E.modPosSlider.Value[1], 'Orbit', 'Light')
     end
-    
-    
-    
+
+
+
     E.btnPosZ_F = E.orbitTree:AddButton('>')
     E.btnPosZ_F.IDContext = ' safj;awdfefaawdawwdwoeifmn'
     E.btnPosZ_F.SameLine = true
     E.btnPosZ_F.OnClick = function (e)
         MoveEntity(LLGlobals.selectedEntity, 'z', 100, E.modPosSlider.Value[1], 'Orbit', 'Light')
     end
-    
-    
+
+
     textCF = E.orbitTree:AddText('Close/Far')
     textCF.SameLine = true
-    
-    
+
+
     E.orbitTree:AddSeparator('')
 
 
@@ -1229,9 +1237,9 @@ end
 
     E.collapsRot = p:AddCollapsingHeader('Rotation')
     E.collapsRot.DefaultOpen = openByDefaultMainRot
-    
-    
-    
+
+
+
     E.slRotTiltSlider = E.collapsRot:AddSlider('', 0, -1000, 1000, 0.1)
     E.slRotTiltSlider.IDContext = 'Pitch'
     E.slRotTiltSlider.Value = {0,0,0,0}
@@ -1249,9 +1257,9 @@ end
     E.btnRot_Pp.OnClick = function (e)
         RotateEntity(LLGlobals.selectedEntity, 'x', -100, E.modRotSlider.Value[1], 'Light')
     end
-    
-    
-    
+
+
+
     E.btnRot_Pm = E.collapsRot:AddButton('>')
     E.btnRot_Pm.IDContext = 'awdawdawd'
     E.btnRot_Pm.SameLine = true
@@ -1283,9 +1291,9 @@ end
     E.btnRot_Rp.OnClick = function (e)
         RotateEntity(LLGlobals.selectedEntity, 'z', -100, E.modRotSlider.Value[1], 'Light')
     end
-    
-    
-    
+
+
+
     E.btnRot_Rm = E.collapsRot:AddButton('>')
     E.btnRot_Rm.IDContext = 'awdddddawdawd'
     E.btnRot_Rm.SameLine = true
@@ -1298,8 +1306,8 @@ end
     rotRollReset.IDContext = 'resetROll'
     rotRollReset.SameLine = true
 
-    
-    
+
+
     E.slRotYawSlider = E.collapsRot:AddSlider('', 0, -1000, 1000, 0.1)
     E.slRotYawSlider.IDContext = 'Roll'
     E.slRotYawSlider.Value = {0,0,0,0}
@@ -1318,9 +1326,9 @@ end
     E.btnRot_Yp.OnClick = function (e)
         RotateEntity(LLGlobals.selectedEntity, 'y', -100, E.modRotSlider.Value[1], 'Light')
     end
-    
-    
-    
+
+
+
     E.btnRot_Ym = E.collapsRot:AddButton('>')
     E.btnRot_Ym.IDContext = 'awdddddddddawdawd'
     E.btnRot_Ym.SameLine = true
@@ -1356,12 +1364,12 @@ end
     ---------------------------------------------------------
     p:AddSeparatorText([[Position source]])
     ---------------------------------------------------------
-    
-    
 
 
-    
-    
+
+
+
+
     E.checkOriginSrc = p:AddCheckbox('Origin point')
     E.checkOriginSrc.Disabled = false
     E.checkOriginSrc.OnChange = function (e)
@@ -1384,7 +1392,7 @@ end
     E.checkPMSrc.OnChange = function (e)
         SourcePhotoMode(e.Checked)
     end
-    
+
 
 
     E.checkClientSrc = p:AddCheckbox('Client-side')
@@ -1393,44 +1401,44 @@ end
     E.checkClientSrc.OnChange = function (e)
         SourceClient(e.Checked)
     end
-    
 
 
 
-    
-    
+
+
+
     ---------------------------------------------------------
     p:AddSeparatorText('Utilities')
     ---------------------------------------------------------
-    
 
 
 
 
-    
+
+
     E.modPosSlider = p:AddSlider('', modPosDefault, 0.1, modPos, 0)
     E.modPosSlider.Value = {modPosDefault,0,0,0}
     E.modPosSlider.IDContext = 'ModID'
     E.modPosSlider.Logarithmic = true
-    
-    
-    
+
+
+
     ER.modPosReset = p:AddButton('Mod pos')
     ER.modPosReset.IDContext = 'MOdd'
     ER.modPosReset.SameLine = true
     ER.modPosReset.OnClick = function ()
         E.modPosSlider.Value = {modPosDefault,0,0,0}
     end
-    
-    
-    
+
+
+
     E.modRotSlider = p:AddSlider('', modRotDefault, 0.1, modRot, 0)
-    E.modRotSlider.IDContext = 'RotMiodID'    
+    E.modRotSlider.IDContext = 'RotMiodID'
     E.modRotSlider.Value = {modRotDefault,0,0,0}
     E.modRotSlider.Logarithmic = true
-    
 
-    
+
+
     ER.modRotReset = p:AddButton('Mod rot')
     ER.modRotReset.IDContext = 'MOddRot'
     ER.modRotReset.SameLine = true
@@ -1447,7 +1455,7 @@ end
             end
         end
         textPreplace.Visible = true
-        
+
         Helpers.Timer:OnTicks(300, function ()
             textPreplace.Visible = false
         end)
@@ -1498,11 +1506,12 @@ end
     end
 
 
-    E.checkLightSetup = p:AddCheckbox('Disable CharacterLight (only available for SE devel. oopsie)')
+    E.checkLightSetup = p:AddCheckbox('Disable CharacterLight')
     E.checkLightSetup.Checked = lightSetupState
     E.checkLightSetup.OnChange = function (e)
         CharacterLightSetupState(e.Checked)
     end
+
 
     E.checkFollowIGCS = p:AddCheckbox('Head follow IGCS')
     E.checkFollowIGCS.OnChange = function (e)
@@ -1512,25 +1521,26 @@ end
             StopFollowIGCS()
         end
     end
+
 --[[
 local rate = 10
 local count = 300
 for _, ent in pairs(Ext.Entity.GetAllEntitiesWithComponent('GameObjectVisual')) do
     if ent.Effect and ent.Effect.EffectName == 'VFX_Environment_Leaves_Sussur_01_NonGlow' then
-    
+
         if ent.Effect.Timeline then
             _P(ent.Effect.Timeline.Components[5].MaximumParticleCount)
         ent.Effect.Timeline.Components[5].MaximumParticleCount = count
             _P(ent.Effect.Timeline.Components[6].MaximumParticleCount)
             ent.Effect.Timeline.Components[6].MaximumParticleCount = count
         end
-        
-        
+
+
         for k, v in pairs(ent.Effect.EffectResource.Constructor.EffectComponents) do
-            
+
             if v.Properties['Emitter.Behavior.Emit Rate Modifier'] then
                 _D(v.Properties['Emitter.Behavior.Emit Rate Modifier'].Value)
-                
+
                 _P('Count')
                 v.MaximumParticleCount = count
 
@@ -1558,12 +1568,22 @@ end
 ]]--
 
 
+--[[
+for _, ent in pairs(Ext.Entity.GetAllEntitiesWithComponent('GameObjectVisual')) do
+    if ent.Effect and ent.Effect.EffectName == 'VFX_Actions_Cast_Cleave_Cast_Root_Textkey_03' then
+        if ent.Effect.Timeline then
+            Mods.LL2.Utils:Dump(ent, 'r_VFX', true)
+            vfx = ent
+        end
+    end
+end
+]]--
 
 
 end
 
 
-    
+
 
 Ext.RegisterNetListener('LL_SendLookAtTargetUuid', function(channel, payload)
     LLGlobals.tragetUuid = payload
