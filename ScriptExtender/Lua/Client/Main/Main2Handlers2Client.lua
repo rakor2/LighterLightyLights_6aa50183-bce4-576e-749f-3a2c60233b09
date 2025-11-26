@@ -1431,6 +1431,21 @@ function DisableVFXEffects(isChecked)
 end
 
 
+function StartFollowIGCS()
+    Utils:SubUnsubToTick('sub', 'look', function ()
+        local camera = Camera:GetActiveCamera()
+        local Transform = camera.Transform.Transform
+        Camera:GetPhotoModeCamera().PhotoModeCameraTransform.Transform = Transform
+    end)
+end
+
+
+function StopFollowIGCS()
+    if Utils.subID and Utils.subID['look'] then
+        Utils:SubUnsubToTick('unsub', 'look', _)
+    end
+end
+
 
 
 

@@ -1504,6 +1504,14 @@ end
         CharacterLightSetupState(e.Checked)
     end
 
+    E.checkFollowIGCS = p:AddCheckbox('Head follow IGCS')
+    E.checkFollowIGCS.OnChange = function (e)
+        if e.Checked then
+            StartFollowIGCS()
+        else
+            StopFollowIGCS()
+        end
+    end
 --[[
 local rate = 10
 local count = 300
