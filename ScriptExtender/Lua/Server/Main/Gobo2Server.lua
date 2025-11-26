@@ -40,6 +40,7 @@ Channels.DeleteGobo:SetHandler(function (Data)
     local goboToDelete
     
     if Data then
+    if Data == 'All' then
 
         for light, gobo in pairs(LLGlobals.GoboLightMap) do
             Osi.RequestDelete(gobo)
