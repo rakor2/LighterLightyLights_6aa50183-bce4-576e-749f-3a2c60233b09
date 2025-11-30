@@ -449,7 +449,6 @@ Channels.StickToCamera:SetHandler(function (Data)
     UpdateGoboPosition()
     UpdateBeamPosition()
 
-    Osi.ToTransform(LLGlobals.selectedUuid, x, y, z, rx, ry, rz)
 end)
 
 
@@ -627,25 +626,6 @@ Channels.EntityRotation:SetHandler(function (Data)
     local x, y, z = Osi.GetPosition(uuid)
 
 
-    --- For look at
-    -- local centerX, centerY, centerZ = table.unpack(getSourcePosition())
-    -- local curX, curY, curZ = Osi.GetPosition(uuid)
-    -- local dx, dy, dz = centerX - curX, centerY - curY, centerZ - curZ
-    -- local distance = math.sqrt(dx*dx + dy*dy + dz*dz)
-    -- local baseYaw = math.deg(Ext.Math.Atan2(dx / distance, dz / distance))
-    -- local basePitch = math.deg(math.asin(-dy / distance))
-
-    -- local curRx, curRy, curRz = Osi.GetRotation(uuid)
-
-
-
-    -- local params = LLGlobals.OrbitParams[uuid] or {}
-    -- params.userYawOffset = curRy - baseYaw
-    -- params.userPitchOffset = curRx - basePitch
-    -- LLGlobals.OrbitParams[uuid] = params
-
-
-
     local RotationQuat = entity.Transform.Transform.RotationQuat
     local Translate = entity.Transform.Transform.Translate
     local HumanRotation = {rx,ry,rz}
@@ -671,28 +651,22 @@ Channels.EntityRotation:SetHandler(function (Data)
         HumanRotation = {rx,ry,rz}
 
     else
-        -- if LLGlobals.States.lastMode[LLGlobals.selectedUuid] == 'World' then
-        --     Osi.ToTransform(uuid, x, y, z, 0, 0, 0)
-        --     LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = {0,0,0}
-        --     LLGlobals.OrbitParams[LLGlobals.selectedUuid] = nil
-        -- else
-            Osi.ToTransform(uuid, x, y, z, 0, 0, 0)
-            LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = {0,0,0}
-            LLGlobals.OrbitParams[LLGlobals.selectedUuid] = nil
+        Osi.ToTransform(uuid, x, y, z, 0, 0, 0)
+        LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = {0,0,0}
+        LLGlobals.OrbitParams[LLGlobals.selectedUuid] = nil
 
-            local Response = {
-                Translate = Translate,
-                RotationQuat = RotationQuat,
-                HumanRotation = {0,0,0}
-            }
+        local Response = {
+            Translate = Translate,
+            RotationQuat = RotationQuat,
+            HumanRotation = {0,0,0}
+        }
 
-            Channels.CurrentEntityTransform:Broadcast(Response)
-            UpdateMarkerPosition()
-            UpdateGoboPosition()
-            UpdateBeamPosition()
+        Channels.CurrentEntityTransform:Broadcast(Response)
+        UpdateMarkerPosition()
+        UpdateGoboPosition()
+        UpdateBeamPosition()
 
-            return Response
-        -- end
+        return Response
     end
 
     LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = HumanRotation
@@ -746,16 +720,15 @@ Channels.EntityRotationOrbit:SetHandler(function (Data)
 
     local uuid = LLGlobals.selectedUuid
     local entity = Ext.Entity.Get(uuid)
-
     local centerX, centerY, centerZ = table.unpack(getSourcePosition())
-
     local curX, curY, curZ = Osi.GetPosition(uuid)
     local curRx, curRy, curRz = Osi.GetRotation(uuid)
 
     if not LLGlobals.OrbitParams[uuid] then
         LLGlobals.OrbitParams[uuid] = {
-            angle = 0, radius = 1, height = 0,
-            -- rx = 0, ry = 0, rz = 0,
+            angle = 0,
+            radius = 1,
+            height = 0,
             lastCenterX = centerX,
             lastCenterY = centerY,
             lastCenterZ = centerZ
@@ -765,16 +738,9 @@ Channels.EntityRotationOrbit:SetHandler(function (Data)
 
     local params = LLGlobals.OrbitParams[uuid]
 
-    local centerMoved = centerX ~= params.lastCenterX
-        or centerY ~= params.lastCenterY
-        or centerZ ~= params.lastCenterZ
-
-    local posChanged = curX ~= (params.baseX or curX)
-        or curY ~= (params.baseY or curY)
-        or curZ ~= (params.baseZ or curZ)
-    local rotChanged = curRx ~= (params.lastActualRx or curRx)
-        or curRy ~= (params.lastActualRy or curRy)
-        or curRz ~= (params.lastActualRz or curRz)
+    local centerMoved = centerX ~= params.lastCenterX or centerY ~= params.lastCenterY or centerZ ~= params.lastCenterZ
+    local posChanged = curX ~= (params.baseX or curX) or curY ~= (params.baseY or curY) or curZ ~= (params.baseZ or curZ)
+    local rotChanged = curRx ~= (params.lastActualRx or curRx) or curRy ~= (params.lastActualRy or curRy) or curRz ~= (params.lastActualRz or curRz)
 
 
     if centerMoved or posChanged or rotChanged or not params.baseX then
@@ -784,16 +750,16 @@ Channels.EntityRotationOrbit:SetHandler(function (Data)
         params.lastCenterZ = centerZ
     end
 
-
-
     local change = Data.offset / Data.step
-
     if Data.axis == 'x' then
         params.angle = params.angle + change*50
+
     elseif Data.axis == 'y' then
         params.height = params.height + change
+
     elseif Data.axis == 'z' then
         params.radius = math.max(0.1, params.radius + change)
+
     else
         local charX, charY, charZ = table.unpack(getSourcePosition())
         Osi.ToTransform(uuid, charX, charY, charZ, curRx, curRy, curRz)
@@ -802,31 +768,42 @@ Channels.EntityRotationOrbit:SetHandler(function (Data)
     end
 
     RotateAroundPoint(uuid, centerX, centerY, centerZ, params)
-    LookAtCenter(uuid, centerX, centerY, centerZ, 1, params)
+    LookAtCenter(uuid, centerX, centerY, centerZ, 1.3, params)
 
-    params.baseX, params.baseY, params.baseZ = Osi.GetPosition(uuid)
-    local arx, ary, arz = Osi.GetRotation(uuid)
-    params.lastActualRx = arx
-    params.lastActualRy = ary
-    params.lastActualRz = arz
+    local newX, newY, newZ = Osi.GetPosition(uuid)
+    local targetY = centerY + 1.3
+    local dx, dy, dz = centerX - newX, targetY - newY, centerZ - newZ
+    local distance = math.sqrt(dx*dx + dy*dy + dz*dz)
+    local baseYaw = math.deg(Ext.Math.Atan2(dx / distance, dz / distance))
+    local basePitch = math.deg(math.asin(-dy / distance))
+
+
+    local actualRx, actualRy, actualRz = Osi.GetRotation(uuid)
+
+    params.userYawOffset = actualRy - baseYaw
+    params.userPitchOffset = actualRx - basePitch
+
+
+    params.baseX, params.baseY, params.baseZ = newX, newY, newZ
+    params.lastActualRx = actualRx
+    params.lastActualRy = actualRy
+    params.lastActualRz = actualRz
 
     LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate = {params.baseX, params.baseY, params.baseZ}
     local RotationQuat = entity.Transform.Transform.RotationQuat
     LLGlobals.LightParametersServer[LLGlobals.selectedUuid].RotationQuat = RotationQuat
-    LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = {arx, ary, arz}
+    LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = {actualRx, actualRy, actualRz}
 
     local Response = {
         Translate = {params.baseX, params.baseY, params.baseZ},
         RotationQuat = RotationQuat,
-        HumanRotation = {arx, ary, arz}
+        HumanRotation = {actualRx, actualRy, actualRz}
     }
 
     UpdateMarkerPosition()
     UpdateGoboPosition()
     UpdateBeamPosition()
-
     LLGlobals.States.lastMode[LLGlobals.selectedUuid] = 'Orbit'
-
     Channels.CurrentEntityTransform:Broadcast(Response)
 end)
 
@@ -856,7 +833,18 @@ function InitOrbitParamsFromCurrent(uuid, params, centerX, centerY, centerZ)
     params.lastActualRx = rx
     params.lastActualRy = ry
     params.lastActualRz = rz
+
+    local targetY = centerY + 1.3
+    local dx, dy, dz = centerX - x, targetY - y, centerZ - z
+    local distance = math.sqrt(dx*dx + dy*dy + dz*dz)
+    local baseYaw = math.deg(Ext.Math.Atan2(dx / distance, dz / distance))
+    local basePitch = math.deg(math.asin(-dy / distance))
+
+    params.userYawOffset = ry - baseYaw
+    params.userPitchOffset = rx - basePitch
+
 end
+
 
 
 function RotateAroundPoint(uuid, centerX, centerY, centerZ, params)
@@ -873,40 +861,19 @@ end
 
 function LookAtCenter(uuid, centerX, centerY, centerZ, heightOffset, params)
     local x, y, z = Osi.GetPosition(uuid)
-    local heightOffset = 0 -- I FIXED SLOP.
-    local dx, dy, dz = centerX - x, centerY + heightOffset - y, centerZ - z
+
+    local targetY = centerY + (heightOffset or 0)
+    local dx, dy, dz = centerX - x, targetY - y, centerZ - z
     local distance = math.sqrt(dx * dx + dy * dy + dz * dz)
 
-    local pitch = math.deg(math.asin(-dy / distance))
-    local yaw = math.deg(Ext.Math.Atan2(dx / distance, dz / distance))
+    local basePitch = math.deg(math.asin(-dy / distance))
+    local baseYaw = math.deg(Ext.Math.Atan2(dx / distance, dz / distance))
+
+
+    local pitch = basePitch + (params.userPitchOffset or 0)
+    local yaw = baseYaw + (params.userYawOffset or 0)
     local roll = 0
 
-    if params.userYawOffset then
-        yaw = yaw + params.userYawOffset
-    end
-    if params.userPitchOffset then
-        pitch = pitch + params.userPitchOffset
-    end
 
     Osi.ToTransform(uuid, x, y, z, pitch, yaw, roll)
-end
-
-
-
-
-Ext.RegisterConsoleCommand('lldg', function (cmd, ...)
-
-    DPrint('Globals-----------------------------')
-    DDump(LLGlobals)
-
-end)
-
-
-
-
----@type table<string, ResourceLevelMap>
-local levelMaps = {}
-for _,uuid in pairs(Ext.StaticData.GetAll(Ext.Enums.ExtResourceManagerType.LevelMap)) do
-    local map = Ext.StaticData.Get(uuid, Ext.Enums.ExtResourceManagerType.LevelMap) --[[@as ResourceLevelMap]]
-    levelMaps[map.Name] = map
 end

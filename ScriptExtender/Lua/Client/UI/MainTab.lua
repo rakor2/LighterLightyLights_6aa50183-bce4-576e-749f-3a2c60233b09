@@ -494,67 +494,68 @@ function BetterPMTab(parent)
     E.collapseSavePos = parent:AddCollapsingHeader('Save/Load position')
 
 
-local btnCounter = 0
-local savedButtons = {}
 
-E.btnSavePos = E.collapseSavePos:AddButton('Save')
-E.btnSavePos.IDContext = '238492kjndflkjsdnf'
-E.btnSavePos.OnClick = function ()
+    local btnCounter = 0
+    local savedButtons = {}
 
-    if not LLGlobals.States.inPhotoMode then return end
+    E.btnSavePos = E.collapseSavePos:AddButton('Save')
+    E.btnSavePos.IDContext = '238492kjndflkjsdnf'
+    E.btnSavePos.OnClick = function ()
 
-    btnCounter = btnCounter + 1
-    local currentIndex = btnCounter
-    local size = 38
+        if not LLGlobals.States.inPhotoMode then return end
 
-    CameraSaveLoadPosition(currentIndex)
+        btnCounter = btnCounter + 1
+        local currentIndex = btnCounter
+        local size = 38
 
-    E.windowLoadPos.Size = {
-        E.windowLoadPos.Size[1],
-        E.windowLoadPos.Size[2] + size
-    }
+        CameraSaveLoadPosition(currentIndex)
 
-    local btnDelete = E.windowLoadPos:AddButton('X')
-    btnDelete.IDContext = 'delete_' .. currentIndex
+        E.windowLoadPos.Size = {
+            E.windowLoadPos.Size[1],
+            E.windowLoadPos.Size[2] + size
+        }
 
-    local btnLoad = E.windowLoadPos:AddButton('')
-    btnLoad.IDContext = 'load_' .. currentIndex
-    btnLoad.SameLine = true
-    btnLoad.Label = tostring(currentIndex)
+        local btnDelete = E.windowLoadPos:AddButton('X')
+        btnDelete.IDContext = 'delete_' .. currentIndex
 
-    savedButtons[currentIndex] = {
-        load = btnLoad,
-        delete = btnDelete
-    }
+        local btnLoad = E.windowLoadPos:AddButton('')
+        btnLoad.IDContext = 'load_' .. currentIndex
+        btnLoad.SameLine = true
+        btnLoad.Label = tostring(currentIndex)
 
-    btnDelete.OnClick = function ()
-        if savedButtons[currentIndex] then
-            savedButtons[currentIndex].load:Destroy()
-            savedButtons[currentIndex].delete:Destroy()
-            savedButtons[currentIndex] = nil
-            LLGlobals.CameraPositions[tostring(currentIndex)] = nil
+        savedButtons[currentIndex] = {
+            load = btnLoad,
+            delete = btnDelete
+        }
 
-            E.windowLoadPos.Size = {
-                E.windowLoadPos.Size[1],
-                E.windowLoadPos.Size[2] - size
-            }
+        btnDelete.OnClick = function ()
+            if savedButtons[currentIndex] then
+                savedButtons[currentIndex].load:Destroy()
+                savedButtons[currentIndex].delete:Destroy()
+                savedButtons[currentIndex] = nil
+                LLGlobals.CameraPositions[tostring(currentIndex)] = nil
+
+                E.windowLoadPos.Size = {
+                    E.windowLoadPos.Size[1],
+                    E.windowLoadPos.Size[2] - size
+                }
+            end
+        end
+
+        btnLoad.OnClick = function ()
+            local index = tostring(currentIndex)
+            if LLGlobals.CameraPositions[index] then
+                local camera = Camera:GetActiveCamera()
+                camera.PhotoModeCameraSavedTransform.field_0.Translate = LLGlobals.CameraPositions[index].activeTranslate
+                camera.PhotoModeCameraSavedTransform.field_0.RotationQuat = LLGlobals.CameraPositions[index].activeRotationQuat
+                camera.PhotoModeCameraSavedTransform.field_0.Scale = LLGlobals.CameraPositions[index].activeScale
+
+                Helpers.Timer:OnTicks(5, function ()
+                    Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.RecallCameraTransform:Execute()
+                end)
+            end
         end
     end
-
-    btnLoad.OnClick = function ()
-        local index = tostring(currentIndex)
-        if LLGlobals.CameraPositions[index] then
-            local camera = Camera:GetActiveCamera()
-            camera.PhotoModeCameraSavedTransform.field_0.Translate = LLGlobals.CameraPositions[index].activeTranslate
-            camera.PhotoModeCameraSavedTransform.field_0.RotationQuat = LLGlobals.CameraPositions[index].activeRotationQuat
-            camera.PhotoModeCameraSavedTransform.field_0.Scale = LLGlobals.CameraPositions[index].activeScale
-
-            Helpers.Timer:OnTicks(5, function ()
-                Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.RecallCameraTransform:Execute()
-            end)
-        end
-    end
-end
 
 
     E.windowLoadPos = E.collapseSavePos:AddChildWindow('Load')
