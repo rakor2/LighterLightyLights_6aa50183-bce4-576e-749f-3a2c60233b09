@@ -1,8 +1,9 @@
 
+---@class SomeGlobalBullshit
 LLGlobals = LLGlobals or {}
 
-Styles = {}
 
+Styles = {}
 
 
 RootTemplates = {
@@ -101,7 +102,7 @@ QOTD = {
     'Janky ahh code',
     'Under the same one',
     'Empty text',
-    'Daniela aka Luna Girl Artista @ LL',
+    'Daniela Artista @ LL',
     'Alyona Artist @ LL',
     'satanfish Artist @ LL',
     'aini Artist @ LL',
@@ -130,26 +131,132 @@ QOTD = {
 }
 
 
-LTN_ORDER = {
-    "Enabled",
-    "Intensity",
-    "Kelvin",
-    "UseTemperature",
 
-    "Color",
-    "Albedo",
-    "BaseColor",
-    "TopColor",
+IGNORE_PARAMS = {
+    "ParentGUID",
+    "LinearClearColor",
+    "LinearClearColorOverride",
+    "TimelineFogOverride",
+    "SunlightObscurity",
+    "RotationAsVec3",
     "ColorAdjustedForIntensity",
     "ColorTemperatureAdjustment",
+
+
+    "Atmosphere",
+    "GUID",
+    "InheritanceFlags",
+    "LocalLightSourceEnabled",
+    "LocalLightSourceOverrideSettings",
+    "LocalLightSourceIntensity",
+    "LocalLightSourceColor",
+    "ColorCorrection",
+    "BlendedColorCorrection",
+    "ColorCorrectionInterpolationFactor",
+
+    "Contrast",
+    "Saturation",
+    "Hue",
+    "Pivot",
+    "Shadows",
+    "Highlights",
+
+    "GlobalRange",
+    "DarkRange",
+    "ShadowRange",
+    "MidtonesRange",
+    "HighlightRange",
+    "SpecularRange",
+    "ExposureShift",
+    "XYOffset",
+
+    "LutApplyMode",
+    "LutBlendFactors",
+    "GradingLut",
+    "GradingLutEnabled",
+
+    "Bloom",
+    "BloomAmount",
+    "BloomThreshold",
+
+    "TimelineAutomaticLightingDefaultSetup",
+    "TimelineAutomaticLightingDisableFlip",
+
+    "DOF",
+    "DOFForcedSettingsEnabled",
+    "AlternateDOF",
+    "FocalDistance",
+    "Aperture",
+    "NearSharpDistance",
+    "FarSharpDistance",
+    "NearOnly",
+    "FarOnly",
+    "Vignette",
+    "VignetteColor",
+    "VignetteIntensity",
+    "VignettePower",
+
+    "Brightness",
+    "FadeOut",
+    "ToneMapHighlightsFixAmount",
+    "UseViewModeHDRSettings",
+
+    "WhiteTemperature",
+    "WhiteBalanceTint",
+    "WhiteBalanceMatrix",
+    "DeltaCompensation",
+    "DeltaMax",
+    "DeltaMin",
+
+}
+
+
+
+LTN_ORDER = {
+
+    "TexResourceGUID",
+
+    "Fog",
+    "SkyLight",
+    "Sun",
+    "Moon",
+    "SSAOSettings",
+    "TimelineFog",
+    "VolumetricCloudSettings",
+
+    "Enabled",
+    "CastLightEnabled",
+    "ScatteringEnabled",
+    "Color",
+    "PhysicalModel",
     "SunColor",
     "ScatteringSunColor",
-    "CirrusCloudsColor",
-
+    "ScatteringIntensity",
+    "ScatteringSunIntensity",
+    "ScatteringIntensityScale",
+    "UseTemperature",
+    "Kelvin",
+    "Intensity",
     "Pitch",
     "Yaw",
     "Distance",
-    "RotationAsVec3",
+    "Radius",
+    "SunIntensity",
+    "Earthshine",
+    "MoonGlare",
+    "TearsRotate",
+    "TearsScale",
+
+    "Albedo",
+    "BaseColor",
+    "TopColor",
+    "CirrusCloudsColor",
+
+    "SunRayLength",
+
+
+    "FogLayer0",
+    "FogLayer1",
 
     "Density",
     "Density0",
@@ -166,7 +273,6 @@ LTN_ORDER = {
     "RenderDistance",
 
     "ShadowEnabled",
-    "Radius",
     "LightDistance",
     "LightSize",
     "ShadowBias",
@@ -185,11 +291,10 @@ LTN_ORDER = {
     "CoverageStartDistance",
     "CoverageEndDistance",
     "CoverageWindSpeed",
+    "StartHeight",
+    "EndHeight",
+    "HorizonDistance",
 
-    "ScatteringEnabled",
-    "ScatteringIntensity",
-    "ScatteringSunIntensity",
-    "ScatteringIntensityScale",
 
     "SkydomeEnabled",
     "SkydomeTex",
@@ -228,20 +333,7 @@ LTN_ORDER = {
 
     "RainCoverageMaxInfluence",
 
-    "SunIntensity",
-    "SunlightObscurity",
-    "SunRayLength",
-
-    "Earthshine",
-    "MoonGlare",
-    "CastLightEnabled",
-
     "Bias",
-
-    "TearsRotate",
-    "TearsScale",
-
-    "PhysicalModel",
 
     "Offset",
 
@@ -249,21 +341,10 @@ LTN_ORDER = {
     "NormalTexResourceGUID",
     "TearsAlbedoTexResourceGUID",
     "TearsNormalTexResourceGUID",
-    "TexResourceGUID",
-
-    "ParentGUID",
-    "LinearClearColor",
-    "LinearClearColorOverride",
-    "TimelineFogOverride"
 }
 
 
-
 ATM_ORDER = {
-    "GUID",
-    "InheritanceFlags",
-
-    "Atmosphere",
 
     "NearPlane",
     "FarPlane",
@@ -277,33 +358,13 @@ ATM_ORDER = {
     "ClothMaxWindDirectionOffset",
     "ClothWindDirectionOffsetFrequency",
 
-    "LocalLightSourceEnabled",
-    "LocalLightSourceOverrideSettings",
-    "LocalLightSourceIntensity",
-    "LocalLightSourceColor",
-
     "EnvironmentEffectGlobalEnabled",
     "EnvironmentEffect",
     "EnvironmentEffectEnabled",
     "EnvironmentEffectEnabledForTimeline",
     "EnvironmentEffectOffset",
 
-    "TimelineAutomaticLightingDefaultSetup",
-    "TimelineAutomaticLightingDisableFlip",
-
-    "PostProcess",
-
     "Camera",
-
-    "DOF",
-    "DOFForcedSettingsEnabled",
-    "AlternateDOF",
-    "FocalDistance",
-    "Aperture",
-    "NearSharpDistance",
-    "FarSharpDistance",
-    "NearOnly",
-    "FarOnly",
 
     "Exposure",
     "ExposureCompensation",
@@ -313,12 +374,8 @@ ATM_ORDER = {
     "ExposureMaxPercentile",
     "ExposureMeteringMode",
 
-    "Delta",
     "Enabled",
     "Settings",
-    "DeltaCompensation",
-    "DeltaMin",
-    "DeltaMax",
 
     "LensFlareEnabled",
     "LensFlareIntensity",
@@ -327,51 +384,106 @@ ATM_ORDER = {
     "LensFlareHaloWidth",
     "LensFlareChromaticDistortion",
 
-    "ColorCorrection",
-    "BlendedColorCorrection",
-    "ColorCorrectionInterpolationFactor",
-
-    "Contrast",
-    "Saturation",
-    "Hue",
-    "Pivot",
-    "Shadows",
-    "Highlights",
-
-    "GlobalRange",
-    "DarkRange",
-    "ShadowRange",
-    "MidtonesRange",
-    "HighlightRange",
-    "SpecularRange",
-    "ExposureShift",
-    "XYOffset",
-
-    "LutApplyMode",
-    "LutBlendFactors",
-    "GradingLut",
-    "GradingLutEnabled",
-
-    "Bloom",
-    "BloomAmount",
-    "BloomThreshold",
-
     "GodRaysEnabled",
     "GodRaysPower",
     "GodRaysRayIntensity",
     "GodRaysThreshold",
 
-    "Vignette",
-    "VignetteColor",
-    "VignetteIntensity",
-    "VignettePower",
+}
 
-    "Brightness",
-    "FadeOut",
-    "ToneMapHighlightsFixAmount",
-    "UseViewModeHDRSettings",
 
-    "WhiteTemperature",
-    "WhiteBalanceTint",
-    "WhiteBalanceMatrix"
+
+CONFIG = {
+
+    ["Fog.Phase"] = {min = -100, max = 100},
+    ["Fog.RenderDistance"] = {min = 100.00, max = 10000.00},
+    ["Fog.FogLayer0.Density0"] = {min = 0, max = 100, log = true},
+    ["Fog.FogLayer0.Density1"] = {min = 0, max = 100, log = true},
+    ["Fog.FogLayer0.Height0"]  = {min = -100, max = 100, log = true},
+    ["Fog.FogLayer0.Height1"]  = {min = -100, max = 100, log = true},
+    ["Fog.FogLayer0.NoiseCoverage"] = {min = 0, max = 100},
+    ["Fog.FogLayer0.NoiseFrequency"] = {min = 0, max = 1},
+
+    ["Fog.FogLayer1.Density0"] = {min = 0, max = 100, log = true},
+    ["Fog.FogLayer1.Density1"] = {min = 0, max = 100, log = true},
+    ["Fog.FogLayer1.Height0"]  = {min = -100, max = 100, log = true},
+    ["Fog.FogLayer1.Height1"]  = {min = -100, max = 100, log = true},
+    ["Fog.FogLayer1.NoiseCoverage"] = {min = 0, max = 100},
+    ["Fog.FogLayer1.NoiseFrequency"] = {min = 0, max = 1},
+
+    ["SkyLight.Intensity"] = {min = 0, max = 200000, log = true},
+    ["SkyLight.Kelvin"] = {min = 1000, max = 20000},
+    ["SkyLight.CirrusCloudsAmount"] = {min = 0, max = 1},
+    ["SkyLight.ProcStarsSaturation"] = {min = 0, max = 1},
+    ["SkyLight.ProcStarsIntensity"] = {min = 0, max = 200000.09, log = true},
+    ["SkyLight.ProcStarsAmount"] = {min = 0, max = 10.00},
+    ["SkyLight.ProcStarsShimmer"] = {min = 0, max = 10.00},
+    ["SkyLight.ScatteringIntensity"] = {min = 0, max = 35000.00, log = true},
+    ["SkyLight.ScatteringSunIntensity"] = {min = 0, max = 120000.00, log = true},
+    ["SkyLight.PhysicalModel"] = {min = 0, max = 4},
+
+    ["Sun.Intensity"] = {min = 0, max = 120000, log = true},
+    ["Sun.Yaw"] = {min = 0, max = 360},
+    ["Sun.Pitch"] = {min = 0, max = 360},
+    ["Sun.Kelvin"] = {min = 1000, max = 25000.00},
+    ["Sun.ShadowFade"] = {min = 0, max = 1},
+    ["Sun.ShadowFarPlane"] = {min = 0.10, max = 1000, log = true},
+    ["Sun.ShadowNearPlane"] = {min = 0.10, max = 1000, log = true},
+    ["Sun.CascadeSpeed"] = {min = 0, max = 1},
+    ["Sun.CascadeCount"] = {min = 0, max = 4},
+    ["Sun.LightDistance"] = {min = 1, max = 1000},
+    ["Sun.LightSize"] = {min = 0, max = 5},
+    ["Sun.ShadowObscurity"] = {min = 0, max = 200},
+    ["Sun.ShadowBias"] = {min = 0, max = 3},
+    ["Sun.SunlightObscurity"] = {min = 0, max = 3},
+    ["Sun.CoverageSettings.EndHeight"] = {min = 0, max = 10000},
+    ["Sun.CoverageSettings.HorizonDistance"] = {min = 0, max = 50000.00},
+    ["Sun.CoverageSettings.StartHeight"] = {min = 0, max = 5000.00},
+    ["Sun.CoverageSettings.Offset"] = {min = 0, max = 1},
+
+    ["Moon.Intensity"] = {min = 0, max = 120000, log = true},
+    ["Moon.Yaw"] = {min = 0, max = 360},
+    ["Moon.Pitch"] = {min = 0, max = 360},
+    ["Moon.Kelvin"] = {min = 1000, max = 25000.00},
+    ["Moon.Radius"] = {min = 0, max = 50000.000},
+    ["Moon.Earthshine"] = {min = 0, max = 1},
+    ["Moon.Glare"] = {min = 0, max = 1},
+    ["Moon.Distance"] = {min = 0.000, max = 50000.000},
+    ["Moon.TearsScale"] = {min = 0, max = 10.000},
+    ["Moon.TearsRotate"] = {min = -180, max = 180},
+
+
+    ["SSAOSettings.Bias"] = {min = 0, max = 2},
+    ["SSAOSettings.Intensity"] = {min = 0, max = 10},
+    ["SSAOSettings.Radius"] = {min = 0, max = 10},
+    ["SSAOSettings.DirectLightInfluence"] = {min = 0, max = 1},
+
+    ["TimelineFog.FogLayer0.Density0"] = {min = 0, max = 1, log = true},
+    ["TimelineFog.FogLayer0.Density1"] = {min = 0, max = 1, log = true},
+    ["TimelineFog.FogLayer1.Density0"] = {min = 0, max = 1, log = true},
+    ["TimelineFog.FogLayer1.Density1"] = {min = 0, max = 1, log = true},
+
+    ["VolumetricCloudSettings.Intensity"] = {min = 0, max = 60000.00, log = true},
+    ["VolumetricCloudSettings.AmbientLightFactor"] = {min = 0, max = 1},
+    ["VolumetricCloudSettings.ConeRadius"] = {min = 0, max = 1},
+    ["VolumetricCloudSettings.CoverageStartDistance"] = {min = 0, max = 1},
+    ["VolumetricCloudSettings.CoverageEndDistance"] = {min = 0, max = 1},
+    ["VolumetricCloudSettings.Density"] = {min = 0, max = 5},
+    ["VolumetricCloudSettings.DetailScale"] = {min = 0, max = 20},
+    ["VolumetricCloudSettings.RainCoverageMaxInfluence"] = {min = 0, max = 10},
+    ["VolumetricCloudSettings.SunLightFactor"] = {min = 0, max = 1},
+    ["VolumetricCloudSettings.SunRayLength"] = {min = 0, max = 100},
+
+
+    ["PostProcess.Camera.LensFlareChromaticDistortion"] = {min = 0, max = 5},
+    ["PostProcess.Camera.LensFlareGhostDispersal"] = {min = 0, max = 1},
+    ["PostProcess.Camera.LensFlareHaloWidth"] = {min = 0, max = 1},
+    ["PostProcess.Camera.LensFlareIntensity"] = {min = 0, max = 1},
+    ["PostProcess.Camera.LensFlareTreshold"] = {min = 0, max = 10},
+
+    ["PostProcess.Camera.GodRaysPower"] = {min = 0, max = 50},
+    ["PostProcess.Camera.GodRaysRayIntensity"] = {min = 0, max = 10},
+    ["PostProcess.Camera.GodRaysThreshold"] = {min = 0, max = 10},
+
+
 }

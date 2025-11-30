@@ -2,19 +2,16 @@
 --[[
 
 
-Is it possible to have the new implemented square colour open/close (which most people will likely prefer) and something more like what we have in the current version of LL? It's annoying to have to keep clicking (or a keybind to open it would be great in lieu of a open/closable colour selection).
-
-
-
-
-
-
 GOGO BUUG
-STICK LOOK AT SNAP
 PREC DIS POWE
 
-]]
 
+MAZZLEBEAM AFTER DELETE
+
+
+ADD RECENT COLORS
+
+]]
 
 
 
@@ -32,8 +29,6 @@ LLGlobals.States.allowLightCreation = {}
 
 ---@class Settings
 Settings = Settings or {}
--- Settings.checkPrePlaced = Settings.checkPrePlaced or nil
-
 
 ---@type string EntityUuid
 LLGlobals.selectedUuid = nil
@@ -47,17 +42,11 @@ LLGlobals.selectedLightEntity = nil
 
 DEFAULT_MARKER_SCALE = 0.699999988079071
 
-
 nameIndex = 0
 
-
-
--- local checkPrePlaced
--- local textPrePlacedNote
-
-
-
 LLGlobals.syncedSelectedIndex = 0
+
+---@class Elements
 E = {
     slIntLightType,
     pickerLightColor,
@@ -72,6 +61,7 @@ E = {
     slLightEdgeSharp,
 }
 
+---@class ElementsForResize
 ER = {
     btnLightIntensityReset,
     btnLightTempReset,
@@ -125,7 +115,7 @@ function MainTab(p)
     E.checkTypeDir.SameLine = true
     E.checkTypeDir.OnChange = function ()
 
-        lightType = 'Directional' -- 3
+        lightType = 'Directional' -- 2
 
         E.checkTypePoint.Checked = false
         E.checkTypeSpot.Checked = false
@@ -358,26 +348,6 @@ end
 
     end
 
-    Ext.RegisterConsoleCommand('lldumpall', function (cmd, ...)
-        DPrint('CreatedLightsServer ------------------------------')
-        DDump(LLGlobals.CreatedLightsServer)
-        DPrint('LightsUuidNameMap --------------------------------')
-        DDump(LLGlobals.LightsUuidNameMap)
-        DPrint('LightsNames --------------------------------------')
-        DDump(LLGlobals.LightsNames)
-        DPrint('LightParametersClient ----------------------------')
-        DDump(LLGlobals.LightParametersClient)
-        DPrint('selectedUuid -------------------------------------')
-        DDump(LLGlobals.selectedUuid)
-        DPrint('selectedEntity -----------------------------------')
-        DDump(LLGlobals.selectedEntity)
-        DPrint('markerUuid ---------------------------------------')
-        DDump(LLGlobals.markerUuid)
-        DPrint('nameIndex ----------------------------------------')
-        DDump(nameIndex)
-    end)
-
-
 
 
     ER.btnDuplicate = p:AddButton('Duplicate')
@@ -400,7 +370,6 @@ end
     ---------------------------------------------------------
     p:AddSeparatorText('Parameters')
     ---------------------------------------------------------
-
 
 
 
@@ -440,12 +409,14 @@ end
     end
 
 
+
     E.toggleLightButton = p:AddButton('Toggle light')
     E.toggleLightButton.IDContext = 'awdaw'
     E.toggleLightButton.OnClick = function()
         if not LLGlobals.selectedUuid then return end
         toggleLightBtn()
     end
+
 
 
     function toggleAllLightsBtn()
@@ -477,6 +448,8 @@ end
         end
     end
 
+
+
     local all = false
     E.toggleLightsButton = p:AddButton('Toggle all')
     E.toggleLightsButton.IDContext = 'awdfdgdfg'
@@ -488,6 +461,7 @@ end
     end
 
 
+
     E.toggleMarkerButton = p:AddButton('Toggle marker')
     E.toggleMarkerButton.SameLine = true
     E.toggleMarkerButton.IDContext = 'jhjkgyyutr'
@@ -496,6 +470,8 @@ end
         ToggleMarker(LLGlobals.markerUuid)
 
     end
+
+
 
     E.toggleAllMarkersButton = p:AddButton('Toggle all')
     E.toggleAllMarkersButton.SameLine = true
@@ -519,9 +495,11 @@ end
     end
 
 
+
     E.collapseParameters = p:AddCollapsingHeader('Main parameters')
     E.collapseParameters.DefaultOpen = true
     -- E.collapseParameters = E.collapseParameters:AddGroup('Parameters1')
+
 
 
     E.treeGen = E.collapseParameters:AddTree('General')
@@ -529,23 +507,13 @@ end
 
 
 
-
-
-
     -- TYPE
-
-
 
 
 
     E.slIntLightType = E.treeGen:AddSliderInt('', 0,0,2,1)
     E.slIntLightType.IDContext = 'aojwdnakwol;n'
     E.slIntLightType.OnChange = function (e)
-
-
-
-
-
         if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             SetLightType(e.Value[1])
 
@@ -578,16 +546,14 @@ end
         end
     end
 
+
+
     textLightType = E.treeGen:AddText('Type')
     textLightType.SameLine = true
 
 
 
-
-
     -- COLOR
-
-
 
 
 
@@ -601,6 +567,9 @@ end
         textPicker.SameLine = true
     end
 
+
+
+
     E.pickerLightColor.IDContext = 'aowidnawoidn'
     E.pickerLightColor.NoAlpha = true
     E.pickerLightColor.Float = false
@@ -613,11 +582,7 @@ end
     end
 
 
-
-
     -- INTENSITY
-
-
 
 
 
@@ -631,6 +596,7 @@ end
     end
 
 
+
     ER.btnLightIntensityReset = E.treeGen:AddButton('Power')
     ER.btnLightIntensityReset.SameLine = true
     ER.btnLightIntensityReset.OnClick = function ()
@@ -642,13 +608,7 @@ end
 
 
 
-
-
-
     -- TEMPERATURE
-
-
-
 
 
 
@@ -665,6 +625,7 @@ end
     end
 
 
+
     ER.btnLightTempReset = E.treeGen:AddButton('Temperature')
     ER.btnLightTempReset.SameLine = true
     ER.btnLightTempReset.OnClick = function ()
@@ -677,13 +638,7 @@ end
 
 
 
-
-
-
     -- RADIUS
-
-
-
 
 
 
@@ -695,6 +650,7 @@ end
             SetLightRadius(e.Value[1])
         end
     end
+
 
 
     ER.btnLightRadiusReset = E.treeGen:AddButton('Distance')
@@ -741,6 +697,8 @@ end
         end
     end
 
+
+
     E.checkLightFill = E.treeGen:AddCheckbox('Scattering fill-light')
     E.checkLightFill.Checked = true
     E.checkLightFill.OnChange = function ()
@@ -748,8 +706,6 @@ end
             SetLightFill(E.checkLightFill.Checked and 184 or 56)
         end
     end
-
-
 
 
 
@@ -770,6 +726,7 @@ end
             LLGlobals.LightParametersClient[LLGlobals.selectedUuid].EdgeSharpening = value
         end
     end
+
 
 
     E.slLightEdgeSharp = E.treePoint:AddSlider('', 0, 0, 1, 1)
@@ -793,7 +750,9 @@ end
     end
 
 
+
     -- OUTER ANGLE
+
 
 
     E.treeSpot = E.collapseParameters:AddTree('Spotlight')
@@ -812,6 +771,7 @@ end
     end
 
 
+
     ER.btnLightOuterReset = E.treeSpot:AddButton('Outer angle')
     ER.btnLightOuterReset.SameLine = true
     ER.btnLightOuterReset.OnClick = function ()
@@ -823,13 +783,7 @@ end
 
 
 
-
-
-
     -- INNER ANGLE
-
-
-
 
 
 
@@ -840,6 +794,7 @@ end
             SetLightInnerAngle(e.Value[1])
         end
     end
+
 
 
     ER.btnLightInnerReset = E.treeSpot:AddButton('Inner angle')
@@ -853,16 +808,15 @@ end
 
 
 
-
-
     E.treeSpot:AddSeparator('')
+
+
 
     local sepaTreeDir
     local spepaPreAdd
     E.treeDir = E.collapseParameters:AddTree('Directional')
     E.treeDir.IDContext = 'sodsdfkfn'
     E.treeDir.DefaultOpen = openByDefaultMainDir
-
 
 
 
@@ -885,6 +839,7 @@ end
     end
 
 
+
     E.slLightDirSide2 = E.treeDir:AddSlider('Falloff sides', 0, 0, 10, 1)
     E.slLightDirSide2.IDContext = 'asdaw'
     E.slLightDirSide2.OnChange = function (e)
@@ -892,6 +847,7 @@ end
             SetLightDirectionalParameters('DirectionLightAttenuationSide2', e.Value[1])
         end
     end
+
 
 
     E.slIntLightDirFunc = E.treeDir:AddSliderInt('', 0, 0, 3, 1)
@@ -903,8 +859,10 @@ end
     end
 
 
+
     textFunc = E.treeDir:AddText('Attenuation')
     textFunc.SameLine = true
+
 
 
     E.slLightDirDim = E.treeDir:AddSlider('Wid/Hei/Len', 0, 0, 100, 1)
@@ -919,37 +877,10 @@ end
 
 
 
-    -- E.collapseParameters:AddSeparator('')
-
-
-
-    -- local collapseAddParameters = p:AddCollapsingHeader('Additional parameters')
-    -- collapseAddParameters.DefaultOpen = openByDefaultMainAdd
-
-
-    -- local gap = collapseAddParameters:AddGroup('AddParameters')
-
-
-
-
-
-
-
-    -- FILL
-
-    -- 1 Render shadows
-
-
-
-
-
-
-
-
-
     ---------------------------------------------------------
     p:AddSeparatorText('Positioning')
     ---------------------------------------------------------
+
 
 
     ER.btnSavePos = p:AddButton('Save')
@@ -960,6 +891,8 @@ end
         Channels.SaveLoadLightPos:SendToServer('Save')
     end
 
+
+
     ER.btnLoadPos = p:AddButton('Load')
     ER.btnLoadPos.SameLine = true
     ER.btnLoadPos.OnClick = function (e)
@@ -968,7 +901,6 @@ end
 
         Channels.SaveLoadLightPos:SendToServer('Load')
     end
-
 
 
 
@@ -987,13 +919,13 @@ end
     end
 
 
+
     ER.rotReset = p:AddButton('Reset rotation')
     ER.rotReset.IDContext = 'resetRos'
     ER.rotReset.SameLine = true
     ER.rotReset.OnClick = function ()
         RotateEntity(LLGlobals.selectedEntity, nil, 0, 0, 'Light')
     end
-
 
 
 
@@ -1005,10 +937,8 @@ end
 
 
 
-
     E.worldTree = p:AddCollapsingHeader('World relative')
     E.worldTree.DefaultOpen = openByDefaultMainWorld
-
 
 
 
@@ -1022,14 +952,12 @@ end
 
 
 
-
     E.btnPosZ_S = E.worldTree:AddButton('<')
     E.btnPosZ_S.IDContext = ' safj;woeifmn'
     E.btnPosZ_S.SameLine = true
     E.btnPosZ_S.OnClick = function (e)
         MoveEntity(LLGlobals.selectedEntity, 'z', -100, E.modPosSlider.Value[1], 'World', 'Light')
     end
-
 
 
 
@@ -1055,7 +983,6 @@ end
         MoveEntity(LLGlobals.selectedEntity, 'y', E.slPosYSlider.Value[1], E.modPosSlider.Value[1], 'World', 'Light')
         E.slPosYSlider.Value = {0,0,0,0}
     end
-
 
 
 
@@ -1111,17 +1038,13 @@ end
 
 
 
-
     textX = E.worldTree:AddText('West/East')
     textX.IDContext = 'awdawdawda'
     textX.SameLine = true
 
 
 
-
-
     E.worldTree:AddSeparator('')
-
 
 
 
@@ -1144,7 +1067,13 @@ end
     E.btnPosX_CW.IDContext = ' safj;awffdahwoeifmn'
     E.btnPosX_CW.SameLine = true
     E.btnPosX_CW.OnClick = function (e)
-        MoveEntity(LLGlobals.selectedEntity, 'x', -100, E.modPosSlider.Value[1], 'Orbit', 'Light')
+
+        for k, v in pairs(LLGlobals.LightParametersClient) do
+            DPrint(k)
+            local entity = Ext.Entity.Get(k)
+            MoveEntity(entity, 'x', -100, E.modPosSlider.Value[1], 'Orbit', 'Light')
+        end
+
     end
 
 
@@ -1160,9 +1089,6 @@ end
 
     textCCW = E.orbitTree:AddText('Cw/Ccw')
     textCCW.SameLine = true
-
-
-
 
 
 
@@ -1193,9 +1119,9 @@ end
     end
 
 
+
     textDU = E.orbitTree:AddText('Down/Up')
     textDU.SameLine = true
-
 
 
 
@@ -1226,12 +1152,13 @@ end
     end
 
 
+
     textCF = E.orbitTree:AddText('Close/Far')
     textCF.SameLine = true
 
 
-    E.orbitTree:AddSeparator('')
 
+    E.orbitTree:AddSeparator('')
 
 
 
@@ -1251,6 +1178,8 @@ end
         RotateEntity(LLGlobals.selectedEntity, 'x', 90, 1, 'Light')
     end
 
+
+
     E.btnRot_Pp = E.collapsRot:AddButton('<')
     E.btnRot_Pp.IDContext = 'adawdawd'
     E.btnRot_Pp.SameLine = true
@@ -1268,6 +1197,7 @@ end
     end
 
 
+
     rotTiltReset = E.collapsRot:AddText('Pitch')
     rotTiltReset.IDContext = 'resetPitch'
     rotTiltReset.SameLine = true
@@ -1281,9 +1211,12 @@ end
         RotateEntity(LLGlobals.selectedEntity, 'z', e.Value[1], E.modRotSlider.Value[1], 'Light')
         E.slRotRollSlider.Value = {0,0,0,0}
     end
+
     E.slRotRollSlider.OnRightClick = function (e)
         RotateEntity(LLGlobals.selectedEntity, 'z', 90, 1, 'Light')
     end
+
+
 
     E.btnRot_Rp = E.collapsRot:AddButton('<')
     E.btnRot_Rp.IDContext = 'adwdawdawdawd'
@@ -1302,6 +1235,7 @@ end
     end
 
 
+
     rotRollReset = E.collapsRot:AddText('Roll')
     rotRollReset.IDContext = 'resetROll'
     rotRollReset.SameLine = true
@@ -1315,9 +1249,11 @@ end
         RotateEntity(LLGlobals.selectedEntity, 'y', e.Value[1], E.modRotSlider.Value[1], 'Light')
         E.slRotYawSlider.Value = {0,0,0,0}
     end
+
     E.slRotYawSlider.OnRightClick = function (e)
         RotateEntity(LLGlobals.selectedEntity, 'y', 90, 1, 'Light')
     end
+
 
 
     E.btnRot_Yp = E.collapsRot:AddButton('<')
@@ -1336,10 +1272,15 @@ end
         RotateEntity(LLGlobals.selectedEntity, 'y', 100, E.modRotSlider.Value[1], 'Light')
     end
 
+
+
     rotYawReset = E.collapsRot:AddText('Yaw')
     rotYawReset.IDContext = 'resetYaw'
     rotYawReset.SameLine = true
 
+
+
+    E.bulletLock = E.collapsRot:AddBulletText('Gimbal-lock is real monkaS')
 
 
 
@@ -1357,16 +1298,9 @@ end
 
 
 
-
-
-
-
     ---------------------------------------------------------
     p:AddSeparatorText([[Position source]])
     ---------------------------------------------------------
-
-
-
 
 
 
@@ -1375,6 +1309,7 @@ end
     E.checkOriginSrc.OnChange = function (e)
         SourcePoint(e.Checked)
     end
+
 
 
     E.checkCutsceneSrc = p:AddCheckbox('Cutscene')
@@ -1404,15 +1339,9 @@ end
 
 
 
-
-
-
     ---------------------------------------------------------
     p:AddSeparatorText('Utilities')
     ---------------------------------------------------------
-
-
-
 
 
 
@@ -1447,6 +1376,7 @@ end
     end
 
 
+
     E.btnPreplaced = p:AddButton('Disable pre-placed lights')
     E.btnPreplaced.OnClick = function (e)
         for _, lightEnt in pairs(Ext.Entity.GetAllEntitiesWithComponent('Light')) do
@@ -1467,8 +1397,11 @@ end
     textPreplace.Visible = false
 
 
+
     E.btnDisableVFX = p:AddCheckbox('Disable VFX shake and blur')
     E.btnDisableVFX.OnChange = function (e)
+
+
 
     Utils:SubUnsubToTick('sub', 'LL_VFX', function()
         if not e.Checked then Utils:SubUnsubToTick('unsub', 'LL_VFX',_) return end
@@ -1513,14 +1446,57 @@ end
     end
 
 
-    E.checkFollowIGCS = p:AddCheckbox('Head follow IGCS')
-    E.checkFollowIGCS.OnChange = function (e)
-        if e.Checked then
-            StartFollowIGCS()
-        else
-            StopFollowIGCS()
-        end
-    end
+end
+
+
+
+Ext.RegisterNetListener('LL_SendLookAtTargetUuid', function(channel, payload)
+    LLGlobals.tragetUuid = payload
+    Helpers.Timer:OnTicks(3, function ()
+        LLGlobals.tragetEntity = Ext.Entity.Get(LLGlobals.tragetUuid)
+    end)
+end)
+
+
+
+Ext.RegisterConsoleCommand('lld', function (cmd, ...)
+
+    DPrint('LightParametersClient-----------------------------')
+    DDump(LLGlobals.LightParametersClient)
+
+end)
+
+
+
+Ext.RegisterConsoleCommand('lldg', function (cmd, ...)
+
+    DPrint('Globals-----------------------------')
+    DDump(LLGlobals)
+
+end)
+
+
+
+Ext.RegisterConsoleCommand('lldumpall', function (cmd, ...)
+    DPrint('CreatedLightsServer ------------------------------')
+    DDump(LLGlobals.CreatedLightsServer)
+    DPrint('LightsUuidNameMap --------------------------------')
+    DDump(LLGlobals.LightsUuidNameMap)
+    DPrint('LightsNames --------------------------------------')
+    DDump(LLGlobals.LightsNames)
+    DPrint('LightParametersClient ----------------------------')
+    DDump(LLGlobals.LightParametersClient)
+    DPrint('selectedUuid -------------------------------------')
+    DDump(LLGlobals.selectedUuid)
+    DPrint('selectedEntity -----------------------------------')
+    DDump(LLGlobals.selectedEntity)
+    DPrint('markerUuid ---------------------------------------')
+    DDump(LLGlobals.markerUuid)
+    DPrint('nameIndex ----------------------------------------')
+    DDump(nameIndex)
+end)
+
+
 
 --[[
 local rate = 10
@@ -1578,34 +1554,3 @@ for _, ent in pairs(Ext.Entity.GetAllEntitiesWithComponent('GameObjectVisual')) 
     end
 end
 ]]--
-
-
-end
-
-
-
-
-Ext.RegisterNetListener('LL_SendLookAtTargetUuid', function(channel, payload)
-    LLGlobals.tragetUuid = payload
-    Helpers.Timer:OnTicks(3, function ()
-        LLGlobals.tragetEntity = Ext.Entity.Get(LLGlobals.tragetUuid)
-    end)
-end)
-
-
-Ext.RegisterConsoleCommand('lld', function (cmd, ...)
-
-    DPrint('LightParametersClient-----------------------------')
-    DDump(LLGlobals.LightParametersClient)
-
-end)
-
-
-Ext.RegisterConsoleCommand('lldg', function (cmd, ...)
-
-    DPrint('Globals-----------------------------')
-    DDump(LLGlobals)
-
-end)
-
-

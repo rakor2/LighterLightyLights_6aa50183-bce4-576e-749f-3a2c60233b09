@@ -187,7 +187,7 @@ function Gobo2Tab(p)
     end
 
 
-    function hideGobo()
+    function HideGobo()
         if not LLGlobals.selectedUuid then return end
 
         local uuid = LLGlobals.selectedGoboUuid
@@ -206,7 +206,7 @@ function Gobo2Tab(p)
     E.btnHideGobo.IDContext = 'E.wdzawdawdawdw'
     E.btnHideGobo.SameLine = false
     E.btnHideGobo.OnClick = function()
-        hideGobo()
+        HideGobo()
     end
 
 
