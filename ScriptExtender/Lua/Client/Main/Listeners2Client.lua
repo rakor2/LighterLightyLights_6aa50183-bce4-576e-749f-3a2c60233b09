@@ -22,8 +22,22 @@ Ext.Entity.OnCreate('PhotoModeSession', function ()
         LLGlobals.DummyNames = Utils:MapToArray(LLGlobals.DummyNameMap)
         E.visTemComob.Options = LLGlobals.DummyNames
         
+
+
+
+        Utils:SubUnsubToTick('sub', 'LLDOF', function ()
+            pcall(function()
+                distance = Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFDistance
+                E.dofDistance.Value = {distance, 0, 0, 0}
+            end)
+        end)
+
+
         CharacterLightSetupState(E.checkLightSetupState.Checked)
         UpdateCharacterInfo(E.visTemComob.SelectedIndex + 1)
+
+
+
     end)
 end)
 
@@ -43,6 +57,15 @@ Ext.Entity.OnDestroy('PhotoModeSession', function ()
     if Utils.subID and Utils.subID['SourcePhotoMode'] then
         Utils:SubUnsubToTick('unsub', 'SourcePhotoMode',_)
     end
+
+
+    if Utils.subID and Utils.subID['LLDOF'] then
+        Utils:SubUnsubToTick('unsub', 'LLDOF',_)
+    end
+
+
+    StopFollowIGCS()
+
 
     UpdateCharacterInfo(nil)
 end)

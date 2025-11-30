@@ -478,16 +478,6 @@ function BetterPMTab(parent)
     textDofDistance = E.dofCollapse:AddText('Distance')
     textDofDistance.SameLine = true
 
-    getDofDistanceSub = Ext.Events.Tick:Subscribe(function()
-        local success, result = pcall(function()
-            return Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFDistance
-        end)
-
-        if success and result then
-            getDofDistance = result
-            E.dofDistance.Value = { getDofDistance, 0, 0, 0 }
-        end
-    end)
 
     --CamPos
 
