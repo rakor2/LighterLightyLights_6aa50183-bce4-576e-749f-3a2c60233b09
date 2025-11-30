@@ -1,52 +1,5 @@
-LightDropdown = nil
-colorPicker = nil
-lightTypeCombo = nil
-goboLightDropdown = nil
-ltnCombo = nil
-currentIntensityTextWidget = nil
-currentDistanceTextWidget = nil
-
 local OPENQUESTIONMARK = false
 IMGUI:AntiStupiditySystem()
-
-
-
-
-
-
--- Function to get list of created lights _ai
-function GetLightOptions()
-    local options = {}
-    if ClientSpawnedLights then
-        for i, light in ipairs(ClientSpawnedLights) do
-            table.insert(options, light.name)
-        end
-    end
-    return options
-end
-
--- Global ApplyStyle function _ai
-function ApplyStyle(window, styleNum)
-    if not Styles[styleNum] then
-        for i = 1, #StyleDefinitions do
-            local funcName = StyleDefinitions[i].funcName
-            local windowName = "MainWindow" .. (funcName == "Main" and "" or funcName:sub(5))
-
-            Styles[i] = {
-                func = Style[windowName][funcName]
-            }
-        end
-    end
-
-    if Styles[styleNum] then
-        Styles[styleNum].func(window)
-    end
-end
-
-
-
-
-
 
 
 MCM.SetKeybindingCallback('ll_toggle_window', function()
@@ -103,7 +56,6 @@ end)
 
 MCM.SetKeybindingCallback('ll_selected_popup', function()
 
-
     local lightName = getSelectedLightName() or 'None'
     if lightName then selectedLightNotification.Label = lightName end
 
@@ -113,21 +65,14 @@ MCM.SetKeybindingCallback('ll_selected_popup', function()
 end)
 
 
-
 MCM.SetKeybindingCallback('ll_apply_anl', function()
     ApplyParameters()
 end)
 
+
 MCM.SetKeybindingCallback('ll_hide_gobo', function()
     hideGobo()
 end)
-
-
--- MCM.SetKeybindingCallback('ll_reset_anl', function()
---     Ext.Net.PostMessageToServer("sunValuesResetAll", "")
---     starsCheckbox.Checked = false
---     castLightCheckbox.Checked = false
--- end)
 
 
 
@@ -135,36 +80,26 @@ function MainTab2(mt2)
     if MainTab2 ~= nil then return end
     MainTab2 = mt2
 
-    -- Create window first _ai
-    mw = Ext.IMGUI.NewWindow("Lighty Lights")
+    mw = Ext.IMGUI.NewWindow('Nighty Nights')
     mw.Font = 'Font'
     mw.Open = OPENQUESTIONMARK
 
     mw.Closeable = true
 
 
-    -- if mw then
-    --     EnableMCMHotkeys()
-    -- end
-
-    -- xdText = mt2:AddText("")
-
-
-    -- Add open button _ai
-    openButton = mt2:AddButton("Open")
-    openButton.IDContext = "OpenMainWindowButton"
+    openButton = mt2:AddButton('Open')
+    openButton.IDContext = 'OpenMainWindowButton'
     openButton.OnClick = function()
         mw.Open = not mw.Open
     end
 
-    -- Add window close handler _ai
     mw.OnClose = function()
         mw.Open = false
         return true
     end
 
-    local styleCombo = mt2:AddCombo("Style")
-    styleCombo.IDContext = "StyleSwitchCombo"
+    local styleCombo = mt2:AddCombo('Style')
+    styleCombo.IDContext = 'StyleSwitchCombo'
     styleCombo.Options = StyleNames
     styleCombo.SelectedIndex = StyleSettings.selectedStyle - 1
 
@@ -191,6 +126,8 @@ function MainTab2(mt2)
 
     MainWindow(mw)
 end
+
+
 
 function MainWindow(mw)
     ViewportSize = Ext.IMGUI.GetViewportSize()
@@ -231,8 +168,8 @@ function MainWindow(mw)
     E.goboTab = mainTabBar:AddTabItem('Gobo')
     Gobo2Tab(E.goboTab)
 
-    E.utilsTab = mainTabBar:AddTabItem('Utils')
-    Utils2Tab(E.utilsTab)
+    -- E.utilsTab = mainTabBar:AddTabItem('Utils')
+    -- Utils2Tab(E.utilsTab)
 
 
     -- saverTab = mainTabBar:AddTabItem('Saver')
@@ -340,34 +277,6 @@ function MainWindow(mw)
     -- funnyStuff()
     buttonSizes()
 
-    -- dev = mainTabBar:AddTabItem("Dev")
-    -- DevTab(dev)
-
-
-
-    -- Add AnL tab to the same TabBar _ai
-    -- anlTab = mainTabBar:AddTabItem("AnL")
-    -- AnLWindowTab(anlTab)
-
-
-
-    -- mainTab = mainTabBar:AddTabItem("Main_old")
-    -- MainWindowTab(mainTab)
-
-    -- originPointTab = E.mainTabBar:AddTabItem("Origin point")
-    -- OriginPointTab(originPointTab)
-
-
-
-
-
-
-
-
-    -- particles = E.mainTabBar:AddTabItem("Particles")
-    -- PartclesTab(particles)
-
-
     StyleV2:RegisterWindow(mw)
 
     SettingsLoad()
@@ -380,12 +289,16 @@ end
 --===============-------------------------------------------------------------------------------------------------------------------------------
 
 function BetterPMTab(parent)
+
     local camSepa = parent:AddSeparatorText('Camera settings')
 
-    E.camCollapse = parent:AddCollapsingHeader("Camera")
+    E.camCollapse = parent:AddCollapsingHeader('Camera')
     E.camCollapse.DefaultOpen = openByDefaultPMCamera
 
+
+
     Ext.Stats.GetStatsManager().ExtraData['PhotoModeCameraMovementSpeed'] = defaultCameraSpeed
+
     E.camSpeed = E.camCollapse:AddSlider('Speed', 0, 0.01, 100, 0.1) --default, min, max, step
     E.camSpeed.IDContext = 'slider_UniqueSliderID'
     E.camSpeed.SameLine = false
@@ -396,11 +309,14 @@ function BetterPMTab(parent)
          Ext.Stats.GetStatsManager().ExtraData['PhotoModeCameraMovementSpeed'] = E.camSpeed.Value[1]
     end
 
+
+
     E.slFarPlane = E.camCollapse:AddSlider('Far plane distance', 1000, 0, 5000, 1)
     E.slFarPlane.Logarithmic = true
     E.slFarPlane.OnChange = function(e)
         CameraControlls('Far_plane', e.Value[1])
     end
+
 
 
     E.slNearPlane = E.camCollapse:AddSlider('Near plane distance', 0.025, 0.001, 0.025, 1)
@@ -410,8 +326,11 @@ function BetterPMTab(parent)
     end
 
 
+
     E.dofCollapse = parent:AddCollapsingHeader("DoF")
     E.dofCollapse.DefaultOpen = false
+
+
 
     E.dofStrength = E.dofCollapse:AddSlider("Strength", 0, 22, 1, 0.001)
     E.dofStrength.IDContext = "DofStr"
@@ -429,6 +348,7 @@ function BetterPMTab(parent)
             Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFStrength = preciseDofStr
         end
     end
+
 
     local getDofStrengthSub = Ext.Events.Tick:Subscribe(function()
         local success, result = pcall(function()
@@ -452,6 +372,8 @@ function BetterPMTab(parent)
         end
     end
 
+
+
     E.dofDistance = E.dofCollapse:AddSlider("", 0, 0, 30, 0.001)
     E.dofDistance.IDContext = "DofDist"
     E.dofDistance.SameLine = false
@@ -463,11 +385,14 @@ function BetterPMTab(parent)
     end
 
 
+
     E.btnDofDistanceDec= E.dofCollapse:AddButton('<')
     E.btnDofDistanceDec.SameLine = true
     E.btnDofDistanceDec.OnClick = function ()
         dofChange(E.dofDistance.Value[1] + 0.0005)
     end
+
+
 
     E.btnDofDistanceInc = E.dofCollapse:AddButton('>')
     E.btnDofDistanceInc.SameLine = true
@@ -475,11 +400,12 @@ function BetterPMTab(parent)
         dofChange(E.dofDistance.Value[1] - 0.0005)
     end
 
+
+
     textDofDistance = E.dofCollapse:AddText('Distance')
     textDofDistance.SameLine = true
 
 
-    --CamPos
 
     E.collapseSavePos = parent:AddCollapsingHeader('Save/Load position')
 
@@ -601,14 +527,24 @@ function BetterPMTab(parent)
     E.applyButton.SameLine = false
     E.applyButton.OnClick = function()
         if LLGlobals.DummyNameMap and LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]] then
+
             local transform = LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform
-            transform.Translate = {E.posInput.Value[1], E.posInput.Value[2], E.posInput.Value[3]}
-            transform.Scale = {E.scaleInput.Value[1], E.scaleInput.Value[2], E.scaleInput.Value[3]}
+            local transform2 = LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].DummyOriginalTransform.Transform
+
+
             local deg = {E.rotInput.Value[1], E.rotInput.Value[2], E.rotInput.Value[3]}
             local quats = Math:EulerToQuats(deg)
+
             transform.RotationQuat = quats
-            --UpdateCharacterInfo(index)
+            transform.Scale = {E.scaleInput.Value[1], E.scaleInput.Value[2], E.scaleInput.Value[3]}
+            transform.Translate = {E.posInput.Value[1], E.posInput.Value[2], E.posInput.Value[3]}
+
+            transform2.RotationQuat = quats
+            transform2.Scale = {E.scaleInput.Value[1], E.scaleInput.Value[2], E.scaleInput.Value[3]}
+            transform2.Translate = {E.posInput.Value[1], E.posInput.Value[2], E.posInput.Value[3]}
+
         end
+
     end
 
 
@@ -616,9 +552,6 @@ function BetterPMTab(parent)
 
     E.charPosCollapse = parent:AddCollapsingHeader("Position")
     E.charPosCollapse.DefaultOpen = openByDefaultPMPos
-
-    -- DPrint('E.charPosCollapse open by def: %s', E.charPosCollapse.DefaultOpen)
-
 
 
 
@@ -710,6 +643,7 @@ function BetterPMTab(parent)
 
     E.charRotCollapse = parent:AddCollapsingHeader("Rotation")
     E.charRotCollapse.DefaultOpen = openByDefaultPMRot
+
 
 
     E.rotationModSlider = E.charRotCollapse:AddSliderInt("", 0, 1, 10000, 1)
@@ -1123,30 +1057,6 @@ function BetterPMTab(parent)
     end
 
 
-
-    parent:AddSeparatorText('')
-
-
-
-    E.saveLoadCollapse = parent:AddCollapsingHeader('Save/Load postition')
-    E.saveLoadCollapse.DefaultOpen = openByDefaultPMSave
-
-
-    saveLoadWindow = E.saveLoadCollapse:AddChildWindow('')
-    saveLoadWindow.AlwaysAutoResize = false
-    saveLoadWindow.Size = {0, 1}
-
-
-
-    E.saveButton = E.saveLoadCollapse:AddButton("Save")
-    E.saveButton.IDContext = "saveIdddasdasda"
-    E.saveButton.SameLine = false
-    E.saveButton.OnClick = function()
-        if LLGlobals.DummyNameMap then
-            SaveVisTempCharacterPosition()
-        end
-    end
-
     --LookAt
 
     parent:AddSeparatorText('Look at')
@@ -1156,12 +1066,6 @@ function BetterPMTab(parent)
     E.collapseLookAt = parent:AddCollapsingHeader("Position")
     E.collapseLookAt.IDContext = 'wwwswdawdwdwd'
     E.collapseLookAt.DefaultOpen = openByDefaultPMLook
-
-
-
-
-
-
 
 
 
@@ -1189,8 +1093,35 @@ function BetterPMTab(parent)
         Ext.Net.PostMessageToServer('LL_DeleteLookAtTarget', '')
     end
 
-    E.btnUpdateCamPos = E.collapseLookAt:AddCheckbox('Disable head follow the camera thing')
-    E.btnUpdateCamPos.SameLine = true
+
+
+    local lookAtSlDefault = 0.1
+
+
+
+    E.slLookAt = E.collapseLookAt:AddSlider('X Y Z', 0, -lookAtSlDefault, lookAtSlDefault, 1)
+    E.slLookAt.IDContext = '1312sss31asdad'
+    E.slLookAt.SameLine = false
+    E.slLookAt.Components = 3
+    E.slLookAt.Value = {0, 0, 0, 0}
+    E.slLookAt.OnChange = function()
+        targetPos = targetPos or _C().Transform.Transform.Translate
+        targetPos[1] = targetPos[1] + E.slLookAt.Value[1]
+        targetPos[2] = targetPos[2] + E.slLookAt.Value[2]
+        targetPos[3] = targetPos[3] + E.slLookAt.Value[3]
+        Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1].PhotoModeCameraTransform.Transform.Translate = {targetPos[1],targetPos[2],targetPos[3]}
+        local data = {
+            x = targetPos[1],
+            y = targetPos[2],
+            z = targetPos[3],
+        }
+        Ext.Net.PostMessageToServer('LL_MoveLookAtTarget', Ext.Json.Stringify(data))
+        E.slLookAt.Value = {0, 0, 0, 0}
+    end
+
+
+    E.btnUpdateCamPos = E.collapseLookAt:AddCheckbox([[Head doesn't follow the camera]])
+    E.btnUpdateCamPos.SameLine = false
     E.btnUpdateCamPos.OnChange = function (e)
 
         if not Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1] then e.Checked = false return end
@@ -1218,29 +1149,48 @@ function BetterPMTab(parent)
 
 
 
-    local lookAtSlDefault = 0.1
+    E.checkFollowIGCS = E.collapseLookAt:AddCheckbox('Head does follow IGCS')
+    E.checkFollowIGCS.OnChange = function (e)
+        if e.Checked then
 
+            if not Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1] then
+                e.Checked = false
+                return
+            end
 
-
-    E.slLookAt = E.collapseLookAt:AddSlider('X Y Z', 0, -lookAtSlDefault, lookAtSlDefault, 1)
-    E.slLookAt.IDContext = '1312sss31asdad'
-    E.slLookAt.SameLine = false
-    E.slLookAt.Components = 3
-    E.slLookAt.Value = {0, 0, 0, 0}
-    E.slLookAt.OnChange = function()
-        targetPos = targetPos or _C().Transform.Transform.Translate
-        targetPos[1] = targetPos[1] + E.slLookAt.Value[1]
-        targetPos[2] = targetPos[2] + E.slLookAt.Value[2]
-        targetPos[3] = targetPos[3] + E.slLookAt.Value[3]
-        Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1].PhotoModeCameraTransform.Transform.Translate = {targetPos[1],targetPos[2],targetPos[3]}
-        local data = {
-            x = targetPos[1],
-            y = targetPos[2],
-            z = targetPos[3],
-        }
-        Ext.Net.PostMessageToServer('LL_MoveLookAtTarget', Ext.Json.Stringify(data))
-        E.slLookAt.Value = {0, 0, 0, 0}
+            StartFollowIGCS()
+        else
+            StopFollowIGCS()
+        end
     end
+
+
+    parent:AddSeparatorText('Save/Load postition')
+
+
+
+    E.saveLoadCollapse = parent:AddCollapsingHeader('xd')
+    E.saveLoadCollapse.DefaultOpen = openByDefaultPMSave
+
+
+    saveLoadWindow = E.saveLoadCollapse:AddChildWindow('')
+    saveLoadWindow.AlwaysAutoResize = false
+    saveLoadWindow.Size = {0, 1}
+
+
+
+    E.saveButton = E.saveLoadCollapse:AddButton("Save")
+    E.saveButton.IDContext = "saveIdddasdasda"
+    E.saveButton.SameLine = false
+    E.saveButton.OnClick = function()
+        if LLGlobals.DummyNameMap then
+            SaveVisTempCharacterPosition()
+        end
+    end
+
+
+
+
 end
 
 

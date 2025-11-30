@@ -1198,9 +1198,10 @@ function SaveVisTempCharacterPosition()
     local worldTransform = LLGlobals.DummyNameMap[selectedName].Visual.Visual.WorldTransform
 
     savedTransforms[selectedName] = {
-        pos = worldTransform.Translate,
-        rot = worldTransform.RotationQuat,
-        scale = worldTransform.Scale
+        pos = {worldTransform.Translate[1], worldTransform.Translate[2], worldTransform.Translate[3]},
+        rot = {worldTransform.RotationQuat[1], worldTransform.RotationQuat[2], worldTransform.RotationQuat[3], worldTransform.RotationQuat[4]},
+        scale = {worldTransform.Scale[1], worldTransform.Scale[2], worldTransform.Scale[3]},
+        originalName = selectedName
     }
 
     local saved = savedTransforms[selectedName]
@@ -1209,20 +1210,22 @@ function SaveVisTempCharacterPosition()
         saved.pos[1], saved.pos[2], saved.pos[3])
 
     local function LoadTransform()
-        local currentIndex = E.visTemComob.SelectedIndex + 1
-        local currentName = E.visTemComob.Options[currentIndex]
-        local dummy = LLGlobals.DummyNameMap[currentName]
+        local dummy = LLGlobals.DummyNameMap[saved.originalName]
 
-        dummy.Visual.Visual.WorldTransform.Translate = saved.pos
-        dummy.Visual.Visual.WorldTransform.RotationQuat = saved.rot
-        dummy.Visual.Visual.WorldTransform.Scale = saved.scale
-        dummy.DummyOriginalTransform.Transform.Translate = saved.pos
-        dummy.DummyOriginalTransform.Transform.RotationQuat = saved.rot
-        dummy.DummyOriginalTransform.Transform.Scale = saved.scale
+        dummy.Visual.Visual.WorldTransform.Translate = {saved.pos[1], saved.pos[2], saved.pos[3]}
+        dummy.Visual.Visual.WorldTransform.RotationQuat = {saved.rot[1], saved.rot[2], saved.rot[3], saved.rot[4]}
+        dummy.Visual.Visual.WorldTransform.Scale = {saved.scale[1], saved.scale[2], saved.scale[3]}
+        dummy.DummyOriginalTransform.Transform.Translate = {saved.pos[1], saved.pos[2], saved.pos[3]}
+        dummy.DummyOriginalTransform.Transform.RotationQuat = {saved.rot[1], saved.rot[2], saved.rot[3], saved.rot[4]}
+        dummy.DummyOriginalTransform.Transform.Scale = {saved.scale[1], saved.scale[2], saved.scale[3]}
 
-        UpdateCharacterInfo(index)
+        for i, name in ipairs(E.visTemComob.Options) do
+            if name == saved.originalName then
+                UpdateCharacterInfo(i)
+                break
+            end
+        end
     end
-
 
     if buttons[selectedName] then
         buttons[selectedName].load.Label = buttonLabel
@@ -1235,9 +1238,14 @@ function SaveVisTempCharacterPosition()
         deleteBtn.IDContext = 'xBtn' .. Ext.Math.Random()
         deleteBtn.OnClick = function()
             buttonCount = buttonCount - 1
-            buttons[selectedName].load:Destroy()
-            buttons[selectedName].delete:Destroy()
-            buttons[selectedName] = nil
+
+            if buttons[selectedName] then
+                buttons[selectedName].load:Destroy()
+                buttons[selectedName].delete:Destroy()
+                buttons[selectedName] = nil
+            end
+
+            savedTransforms[selectedName] = nil
 
             if buttonCount == 0 then
                 savedTransforms = {}
@@ -1433,11 +1441,14 @@ function StartFollowIGCS()
 end
 
 
+
 function StopFollowIGCS()
     if Utils.subID and Utils.subID['look'] then
         Utils:SubUnsubToTick('unsub', 'look', _)
     end
+    E.checkFollowIGCS.Checked = false
 end
+
 
 
 Ext.RegisterConsoleCommand('look', function (cmd, ...)

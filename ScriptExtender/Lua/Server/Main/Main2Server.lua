@@ -437,13 +437,31 @@ Channels.StickToCamera:SetHandler(function (Data)
     if not LLGlobals.LightParametersServer  then return end
     if not LLGlobals.LightParametersServer[LLGlobals.selectedUuid] then return end
 
-
+    local uuid = LLGlobals.selectedUuid
     local x,y,z = table.unpack(Data.Translate)
     local rx,ry,rz = table.unpack(Helpers.Math.QuatToEuler(Data.RotationQuat))
 
     LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate = {x, y, z}
     LLGlobals.LightParametersServer[LLGlobals.selectedUuid].RotationQuat = Data.RotationQuat
     LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = {rx, ry, rz}
+
+    Osi.ToTransform(LLGlobals.selectedUuid, x, y, z, rx, ry, rz)
+
+    --- For look at
+    local centerX, centerY, centerZ = table.unpack(getSourcePosition())
+    local curX, curY, curZ = Osi.GetPosition(uuid)
+    local dx, dy, dz = centerX - curX, centerY - curY, centerZ - curZ
+    local distance = math.sqrt(dx*dx + dy*dy + dz*dz)
+    local baseYaw = math.deg(Ext.Math.Atan2(dx / distance, dz / distance))
+    local basePitch = math.deg(math.asin(-dy / distance))
+
+    local curRx, curRy, curRz = Osi.GetRotation(uuid)
+
+    local params = LLGlobals.OrbitParams[uuid] or {}
+    params.userYawOffset = curRy - baseYaw
+    params.userPitchOffset = curRx - basePitch
+    LLGlobals.OrbitParams[uuid] = params
+
 
     UpdateMarkerPosition()
     UpdateGoboPosition()
