@@ -1650,7 +1650,7 @@ end
 
 
     ---------------------------------------------------------
-    p:AddSeparatorText('Utilities')
+    p:AddSeparatorText('Slider settings')
     ---------------------------------------------------------
 
 
@@ -1662,7 +1662,7 @@ end
 
 
 
-    ER.modPosReset = p:AddButton('Mod pos')
+    ER.modPosReset = p:AddButton('Pos modifier')
     ER.modPosReset.IDContext = 'MOdd'
     ER.modPosReset.SameLine = true
     ER.modPosReset.OnClick = function ()
@@ -1678,7 +1678,7 @@ end
 
 
 
-    ER.modRotReset = p:AddButton('Mod rot')
+    ER.modRotReset = p:AddButton('Rot modifier')
     ER.modRotReset.IDContext = 'MOddRot'
     ER.modRotReset.SameLine = true
     ER.modRotReset.OnClick = function ()
