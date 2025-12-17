@@ -77,7 +77,7 @@ function getSelectedLightType()
     local lightType = entity.LightType
     if      lightType == 2 then  return 'Directional'
     elseif  lightType == 1 then  return 'Spotlight'
-    else                    return 'Point'
+    else                         return 'Point'
     end
 end
 
@@ -152,6 +152,16 @@ function SelectLight()
 
 
     if not LLGlobals.selectedEntity then return end
+
+    if LLGlobals.selectedLightType == 'Directional' then
+        E.slRotRollSlider.Disabled = false
+        E.btnRot_Rp.Disabled = false
+        E.btnRot_Rm.Disabled = false
+    else
+        E.slRotRollSlider.Disabled = true
+        E.btnRot_Rp.Disabled = true
+        E.btnRot_Rm.Disabled = true
+    end
 
     local x,y,z = table.unpack(LLGlobals.selectedEntity.Transform.Transform.Translate)
     local rx,ry,rz = table.unpack(Helpers.Math.QuatToEuler(LLGlobals.selectedEntity.Transform.Transform.RotationQuat))
@@ -733,9 +743,7 @@ function RotateEntity(entity, axis, offset, step, objectType)
             Channels.EntityRotation:SendToServer(Data)
 
         elseif objectType == 'Point' then
-
         elseif objectType == 'Gobo' then
-            return 0
         end
     end
 end

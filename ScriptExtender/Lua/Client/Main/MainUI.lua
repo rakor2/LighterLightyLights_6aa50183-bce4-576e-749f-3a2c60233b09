@@ -821,7 +821,15 @@ end
             if selectedName and (selectedName:find('Point') or selectedName:find('Spotlight') or selectedName:find('Directional')) then
                 if e.Value[1] == 0 then localLightType = 'Point' end
                 if e.Value[1] == 1 then localLightType = 'Spotlight' end
-                if e.Value[1] == 2 then localLightType = 'Directional' end
+                if e.Value[1] == 2 then localLightType = 'Directional'
+                    E.slRotRollSlider.Disabled = false
+                    E.btnRot_Rp.Disabled = false
+                    E.btnRot_Rm.Disabled = false
+                else
+                    E.slRotRollSlider.Disabled = true
+                    E.btnRot_Rp.Disabled = true
+                    E.btnRot_Rm.Disabled = true
+                end
 
                 local lightEntity = getSelectedLightEntity()
 
@@ -1503,7 +1511,8 @@ end
 
 
     E.slRotRollSlider = E.collapsRot:AddSlider('', 0, -1000, 1000, 0.1)
-    E.slRotRollSlider.IDContext = 'Yaw'
+    E.slRotRollSlider.IDContext = 'roll'
+    E.slRotRollSlider.Disabled = true
     E.slRotRollSlider.Value = {0,0,0,0}
     E.slRotRollSlider.OnChange = function(e)
         RotateEntity(LLGlobals.selectedEntity, 'z', e.Value[1], E.modRotSlider.Value[1], 'Light')
@@ -1518,6 +1527,7 @@ end
 
     E.btnRot_Rp = E.collapsRot:AddButton('<')
     E.btnRot_Rp.IDContext = 'adwdawdawdawd'
+    E.btnRot_Rp.Disabled = true
     E.btnRot_Rp.SameLine = true
     E.btnRot_Rp.OnClick = function (e)
         RotateEntity(LLGlobals.selectedEntity, 'z', -100, E.modRotSlider.Value[1], 'Light')
@@ -1527,6 +1537,7 @@ end
 
     E.btnRot_Rm = E.collapsRot:AddButton('>')
     E.btnRot_Rm.IDContext = 'awdddddawdawd'
+    E.btnRot_Rm.Disabled = true
     E.btnRot_Rm.SameLine = true
     E.btnRot_Rm.OnClick = function (e)
         RotateEntity(LLGlobals.selectedEntity, 'z', 100, E.modRotSlider.Value[1], 'Light')
@@ -1541,7 +1552,7 @@ end
 
 
     E.slRotYawSlider = E.collapsRot:AddSlider('', 0, -1000, 1000, 0.1)
-    E.slRotYawSlider.IDContext = 'Roll'
+    E.slRotYawSlider.IDContext = 'yaw'
     E.slRotYawSlider.Value = {0,0,0,0}
     E.slRotYawSlider.OnChange = function(e)
         RotateEntity(LLGlobals.selectedEntity, 'y', e.Value[1], E.modRotSlider.Value[1], 'Light')
@@ -1578,7 +1589,7 @@ end
 
 
 
-    E.bulletLock = E.collapsRot:AddBulletText('Gimbal-lock is real monkaS')
+    -- E.bulletLock = E.collapsRot:AddBulletText('Gimbal-lock is real monkaS')
 
 
 
