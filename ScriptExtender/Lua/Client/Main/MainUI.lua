@@ -165,8 +165,9 @@ function MainWindow(mw)
     E.goboTab = mainTabBar:AddTabItem('Gobo')
     Gobo2Tab(E.goboTab)
 
-    -- E.utilsTab = mainTabBar:AddTabItem('Utils')
-    -- Utils2Tab(E.utilsTab)
+
+    E.utilsTab = mainTabBar:AddTabItem('Useful')
+    Utils2Tab(E.utilsTab)
 
 
     -- saverTab = mainTabBar:AddTabItem('Saver')
