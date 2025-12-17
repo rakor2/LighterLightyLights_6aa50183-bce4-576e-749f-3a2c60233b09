@@ -682,9 +682,6 @@ Channels.EntityRotation:SetHandler(function (Data)
         HumanRotation = {rx,ry,rz}
 
     else
-        Osi.ToTransform(uuid, x, y, z, 0, 0, 0)
-        LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = {0,0,0}
-        LLGlobals.OrbitParams[LLGlobals.selectedUuid] = nil
 
         local centerX, centerY, centerZ = table.unpack(getSourcePosition())
         local curX, curY, curZ = Osi.GetPosition(uuid)
