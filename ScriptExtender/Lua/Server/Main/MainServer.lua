@@ -686,10 +686,33 @@ Channels.EntityRotation:SetHandler(function (Data)
         LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = {0,0,0}
         LLGlobals.OrbitParams[LLGlobals.selectedUuid] = nil
 
+        local centerX, centerY, centerZ = table.unpack(getSourcePosition())
+        local curX, curY, curZ = Osi.GetPosition(uuid)
+        local targetY = centerY + 1.3
+        local dx, dy, dz = centerX - curX, targetY - curY, centerZ - curZ
+        local distance = math.sqrt(dx*dx + dy*dy + dz*dz)
+
+        local resetPitch = math.deg(math.asin(-dy / distance))
+        local resetYaw = math.deg(Ext.Math.Atan2(dx / distance, dz / distance))
+        local resetRoll = 0
+
+        Osi.ToTransform(uuid, x, y, z, resetPitch, resetYaw, resetRoll)
+
+        RotationQuat = entity.Transform.Transform.RotationQuat
+        HumanRotation = {resetPitch, resetYaw, resetRoll}
+
+        LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = HumanRotation
+        LLGlobals.LightParametersServer[LLGlobals.selectedUuid].RotationQuat = RotationQuat
+
+        LLGlobals.OrbitParams[uuid] = {
+            userYawOffset = 0,
+            userPitchOffset = 0
+        }
+
         local Response = {
             Translate = Translate,
             RotationQuat = RotationQuat,
-            HumanRotation = {0,0,0}
+            HumanRotation = HumanRotation
         }
 
         Channels.CurrentEntityTransform:Broadcast(Response)
