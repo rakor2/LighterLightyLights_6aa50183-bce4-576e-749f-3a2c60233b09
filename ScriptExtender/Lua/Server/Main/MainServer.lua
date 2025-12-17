@@ -82,6 +82,7 @@ Ext.RegisterConsoleCommand('llrtavail', function (cmd, ...)
 end)
 
 
+
 local function resetAvailableRootTemplate()
     for uuid, _ in pairs(RootTemplates) do
         RootTemplates[uuid] = true
@@ -371,16 +372,28 @@ Channels.DeleteLight:SetHandler(function (request)
         for _ in pairs(LLGlobals.CreatedLightsServer) do
             count = count + 1
         end
+
         if count == 0 and LLGlobals.markerUuid then
+
             Osi.RequestDelete(LLGlobals.markerUuid)
             LLGlobals.markerUuid = nil
+
+            Osi.RequestDelete(LLGlobals.beamUuid)
+            LLGlobals.beamUuid = nil
+            LLGlobals.States.beamExisting = false
+
         end
+
     else
         if LLGlobals.markerUuid then
             Osi.RequestDelete(LLGlobals.markerUuid)
             LLGlobals.markerUuid = nil
+
         end
     end
+
+
+    UpdateBeamPosition()
 
 end)
 

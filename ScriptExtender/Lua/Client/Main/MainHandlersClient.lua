@@ -1055,7 +1055,7 @@ function MoveCharacter(axis, value, stepMod, index)
     if LLGlobals.DummyNameMap then
 
 
-        DPrint('Selected character MoveCharacter: %s', selectedCharacter)
+        -- DPrint('Selected character MoveCharacter: %s', selectedCharacter)
 
 
         local entity = LLGlobals.DummyNameMap[E.visTemComob.Options[index]]
@@ -1210,7 +1210,13 @@ function SaveVisTempCharacterPosition()
         saved.pos[1], saved.pos[2], saved.pos[3])
 
     local function LoadTransform()
-        local dummy = LLGlobals.DummyNameMap[saved.originalName]
+        -- Получаем ТЕКУЩЕГО выбранного персонажа
+        local currentIndex = E.visTemComob.SelectedIndex + 1
+        local currentSelectedName = E.visTemComob.Options[currentIndex]
+
+        if not currentSelectedName or not LLGlobals.DummyNameMap[currentSelectedName] then return end
+
+        local dummy = LLGlobals.DummyNameMap[currentSelectedName]
 
         dummy.Visual.Visual.WorldTransform.Translate = {saved.pos[1], saved.pos[2], saved.pos[3]}
         dummy.Visual.Visual.WorldTransform.RotationQuat = {saved.rot[1], saved.rot[2], saved.rot[3], saved.rot[4]}
@@ -1219,12 +1225,7 @@ function SaveVisTempCharacterPosition()
         dummy.DummyOriginalTransform.Transform.RotationQuat = {saved.rot[1], saved.rot[2], saved.rot[3], saved.rot[4]}
         dummy.DummyOriginalTransform.Transform.Scale = {saved.scale[1], saved.scale[2], saved.scale[3]}
 
-        for i, name in ipairs(E.visTemComob.Options) do
-            if name == saved.originalName then
-                UpdateCharacterInfo(i)
-                break
-            end
-        end
+        UpdateCharacterInfo(currentIndex)
     end
 
     if buttons[selectedName] then

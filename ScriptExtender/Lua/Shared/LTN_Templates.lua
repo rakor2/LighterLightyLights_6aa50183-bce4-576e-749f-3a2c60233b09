@@ -7,6 +7,7 @@ ltn_templates = {
     {uuid = "1002530d-57b7-0f5d-d5eb-8cd2380bdf93", name = "LTN_TUH_Mad2"},
     {uuid = "1002530d-57b7-0f5d-d5eb-8cd2380bdf93", name = "LTN_TUH_Ella"},
     {uuid = "4e730f51-3b58-4792-c092-11bf4a301465", name = "LTN_TUH_Snow_Field"},
+    {uuid = "31c48933-8ed7-778e-4f2a-6eb829687617", name = "TUH_LTN_D_1"},
 
     {uuid = "4ffe46ad-b46b-0a3a-c739-d71f1bf209d9", name = "LTN_BGH_Highberrys_Cellar_A"},
     {uuid = "f2c0d648-869a-dee1-4842-8ec9e37b0441", name = "LTN_BGO_Camp_A"},
@@ -177,6 +178,7 @@ ltn_templates2 = {
 
     ["TUH_LTN_Icy"] = "5ad10360-89bf-b8e2-7d38-410df3b191bd",
     ["LTN_TUH_Snow_Field"] = "4e730f51-3b58-4792-c092-11bf4a301465",
+    ["TUH_LTN_D_1"] = "31c48933-8ed7-778e-4f2a-6eb829687617",
 
     ["LTN_BGH_Highberrys_Cellar_A"] = "4ffe46ad-b46b-0a3a-c739-d71f1bf209d9",
     ["LTN_BGO_Camp_A"] = "f2c0d648-869a-dee1-4842-8ec9e37b0441",

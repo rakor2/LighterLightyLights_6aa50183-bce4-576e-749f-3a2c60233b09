@@ -31,11 +31,6 @@ end)
 
 Channels.DeleteGobo:SetHandler(function (Data)
 
-
-    if not LLGlobals.selectedUuid then return end
-    if not LLGlobals.GoboLightMap[LLGlobals.selectedUuid] then return end
-
-
     local goboToDelete
 
     if Data == 'All' then
@@ -47,6 +42,8 @@ Channels.DeleteGobo:SetHandler(function (Data)
         LLGlobals.GoboLightMap = {}
 
     else
+
+        if not LLGlobals.GoboLightMap[LLGlobals.selectedUuid] then return end
 
         for light, gobo in pairs(LLGlobals.GoboLightMap) do
             if light == LLGlobals.selectedUuid then

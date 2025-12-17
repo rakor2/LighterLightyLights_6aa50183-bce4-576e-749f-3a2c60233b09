@@ -8,7 +8,7 @@ function initMazzleColors()
         text                   = Style.Colors.textColor,
         border                 = Style.Colors.border,
         border_shadow          = Style.Colors.borderShadow,
-        
+
         nav_button_hovered     = Style.Colors.buttonHovered,
         nav_button_active      = Style.Colors.buttonActive,
         nav_area_bg            = Style.Colors.childBg,
@@ -19,29 +19,29 @@ function initMazzleColors()
         nav_button_text        = Style.Colors.textColor,
         nav_header_text        = Style.Colors.textColor,
         slide_index_text       = Style.Colors.textDisabled,
-        
+
         scrollbar_bg           = Style.Colors.scrollbarBg,
         scrollbar_grab         = Style.Colors.scrollbarGrab,
         scrollbar_grab_hovered = Style.Colors.scrollbarGrabHovered,
         scrollbar_grab_active  = Style.Colors.scrollbarGrabActive,
-        
+
         content_text           = Style.Colors.textColor,
         heading_text           = Style.Colors.textColor,
         subheading_text        = Style.Colors.textColor,
         section_text           = Style.Colors.textColor,
         note_text              = Style.Colors.textDisabled,
-        callout_text           = Style.Colors.textColor,
-        callout_prefix         = Style.Colors.textColor,
+        callout_text           = Style.Colors.special,
+        callout_prefix         = Style.Colors.special,
         code_text              = Style.Colors.textColor,
         code_bg                = Style.Colors.childBg,
         bullet_text            = Style.Colors.textColor,
-        separator_color        = Style.Colors.separator,
+        separator_color        = Style.Colors.special,
         keyword_text           = Style.Colors.textColor,
         highlight_text         = Style.Colors.textColor,
         warning_text           = {1.00, 0.64, 0.64, 1.00},
         action_color           = {0.60, 0.85, 0.60, 1.00},
         bonus_action_color     = {0.60, 0.60, 0.85, 1.00},
-        
+
         input_text             = Style.Colors.textColor,
         input_bg               = Style.Colors.frameBg,
         input_bg_hover         = Style.Colors.frameBgHovered,
@@ -52,7 +52,7 @@ function initMazzleColors()
         checkbox_bg_hover      = Style.Colors.frameBgHovered,
         checkbox_bg_active     = Style.Colors.frameBgActive,
         checkbox_check         = Style.Colors.checkMark,
-        
+
         button_bg              = Style.Colors.button,
         button_text            = Style.Colors.textColor,
         button_hover           = Style.Colors.buttonHovered,

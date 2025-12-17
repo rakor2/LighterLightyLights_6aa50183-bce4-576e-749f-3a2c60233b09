@@ -6,6 +6,7 @@ atm_templates = {
     {uuid = "962d7bd2-1f4f-eca7-1d3f-c033cf567e08", name = "ATM_TUH_Snow_Field"},
     {uuid = "ab68f654-c913-6908-da4f-143665b86830", name = "ATM_TUH_HomeRun"},
     {uuid = "524e5503-f7c0-5286-1354-64897fb6d80b", name = "ATM_TUH_Ella"},
+    {uuid = "f6a246ef-a559-b78e-7250-c2969960620b", name = "TUH_ATM_D_1"},
 
     {uuid = "6d27f492-b106-cfcd-99ec-8ec5480058c0", name = "ATM_BGH_Highberrys_Cellar"},
     {uuid = "50ad498c-a452-179e-c05f-1e763feaa29c", name = "ATM_BGO_Camp_A"},
@@ -353,6 +354,7 @@ atm_templates2 = {
 
     ["ATM_TUH_Icy"] = "621fb97d-7569-4803-6519-bfbf902ecd17",
     ["ATM_TUH_Snow_Field"] = "962d7bd2-1f4f-eca7-1d3f-c033cf567e08",
+    ["TUH_ATM_D_1"] = "f6a246ef-a559-b78e-7250-c2969960620b",
 
     ["ATM_AtmosphericTest"] = "1b311a12-59cc-018f-e9b0-9a670cad8034",
     ["ATM_BGH_Highberrys_Cellar"] = "6d27f492-b106-cfcd-99ec-8ec5480058c0",

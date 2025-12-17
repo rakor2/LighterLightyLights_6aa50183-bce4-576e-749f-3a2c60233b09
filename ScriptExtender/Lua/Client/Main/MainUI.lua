@@ -1,16 +1,6 @@
-
 --[[
-
-
-GOGO BUUG
 PREC DIS POWE
-
-
-MAZZLEBEAM AFTER DELETE
-
-
 ADD RECENT COLORS
-
 ]]
 
 
@@ -72,6 +62,308 @@ ER = {
     btnLightSharpReset,
 }
 
+
+
+local OPENQUESTIONMARK = false
+IMGUI:AntiStupiditySystem()
+
+
+
+
+
+
+function LLMCM(mt2)
+    -- if LLMCM ~= nil then return end
+    LLMCM = mt2
+
+    local rngMax = #ModName
+    mw = Ext.IMGUI.NewWindow(ModName[Ext.Math.Random(1, rngMax)])
+    mw.Font = 'Font'
+    mw.Open = OPENQUESTIONMARK
+
+    mw.Closeable = true
+
+
+    openButton = mt2:AddButton('Open')
+    openButton.IDContext = 'OpenMainWindowButton'
+    openButton.OnClick = function()
+        mw.Open = not mw.Open
+    end
+
+    mw.OnClose = function()
+        mw.Open = false
+        return true
+    end
+
+    local styleCombo = mt2:AddCombo('Style')
+    styleCombo.IDContext = 'StyleSwitchCombo'
+    styleCombo.Options = StyleNames
+    styleCombo.SelectedIndex = StyleSettings.selectedStyle - 1
+
+    styleCombo.OnChange = function(widget)
+        StyleSettings.selectedStyle = widget.SelectedIndex + 1
+        ApplyStyle(mw, StyleSettings.selectedStyle)
+
+        if windowNotification then
+            E.checkSelectedLightNotification.Checked = false
+            windowNotification:Destroy()
+            CreateLightNumberNotification()
+        end
+
+        if Mods.Mazzle_Docs then
+            initMazzleColors()
+            API.Rebuild('LL2', 'Lighty Lights Elucidator')
+        end
+
+        SettingsSave()
+
+    end
+
+    ApplyStyle(mw, StyleSettings.selectedStyle)
+
+    MainWindow(mw)
+end
+
+
+
+function MainWindow(mw)
+    ViewportSize = Ext.IMGUI.GetViewportSize()
+    mw:SetPos({ViewportSize[1] / 6, ViewportSize[2] / 10})
+    if ViewportSize[1] <= 1920 and ViewportSize[2] <= 1080 then
+        mw:SetSize({ 571, 750 })
+    else
+        mw:SetSize({ 766, 1000 })
+    end
+    mw.AlwaysAutoResize = false
+    mw.Scaling = 'Scaled'
+    mw.Font = 'Font'
+
+
+
+    mw.Visible = true
+    mw.Closeable = true
+
+    mainTabBar = mw:AddTabBar('LL')
+
+
+    E.main2 = mainTabBar:AddTabItem('Main')
+    MainTab(E.main2)
+
+
+    E.anal2Tab = mainTabBar:AddTabItem('AnL')
+    Anal2Tab(E.anal2Tab)
+
+
+    E.betterPM = mainTabBar:AddTabItem('PM')
+    BetterPMTab(E.betterPM)
+
+
+    E.origin2PointTab = mainTabBar:AddTabItem('Origin point')
+    Origin2PointTab(E.origin2PointTab)
+
+
+    E.goboTab = mainTabBar:AddTabItem('Gobo')
+    Gobo2Tab(E.goboTab)
+
+    -- E.utilsTab = mainTabBar:AddTabItem('Utils')
+    -- Utils2Tab(E.utilsTab)
+
+
+    -- saverTab = mainTabBar:AddTabItem('Saver')
+    -- Saver2Tab(saverTab)
+
+
+    E.settingsTab = mainTabBar:AddTabItem('Settings')
+    Settings2Tab(E.settingsTab)
+
+
+    function buttonSizes()
+        for _, element in pairs(ER) do
+            element.Size = {180/Style.buttonScale, 39/Style.buttonScale}
+        end
+    end
+
+
+--#region FunnyStuff
+    -- function funnyStuff()
+    --     local allElements = {}
+    --     for _, element in pairs(E) do
+    --         table.insert(allElements, element)
+    --     end
+    --     for _, element in pairs(ER) do
+    --         table.insert(allElements, element)
+    --     end
+
+    --     for _, element in pairs(allElements) do
+    --         element.OnHoverEnter = function(e)
+    --             local elementType = tostring(e):match('^(%w+)')
+
+    --             if elementType == 'Button' then
+    --                 Imgui.FadeColor(e, 'Button', Style.buttonHovered, Style.button, fadeTime)
+    --             elseif elementType == 'Checkbox' then
+    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
+    --             elseif elementType == 'SliderScalar' or elementType == 'SliderInt' then
+    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
+    --                 Imgui.FadeColor(e, 'FrameBgHovered', Style.frameBgHovered, Style.frameBgHovered, fadeTime)
+    --             elseif elementType == 'InputText' then
+    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
+    --             elseif elementType == 'ColorEdit' then
+    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
+    --             elseif elementType == 'Combo' then
+    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
+    --             elseif elementType == 'TabItem' then
+    --                 Imgui.FadeColor(e, 'TabActive', Style.tabHovered, Style.tabActive, fadeTime)
+    --                 -- Imgui.FadeColor(e, 'TabHovered', Style.tabHovered, Style.tab, fadeTime)
+    --                 Imgui.FadeColor(e, 'Tab', Style.tabHovered, Style.tab, fadeTime)
+    --             elseif elementType == 'CollapsingHeader' then
+    --                 Imgui.FadeColor(e, 'Header', Style.headerHovered, Style.header, fadeTime)
+    --             end
+    --         end
+    --         element.OnHoverLeave = function(e)
+    --             local elementType = tostring(e):match('^(%w+)')
+
+    --             if elementType == 'Button' then
+    --                 Imgui.FadeColor(e, 'Button', Style.buttonHovered, Style.button, fadeTime)
+    --             elseif elementType == 'Checkbox' then
+    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
+    --             elseif elementType == 'SliderScalar' or elementType == 'SliderInt' then
+    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
+    --                 Imgui.FadeColor(e, 'FrameBgHovered', Style.frameBgHovered, Style.frameBgHovered, fadeTime)
+    --             elseif elementType == 'InputText' then
+    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
+    --             elseif elementType == 'ColorEdit' then
+    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
+    --             elseif elementType == 'Combo' then
+    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
+    --             elseif elementType == 'TabItem' then
+    --                 Imgui.FadeColor(e, 'TabActive', Style.tabHovered, Style.tabActive, fadeTime)
+    --                 -- Imgui.FadeColor(e, 'TabHovered', Style.tabHovered, Style.tab, fadeTime)
+    --                 Imgui.FadeColor(e, 'Tab', Style.tabHovered, Style.tab, fadeTime)
+    --             elseif elementType == 'CollapsingHeader' then
+    --                 Imgui.FadeColor(e, 'Header', Style.headerHovered, Style.header, fadeTime)
+    --             end
+    --         end
+    --         -- element.OnClick = function(e)
+    --         --     local elementType = tostring(e):match('^(%w+)')
+
+    --         --     if elementType == 'Button' then
+    --         --         -- Imgui.FadeColor(e, 'Button', Style.buttonHovered, Style.button, fadeTime)
+    --         --         Imgui.FadeColor(e, 'ButtonActive', Style.buttonHovered, Style.buttonActive, fadeTime)
+    --         --         -- Imgui.FadeColor(e, 'ButtonHovered', Style.buttonActive, Style.buttonHovered, fadeTime)
+    --         --     elseif elementType == 'Checkbox' then
+    --         --         Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
+    --         --     elseif elementType == 'SliderScalar' or elementType == 'SliderInt' then
+    --         --         Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
+    --         --         Imgui.FadeColor(e, 'FrameBgHovered', Style.frameBgActive, Style.frameBgHovered, fadeTime)
+    --         --     elseif elementType == 'InputText' then
+    --         --         Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
+    --         --     elseif elementType == 'ColorEdit' then
+    --         --         Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
+    --         --     elseif elementType == 'Combo' then
+    --         --         Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
+    --         --     elseif elementType == 'TabItem' then
+    --         --         Imgui.FadeColor(e, 'TabActive', Style.tabHovered, Style.tabActive, fadeTime)
+    --         --         -- Imgui.FadeColor(e, 'TabHovered', Style.tabHovered, Style.tab, fadeTime)
+    --         --         Imgui.FadeColor(e, 'Tab', Style.tabHovered, Style.tab, fadeTime)
+    --         --     elseif elementType == 'CollapsingHeader' then
+    --         --         Imgui.FadeColor(e, 'Header', Style.headerHovered, Style.header, fadeTime)
+    --         --     end
+    --         -- end
+    --     end
+    -- end
+    -- funnyStuff()
+--#endregion
+
+    buttonSizes()
+
+    StyleV2:RegisterWindow(mw)
+
+    SettingsLoad()
+end
+
+
+
+MCM.SetKeybindingCallback('ll_toggle_window', function()
+    mw.Open = not mw.Open
+end)
+
+
+
+MCM.SetKeybindingCallback('ll_toggle_light', function()
+    toggleLightBtn()
+end)
+
+
+
+MCM.SetKeybindingCallback('ll_toggle_all_lights', function()
+    toggleAllLightsBtn()
+end)
+
+
+
+MCM.SetKeybindingCallback('ll_toggle_marker', function()
+    ToggleMarker(LLGlobals.markerUuid)
+end)
+
+
+
+MCM.SetKeybindingCallback('ll_toggle_all_markers', function()
+    Channels.MarkerHandler:RequestToServer({}, function (Response)
+    end)
+end)
+
+
+
+MCM.SetKeybindingCallback('ll_duplicate', function()
+    DuplicateLight()
+end)
+
+
+
+MCM.SetKeybindingCallback('ll_beam', function()
+    Channels.MazzleBeam:SendToServer({})
+end)
+
+
+
+MCM.SetKeybindingCallback('ll_stick', function()
+    E.checkStick.Checked = not E.checkStick.Checked
+    stickToCameraCheck()
+end)
+
+
+
+MCM.SetKeybindingCallback('ll_next', function()
+    nextOptionBtn()
+end)
+
+
+
+MCM.SetKeybindingCallback('ll_prev', function()
+    prevOptionBtn()
+end)
+
+
+
+MCM.SetKeybindingCallback('ll_selected_popup', function()
+
+    local lightName = getSelectedLightName() or 'None'
+    if lightName then selectedLightNotification.Label = lightName end
+
+    windowNotification.Visible = not windowNotification.Visible
+    E.checkSelectedLightNotification.Checked = not E.checkSelectedLightNotification.Checked
+
+end)
+
+
+MCM.SetKeybindingCallback('ll_apply_anl', function()
+    ApplyParameters()
+end)
+
+
+MCM.SetKeybindingCallback('ll_hide_gobo', function()
+    hideGobo()
+end)
 
 
 
@@ -182,6 +474,7 @@ function MainTab(p)
     end
 
 
+
     E.btnOptionsNext = p:AddButton('>')
     E.btnOptionsNext.IDContext = 'adadwwd'
     E.btnOptionsNext.SameLine = true
@@ -189,8 +482,6 @@ function MainTab(p)
         if not LLGlobals.selectedUuid then return end
         nextOptionBtn()
     end
-
-
 
 
 
@@ -202,9 +493,7 @@ function MainTab(p)
     E.inputRename = p:AddInputText('')
     E.inputRename.IDContext = 'adawdawdawdawd'
     E.inputRename.Disabled = false
-    E.inputRename.OnChange = function ()
 
-    end
 
 
     E.btnRenameLight = p:AddButton('Rename')
@@ -248,6 +537,8 @@ ER.btnDelete.OnClick = function()
     local uuidToDelete = LLGlobals.selectedUuid
     local selectedName = getSelectedLightName()
 
+    Channels.DeleteGobo:SendToServer('Single')
+
     LLGlobals.CreatedLightsServer[uuidToDelete] = nil
     LLGlobals.LightParametersClient[uuidToDelete] = nil
 
@@ -289,6 +580,7 @@ ER.btnDelete.OnClick = function()
         UpdateTranformInfo(0, 0, 0, 0, 0, 0)
     end
 
+
     Channels.DeleteLight:SendToServer(uuidToDelete)
 
     Channels.SelectedLight:SendToServer(LLGlobals.selectedUuid)
@@ -320,6 +612,8 @@ end
     ER.btnConfirmDeleteAll.OnClick = function ()
 
         E.checkStick.Checked = false
+
+        Channels.DeleteGobo:SendToServer('All')
 
         Channels.DeleteLight:SendToServer('All')
 
@@ -367,9 +661,7 @@ end
 
 
 
-    ---------------------------------------------------------
-    p:AddSeparatorText('Parameters')
-    ---------------------------------------------------------
+
 
 
 
@@ -493,6 +785,12 @@ end
 
         Channels.MazzleBeam:SendToServer({})
     end
+
+
+
+    ---------------------------------------------------------
+    p:AddSeparatorText('Parameters')
+    ---------------------------------------------------------
 
 
 
@@ -1450,12 +1748,14 @@ end
 
 
 
-Ext.RegisterNetListener('LL_SendLookAtTargetUuid', function(channel, payload)
-    LLGlobals.tragetUuid = payload
-    Helpers.Timer:OnTicks(3, function ()
-        LLGlobals.tragetEntity = Ext.Entity.Get(LLGlobals.tragetUuid)
-    end)
-end)
+MCM.InsertModMenuTab('Lighty Lights', LLMCM, ModuleUUID)
+
+
+
+
+
+
+
 
 
 
@@ -1465,6 +1765,7 @@ Ext.RegisterConsoleCommand('lld', function (cmd, ...)
     DDump(LLGlobals.LightParametersClient)
 
 end)
+
 
 
 
@@ -1495,6 +1796,7 @@ Ext.RegisterConsoleCommand('lldumpall', function (cmd, ...)
     DPrint('nameIndex ----------------------------------------')
     DDump(nameIndex)
 end)
+
 
 
 

@@ -1,298 +1,8 @@
-local OPENQUESTIONMARK = false
-IMGUI:AntiStupiditySystem()
-
-
-MCM.SetKeybindingCallback('ll_toggle_window', function()
-    mw.Open = not mw.Open
-end)
-
-
-MCM.SetKeybindingCallback('ll_toggle_light', function()
-    toggleLightBtn()
-end)
-
-
-MCM.SetKeybindingCallback('ll_toggle_all_lights', function()
-    toggleAllLightsBtn()
-end)
-
-
-MCM.SetKeybindingCallback('ll_toggle_marker', function()
-    ToggleMarker(LLGlobals.markerUuid)
-end)
-
-
-MCM.SetKeybindingCallback('ll_toggle_all_markers', function()
-    Channels.MarkerHandler:RequestToServer({}, function (Response)
-    end)
-end)
-
-
-MCM.SetKeybindingCallback('ll_duplicate', function()
-    DuplicateLight()
-end)
-
-
-MCM.SetKeybindingCallback('ll_beam', function()
-    Channels.MazzleBeam:SendToServer({})
-end)
-
-
-MCM.SetKeybindingCallback('ll_stick', function()
-    E.checkStick.Checked = not E.checkStick.Checked
-    stickToCameraCheck()
-end)
-
-
-MCM.SetKeybindingCallback('ll_next', function()
-    nextOptionBtn()
-end)
-
-
-MCM.SetKeybindingCallback('ll_prev', function()
-    prevOptionBtn()
-end)
-
-
-MCM.SetKeybindingCallback('ll_selected_popup', function()
-
-    local lightName = getSelectedLightName() or 'None'
-    if lightName then selectedLightNotification.Label = lightName end
-
-    windowNotification.Visible = not windowNotification.Visible
-    E.checkSelectedLightNotification.Checked = not E.checkSelectedLightNotification.Checked
-
-end)
-
-
-MCM.SetKeybindingCallback('ll_apply_anl', function()
-    ApplyParameters()
-end)
-
-
-MCM.SetKeybindingCallback('ll_hide_gobo', function()
-    hideGobo()
-end)
-
-
-
-function MainTab2(mt2)
-    if MainTab2 ~= nil then return end
-    MainTab2 = mt2
-
-    mw = Ext.IMGUI.NewWindow('Nighty Nights')
-    mw.Font = 'Font'
-    mw.Open = OPENQUESTIONMARK
-
-    mw.Closeable = true
-
-
-    openButton = mt2:AddButton('Open')
-    openButton.IDContext = 'OpenMainWindowButton'
-    openButton.OnClick = function()
-        mw.Open = not mw.Open
-    end
-
-    mw.OnClose = function()
-        mw.Open = false
-        return true
-    end
-
-    local styleCombo = mt2:AddCombo('Style')
-    styleCombo.IDContext = 'StyleSwitchCombo'
-    styleCombo.Options = StyleNames
-    styleCombo.SelectedIndex = StyleSettings.selectedStyle - 1
-
-    styleCombo.OnChange = function(widget)
-        StyleSettings.selectedStyle = widget.SelectedIndex + 1
-        ApplyStyle(mw, StyleSettings.selectedStyle)
-
-        if windowNotification then
-            E.checkSelectedLightNotification.Checked = false
-            windowNotification:Destroy()
-            CreateLightNumberNotification()
-        end
-
-        if Mods.Mazzle_Docs then
-            initMazzleColors()
-            API.Rebuild('LL2', 'Lighty Lights Elucidator')
-        end
-
-        SettingsSave()
-
-    end
-
-    ApplyStyle(mw, StyleSettings.selectedStyle)
-
-    MainWindow(mw)
-end
-
-
-
-function MainWindow(mw)
-    ViewportSize = Ext.IMGUI.GetViewportSize()
-    mw:SetPos({ViewportSize[1] / 6, ViewportSize[2] / 10})
-    if ViewportSize[1] <= 1920 and ViewportSize[2] <= 1080 then
-        mw:SetSize({ 571, 750 })
-    else
-        mw:SetSize({ 766, 1000 })
-    end
-    mw.AlwaysAutoResize = false
-    mw.Scaling = 'Scaled'
-    mw.Font = 'Font'
-
-
-
-    mw.Visible = true
-    mw.Closeable = true
-
-    mainTabBar = mw:AddTabBar('LL')
-
-
-    E.main2 = mainTabBar:AddTabItem('Main')
-    MainTab(E.main2)
-
-
-    E.anal2Tab = mainTabBar:AddTabItem('AnL')
-    Anal2Tab(E.anal2Tab)
-
-
-    E.betterPM = mainTabBar:AddTabItem('PM')
-    BetterPMTab(E.betterPM)
-
-
-    E.origin2PointTab = mainTabBar:AddTabItem('Origin point')
-    Origin2PointTab(E.origin2PointTab)
-
-
-    E.goboTab = mainTabBar:AddTabItem('Gobo')
-    Gobo2Tab(E.goboTab)
-
-    -- E.utilsTab = mainTabBar:AddTabItem('Utils')
-    -- Utils2Tab(E.utilsTab)
-
-
-    -- saverTab = mainTabBar:AddTabItem('Saver')
-    -- Saver2Tab(saverTab)
-
-
-    E.settingsTab = mainTabBar:AddTabItem('Settings')
-    Settings2Tab(E.settingsTab)
-
-
-    function buttonSizes()
-        for _, element in pairs(ER) do
-            element.Size = {180/Style.buttonScale, 39/Style.buttonScale}
-        end
-    end
-
-
-
-    -- function funnyStuff()
-    --     local allElements = {}
-    --     for _, element in pairs(E) do
-    --         table.insert(allElements, element)
-    --     end
-    --     for _, element in pairs(ER) do
-    --         table.insert(allElements, element)
-    --     end
-
-    --     for _, element in pairs(allElements) do
-    --         element.OnHoverEnter = function(e)
-    --             local elementType = tostring(e):match('^(%w+)')
-
-    --             if elementType == 'Button' then
-    --                 Imgui.FadeColor(e, 'Button', Style.buttonHovered, Style.button, fadeTime)
-    --             elseif elementType == 'Checkbox' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'SliderScalar' or elementType == 'SliderInt' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --                 Imgui.FadeColor(e, 'FrameBgHovered', Style.frameBgHovered, Style.frameBgHovered, fadeTime)
-    --             elseif elementType == 'InputText' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'ColorEdit' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'Combo' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'TabItem' then
-    --                 Imgui.FadeColor(e, 'TabActive', Style.tabHovered, Style.tabActive, fadeTime)
-    --                 -- Imgui.FadeColor(e, 'TabHovered', Style.tabHovered, Style.tab, fadeTime)
-    --                 Imgui.FadeColor(e, 'Tab', Style.tabHovered, Style.tab, fadeTime)
-    --             elseif elementType == 'CollapsingHeader' then
-    --                 Imgui.FadeColor(e, 'Header', Style.headerHovered, Style.header, fadeTime)
-    --             end
-    --         end
-    --         element.OnHoverLeave = function(e)
-    --             local elementType = tostring(e):match('^(%w+)')
-
-    --             if elementType == 'Button' then
-    --                 Imgui.FadeColor(e, 'Button', Style.buttonHovered, Style.button, fadeTime)
-    --             elseif elementType == 'Checkbox' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'SliderScalar' or elementType == 'SliderInt' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --                 Imgui.FadeColor(e, 'FrameBgHovered', Style.frameBgHovered, Style.frameBgHovered, fadeTime)
-    --             elseif elementType == 'InputText' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'ColorEdit' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'Combo' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'TabItem' then
-    --                 Imgui.FadeColor(e, 'TabActive', Style.tabHovered, Style.tabActive, fadeTime)
-    --                 -- Imgui.FadeColor(e, 'TabHovered', Style.tabHovered, Style.tab, fadeTime)
-    --                 Imgui.FadeColor(e, 'Tab', Style.tabHovered, Style.tab, fadeTime)
-    --             elseif elementType == 'CollapsingHeader' then
-    --                 Imgui.FadeColor(e, 'Header', Style.headerHovered, Style.header, fadeTime)
-    --             end
-    --         end
-    --         -- element.OnClick = function(e)
-    --         --     local elementType = tostring(e):match('^(%w+)')
-
-    --         --     if elementType == 'Button' then
-    --         --         -- Imgui.FadeColor(e, 'Button', Style.buttonHovered, Style.button, fadeTime)
-    --         --         Imgui.FadeColor(e, 'ButtonActive', Style.buttonHovered, Style.buttonActive, fadeTime)
-    --         --         -- Imgui.FadeColor(e, 'ButtonHovered', Style.buttonActive, Style.buttonHovered, fadeTime)
-    --         --     elseif elementType == 'Checkbox' then
-    --         --         Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --         --     elseif elementType == 'SliderScalar' or elementType == 'SliderInt' then
-    --         --         Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --         --         Imgui.FadeColor(e, 'FrameBgHovered', Style.frameBgActive, Style.frameBgHovered, fadeTime)
-    --         --     elseif elementType == 'InputText' then
-    --         --         Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --         --     elseif elementType == 'ColorEdit' then
-    --         --         Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --         --     elseif elementType == 'Combo' then
-    --         --         Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --         --     elseif elementType == 'TabItem' then
-    --         --         Imgui.FadeColor(e, 'TabActive', Style.tabHovered, Style.tabActive, fadeTime)
-    --         --         -- Imgui.FadeColor(e, 'TabHovered', Style.tabHovered, Style.tab, fadeTime)
-    --         --         Imgui.FadeColor(e, 'Tab', Style.tabHovered, Style.tab, fadeTime)
-    --         --     elseif elementType == 'CollapsingHeader' then
-    --         --         Imgui.FadeColor(e, 'Header', Style.headerHovered, Style.header, fadeTime)
-    --         --     end
-    --         -- end
-    --     end
-    -- end
-    -- funnyStuff()
-    buttonSizes()
-
-    StyleV2:RegisterWindow(mw)
-
-    SettingsLoad()
-end
-
-
-
---===============-------------------------------------------------------------------------------------------------------------------------------
------PM TAB------
---===============-------------------------------------------------------------------------------------------------------------------------------
-
 function BetterPMTab(parent)
 
-    local camSepa = parent:AddSeparatorText('Camera settings')
+    local camSepa = parent:AddSeparatorText('Camera controls')
 
-    E.camCollapse = parent:AddCollapsingHeader('Camera')
+    E.camCollapse = parent:AddCollapsingHeader('Parameters')
     E.camCollapse.DefaultOpen = openByDefaultPMCamera
 
 
@@ -481,18 +191,16 @@ function BetterPMTab(parent)
 
 
 
-    E.visTemComob = parent:AddCombo('Character')
+    E.visTemComob = parent:AddCombo('Dummies')
     E.visTemComob.IDContext = 'E.visTemComob123'
     E.visTemComob.SelectedIndex = 0
     E.visTemComob.Options = {'Not in Photo Mode'}
     E.visTemComob.HeightLargest = true
     E.visTemComob.SameLine = false
     E.visTemComob.OnChange = function()
-
         selectedCharacter = E.visTemComob.SelectedIndex + 1
-
-        DPrint('Combo option: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
-        DPrint('Selected character combo: %s', selectedCharacter)
+        -- DPrint('Combo option: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
+        -- DPrint('Selected character combo: %s', selectedCharacter)
         UpdateCharacterInfo(E.visTemComob.SelectedIndex + 1)
     end
     selectedCharacter = E.visTemComob.SelectedIndex + 1
@@ -548,6 +256,8 @@ function BetterPMTab(parent)
     end
 
 
+    E.infoCollapse:AddSeparator()
+
 
 
     E.charPosCollapse = parent:AddCollapsingHeader("Position")
@@ -584,15 +294,15 @@ function BetterPMTab(parent)
     E.posX.OnChange = function(e)
         -- local value = E.posX.Value[1]
 
-        DPrint('Selected character name selectedCharacter: %s', E.visTemComob.Options[selectedCharacter])
-        DPrint('Selected character name Index: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
-        DPrint('Selected character W/E: %s', selectedCharacter)
+        -- DPrint('Selected character name selectedCharacter: %s', E.visTemComob.Options[selectedCharacter])
+        -- DPrint('Selected character name Index: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
+        -- DPrint('Selected character W/E: %s', selectedCharacter)
 
         MoveCharacter("x", e.Value[1], stepMod, selectedCharacter)
 
-        DPrint('Pre SliderValue W/E: %s', e.Value[1])
+        -- DPrint('Pre SliderValue W/E: %s', e.Value[1])
         E.posX.Value = {0, 0, 0, 0}
-        DPrint('Post SliderValue W/E: %s', e.Value[1])
+        -- DPrint('Post SliderValue W/E: %s', e.Value[1])
     end
 
 
@@ -605,15 +315,15 @@ function BetterPMTab(parent)
     E.posY.OnChange = function(e)
         -- local value = E.posY.Value[1]
 
-        DPrint('Selected character name selectedCharacter: %s', E.visTemComob.Options[selectedCharacter])
-        DPrint('Selected character name Index: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
-        DPrint('Selected character D/U: %s', selectedCharacter)
+        -- DPrint('Selected character name selectedCharacter: %s', E.visTemComob.Options[selectedCharacter])
+        -- DPrint('Selected character name Index: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
+        -- DPrint('Selected character D/U: %s', selectedCharacter)
 
 
         MoveCharacter("y", e.Value[1], stepMod, selectedCharacter)
-        DPrint('Pre SliderValue D/U: %s', e.Value[1])
+        -- DPrint('Pre SliderValue D/U: %s', e.Value[1])
         E.posY.Value = { 0, 0, 0, 0 }
-        DPrint('Post SliderValue D/U: %s', e.Value[1])
+        -- DPrint('Post SliderValue D/U: %s', e.Value[1])
 
     end
 
@@ -627,17 +337,21 @@ function BetterPMTab(parent)
     E.posZ.OnChange = function(e)
         -- local value = E.posZ.Value[1]
 
-        DPrint('Selected character name selectedCharacter: %s', E.visTemComob.Options[selectedCharacter])
-        DPrint('Selected character name Index: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
-        DPrint('Selected character S/N: %s', selectedCharacter)
+        -- DPrint('Selected character name selectedCharacter: %s', E.visTemComob.Options[selectedCharacter])
+        -- DPrint('Selected character name Index: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
+        -- DPrint('Selected character S/N: %s', selectedCharacter)
 
 
         MoveCharacter("z", e.Value[1], stepMod, selectedCharacter)
-        DPrint('Pre SliderValue S/N: %s', e.Value[1])
+        -- DPrint('Pre SliderValue S/N: %s', e.Value[1])
         E.posZ.Value = { 0, 0, 0, 0 }
-        DPrint('Post SliderValue S/N: %s', e.Value[1])
+        -- DPrint('Post SliderValue S/N: %s', e.Value[1])
 
     end
+
+
+
+    E.charPosCollapse:AddSeparator()
 
 
 
@@ -713,6 +427,8 @@ function BetterPMTab(parent)
         LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat =  {0.0, 1.0, 0.0, 0.0}
         UpdateCharacterInfo(selectedCharacter)
     end
+
+    E.charRotCollapse:AddSeparator()
 
 
 
@@ -804,6 +520,8 @@ function BetterPMTab(parent)
     end
 
 
+    E.charScaleCollapse:AddSeparator()
+
 
 
     E.collapseParts = parent:AddCollapsingHeader('Other body parts')
@@ -872,6 +590,10 @@ function BetterPMTab(parent)
 
 
 
+    E.tailPosCollapse:AddSeparator()
+
+
+
     E.tailRotCollapse = E.treeTail:AddTree("Rotation")
     E.tailRotCollapse.IDContext = 'asdasdasdasdasds'
     E.tailRotCollapse.DefaultOpen = false
@@ -930,6 +652,7 @@ function BetterPMTab(parent)
         end
     end
 
+    E.tailRotCollapse:AddSeparator()
 
 
     E.treeHorns = E.collapseParts:AddTree('Horns')
@@ -996,6 +719,7 @@ function BetterPMTab(parent)
         end
     end
 
+    E.hornsPosCollapse:AddSeparator()
 
 
     E.hornsRotCollapse = E.treeHorns:AddTree("Rotation")
@@ -1056,14 +780,14 @@ function BetterPMTab(parent)
         end
     end
 
+    E.hornsRotCollapse:AddSeparator()
+
+
 
     --LookAt
 
-    parent:AddSeparatorText('Look at')
 
-
-
-    E.collapseLookAt = parent:AddCollapsingHeader("Position")
+    E.collapseLookAt = parent:AddCollapsingHeader('Look at')
     E.collapseLookAt.IDContext = 'wwwswdawdwdwd'
     E.collapseLookAt.DefaultOpen = openByDefaultPMLook
 
@@ -1120,6 +844,10 @@ function BetterPMTab(parent)
     end
 
 
+
+
+
+
     E.btnUpdateCamPos = E.collapseLookAt:AddCheckbox([[Head doesn't follow the camera]])
     E.btnUpdateCamPos.SameLine = false
     E.btnUpdateCamPos.OnChange = function (e)
@@ -1165,11 +893,12 @@ function BetterPMTab(parent)
     end
 
 
-    parent:AddSeparatorText('Save/Load postition')
+
+    E.collapseLookAt:AddSeparator()
 
 
 
-    E.saveLoadCollapse = parent:AddCollapsingHeader('xd')
+    E.saveLoadCollapse = parent:AddCollapsingHeader('Save/Load postition')
     E.saveLoadCollapse.DefaultOpen = openByDefaultPMSave
 
 
@@ -1189,33 +918,8 @@ function BetterPMTab(parent)
     end
 
 
-
-
-end
-
-
-
---===============-------------------------------------------------------------------------------------------------------------------------------
------ANAL2 TAB------
---===============-------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-function DevTab(parent)
-
-
-
-    parent:AddSeparatorText('AnL')
-    E.getTriggersBtn = parent:AddButton('Update triggers')
-    E.getTriggersBtn.OnClick = function ()
-        Channels.GetTriggers:SendToServer({})
-    end
+    E.saveLoadCollapse:AddSeparator()
 
 
 
 end
-
-MCM.InsertModMenuTab('Lighty Lights', MainTab2, ModuleUUID)
-

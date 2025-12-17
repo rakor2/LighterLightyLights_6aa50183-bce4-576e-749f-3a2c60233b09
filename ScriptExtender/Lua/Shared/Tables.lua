@@ -71,6 +71,15 @@ RootTemplates = {
 
 
 
+ModName = {
+    'Lighty Lights',
+    'Lightly Lights',
+    'Love Latinas',
+    'Nighty Nights',
+}
+
+
+
 QOTD = {
     'xQc is the best streamer',
     'Fnesrkljtnesilurng',

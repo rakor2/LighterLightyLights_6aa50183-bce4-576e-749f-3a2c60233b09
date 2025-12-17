@@ -32,7 +32,7 @@ function StyleV2:StyleV2Window()
     modName = Ext.Mod.GetMod(ModuleUUID).Info.Name
     randomID = Ext.Math.Random(1, 100000000) --just in case if there's no modName or whatever
     noInputs = true
-    
+
     self.SettingsWindow = Ext.IMGUI.NewWindow(modName .. " " .. "StyleV2" .. "##" .. randomID)
     self.SettingsWindow.Open = false
     self.SettingsWindow.Closeable = true
@@ -100,7 +100,7 @@ function StyleV2:StyleV2Window()
         {property = "NavWindowingDimBg", label = "Nav Windowing Dim Bg", default = {0.80, 0.80, 0.80, 0.20}},
         {property = "ModalWindowDimBg", label = "Modal Window Dim Bg", default = {0.80, 0.80, 0.80, 0.35}},
     }
-    
+
     local sliderConfiguration = {
 
         {property = "ItemSpacing", label = "Item Spacing"},
@@ -141,7 +141,7 @@ function StyleV2:StyleV2Window()
 
 
     }
-    
+
 
     function StyleV2:CreateSlider(sliderConfiguration)
         for _, parameters in ipairs (sliderConfiguration) do
@@ -149,7 +149,7 @@ function StyleV2:StyleV2Window()
             if parameters.sepa == 1 then
                 separator = styleParent:AddSeparator("")
             else
-                
+
             end
 
             if parameters.max == nil then
@@ -171,7 +171,7 @@ function StyleV2:StyleV2Window()
                 slider.OnChange = function (slider)
                     local value1 = slider.Value[1]
                     local value2 = slider.Value[2]
- 
+
                     for _, window in ipairs(self.Windows) do
                         window:SetStyle(parameters.property, value1, value2)
 
@@ -180,7 +180,7 @@ function StyleV2:StyleV2Window()
             end
         end
     end
-    
+
     -- Ext.IMGUI.EnableDemo(true)
 
     StyleV2:CreateSlider(sliderConfiguration)
@@ -202,14 +202,14 @@ function StyleV2:StyleV2Window()
 
 
 
-        
+
     -- function StyleV2:ColorEdit(colorEdit)
     --     for _, window in ipairs(self.Windows) do
     --         window:SetColor("Text", colorEdit.Color)
     --     end
     -- end
 
-    
+
     -- function StyleV2:CreateColorEdit(colorEdit, parent, label, idcontext, color, components, fn)
     --     colorEdit = parent:AddColorEdit(label)
     --     colorEdit.Components = components
