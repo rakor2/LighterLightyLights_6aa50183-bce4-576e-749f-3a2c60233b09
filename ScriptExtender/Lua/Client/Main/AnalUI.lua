@@ -81,9 +81,16 @@ function Anal2Tab(p)
 
 
 
+    E.resetLtnBtn = p:AddButton('Reset')
+    E.resetLtnBtn.IDContext = 'awdpoiqawndoiwna'
+    E.resetLtnBtn.OnClick = function ()
+        Channels.ResetANL:SendToServer('Lighting')
+    end
+
+
+
     E.colFav = p:AddCollapsingHeader('Favorites')
     E.colFav.IDContext = 'iaeuhkbnkwbriyuwg34iy'
-
 
 
     winLtnFav = E.colFav:AddChildWindow('')
@@ -176,6 +183,14 @@ function Anal2Tab(p)
 
 
 
+    E.resetAtmBtn = p:AddButton('Reset')
+    E.resetAtmBtn.IDContext = 'awpokdnawo;ikn'
+    E.resetAtmBtn.OnClick = function ()
+        Channels.ResetANL:SendToServer('Atmosphere')
+    end
+
+
+
     E.colFavAtm = p:AddCollapsingHeader('Favorites')
     E.colFavAtm.IDContext = 'iae1231231235156646hgdtm'
 
@@ -195,22 +210,7 @@ function Anal2Tab(p)
 
 
 
-    local aepasdaw = p:AddSeparatorText('Reset')
-
-
-
-    E.resetLtnBtn = p:AddButton('Lighting')
-    E.resetLtnBtn.OnClick = function ()
-        Channels.ResetANL:SendToServer('Lighting')
-    end
-
-
-
-    E.resetAtmBtn = p:AddButton('Atmosphere')
-    E.resetAtmBtn.SameLine = true
-    E.resetAtmBtn.OnClick = function ()
-        Channels.ResetANL:SendToServer('Atmosphere')
-    end
+    -- local aepasdaw = p:AddSeparatorText('Reset')
 
 
 
@@ -231,9 +231,6 @@ function Anal2Tab(p)
         ResetLTN(false)
         ApplyParameters()
     end
-
-
-
     E.btnResetCLTN.OnRightClick = function ()
         ResetLTN(true)
         ApplyParameters()
@@ -247,9 +244,6 @@ function Anal2Tab(p)
         ResetATM(false)
         ApplyParameters()
     end
-
-
-
     E.btnResetCATM.OnRightClick = function ()
         ResetATM(true)
         ApplyParameters()
