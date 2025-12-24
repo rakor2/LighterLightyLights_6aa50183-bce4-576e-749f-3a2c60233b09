@@ -73,6 +73,13 @@ RootTemplates = {
 
 ModName = {
     'Lighty Lights',
+    'Lighty Lights',
+    'Lighty Lights',
+    'Lighty Lights',
+    'Lighty Lights',
+    'Lighty Lights',
+    'Lighty Lights',
+    'Lighty Lights',
     'Lightly Lights',
     'Love Latinas',
     'Nighty Nights',
@@ -136,7 +143,8 @@ QOTD = {
     'uwu',
     'meow',
     'Dont be afraid of ligtning',
-    'Lightly Lights'
+    'Lightly Lights',
+    'All I need is your smile'
 }
 
 
