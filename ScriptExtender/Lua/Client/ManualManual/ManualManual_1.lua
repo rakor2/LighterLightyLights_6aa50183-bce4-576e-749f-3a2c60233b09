@@ -39,6 +39,7 @@ Previous light - Alt + Q.]] },
             { type = "Heading", text = [[Parameters]]},
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Type", 				text = [[Selects the light type to create: point, spotlight, directional.]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Color", 				text = [[Light's color.]] },
+			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Saved colors", 		text = [[You can drag and drop a color from the picker onto one of the icons to save it.]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Power", 				text = [[Light's intensity.]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Distance", 			text = [[How far light emits light.]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Light channel",	 	text = [[Lets you choose whether the light affects the world, characters, or both.]] },
@@ -104,7 +105,7 @@ These presets affect sun and moon position, atmosphere color, fog parameters, an
 
 1. Select any preset as a base.
 2. Modify the parameters and apply them.
-It is recommended to assign a keybind for applying parameters for faster workflow.
+It is recommended to assign a keybind for applying parameters for a faster workflow.
 ]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Reset parameters ", text = [[Left click resets parameters for the currently selected preset.
 Right click resets parameters for all presets.]] },
@@ -201,7 +202,7 @@ Open by default means that a tree will be opened by default when you open LL win
 		SubTopic = "XD",
 		content = {
 			{ type = "Heading", text = [[XD]] },
-			{ type = "Content", size = CONTENT_SIZE, 				text = [[For general tips, head down to the CMTY Screenarchery / Virtual Photography wiki page :).]] },
+			{ type = "Content", size = CONTENT_SIZE, 				text = [[For general tips head down to the CMTY Screenarchery / Virtual Photography wiki page :).]] },
 			{ type = "InputText", widget_id = "123", width = 500, 	default = "wiki.bg3.community/en/Screenarchery/Screenarchery-ref" },
 		},
 	},
