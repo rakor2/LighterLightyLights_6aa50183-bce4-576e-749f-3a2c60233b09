@@ -821,4 +821,10 @@ function Anal2Tab(p)
         end
     end
 
+
+    local txtReminder = p:AddBulletText([[Don't forget that you can click on the sliders while holding ctrl
+to enter a specific number]])
+    txtReminder:SetColor('Text', {1,1,1,1})
+
+
 end
