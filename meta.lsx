@@ -13,7 +13,7 @@
                             <attribute id="Name" type="LSString" value="Mod Configuration Menu"/>
                             <attribute id="PublishHandle" type="uint64" value="0"/>
                             <attribute id="UUID" type="guid" value="755a8a72-407f-4f0d-9a33-274ac0f0b53d"/>
-                            <attribute id="Version64" type="int64" value="41376821576466432"/>
+                            <attribute id="Version64" type="int64" value="41376825871433728"/>
                         </node>
                     </children>
                 </node>
@@ -24,7 +24,7 @@
                     <attribute id="FileSize" type="uint64" value="9387912"/>
                     <attribute id="Folder" type="LSString" value="LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09"/>
                     <attribute id="LobbyLevelName" type="FixedString" value=""/>
-                    <attribute id="MD5" type="LSString" value="9d5acef19cbb74278cee5b6d7679bbbe"/>
+                    <attribute id="MD5" type="LSString" value="5cfa7af8205e6454d158cdb20dc327c0"/>
                     <attribute id="MenuLevelName" type="FixedString" value=""/>
                     <attribute id="Name" type="LSString" value="LighterLightyLights"/>
                     <attribute id="NumPlayers" type="uint8" value="4"/>
@@ -32,7 +32,7 @@
                     <attribute id="PublishHandle" type="uint64" value="0"/>
                     <attribute id="StartupLevelName" type="FixedString" value=""/>
                     <attribute id="UUID" type="FixedString" value="6aa50183-bce4-576e-749f-3a2c60233b09"/>
-                    <attribute id="Version64" type="int64" value="36591766299738118"/>
+                    <attribute id="Version64" type="int64" value="36732484460740609"/>
                     <children>
                         <node id="PublishVersion">
                             <attribute id="Version64" type="int64" value="144255927717549775"/>
