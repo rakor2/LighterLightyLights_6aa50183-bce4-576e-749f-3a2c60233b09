@@ -25,7 +25,7 @@ LLGlobals.States.allMarkersExisting = false
 LLGlobals.States.beamExisting = false
 LLGlobals.States.lastMode = {}
 
-LLGlobals.CreatedAllMakers = {}
+LLGlobals.CreatedAllMarkers = {}
 
 
 -- INITIAL_LIGHT_TEMPLATE_0_POINT = 'd92ed2ec-a332-4a28-ae3d-99f79ee0fa92'
@@ -210,6 +210,7 @@ function CreateMarker(single)
     local rOffset = 90
 
     if single then
+
         local x,y,z = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate)
         local rx,ry,rz = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation)
 
@@ -225,6 +226,7 @@ function CreateMarker(single)
         LLGlobals.States.allMarkersExisting = not LLGlobals.States.allMarkersExisting
 
         if LLGlobals.States.allMarkersExisting then
+
             for k,v in pairs(LLGlobals.CreatedLightsServer) do
 
                 local x,y,z = table.unpack(LLGlobals.LightParametersServer[v].Translate)
@@ -234,13 +236,14 @@ function CreateMarker(single)
 
                 local markerUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
                 Osi.ToTransform(markerUuid, x, y, z, rx - rOffset, ry, rz)
-                table.insert(LLGlobals.CreatedAllMakers, markerUuid)
+                table.insert(LLGlobals.CreatedAllMarkers, markerUuid)
             end
         else
-            for _, markerUuid in pairs(LLGlobals.CreatedAllMakers) do
+            for _, markerUuid in pairs(LLGlobals.CreatedAllMarkers) do
                 Osi.RequestDelete(markerUuid)
             end
-            LLGlobals.CreatedAllMakers = {}
+
+            LLGlobals.CreatedAllMarkers = {}
         end
 
     end
@@ -277,14 +280,7 @@ end
 
 
 Channels.MarkerHandler:SetRequestHandler(function (Data)
-    -- if Data.single then
-    --     CreateMarker()
-    -- else
-
-        CreateMarker(false)
-
-    -- end
-    -- local Reseponse = 0
+    CreateMarker(false)
     return Reseponse
 end)
 
@@ -308,7 +304,7 @@ Channels.DeleteLight:SetHandler(function (request)
         end
 
 
-        for _, markerUuid in pairs(LLGlobals.CreatedAllMakers) do
+        for _, markerUuid in pairs(LLGlobals.CreatedAllMarkers) do
             Osi.RequestDelete(markerUuid)
         end
 
@@ -322,7 +318,7 @@ Channels.DeleteLight:SetHandler(function (request)
         LLGlobals.selectedUuid = nil
 
 
-        LLGlobals.CreatedAllMakers = {}
+        LLGlobals.CreatedAllMarkers = {}
         LLGlobals.States.allMarkersExisting = false
 
         LLGlobals.GoboLightMap = {}
@@ -332,7 +328,6 @@ Channels.DeleteLight:SetHandler(function (request)
 
         LLGlobals.beamUuid = nil
         LLGlobals.States.beamExisting = false
-
 
 
 
@@ -362,12 +357,11 @@ Channels.DeleteLight:SetHandler(function (request)
 
             if LLGlobals.GoboDistances then LLGlobals.GoboDistances[lightUuidFromClientJustToMakeSureBecauseIHadProblemsForSomeReasonImProbablyDumb] = nil end
 
-
-
             changeRootTemplateState(rootId)
         end
 
         --TBD: find a better solution later, because I'm sleepy af rn
+        --now I'm too lazy
         local count = 0
         for _ in pairs(LLGlobals.CreatedLightsServer) do
             count = count + 1
@@ -406,7 +400,7 @@ Ext.RegisterConsoleCommand('lldumpall', function (cmd, ...)
     DPrint('LightParametersServer ---------------------------------')
     DDump(LLGlobals.selectedUuid)
     DPrint('allMarkersExisting ------------------------------------')
-    DDump(LLGlobals.CreatedAllMakers)
+    DDump(LLGlobals.CreatedAllMarkers)
     DPrint('States.allMarkersExisting -----------------------------')
     DDump(LLGlobals.States.allMarkersExisting)
     DPrint('States.GoboLightMap -----------------------------------')
