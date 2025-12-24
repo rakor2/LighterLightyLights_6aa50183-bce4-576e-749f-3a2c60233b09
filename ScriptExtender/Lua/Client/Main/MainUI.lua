@@ -1,5 +1,4 @@
 --[[
-PREC DIS POWE
 ADD RECENT COLORS
 ]]
 
@@ -866,7 +865,7 @@ end
 
     if biggerPicker then
         E.pickerLightColor = E.treeGen:AddColorPicker('')
-        textPicker = E.treeGen:AddText('xd')
+        textPicker = E.treeGen:AddText('Icon')
         textPicker.SameLine = true
     else
         E.pickerLightColor = E.treeGen:AddColorEdit('')
@@ -874,8 +873,53 @@ end
         textPicker.SameLine = true
     end
 
+    E.pickerRecentColor1 = E.treeGen:AddColorEdit('')
+    UI:Config(E.pickerRecentColor1, {
+        NoAlpha = true,
+        Float = false,
+        InputRGB = true,
+        DisplayHex = true,
+        NoInputs = true
+    })
+    E.pickerRecentColor2 = E.treeGen:AddColorEdit('')
+    E.pickerRecentColor3 = E.treeGen:AddColorEdit('')
+    E.pickerRecentColor4 = E.treeGen:AddColorEdit('')
+    E.pickerRecentColor5 = E.treeGen:AddColorEdit('')
+    E.pickerRecentColor6 = E.treeGen:AddColorEdit('')
+    E.pickerRecentColor7 = E.treeGen:AddColorEdit('')
+    E.pickerRecentColor8 = E.treeGen:AddColorEdit('')
+    E.pickerRecentColor9 = E.treeGen:AddColorEdit('')
+    E.pickerRecentColor10 = E.treeGen:AddColorEdit('')
+    E.pickerRecentColor11 = E.treeGen:AddColorEdit('')
+    E.pickerRecentColor12 = E.treeGen:AddColorEdit('')
+
+    for _, picker in pairs({
+        E.pickerRecentColor2,
+        E.pickerRecentColor3,
+        E.pickerRecentColor4,
+        E.pickerRecentColor5,
+        E.pickerRecentColor6,
+        E.pickerRecentColor7,
+        E.pickerRecentColor8,
+        E.pickerRecentColor9,
+        E.pickerRecentColor10,
+        E.pickerRecentColor11,
+        E.pickerRecentColor12,
+    })
+    do
+        UI:Config(picker, {
+            SameLine = true,
+            NoAlpha = true,
+            Float = false,
+            InputRGB = true,
+            DisplayHex = true,
+            NoInputs = true
+        })
+    end
 
 
+    E.txtSaveColor = E.treeGen:AddText('Saved colors')
+    E.txtSaveColor.SameLine = true
 
     E.pickerLightColor.IDContext = 'aowidnawoidn'
     E.pickerLightColor.NoAlpha = true
