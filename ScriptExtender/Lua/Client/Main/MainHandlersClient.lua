@@ -535,12 +535,14 @@ LLGlobals.States.markerToggled = false
 function ToggleMarker(uuid)
     local newScaleX
     local entity = Ext.Entity.Get(uuid)
+
     if entity and entity.Visual then
         local scaleX = entity.Visual.Visual.WorldTransform.Scale[1]
         newScaleX = scaleX == 0 and markerScale or 0
         entity.Visual.Visual:SetWorldScale({newScaleX,newScaleX,newScaleX})
         LLGlobals.States.markerToggled = not LLGlobals.States.markerToggled
     end
+
 end
 
 
@@ -1028,6 +1030,9 @@ MCM.SetKeybindingCallback('ll_move_to_cursor', function()
     if LLGlobals.DummyNameMap then
         local index = E.visTemComob.SelectedIndex + 1
         local entity = LLGlobals.DummyNameMap[E.visTemComob.Options[index]]
+
+        if not entity then return end
+
         local mousePos = Utils:GetMouseover().Inner.Position
         entity.Visual.Visual.WorldTransform.Translate = mousePos
         entity.DummyOriginalTransform.Transform.Translate = mousePos
