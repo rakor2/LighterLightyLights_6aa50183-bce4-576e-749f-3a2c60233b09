@@ -1,4 +1,4 @@
-Starter_Doc_Config = Starter_Doc_Config or {}
+ManualManual_Config = ManualManual_Config or {}
 function initMazzleColors()
     theme_override = {
         background             = Style.Colors.windowBg,
@@ -60,11 +60,11 @@ function initMazzleColors()
         progress_bar           = Style.Colors.resizeGripActive,
         progress_bar_bg        = Style.Colors.frameBg
     }
-    Starter_Doc_Config.theme_override = theme_override
+    ManualManual_Config.theme_override = theme_override
     return theme_override
 end
 
-Starter_Doc_Config = {
+ManualManual_Config = {
     mod_name = 'LL2',
     documentation_name = 'Lighty Lights Elucidator',
     window_title = 'Lighty Lights Elucidator',

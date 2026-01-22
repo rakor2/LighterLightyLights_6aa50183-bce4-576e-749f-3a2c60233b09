@@ -2,8 +2,8 @@ local CONTENT_SIZE = 'Large'
 local CALLOUT_SIZE = 'Large'
 local INDENT = 250
 
-Starter_Doc_Contents = {}
-Starter_Doc_Contents[1] =
+ManualManual_Contents = {}
+ManualManual_Contents[1] =
 {
     {
         Topic = "The tabs",
