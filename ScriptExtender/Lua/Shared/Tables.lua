@@ -1,10 +1,6 @@
-
 ---@class SomeGlobalBullshit
 LLGlobals = LLGlobals or {}
-
-
 Styles = {}
-
 
 RootTemplates = {
     ['b8305734-4f4a-4699-a0b5-91a735a5783a'] = true,
@@ -159,7 +155,6 @@ IGNORE_PARAMS = {
     "ColorAdjustedForIntensity",
     "ColorTemperatureAdjustment",
 
-
     "Atmosphere",
     "GUID",
     "InheritanceFlags",
@@ -230,7 +225,6 @@ IGNORE_PARAMS = {
 
 
 LTN_ORDER = {
-
     "TexResourceGUID",
 
     "Fog",
@@ -271,7 +265,6 @@ LTN_ORDER = {
 
     "SunRayLength",
 
-
     "FogLayer0",
     "FogLayer1",
 
@@ -311,7 +304,6 @@ LTN_ORDER = {
     "StartHeight",
     "EndHeight",
     "HorizonDistance",
-
 
     "SkydomeEnabled",
     "SkydomeTex",
@@ -362,7 +354,6 @@ LTN_ORDER = {
 
 
 ATM_ORDER = {
-
     "NearPlane",
     "FarPlane",
 
@@ -411,7 +402,6 @@ ATM_ORDER = {
 
 
 CONFIG = {
-
     ["Fog.Phase"] = {min = -100, max = 100},
     ["Fog.RenderDistance"] = {min = 100.00, max = 10000.00},
     ["Fog.FogLayer0.Density0"] = {min = 0, max = 100, log = true},
@@ -469,7 +459,6 @@ CONFIG = {
     ["Moon.TearsScale"] = {min = 0, max = 10.000},
     ["Moon.TearsRotate"] = {min = -180, max = 180},
 
-
     ["SSAOSettings.Bias"] = {min = 0, max = 2},
     ["SSAOSettings.Intensity"] = {min = 0, max = 10},
     ["SSAOSettings.Radius"] = {min = 0, max = 10},
@@ -491,7 +480,6 @@ CONFIG = {
     ["VolumetricCloudSettings.SunLightFactor"] = {min = 0, max = 1},
     ["VolumetricCloudSettings.SunRayLength"] = {min = 0, max = 100},
 
-
     ["PostProcess.Camera.LensFlareChromaticDistortion"] = {min = 0, max = 5},
     ["PostProcess.Camera.LensFlareGhostDispersal"] = {min = 0, max = 1},
     ["PostProcess.Camera.LensFlareHaloWidth"] = {min = 0, max = 1},
@@ -501,6 +489,4 @@ CONFIG = {
     ["PostProcess.Camera.GodRaysPower"] = {min = 0, max = 50},
     ["PostProcess.Camera.GodRaysRayIntensity"] = {min = 0, max = 10},
     ["PostProcess.Camera.GodRaysThreshold"] = {min = 0, max = 10},
-
-
 }

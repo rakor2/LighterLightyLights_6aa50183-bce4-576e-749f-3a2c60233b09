@@ -7,5 +7,3 @@ Ext.Require("Shared/LTN_Triggers.lua")
 Ext.Require("Shared/ATM_Templates.lua")
 Ext.Require("Shared/LTN_Templates.lua")
 Ext.Require("Shared/CommunityLibrary/_InitDefaults.lua")
-
-

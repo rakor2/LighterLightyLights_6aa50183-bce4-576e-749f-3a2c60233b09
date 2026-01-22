@@ -1,11 +1,9 @@
 Ext.Require('_Libs/_InitLibs.lua')
 Ext.Require('Shared/_init.lua')
 
-ZipBomb = ZipBomb or {}
-
-currentCacheVersion = '1.7.Bober'
-
 Settings = {}
+ZipBomb = ZipBomb or {}
+currentCacheVersion = '1.7.Bober'
 
 
 --- TBD:unhardcode
@@ -40,19 +38,12 @@ function SettingsSave()
         openByDefaultMainRot = bool(openByDefaultMainRot, false),
 
         defaultLightType = defaultLightType or 'Point',
-
         biggerPicker = bool(biggerPicker, false),
-
         markerScale = markerScale or 0.699999988079071,
-
         fadeTime = fadeTime or 0,
-
         defaultCameraSpeed = defaultCameraSpeed or 6,
-
         lightSetupState = bool(lightSetupState, true),
-
         markerOff = bool(markerOff, false),
-
         stickToggleOff = bool(stickToggleOff, false),
 
     }
@@ -115,6 +106,7 @@ else
 end
 
 
+
 Ext.Require('Client/_init.lua')
 
 
@@ -125,7 +117,6 @@ function CacheLightingValues()
     for name, uuid in pairs(ltn_templates2) do
         local Lighting = Resource:GetResource(uuid, 'Lighting')
         if Lighting then
-
             local values = {}
 
             local function copyValues(source, target)
@@ -140,7 +131,6 @@ function CacheLightingValues()
             end
 
             copyValues(Lighting, values)
-
             CachedLighting[uuid] = {
                 {Name = name},
                 values
@@ -161,9 +151,7 @@ function CacheAtmosphereValues()
     for name, uuid in pairs(atm_templates2) do
         local Atmosphere = Resource:GetResource(uuid, 'Atmosphere')
         if Atmosphere then
-
             local values = {}
-
             local function copyValues(source, target)
                 for k, v in pairs(source) do
                     if type(v) == 'table' or type(v) == 'userdata' then
@@ -203,22 +191,16 @@ end
 
 
 function SaveCacheToFile()
-
     if Ext.IO.LoadFile('LightyLights/CachedAtmosphere.json') then DPrint('Loading cached parameters') LoadCacheFromFile() return end
 
     local CachedLighting = CacheLightingValues()
     local CachedAtmosphere = CacheAtmosphereValues()
-
     CachedLighting.Version = currentCacheVersion
     CachedAtmosphere.Version = currentCacheVersion
-
-
     local jsonLtn = Ext.Json.Stringify(CachedLighting)
     Ext.IO.SaveFile('LightyLights/CachedLighting.json', jsonLtn)
-
     local jsonAtm = Ext.Json.Stringify(CachedAtmosphere)
     Ext.IO.SaveFile('LightyLights/CachedAtmosphere.json', jsonAtm)
-
 end
 
 SaveCacheToFile()
@@ -226,3 +208,35 @@ SaveCacheToFile()
 print('')
 DPrint([[files location: AppData\\Local\\Larian Studios\\Baldur's Gate 3\\Script Extender\\LightyLights]])
 print('')
+
+
+
+local lastTimePressed = 0
+Ext.Events.KeyInput:Subscribe(function(e)
+    if e.Event == "KeyDown" then
+        if e.Key == "NUM_1" then
+            local currentTime = Ext.Timer.MonotonicTime()
+            local diff = currentTime - lastTimePressed
+
+            if diff < 500 then
+                Ext.Debug.Reset(false, true)
+                lastTimePressed = 0
+            else
+                lastTimePressed = currentTime
+            end
+        end
+
+        if e.Key == "NUM_2" then
+            local currentTime = Ext.Timer.MonotonicTime()
+            local diff = currentTime - lastTimePressed
+
+            if diff < 500 then
+                Ext.Debug.Reset(true, false)
+                lastTimePressed = 0
+            else
+                lastTimePressed = currentTime
+            end
+        end
+
+    end
+end)

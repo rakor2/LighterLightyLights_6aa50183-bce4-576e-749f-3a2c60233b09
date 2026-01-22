@@ -1,16 +1,5 @@
-local xd
-
 function Gobo2Tab(p)
-
-
-
-    ---------------------------------------------------------
-    p:AddSeparatorText('adawd')
-    ---------------------------------------------------------
-
-
     local GoboNames = {}
-
     local GoboUuidNameMap = {
         ['a0d2ac1c-efb5-4f64-9f7d-b01db470e091'] = 'Tree',
         ['c1c8b026-e3c8-4975-bb4f-6b29450c2d18'] = 'Figures',
@@ -28,8 +17,7 @@ function Gobo2Tab(p)
         ['7608ddb7-6fac-453d-b972-c002ff694ccc'] = 'Shape flower',
     }
 
-
-
+    p:AddSeparatorText('adawd')
 
     for uuid, name in pairs(GoboUuidNameMap) do
         table.insert(GoboNames, name)
@@ -45,6 +33,7 @@ function Gobo2Tab(p)
     end
 
 
+
     E.comboIHateCombos2 = p:AddCombo('')
     E.comboIHateCombos2.Options = LLGlobals.LightsNames
     E.comboIHateCombos2.SelectedIndex = LLGlobals.syncedSelectedIndex
@@ -56,6 +45,7 @@ function Gobo2Tab(p)
         E.comboIHateCombos.SelectedIndex = LLGlobals.syncedSelectedIndex
         SelectLight()
     end
+
 
 
     E.txtCreateLight2 = p:AddText('Created lights')
@@ -130,12 +120,10 @@ function Gobo2Tab(p)
     E.goboDistanceSlider.IDContext = 'E.goboDistanceSlider'
     E.goboDistanceSlider.OnChange = function(e)
         if not LLGlobals.selectedUuid then return end
-
         local Data = {
             step = 1,
             offset = e.Value[1],
         }
-
         Channels.GoboTranslate:SendToServer(Data)
     end
 
@@ -144,14 +132,10 @@ function Gobo2Tab(p)
     E.createGoboButton = p:AddButton('Create gobo')
     E.createGoboButton.IDContext = 'E.createGoboButton'
     E.createGoboButton.OnClick = function()
-
         if not LLGlobals.selectedUuid then return end
-
-
         local Data = {
             goboGuid = LLGlobals.selectedGobo
         }
-
         Channels.CreateGobo:RequestToServer(Data, function (Response)
             LLGlobals.selectedGoboUuid = Response
         end)
@@ -199,8 +183,6 @@ function Gobo2Tab(p)
     E.btnHideGobo.OnClick = function()
         HideGobo()
     end
-
-
 end
 
 

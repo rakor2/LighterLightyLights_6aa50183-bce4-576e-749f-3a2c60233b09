@@ -1,19 +1,11 @@
 function Anal2Tab(p)
-
-
     local CHILD_WIN_SIZE = {554, 200}
     local winLtnFav
     local winAtmFav
-
-
+    LLGlobals.FilteredLTNOptions = LLGlobals.LtnComboOptions
+    LLGlobals.FilteredATMOptions = LLGlobals.AtmComboOptions
 
     p:AddSeparatorText('Lighting')
-
-
-
-    LLGlobals.FilteredLTNOptions = LLGlobals.LtnComboOptions
-
-
 
     E.inpSearchLighting = p:AddInputText('')
     E.inpSearchLighting.IDContext = 'o9irtqjwno9485839c'
@@ -92,7 +84,6 @@ function Anal2Tab(p)
     E.colFav = p:AddCollapsingHeader('Favorites')
     E.colFav.IDContext = 'iaeuhkbnkwbriyuwg34iy'
 
-
     winLtnFav = E.colFav:AddChildWindow('')
     winLtnFav.Size = CHILD_WIN_SIZE
 
@@ -113,7 +104,6 @@ function Anal2Tab(p)
 
 
 
-    LLGlobals.FilteredATMOptions = LLGlobals.AtmComboOptions
 
 
 
@@ -210,12 +200,7 @@ function Anal2Tab(p)
 
 
 
-    -- local aepasdaw = p:AddSeparatorText('Reset')
-
-
-
     p:AddSeparatorText('Parameters')
-
 
 
     E.btnApplyParam = p:AddButton('Apply')
@@ -305,9 +290,7 @@ function Anal2Tab(p)
         local presetName = E.inputPresetNameLighting.Text
         if presetName == '' then
             DWarn('Enter a valid preset name')
-
             Imgui.BorderPulse(e, 1)
-
             return
         end
 
@@ -382,7 +365,6 @@ function Anal2Tab(p)
     E.colPresetsAtmosphere.IDContext = 'adwwdawdawd'
 
 
-
     winAtmospherePresets = E.colPresetsAtmosphere:AddChildWindow('')
     winAtmospherePresets.Size = CHILD_WIN_SIZE
 
@@ -398,8 +380,6 @@ function Anal2Tab(p)
     end
 
 
-
-
     p:AddSeparator()
 
 
@@ -408,22 +388,16 @@ function Anal2Tab(p)
     E.collapseParamsLTN.IDContext = 'awdaowikdn'
 
 
-
     E.collapseParamsATM = p:AddCollapsingHeader('Atmosphere')
     E.collapseParamsATM.IDContext = 'awdaowikdn'
 
 
     --slop
     function CreateUI(uuid, resource, mainParent, order)
-
         Imgui.ClearChildren(mainParent)
-
         local treeParameterName
         local treeSubParameterName
-
         local PARAMETER_ORDER = order
-
-
 
         local function isIgnored(key)
             for _, ignoreKey in ipairs(IGNORE_PARAMS) do
@@ -433,8 +407,6 @@ function Anal2Tab(p)
             end
             return false
         end
-
-
 
         local function getSortedKeys(tbl)
             local keys = {}
@@ -464,8 +436,6 @@ function Anal2Tab(p)
             return keys
         end
 
-
-
         local function isColorParam(key)
             local excludeKeys = {
                 "BlendedColorCorrection",
@@ -493,8 +463,6 @@ function Anal2Tab(p)
             return false
         end
 
-
-
         local function isVectorParam(key)
             local vectorKeys = {
                 "NoiseFrequency", "NoiseRotation", "NoiseWind",
@@ -507,8 +475,6 @@ function Anal2Tab(p)
             end
             return false
         end
-
-
 
         local function isStringParam(key)
             local stringKeys = {
@@ -525,8 +491,6 @@ function Anal2Tab(p)
             return false
         end
 
-
-
         local function isBooleanParam(key)
             local booleanKeys = {
                 "Enabled", "CastLightEnabled", "UseTemperature",
@@ -542,8 +506,6 @@ function Anal2Tab(p)
             return false
         end
 
-
-
         local function isIntParam(key)
             local intKeys = {
                 "ShadowObscurity", "SunlightObscurity", "CascadeCount", "PhysicalModel",
@@ -555,8 +517,6 @@ function Anal2Tab(p)
             end
             return false
         end
-
-
 
         local function trev(tbl, tbl2, depth, parent, path)
             tbl2 = tbl2 or {}
@@ -717,9 +677,7 @@ function Anal2Tab(p)
             end
             return tbl2
         end
-
         trev(Resource:GetResource(uuid, resource), {}, 1, mainParent, {})
-
     end
 
 
@@ -765,7 +723,6 @@ function Anal2Tab(p)
                 comboLightingFunc()
                 comboAtmosphereFunc()
             end
-
         end)
     end
 

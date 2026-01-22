@@ -1,16 +1,11 @@
 ---@diagnostic disable: param-type-mismatch
-
-
 local dummyCounter = 0
 
 Ext.Entity.OnCreate('PhotoModeSession', function ()
     Helpers.Timer:OnTicks(30, function ()
-
-        LLGlobals.States.inPhotoMode = true
-
-        dummyCounter = 0
-
         LLGlobals.DummyNameMap = {}
+        LLGlobals.States.inPhotoMode = true
+        dummyCounter = 0
 
         local dummies = Ext.Entity.GetAllEntitiesWithComponent('Dummy')
         for _, dummy in pairs(dummies) do
@@ -18,12 +13,8 @@ Ext.Entity.OnCreate('PhotoModeSession', function ()
             LLGlobals.DummyNameMap[Dummy:Name(dummy) .. '##' .. dummyCounter] = dummy
         end
 
-
-
         LLGlobals.DummyNames = Utils:MapToArray(LLGlobals.DummyNameMap)
         E.visTemComob.Options = LLGlobals.DummyNames
-
-
 
         Utils:SubUnsubToTick('sub', 'LLDOF', function ()
             pcall(function()
@@ -35,19 +26,13 @@ Ext.Entity.OnCreate('PhotoModeSession', function ()
 
         CharacterLightSetupState(E.checkLightSetupState.Checked)
         UpdateCharacterInfo(E.visTemComob.SelectedIndex + 1)
-
-
-
     end)
 end)
 
 
 
 Ext.Entity.OnDestroy('PhotoModeSession', function ()
-
     LLGlobals.States.inPhotoMode = false
-
-    --DPrint('PhotoModeSession OnDestroy')
     LLGlobals.DummyNameMap = nil
     LLGlobals.DummyNames = nil
     E.visTemComob.Options = {'Not in Photo Mode'}
@@ -58,15 +43,11 @@ Ext.Entity.OnDestroy('PhotoModeSession', function ()
         Utils:SubUnsubToTick('unsub', 'SourcePhotoMode',_)
     end
 
-
     if Utils.subID and Utils.subID['LLDOF'] then
         Utils:SubUnsubToTick('unsub', 'LLDOF',_)
     end
 
-
     StopFollowIGCS()
-
-
     UpdateCharacterInfo(nil)
 end)
 

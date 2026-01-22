@@ -1,20 +1,14 @@
 --[[
-ADD RECENT COLORS
+Light Setup on level change
 ]]
-
-
-
 LLGlobals.CreatedLightsClient = {} --UNUSED
-
 
 LLGlobals.LightsUuidNameMap = {}
 LLGlobals.LightsNames = {}
 LLGlobals.LightParametersClient = {}
 
-
 LLGlobals.States = LLGlobals.States or {}
 LLGlobals.States.allowLightCreation = {}
-
 
 ---@class Settings
 Settings = Settings or {}
@@ -62,26 +56,19 @@ ER = {
 }
 
 
-
 local OPENQUESTIONMARK = false
 IMGUI:AntiStupiditySystem()
 
 
 
-
-
-
 function LLMCM(mt2)
-    -- if LLMCM ~= nil then return end
     LLMCM = mt2
 
     local rngMax = #ModName
     mw = Ext.IMGUI.NewWindow(ModName[Ext.Math.Random(1, rngMax)])
     mw.Font = 'Font'
     mw.Open = OPENQUESTIONMARK
-
     mw.Closeable = true
-
 
     openButton = mt2:AddButton('Open')
     openButton.IDContext = 'OpenMainWindowButton'
@@ -119,7 +106,6 @@ function LLMCM(mt2)
     end
 
     ApplyStyle(mw, StyleSettings.selectedStyle)
-
     MainWindow(mw)
 end
 
@@ -136,46 +122,34 @@ function MainWindow(mw)
     mw.AlwaysAutoResize = false
     mw.Scaling = 'Scaled'
     mw.Font = 'Font'
-
-
-
     mw.Visible = true
     mw.Closeable = true
 
     mainTabBar = mw:AddTabBar('LL')
 
-
     E.main2 = mainTabBar:AddTabItem('Main')
     MainTab(E.main2)
-
 
     E.anal2Tab = mainTabBar:AddTabItem('AnL')
     Anal2Tab(E.anal2Tab)
 
-
     E.betterPM = mainTabBar:AddTabItem('PM')
     BetterPMTab(E.betterPM)
-
 
     E.origin2PointTab = mainTabBar:AddTabItem('Origin point')
     Origin2PointTab(E.origin2PointTab)
 
-
     E.goboTab = mainTabBar:AddTabItem('Gobo')
     Gobo2Tab(E.goboTab)
-
 
     E.utilsTab = mainTabBar:AddTabItem('Useful')
     Utils2Tab(E.utilsTab)
 
-
     -- saverTab = mainTabBar:AddTabItem('Saver')
     -- Saver2Tab(saverTab)
 
-
     E.settingsTab = mainTabBar:AddTabItem('Settings')
     Settings2Tab(E.settingsTab)
-
 
     function buttonSizes()
         for _, element in pairs(ER) do
@@ -275,18 +249,15 @@ function MainWindow(mw)
 --#endregion
 
     buttonSizes()
-
     StyleV2:RegisterWindow(mw)
-
     SettingsLoad()
 end
 
 
-
+--- TBD: MAYBE PAIRS
 MCM.SetKeybindingCallback('ll_toggle_window', function()
     mw.Open = not mw.Open
 end)
-
 
 
 MCM.SetKeybindingCallback('ll_toggle_light', function()
@@ -294,17 +265,14 @@ MCM.SetKeybindingCallback('ll_toggle_light', function()
 end)
 
 
-
 MCM.SetKeybindingCallback('ll_toggle_all_lights', function()
     toggleAllLightsBtn()
 end)
 
 
-
 MCM.SetKeybindingCallback('ll_toggle_marker', function()
     ToggleMarker(LLGlobals.markerUuid)
 end)
-
 
 
 MCM.SetKeybindingCallback('ll_toggle_all_markers', function()
@@ -313,17 +281,14 @@ MCM.SetKeybindingCallback('ll_toggle_all_markers', function()
 end)
 
 
-
 MCM.SetKeybindingCallback('ll_duplicate', function()
     DuplicateLight()
 end)
 
 
-
 MCM.SetKeybindingCallback('ll_beam', function()
     Channels.MazzleBeam:SendToServer({})
 end)
-
 
 
 MCM.SetKeybindingCallback('ll_stick', function()
@@ -332,11 +297,9 @@ MCM.SetKeybindingCallback('ll_stick', function()
 end)
 
 
-
 MCM.SetKeybindingCallback('ll_next', function()
     nextOptionBtn()
 end)
-
 
 
 MCM.SetKeybindingCallback('ll_prev', function()
@@ -344,15 +307,11 @@ MCM.SetKeybindingCallback('ll_prev', function()
 end)
 
 
-
 MCM.SetKeybindingCallback('ll_selected_popup', function()
-
     local lightName = getSelectedLightName() or 'None'
     if lightName then selectedLightNotification.Label = lightName end
-
     windowNotification.Visible = not windowNotification.Visible
     E.checkSelectedLightNotification.Checked = not E.checkSelectedLightNotification.Checked
-
 end)
 
 

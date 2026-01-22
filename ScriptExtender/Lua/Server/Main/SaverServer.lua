@@ -3,9 +3,8 @@ local ServerState = {}
 local SceneState = {}
 
 Channels.SceneSave:SetHandler(function (Data)
-    
     local ClientState = Data
-    
+
     ServerState = {
         SV_CreatedLightsServer = LLGlobals.CreatedLightsServer,
         SV_LightParametersServer = LLGlobals.LightParametersServer,
@@ -14,7 +13,7 @@ Channels.SceneSave:SetHandler(function (Data)
         SV_GoboLightMap = LLGlobals.GoboLightMap,
         SV_GoboDistances = LLGlobals.GoboDistances,
     }
-    
+
     SceneState = {
         ClientState = ClientState,
         ServerState = ServerState
@@ -23,18 +22,15 @@ Channels.SceneSave:SetHandler(function (Data)
 
     local json = Ext.Json.Stringify(SceneState)
     Ext.IO.SaveFile("LightyLights/SceneState.json", json)
-    
-
 
     DDump(ClientState)
     DDump(ServerState)
-
 
 end)
 
 
 Channels.SceneLoad:SetRequestHandler(function (Data)
-    
+
     local json = Ext.IO.LoadFile("LightyLights/SceneState.json")
     SceneState = Ext.Json.Parse(json)
     ServerState = SceneState.ServerState

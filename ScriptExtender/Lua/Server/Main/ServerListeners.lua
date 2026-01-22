@@ -1,6 +1,5 @@
 
 Ext.RegisterNetListener('LL_WhenLevelGameplayStarted', function (channel, payload, user)
-    
 end)
 
 Ext.Events.ResetCompleted:Subscribe(function()
@@ -33,7 +32,7 @@ end)
 
 
 Ext.RegisterNetListener('PostLatestPositionToServer', function(channel, payload)
-        clientEntLatestPos = Ext.Json.Parse(payload) 
+    clientEntLatestPos = Ext.Json.Parse(payload)
 end)
 
 
@@ -43,11 +42,6 @@ Ext.RegisterNetListener('posSlider', function(channel, payload)
 
     EntControls:Position(data.uuid, data.axis, data.value, data.step, data.channel, 'OnServer')
 end)
-
-
-
-
-
 
 
 
@@ -78,7 +72,7 @@ end)
 Ext.RegisterNetListener('LL_MoveLookAtTarget', function(channel, payload, user)
     local data = Ext.Json.Parse(payload)
     if LLGlobals.tragetUuid then
-        Osi.ToTransform(LLGlobals.tragetUuid, data.x, data.y, data.z, 0, 0, 0) 
+        Osi.ToTransform(LLGlobals.tragetUuid, data.x, data.y, data.z, 0, 0, 0)
     end
 end)
 
@@ -87,7 +81,7 @@ end)
 Ext.RegisterNetListener('LL_MoveLookAtTargetToCam', function(channel, payload, user)
     local data = Ext.Json.Parse(payload)
     if LLGlobals.tragetUuid then
-        Osi.ToTransform(LLGlobals.tragetUuid, data[1], data[2], data[3], 0, 0, 0) 
+        Osi.ToTransform(LLGlobals.tragetUuid, data[1], data[2], data[3], 0, 0, 0)
     end
 end)
 

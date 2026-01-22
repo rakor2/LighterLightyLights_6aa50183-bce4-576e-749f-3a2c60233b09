@@ -3,7 +3,6 @@ LLGlobals.GoboLightMap = {}
 
 
 Channels.CreateGobo:SetRequestHandler(function (Data)
-
     if not LLGlobals.selectedUuid then return end
     if LLGlobals.GoboLightMap[LLGlobals.selectedUuid] then return end
     if not Data.goboGuid then return end
@@ -13,11 +12,9 @@ Channels.CreateGobo:SetRequestHandler(function (Data)
     local uuid = tostring(Data.goboGuid)
 
     local goboUuid = Osi.CreateAt(uuid, x, y, z, 0, 0,'')
-
     Osi.ToTransform(goboUuid, x, y, z, rx, ry, rz)
 
     LLGlobals.GoboLightMap[LLGlobals.selectedUuid] = goboUuid
-
     LLGlobals.GoboDistances = LLGlobals.GoboDistances or {}
     LLGlobals.GoboDistances[goboUuid] = 0.1
 
@@ -27,22 +24,39 @@ Channels.CreateGobo:SetRequestHandler(function (Data)
 
 end)
 
-
+local GoboUuidNameMap = {
+    ['a0d2ac1c-efb5-4f64-9f7d-b01db470e091'] = 'Tree',
+    ['c1c8b026-e3c8-4975-bb4f-6b29450c2d18'] = 'Figures',
+    ['4eab6f6d-5d94-4827-9331-ae3f67747410'] = 'Window',
+    ['13c358b1-9afc-4acf-b121-fa38994d72d2'] = 'Stars',
+    ['34329d13-f74d-46ac-928c-c6b40b87b644'] = 'Star',
+    ['0435655f-4c3b-48dc-970e-55afc2956cd6'] = 'Asstation',
+    ['213674c9-8606-4f08-aaea-7ef3b7339e6e'] = 'Bhaal bs',
+    ['fc270e8b-7192-47af-b440-f5a87dd3d2cf'] = 'Water',
+    ['1b86fb4a-330e-413e-ba8f-fbb1e51846fe'] = 'Blinds',
+    ['08a26239-974d-4837-88be-f0365792cad9'] = 'Dots',
+    ['e6748263-1452-4a78-a2c7-e2ad32c90ff8'] = 'Flowers',
+    ['1099002f-5ba1-4d17-80c3-e1d4371c5685'] = 'Droplets',
+    ['731867e3-0dab-4b13-9d78-13275087a446'] = 'Idk',
+    ['7608ddb7-6fac-453d-b972-c002ff694ccc'] = 'Shape flower',
+}
 
 Channels.DeleteGobo:SetHandler(function (Data)
-
     local goboToDelete
 
     if Data == 'All' then
+        local GOV = Ext.Entity.GetAllEntitiesWithComponent('GameObjectVisual')
 
-        for light, gobo in pairs(LLGlobals.GoboLightMap) do
-            Osi.RequestDelete(gobo)
+        for _, entity in ipairs(GOV) do
+            for guid, _ in pairs(GoboUuidNameMap) do
+                if entity.GameObjectVisual.RootTemplateId == guid then
+                    local uuid = entity.Uuid.EntityUuid
+                    Osi.RequestDelete(uuid)
+                end
+            end
         end
-
         LLGlobals.GoboLightMap = {}
-
     else
-
         if not LLGlobals.GoboLightMap[LLGlobals.selectedUuid] then return end
 
         for light, gobo in pairs(LLGlobals.GoboLightMap) do
@@ -53,9 +67,7 @@ Channels.DeleteGobo:SetHandler(function (Data)
 
         LLGlobals.GoboLightMap[LLGlobals.selectedUuid] = nil
         Osi.RequestDelete(goboToDelete)
-
     end
-
 end)
 
 Channels.HideGobo:SetHandler(function (Data)
@@ -64,8 +76,6 @@ end)
 
 -- tasty slopppppppppp
 -- sloppy toppy
-
-
 
 Channels.GoboTranslate:SetHandler(function (Data)
     if not LLGlobals.selectedUuid then return end
@@ -89,23 +99,18 @@ function UpdateGoboPosition()
     if not LLGlobals.selectedUuid then return end
     if not LLGlobals.GoboLightMap[LLGlobals.selectedUuid] then return end
 
-
     local goboUuid = LLGlobals.GoboLightMap[LLGlobals.selectedUuid]
     if not goboUuid then return end
 
     LLGlobals.GoboDistances = LLGlobals.GoboDistances or {}
     local distance = LLGlobals.GoboDistances[goboUuid] or 1.0
-
     local lx, ly, lz = Osi.GetPosition(LLGlobals.selectedUuid)
     local lrx, lry, lrz = Osi.GetRotation(LLGlobals.selectedUuid)
-
     local angleX = math.rad(lrx)
     local angleY = math.rad(lry)
-
     local dirX = math.sin(angleY) * math.cos(angleX)
     local dirY = -math.sin(angleX)
     local dirZ = math.cos(angleY) * math.cos(angleX)
-
     local length = math.sqrt(dirX * dirX + dirY * dirY + dirZ * dirZ)
 
     if length > 0 then

@@ -1,9 +1,3 @@
-Light_Actual_Templates_Slots = {
-    ["Torch"] = {
-        {"Torch", "e40d1292-1da8-4c8f-b1dc-213cfdd4e135"}
-    }
-}
-
 --Markers
 
 lightMarkerGUID = "62a459e2-d3b0-4a81-9f59-160e72d977e9"
@@ -13,11 +7,11 @@ lightMarker2GUID = "cabc9b70-0e33-4eb6-ab17-316fd1eb8c55"
 
 
 
-
-
-
-
-
+-- Light_Actual_Templates_Slots = {
+--     ["Torch"] = {
+--         {"Torch", "e40d1292-1da8-4c8f-b1dc-213cfdd4e135"}
+--     }
+-- }
 -- light_table = {
 --     ["Directional Narrow"] = {
 --         {"Narrow White", "5dd2ced7-441a-49b8-9863-36e0afd1d3a6"},
