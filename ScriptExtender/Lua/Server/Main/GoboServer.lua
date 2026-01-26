@@ -2,7 +2,7 @@ LLGlobals.GoboLightMap = {}
 
 
 
-Channels.CreateGobo:SetRequestHandler(function (Data)
+Ch.CreateGobo:SetRequestHandler(function (Data)
     if not LLGlobals.selectedUuid then return end
     if LLGlobals.GoboLightMap[LLGlobals.selectedUuid] then return end
     if not Data.goboGuid then return end
@@ -21,7 +21,6 @@ Channels.CreateGobo:SetRequestHandler(function (Data)
     UpdateGoboPosition()
 
     return goboUuid
-
 end)
 
 local GoboUuidNameMap = {
@@ -41,7 +40,7 @@ local GoboUuidNameMap = {
     ['7608ddb7-6fac-453d-b972-c002ff694ccc'] = 'Shape flower',
 }
 
-Channels.DeleteGobo:SetHandler(function (Data)
+Ch.DeleteGobo:SetHandler(function (Data)
     local goboToDelete
 
     if Data == 'All' then
@@ -70,14 +69,14 @@ Channels.DeleteGobo:SetHandler(function (Data)
     end
 end)
 
-Channels.HideGobo:SetHandler(function (Data)
+Ch.HideGobo:SetHandler(function (Data)
 end)
 
 
 -- tasty slopppppppppp
 -- sloppy toppy
 
-Channels.GoboTranslate:SetHandler(function (Data)
+Ch.GoboTranslate:SetHandler(function (Data)
     if not LLGlobals.selectedUuid then return end
     if not LLGlobals.GoboLightMap[LLGlobals.selectedUuid] then return end
 

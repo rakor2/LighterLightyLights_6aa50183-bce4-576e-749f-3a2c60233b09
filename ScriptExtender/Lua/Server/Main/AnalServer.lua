@@ -24,7 +24,7 @@ end)
 
 
 
-Channels.GetTriggers:SetHandler(function(Data)
+Ch.GetTriggers:SetHandler(function(Data)
     getLevelAvailableLTNTriggers()
     getLevelAvailableATMTriggers()
 end)
@@ -49,7 +49,7 @@ end)
 
 
 
-Channels.ApplyANL:SetRequestHandler(function(Data)
+Ch.ApplyANL:SetRequestHandler(function(Data)
     local uuid = '6e3f3623-5c84-a681-6131-2da753fa2c8f'
 
     for _, trigger in pairs(LLGlobals.LightingTriggers) do
@@ -68,7 +68,7 @@ end)
 
 
 
-Channels.ResetANL:SetHandler(function(Data)
+Ch.ResetANL:SetHandler(function(Data)
     if Data == 'Lighting' then
         for _, trigger in pairs(LLGlobals.LightingTriggers) do
             Osi.TriggerResetLighting(trigger.Uuid.EntityUuid)

@@ -76,7 +76,7 @@ function Anal2Tab(p)
     E.resetLtnBtn = p:AddButton('Reset')
     E.resetLtnBtn.IDContext = 'awdpoiqawndoiwna'
     E.resetLtnBtn.OnClick = function ()
-        Channels.ResetANL:SendToServer('Lighting')
+        Ch.ResetANL:SendToServer('Lighting')
     end
 
 
@@ -176,7 +176,7 @@ function Anal2Tab(p)
     E.resetAtmBtn = p:AddButton('Reset')
     E.resetAtmBtn.IDContext = 'awpokdnawo;ikn'
     E.resetAtmBtn.OnClick = function ()
-        Channels.ResetANL:SendToServer('Atmosphere')
+        Ch.ResetANL:SendToServer('Atmosphere')
     end
 
 
@@ -718,7 +718,7 @@ function Anal2Tab(p)
         local Data = {
             uuid = ltn_templates2[UI:SelectedOpt(E.comboLighting)]
         }
-        Channels.ApplyANL:RequestToServer(Data, function (Response)
+        Ch.ApplyANL:RequestToServer(Data, function (Response)
             if Response then
                 comboLightingFunc()
                 comboAtmosphereFunc()

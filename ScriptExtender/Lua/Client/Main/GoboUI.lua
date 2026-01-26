@@ -60,14 +60,14 @@ function Gobo2Tab(p)
             end
         end
 
-        Channels.DeleteGobo:SendToServer({})
+        Ch.DeleteGobo:SendToServer({})
 
         Helpers.Timer:OnTicks(3, function ()
             local Data = {
                 goboGuid = LLGlobals.selectedGobo
             }
 
-            Channels.CreateGobo:RequestToServer(Data, function (Response)
+            Ch.CreateGobo:RequestToServer(Data, function (Response)
                 LLGlobals.selectedGoboUuid = Response
             end)
         end)
@@ -124,7 +124,7 @@ function Gobo2Tab(p)
             step = 1,
             offset = e.Value[1],
         }
-        Channels.GoboTranslate:SendToServer(Data)
+        Ch.GoboTranslate:SendToServer(Data)
     end
 
 
@@ -136,7 +136,7 @@ function Gobo2Tab(p)
         local Data = {
             goboGuid = LLGlobals.selectedGobo
         }
-        Channels.CreateGobo:RequestToServer(Data, function (Response)
+        Ch.CreateGobo:RequestToServer(Data, function (Response)
             LLGlobals.selectedGoboUuid = Response
         end)
 
@@ -148,7 +148,7 @@ function Gobo2Tab(p)
     E.deleteGoboButton.IDContext = 'E.deleteGoboButton'
     E.deleteGoboButton.SameLine = true
     E.deleteGoboButton.OnClick = function()
-        Channels.DeleteGobo:SendToServer('Single')
+        Ch.DeleteGobo:SendToServer('Single')
     end
 
 
@@ -157,7 +157,7 @@ function Gobo2Tab(p)
     E.deleteGoboButtonAll.IDContext = 'E.deleteGoboButton'
     E.deleteGoboButtonAll.SameLine = true
     E.deleteGoboButtonAll.OnClick = function()
-        Channels.DeleteGobo:SendToServer('All')
+        Ch.DeleteGobo:SendToServer('All')
     end
 
 

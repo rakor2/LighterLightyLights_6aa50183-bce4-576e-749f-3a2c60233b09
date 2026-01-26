@@ -1,5 +1,5 @@
 
-Channels.CreateOriginPoint:SetRequestHandler(function (Data)
+Ch.CreateOriginPoint:SetRequestHandler(function (Data)
     if LLGlobals.States.pointIsExisting then return end
     local x, y, z = table.unpack(getSourcePosition())
     LLGlobals.pointUuid = Osi.CreateAt(lightMarkerGUID, x, y, z, 0, 0, '')
@@ -13,7 +13,7 @@ end)
 
 
 
-Channels.DeleteOriginPoint:SetHandler(function (Data)
+Ch.DeleteOriginPoint:SetHandler(function (Data)
     if LLGlobals.pointUuid then
         Osi.RequestDelete(LLGlobals.pointUuid)
         LLGlobals.States.pointIsExisting = false
@@ -22,7 +22,7 @@ end)
 
 
 --fuck it, I'll just make everything separate, idc
-Channels.MoveOriginPoint:SetHandler(function (Data)
+Ch.MoveOriginPoint:SetHandler(function (Data)
     local axis = Data.axis
     local step = Data.step
     local offset = Data.offset
@@ -53,7 +53,7 @@ Channels.MoveOriginPoint:SetHandler(function (Data)
 end)
 
 
-Channels.ToCamOriginPoint:SetHandler(function (Data)
+Ch.ToCamOriginPoint:SetHandler(function (Data)
     local uuid = LLGlobals.pointUuid
     local x,y,z = table.unpack(Data.Translate)
     Osi.ToTransform(uuid, x, y, z, 0, 0, 0)

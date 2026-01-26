@@ -1,12 +1,14 @@
 Ext.Require('_Libs/_InitLibs.lua')
 Ext.Require('Shared/_init.lua')
 
+
+
 Settings = {}
 ZipBomb = ZipBomb or {}
 currentCacheVersion = '1.7.Bober'
 
 
---- TBD:unhardcode
+--- TBD: unhardcode
 
 local function bool(v, default)
     if v == nil then return default end
@@ -86,7 +88,7 @@ function SettingsLoad()
     biggerPicker = bool(settings.biggerPicker, false)
 
     markerScale = settings.markerScale or 0.699999988079071
-    fadeTime = settings.fadeTime or 0.3
+    fadeTime = settings.fadeTime or 1
     defaultCameraSpeed = settings.defaultCameraSpeed or 6
     lightSetupState = bool(settings.lightSetupState, true)
 
@@ -116,6 +118,7 @@ function CacheLightingValues()
 
     for name, uuid in pairs(ltn_templates2) do
         local Lighting = Resource:GetResource(uuid, 'Lighting')
+
         if Lighting then
             local values = {}
 
@@ -139,8 +142,6 @@ function CacheLightingValues()
             CachedLighting.Version = currentCacheVersion
         end
     end
-
-
     return CachedLighting
 end
 
@@ -150,9 +151,11 @@ function CacheAtmosphereValues()
 
     for name, uuid in pairs(atm_templates2) do
         local Atmosphere = Resource:GetResource(uuid, 'Atmosphere')
+
         if Atmosphere then
             local values = {}
             local function copyValues(source, target)
+
                 for k, v in pairs(source) do
                     if type(v) == 'table' or type(v) == 'userdata' then
                         target[k] = {}
@@ -162,25 +165,21 @@ function CacheAtmosphereValues()
                     end
                 end
             end
-
             copyValues(Atmosphere, values)
 
             CachedAtmosphere[uuid] = {
                 { Name = name },
                 values
             }
-
             CachedAtmosphere.Version = currentCacheVersion
         end
     end
-
     return CachedAtmosphere
 end
 
 
 
 function LoadCacheFromFile()
-
     if not Ext.IO.LoadFile('LightyLights/CachedAtmosphere.json') then DPrint('NO ANAL CACHE') return end
 
     ZipBomb.CachedLighting = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/CachedLighting.json'))
@@ -206,37 +205,38 @@ end
 SaveCacheToFile()
 
 print('')
-DPrint([[files location: AppData\\Local\\Larian Studios\\Baldur's Gate 3\\Script Extender\\LightyLights]])
+DPrint([[files location: AppData/Local/Larian Studios/Baldur's Gate 3/Script Extender/LightyLights]])
+DPrint([[FOR MAZZLEDOCS to work you need to place the mod above Lighty Lights in the load order]])
 print('')
 
 
 
-local lastTimePressed = 0
-Ext.Events.KeyInput:Subscribe(function(e)
-    if e.Event == "KeyDown" then
-        if e.Key == "NUM_1" then
-            local currentTime = Ext.Timer.MonotonicTime()
-            local diff = currentTime - lastTimePressed
+-- local lastTimePressed = 0
+-- Ext.Events.KeyInput:Subscribe(function(e)
+--     if e.Event == "KeyDown" then
+--         if e.Key == "NUM_1" then
+--             local currentTime = Ext.Timer.MonotonicTime()
+--             local diff = currentTime - lastTimePressed
 
-            if diff < 500 then
-                Ext.Debug.Reset(false, true)
-                lastTimePressed = 0
-            else
-                lastTimePressed = currentTime
-            end
-        end
+--             if diff < 500 then
+--                 Ext.Debug.Reset(false, true)
+--                 lastTimePressed = 0
+--             else
+--                 lastTimePressed = currentTime
+--             end
+--         end
 
-        if e.Key == "NUM_2" then
-            local currentTime = Ext.Timer.MonotonicTime()
-            local diff = currentTime - lastTimePressed
+--         if e.Key == "NUM_2" then
+--             local currentTime = Ext.Timer.MonotonicTime()
+--             local diff = currentTime - lastTimePressed
 
-            if diff < 500 then
-                Ext.Debug.Reset(true, false)
-                lastTimePressed = 0
-            else
-                lastTimePressed = currentTime
-            end
-        end
+--             if diff < 500 then
+--                 Ext.Debug.Reset(true, false)
+--                 lastTimePressed = 0
+--             else
+--                 lastTimePressed = currentTime
+--             end
+--         end
 
-    end
-end)
+--     end
+-- end)

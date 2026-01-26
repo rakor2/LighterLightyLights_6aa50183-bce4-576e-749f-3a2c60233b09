@@ -6,7 +6,7 @@ function Origin2PointTab(p)
 
         if LLGlobals.pointUuid then return end
 
-        Channels.CreateOriginPoint:RequestToServer({}, function (Response)
+        Ch.CreateOriginPoint:RequestToServer({}, function (Response)
 
             LLGlobals.pointUuid = Response[1]
 
@@ -29,7 +29,7 @@ function Origin2PointTab(p)
         local Data = {
             Translate = Translate,
         }
-        Channels.ToCamOriginPoint:SendToServer(Data)
+        Ch.ToCamOriginPoint:SendToServer(Data)
     end
 
 
@@ -53,7 +53,7 @@ function Origin2PointTab(p)
 
         SourcePoint(false)
         E.checkOriginSrc.Checked = false
-        Channels.DeleteOriginPoint:SendToServer({})
+        Ch.DeleteOriginPoint:SendToServer({})
         LLGlobals.pointUuid = nil
         LLGlobals.pointEntity = nil
     end

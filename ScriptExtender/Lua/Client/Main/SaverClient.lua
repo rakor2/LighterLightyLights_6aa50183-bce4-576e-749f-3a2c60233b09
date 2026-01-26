@@ -18,9 +18,9 @@ function Saver2Tab(p)
             CL_nameIndex = nameIndex,
         }
 
-        
-        
-        Channels.SceneSave:SendToServer(ClientState)
+
+
+        Ch.SceneSave:SendToServer(ClientState)
 
     end
 
@@ -28,7 +28,7 @@ function Saver2Tab(p)
     local btnLoadScene = p:AddButton('Load scene')
     btnLoadScene.OnClick = function (e)
 
-        Channels.SceneLoad:RequestToServer({},function (Response)
+        Ch.SceneLoad:RequestToServer({},function (Response)
             ClientState = Response
 
             LLGlobals.CreatedLightsServer = ClientState.CL_CreatedLightsServer
@@ -41,7 +41,7 @@ function Saver2Tab(p)
             nameIndex = ClientState.CL_nameIndex
 
             Imgui.ClearChildren(mw)
-            
+
             Helpers.Timer:OnTicks(50, function ()
                 MainWindow(mw)
             end)

@@ -51,6 +51,8 @@ local currentFadeMap = {}
 ---@param fadeColor vec4
 ---@param fadeTime number # time in seconds for the fade effect
 function Imgui.FadeColor(el, colorProp, initialColor, fadeColor, fadeTime)
+    if fadeTime == 0 then return end
+
     local framesPassed = 0
     local totalFrames = fadeTime * 60  -- Assuming 60 fps
 
@@ -71,7 +73,7 @@ function Imgui.FadeColor(el, colorProp, initialColor, fadeColor, fadeTime)
             -- RPrint(("Fading... %s"):format(percent))
         end
     end
-    
+
     local function resetColor()
         el:SetColor(colorProp, fadeColor)
         currentFadeMap[fadeKey] = nil
@@ -129,7 +131,7 @@ function Imgui.BorderPulse(el, size)
         el:SetStyle("FrameBorderSize", originalBorderSizeMap[el.Handle] or 0)
         originalBorderSizeMap[el.Handle] = nil
     end
-    
+
     Imgui.MainTick:Take(30):Subscribe(pulse, reset, reset)
 end
 

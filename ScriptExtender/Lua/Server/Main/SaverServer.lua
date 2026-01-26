@@ -2,7 +2,7 @@ local ClientState = {}
 local ServerState = {}
 local SceneState = {}
 
-Channels.SceneSave:SetHandler(function (Data)
+Ch.SceneSave:SetHandler(function (Data)
     local ClientState = Data
 
     ServerState = {
@@ -29,7 +29,7 @@ Channels.SceneSave:SetHandler(function (Data)
 end)
 
 
-Channels.SceneLoad:SetRequestHandler(function (Data)
+Ch.SceneLoad:SetRequestHandler(function (Data)
 
     local json = Ext.IO.LoadFile("LightyLights/SceneState.json")
     SceneState = Ext.Json.Parse(json)

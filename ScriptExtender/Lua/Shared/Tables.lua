@@ -76,8 +76,12 @@ ModName = {
     'Lighty Lights',
     'Lighty Lights',
     'Lighty Lights',
+    'Lighty Lights',
+    'Lighty Lights',
     'Lightly Lights',
     'Love Latinas',
+    'Love Latinas',
+    'I meant specific latina',
     'Nighty Nights',
 }
 
@@ -140,7 +144,11 @@ QOTD = {
     'meow',
     'Dont be afraid of ligtning',
     'Lightly Lights',
-    'All I need is your smile'
+    'All I need is your smile',
+    'Lunar eclipse March 3rd 8:00 UTC',
+    'March 1st spring gift',
+    ':rightwards_pushing_hand:',
+    'All my homies hate iron pills',
 }
 
 

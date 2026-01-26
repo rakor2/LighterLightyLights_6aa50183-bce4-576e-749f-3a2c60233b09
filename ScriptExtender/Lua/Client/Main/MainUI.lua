@@ -56,6 +56,7 @@ ER = {
 }
 
 
+
 local OPENQUESTIONMARK = false
 IMGUI:AntiStupiditySystem()
 
@@ -64,8 +65,9 @@ IMGUI:AntiStupiditySystem()
 function LLMCM(mt2)
     LLMCM = mt2
 
+    local version = table.concat(Ext.Mod.GetMod(ModuleUUID).Info.ModVersion, ".")
     local rngMax = #ModName
-    mw = Ext.IMGUI.NewWindow(ModName[Ext.Math.Random(1, rngMax)])
+    mw = Ext.IMGUI.NewWindow(ModName[Ext.Math.Random(1, rngMax)] .. ' ' .. '[' .. version .. ']')
     mw.Font = 'Font'
     mw.Open = OPENQUESTIONMARK
     mw.Closeable = true
@@ -151,6 +153,9 @@ function MainWindow(mw)
     E.settingsTab = mainTabBar:AddTabItem('Settings')
     Settings2Tab(E.settingsTab)
 
+    E.docsTab = mainTabBar:AddTabItem('Docs')
+    Docs2Tab(E.docsTab)
+
     function buttonSizes()
         for _, element in pairs(ER) do
             element.Size = {180/Style.buttonScale, 39/Style.buttonScale}
@@ -159,93 +164,6 @@ function MainWindow(mw)
 
 
 --#region FunnyStuff
-    -- function funnyStuff()
-    --     local allElements = {}
-    --     for _, element in pairs(E) do
-    --         table.insert(allElements, element)
-    --     end
-    --     for _, element in pairs(ER) do
-    --         table.insert(allElements, element)
-    --     end
-
-    --     for _, element in pairs(allElements) do
-    --         element.OnHoverEnter = function(e)
-    --             local elementType = tostring(e):match('^(%w+)')
-
-    --             if elementType == 'Button' then
-    --                 Imgui.FadeColor(e, 'Button', Style.buttonHovered, Style.button, fadeTime)
-    --             elseif elementType == 'Checkbox' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'SliderScalar' or elementType == 'SliderInt' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --                 Imgui.FadeColor(e, 'FrameBgHovered', Style.frameBgHovered, Style.frameBgHovered, fadeTime)
-    --             elseif elementType == 'InputText' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'ColorEdit' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'Combo' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'TabItem' then
-    --                 Imgui.FadeColor(e, 'TabActive', Style.tabHovered, Style.tabActive, fadeTime)
-    --                 -- Imgui.FadeColor(e, 'TabHovered', Style.tabHovered, Style.tab, fadeTime)
-    --                 Imgui.FadeColor(e, 'Tab', Style.tabHovered, Style.tab, fadeTime)
-    --             elseif elementType == 'CollapsingHeader' then
-    --                 Imgui.FadeColor(e, 'Header', Style.headerHovered, Style.header, fadeTime)
-    --             end
-    --         end
-    --         element.OnHoverLeave = function(e)
-    --             local elementType = tostring(e):match('^(%w+)')
-
-    --             if elementType == 'Button' then
-    --                 Imgui.FadeColor(e, 'Button', Style.buttonHovered, Style.button, fadeTime)
-    --             elseif elementType == 'Checkbox' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'SliderScalar' or elementType == 'SliderInt' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --                 Imgui.FadeColor(e, 'FrameBgHovered', Style.frameBgHovered, Style.frameBgHovered, fadeTime)
-    --             elseif elementType == 'InputText' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'ColorEdit' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'Combo' then
-    --                 Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --             elseif elementType == 'TabItem' then
-    --                 Imgui.FadeColor(e, 'TabActive', Style.tabHovered, Style.tabActive, fadeTime)
-    --                 -- Imgui.FadeColor(e, 'TabHovered', Style.tabHovered, Style.tab, fadeTime)
-    --                 Imgui.FadeColor(e, 'Tab', Style.tabHovered, Style.tab, fadeTime)
-    --             elseif elementType == 'CollapsingHeader' then
-    --                 Imgui.FadeColor(e, 'Header', Style.headerHovered, Style.header, fadeTime)
-    --             end
-    --         end
-    --         -- element.OnClick = function(e)
-    --         --     local elementType = tostring(e):match('^(%w+)')
-
-    --         --     if elementType == 'Button' then
-    --         --         -- Imgui.FadeColor(e, 'Button', Style.buttonHovered, Style.button, fadeTime)
-    --         --         Imgui.FadeColor(e, 'ButtonActive', Style.buttonHovered, Style.buttonActive, fadeTime)
-    --         --         -- Imgui.FadeColor(e, 'ButtonHovered', Style.buttonActive, Style.buttonHovered, fadeTime)
-    --         --     elseif elementType == 'Checkbox' then
-    --         --         Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --         --     elseif elementType == 'SliderScalar' or elementType == 'SliderInt' then
-    --         --         Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --         --         Imgui.FadeColor(e, 'FrameBgHovered', Style.frameBgActive, Style.frameBgHovered, fadeTime)
-    --         --     elseif elementType == 'InputText' then
-    --         --         Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --         --     elseif elementType == 'ColorEdit' then
-    --         --         Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --         --     elseif elementType == 'Combo' then
-    --         --         Imgui.FadeColor(e, 'FrameBg', Style.frameBgHovered, Style.frameBg, fadeTime)
-    --         --     elseif elementType == 'TabItem' then
-    --         --         Imgui.FadeColor(e, 'TabActive', Style.tabHovered, Style.tabActive, fadeTime)
-    --         --         -- Imgui.FadeColor(e, 'TabHovered', Style.tabHovered, Style.tab, fadeTime)
-    --         --         Imgui.FadeColor(e, 'Tab', Style.tabHovered, Style.tab, fadeTime)
-    --         --     elseif elementType == 'CollapsingHeader' then
-    --         --         Imgui.FadeColor(e, 'Header', Style.headerHovered, Style.header, fadeTime)
-    --         --     end
-    --         -- end
-    --     end
-    -- end
-    -- funnyStuff()
     function funnyStuff()
         local allElements = {}
         -- local allButtons = {}
@@ -347,7 +265,6 @@ function MainWindow(mw)
 --#endregion
 
     buttonSizes()
-    StyleV2:RegisterWindow(mw)
     SettingsLoad()
 end
 
@@ -374,7 +291,7 @@ end)
 
 
 MCM.SetKeybindingCallback('ll_toggle_all_markers', function()
-    Channels.MarkerHandler:RequestToServer({}, function (Response)
+    Ch.MarkerHandler:RequestToServer({}, function (Response)
     end)
 end)
 
@@ -385,13 +302,13 @@ end)
 
 
 MCM.SetKeybindingCallback('ll_beam', function()
-    Channels.MazzleBeam:SendToServer({})
+    Ch.MazzleBeam:SendToServer({})
 end)
 
 
 MCM.SetKeybindingCallback('ll_stick', function()
     E.checkStick.Checked = not E.checkStick.Checked
-    stickToCameraCheck()
+    StickToCamera()
 end)
 
 
@@ -426,49 +343,37 @@ end)
 
 
 function MainTab(p)
-
-    --local btn = p:AddButton('xddd')
-
-
     local rngMax = #QOTD
     p:AddSeparatorText(QOTD[Ext.Math.Random(1, rngMax)])
-    --
 
     E.checkTypePoint = p:AddCheckbox('Point')
     E.checkTypePoint.Checked = defaultLightType == 'Point'
     E.checkTypePoint.OnChange = function ()
-
         lightType = 'Point' -- 0
-
         E.checkTypeSpot.Checked = false
         E.checkTypeDir.Checked = false
-
     end
+
 
 
     E.checkTypeSpot = p:AddCheckbox('Spotlight')
     E.checkTypeSpot.Checked = defaultLightType == 'Spotlight'
     E.checkTypeSpot.SameLine = true
     E.checkTypeSpot.OnChange = function ()
-
         lightType = 'Spotlight' -- 1
-
         E.checkTypePoint.Checked = false
         E.checkTypeDir.Checked = false
-
     end
+
 
 
     E.checkTypeDir = p:AddCheckbox('Directional')
     E.checkTypeDir.Checked = defaultLightType == 'Directional'
     E.checkTypeDir.SameLine = true
     E.checkTypeDir.OnChange = function ()
-
         lightType = 'Directional' -- 2
-
         E.checkTypePoint.Checked = false
         E.checkTypeSpot.Checked = false
-
     end
 
 
@@ -558,8 +463,8 @@ function MainTab(p)
     E.btnRenameLight.Disabled = false
     E.btnRenameLight.OnClick = function ()
         if not LLGlobals.selectedUuid then return end
-        local lightEntity = getSelectedLightEntity()
 
+        local lightEntity = getSelectedLightEntity()
 
         for k, light in pairs(LLGlobals.LightsUuidNameMap) do
             if light.name == E.comboIHateCombos.Options[E.comboIHateCombos.SelectedIndex + 1] then
@@ -572,86 +477,72 @@ function MainTab(p)
                     lightEntity.LightChannelFlag = 0
                     light.name = '-' .. ' ' ..  '#' .. index .. ' ' .. type .. ' ' .. E.inputRename.Text
                 end
+            end
+        end
+        E.inputRename.Text = ''
+        UpdateCreatedLightsCombo()
+    end
 
+
+
+    ER.btnDelete = p:AddButton('Delete')
+    ER.btnDelete.OnClick = function()
+        if not LLGlobals.selectedUuid then return end
+
+        local uuidToDelete = LLGlobals.selectedUuid
+        local selectedName = getSelectedLightName()
+
+        Ch.DeleteGobo:SendToServer('Single')
+        LLGlobals.CreatedLightsServer[uuidToDelete] = nil
+        LLGlobals.LightParametersClient[uuidToDelete] = nil
+
+        for k, light in pairs(LLGlobals.LightsUuidNameMap) do
+            if light.name == selectedName then
+            table.remove(LLGlobals.LightsUuidNameMap, k)
             end
         end
 
-        E.inputRename.Text = ''
+        for k, light in pairs(LLGlobals.LightsNames) do
+            if light == selectedName then
+                LLGlobals.LightsNames[k] = nil
+            end
+        end
 
         UpdateCreatedLightsCombo()
 
-    end
-
-
-
-
-
-ER.btnDelete = p:AddButton('Delete')
-ER.btnDelete.OnClick = function()
-
-    if not LLGlobals.selectedUuid then return end
-
-    local uuidToDelete = LLGlobals.selectedUuid
-    local selectedName = getSelectedLightName()
-
-    Channels.DeleteGobo:SendToServer('Single')
-
-    LLGlobals.CreatedLightsServer[uuidToDelete] = nil
-    LLGlobals.LightParametersClient[uuidToDelete] = nil
-
-    for k, light in pairs(LLGlobals.LightsUuidNameMap) do
-        if light.name == selectedName then
-           table.remove(LLGlobals.LightsUuidNameMap, k)
+        E.comboIHateCombos.SelectedIndex = E.comboIHateCombos.SelectedIndex - 1
+        if E.comboIHateCombos.SelectedIndex < 0 then
+            E.comboIHateCombos.SelectedIndex = 0
         end
-    end
 
-    for k, light in pairs(LLGlobals.LightsNames) do
-        if light == selectedName then
-            LLGlobals.LightsNames[k] = nil
-        end
-    end
-
-    UpdateCreatedLightsCombo()
-
-    E.comboIHateCombos.SelectedIndex = E.comboIHateCombos.SelectedIndex - 1
-    if E.comboIHateCombos.SelectedIndex < 0 then
-        E.comboIHateCombos.SelectedIndex = 0
-    end
-
-    if E.comboIHateCombos.Options and #E.comboIHateCombos.Options > 0 then
-        local uuid = getSelectedUuid()
-        if uuid then
-            SelectLight()
+        if E.comboIHateCombos.Options and #E.comboIHateCombos.Options > 0 then
+            local uuid = getSelectedUuid()
+            if uuid then
+                SelectLight()
+            else
+                LLGlobals.selectedUuid = nil
+                LLGlobals.selectedEntity = nil
+                LLGlobals.markerUuid = nil
+                LLGlobals.markerEntity = nil
+            end
         else
             LLGlobals.selectedUuid = nil
             LLGlobals.selectedEntity = nil
             LLGlobals.markerUuid = nil
             LLGlobals.markerEntity = nil
+            nameIndex = 0
+            UpdateTranformInfo(0, 0, 0, 0, 0, 0)
         end
-    else
-        LLGlobals.selectedUuid = nil
-        LLGlobals.selectedEntity = nil
-        LLGlobals.markerUuid = nil
-        LLGlobals.markerEntity = nil
-        nameIndex = 0
-        UpdateTranformInfo(0, 0, 0, 0, 0, 0)
+
+        Ch.DeleteLight:SendToServer(uuidToDelete)
+        Ch.SelectedLight:SendToServer(LLGlobals.selectedUuid)
     end
-
-
-    Channels.DeleteLight:SendToServer(uuidToDelete)
-
-    Channels.SelectedLight:SendToServer(LLGlobals.selectedUuid)
-
-end
-
-
 
 
 
     ER.btnDeleteAll = p:AddButton('Delete all')
     ER.btnDeleteAll.SameLine = true
     ER.btnDeleteAll.OnClick = function ()
-
         ER.btnDeleteAll.Visible = false
         ER.btnConfirmDeleteAll.Visible = true
 
@@ -667,12 +558,10 @@ end
     ER.btnConfirmDeleteAll.SameLine = true
     Style.buttonConfirm.default(ER.btnConfirmDeleteAll)
     ER.btnConfirmDeleteAll.OnClick = function ()
-
         E.checkStick.Checked = false
 
-        Channels.DeleteGobo:SendToServer('All')
-
-        Channels.DeleteLight:SendToServer('All')
+        Ch.DeleteGobo:SendToServer('All')
+        Ch.DeleteLight:SendToServer('All')
 
         LLGlobals.CreatedLightsServer = {}
         LLGlobals.LightsUuidNameMap = {}
@@ -684,7 +573,7 @@ end
         LLGlobals.markerEntity = nil
         nameIndex = 0
 
-        Channels.CurrentEntityTransform:SendToServer(nil)
+        Ch.CurrentEntityTransform:SendToServer(nil)
 
         UpdateCreatedLightsCombo()
         UpdateTranformInfo(0, 0, 0, 0, 0, 0)
@@ -696,7 +585,6 @@ end
 
         ER.btnDeleteAll.Visible = true
         ER.btnConfirmDeleteAll.Visible = false
-
     end
 
 
@@ -718,25 +606,16 @@ end
 
 
 
-
-
-
-
     --- for keybind
     function toggleLightBtn()
         local lightEntity = getSelectedLightEntity()
         local selectedUuid = getSelectedUuid()
 
         if lightEntity then
-
-
-
             local flag = lightEntity.LightChannelFlag ~= 0
             local flag2 = not flag
-
             local scattering = lightEntity.ScatteringIntensityScale ~= 0
             local scattering2 = not scattering
-
 
             if flag2 then
                 local savedFlag = LLGlobals.LightParametersClient[selectedUuid].LightChannelFlag
@@ -753,7 +632,6 @@ end
             end
 
             UpdateVisibilityStateToNames(getSelectedLightName(), flag2)
-
         end
     end
 
@@ -770,8 +648,7 @@ end
 
     function toggleAllLightsBtn()
         if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
-
-            all = not all
+            local all = not all
 
             for _, uuid in pairs(LLGlobals.CreatedLightsServer) do
                 local lightEntity = getLightEntity(uuid)
@@ -792,7 +669,6 @@ end
                 for _, name in pairs(LLGlobals.LightsNames) do
                     UpdateVisibilityStateToNames(name, not all)
                 end
-
             end
         end
     end
@@ -805,7 +681,6 @@ end
     E.toggleLightsButton.SameLine = true
     E.toggleLightsButton.OnClick = function()
         if not LLGlobals.selectedUuid then return end
-
         toggleAllLightsBtn()
     end
 
@@ -815,9 +690,7 @@ end
     E.toggleMarkerButton.SameLine = true
     E.toggleMarkerButton.IDContext = 'jhjkgyyutr'
     E.toggleMarkerButton.OnClick = function()
-
         ToggleMarker(LLGlobals.markerUuid)
-
     end
 
 
@@ -827,10 +700,8 @@ end
     E.toggleAllMarkersButton.IDContext = '456456'
     E.toggleAllMarkersButton.SameLine = true
     E.toggleAllMarkersButton.OnClick = function()
-
-        Channels.MarkerHandler:RequestToServer({}, function (Response)
+        Ch.MarkerHandler:RequestToServer({}, function (Response)
         end)
-
     end
 
 
@@ -839,8 +710,7 @@ end
     E.btnMazzleBeam.SameLine = true
     E.btnMazzleBeam.OnClick = function ()
         if not LLGlobals.selectedUuid then return end
-
-        Channels.MazzleBeam:SendToServer({})
+        Ch.MazzleBeam:SendToServer({})
     end
 
 
@@ -853,7 +723,6 @@ end
 
     E.collapseParameters = p:AddCollapsingHeader('Main parameters')
     E.collapseParameters.DefaultOpen = true
-    -- E.collapseParameters = E.collapseParameters:AddGroup('Parameters1')
 
 
 
@@ -862,16 +731,11 @@ end
 
 
 
-    -- TYPE
-
-
-
     E.slIntLightType = E.treeGen:AddSliderInt('', 0,0,2,1)
     E.slIntLightType.IDContext = 'aojwdnakwol;n'
     E.slIntLightType.OnChange = function (e)
         if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
             SetLightType(e.Value[1])
-
 
             -- TBD: temporary
             local selectedName = getSelectedLightName()
@@ -902,9 +766,7 @@ end
                     newName = newName:gsub('Point', localLightType):gsub('Spotlight', localLightType):gsub('Directional', localLightType)
                     LLGlobals.LightsUuidNameMap[E.comboIHateCombos.SelectedIndex + 1].name = newName
                 end
-
                 UpdateCreatedLightsCombo()
-
             end
         end
     end
@@ -913,10 +775,6 @@ end
 
     textLightType = E.treeGen:AddText('Type')
     textLightType.SameLine = true
-
-
-
-    -- COLOR
 
 
 
@@ -929,6 +787,8 @@ end
         textPicker = E.treeGen:AddText('Color (click me)')
         textPicker.SameLine = true
     end
+
+
 
     E.pickerRecentColor1 = E.treeGen:AddColorEdit('')
     UI:Config(E.pickerRecentColor1, {
@@ -990,9 +850,6 @@ end
     end
 
 
-    -- INTENSITY
-
-
 
     E.slLightIntensity = E.treeGen:AddSlider('', 1, 0, 60, 1)
     E.slLightIntensity.IDContext = 'lkjanerfliuaern'
@@ -1013,10 +870,6 @@ end
             SetLightIntensity(E.slLightIntensity.Value[1])
         end
     end
-
-
-
-    -- TEMPERATURE
 
 
 
@@ -1043,10 +896,6 @@ end
             SetLightColor({1,0.93,0.88})
         end
     end
-
-
-
-    -- RADIUS
 
 
 
@@ -1159,10 +1008,6 @@ end
 
 
 
-    -- OUTER ANGLE
-
-
-
     E.treeSpot = E.collapseParameters:AddTree('Spotlight')
     E.treeSpot.IDContext = 'sodkfn'
     E.treeSpot.DefaultOpen = openByDefaultMainSpot
@@ -1191,10 +1036,6 @@ end
 
 
 
-    -- INNER ANGLE
-
-
-
     E.slLightInnerAngle = E.treeSpot:AddSlider('', 1, 0, 179, 1)
     E.slLightInnerAngle.IDContext = 'rfgrtynj5r6'
     E.slLightInnerAngle.OnChange = function (e)
@@ -1220,8 +1061,6 @@ end
 
 
 
-    local sepaTreeDir
-    local spepaPreAdd
     E.treeDir = E.collapseParameters:AddTree('Directional')
     E.treeDir.IDContext = 'sodsdfkfn'
     E.treeDir.DefaultOpen = openByDefaultMainDir
@@ -1293,10 +1132,8 @@ end
 
     ER.btnSavePos = p:AddButton('Save')
     ER.btnSavePos.OnClick = function (e)
-
         if not LLGlobals.selectedUuid then return end
-
-        Channels.SaveLoadLightPos:SendToServer('Save')
+        Ch.SaveLoadLightPos:SendToServer('Save')
     end
 
 
@@ -1304,18 +1141,12 @@ end
     ER.btnLoadPos = p:AddButton('Load')
     ER.btnLoadPos.SameLine = true
     ER.btnLoadPos.OnClick = function (e)
-
         if not LLGlobals.selectedUuid then return end
-
-        Channels.SaveLoadLightPos:SendToServer('Load')
+        Ch.SaveLoadLightPos:SendToServer('Load')
     end
 
 
 
-    local modPosDefault = 8000
-    local modPos = 50000
-    local modRot = 5000
-    local modRotDefault = 1000
 
 
 
@@ -1340,7 +1171,7 @@ end
     E.checkStick = p:AddCheckbox('Stick to camera')
     E.checkStick.OnChange = function (e)
         if not LLGlobals.selectedUuid then e.Checked = false return end
-        stickToCameraCheck()
+        StickToCamera()
     end
 
 
@@ -1475,13 +1306,11 @@ end
     E.btnPosX_CW.IDContext = ' safj;awffdahwoeifmn'
     E.btnPosX_CW.SameLine = true
     E.btnPosX_CW.OnClick = function (e)
-
         for k, v in pairs(LLGlobals.LightParametersClient) do
             DPrint(k)
             local entity = Ext.Entity.Get(k)
             MoveEntity(entity, 'x', -100, E.modPosSlider.Value[1], 'Orbit', 'Light')
         end
-
     end
 
 
@@ -1691,13 +1520,7 @@ end
 
 
 
-    -- E.bulletLock = E.collapsRot:AddBulletText('Gimbal-lock is real monkaS')
-
-
-
     E.collapsRot:AddSeparator('')
-
-
 
     textPositionInfo = p:AddText('')
     textPositionInfo.Label = string.format('x: %.2f, y: %.2f, z: %.2f', 0, 0, 0)
@@ -1754,7 +1577,10 @@ end
     p:AddSeparatorText('Slider settings')
     ---------------------------------------------------------
 
-
+    local modPosDefault = 8000
+    local modPos = 50000
+    local modRot = 5000
+    local modRotDefault = 1000
 
     E.modPosSlider = p:AddSlider('', modPosDefault, 0.1, modPos, 0)
     E.modPosSlider.Value = {modPosDefault,0,0,0}
@@ -1794,22 +1620,16 @@ MCM.InsertModMenuTab('Lighty Lights', LLMCM, ModuleUUID)
 
 
 
-
 Ext.RegisterConsoleCommand('lld', function (cmd, ...)
-
     DPrint('LightParametersClient-----------------------------')
     DDump(LLGlobals.LightParametersClient)
-
 end)
 
 
 
-
 Ext.RegisterConsoleCommand('lldg', function (cmd, ...)
-
     DPrint('Globals-----------------------------')
     DDump(LLGlobals)
-
 end)
 
 

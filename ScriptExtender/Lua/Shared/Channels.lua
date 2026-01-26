@@ -1,42 +1,40 @@
-Channels = {}
+Ch.SelectedLight = Ext.Net.CreateChannel(ModuleUUID, 'SelectedLight')
+Ch.CreateLight = Ext.Net.CreateChannel(ModuleUUID, 'CreateLight')
+Ch.DeleteLight = Ext.Net.CreateChannel(ModuleUUID, 'DeleteLight')
+Ch.DuplicateLight = Ext.Net.CreateChannel(ModuleUUID, 'DuplicateLight')
 
-Channels.SelectedLight = Ext.Net.CreateChannel(ModuleUUID, 'SelectedLight')
-Channels.CreateLight = Ext.Net.CreateChannel(ModuleUUID, 'CreateLight')
-Channels.DeleteLight = Ext.Net.CreateChannel(ModuleUUID, 'DeleteLight')
-Channels.DuplicateLight = Ext.Net.CreateChannel(ModuleUUID, 'DuplicateLight')
+Ch.CurrentEntityTransform = Ext.Net.CreateChannel(ModuleUUID, 'CurrentEntityTransform')
+Ch.EntityTranslate = Ext.Net.CreateChannel(ModuleUUID, 'EntityTranslate')
+Ch.EntityRotation = Ext.Net.CreateChannel(ModuleUUID, 'EntityRotation')
+Ch.EntityRotationOrbit = Ext.Net.CreateChannel(ModuleUUID, 'EntityRotationOrbit')
 
-Channels.CurrentEntityTransform = Ext.Net.CreateChannel(ModuleUUID, 'CurrentEntityTransform')
-Channels.EntityTranslate = Ext.Net.CreateChannel(ModuleUUID, 'EntityTranslate')
-Channels.EntityRotation = Ext.Net.CreateChannel(ModuleUUID, 'EntityRotation')
-Channels.EntityRotationOrbit = Ext.Net.CreateChannel(ModuleUUID, 'EntityRotationOrbit')
+Ch.SaveLoadLightPos = Ext.Net.CreateChannel(ModuleUUID, 'SaveLoadLightPos')
 
-Channels.SaveLoadLightPos = Ext.Net.CreateChannel(ModuleUUID, 'SaveLoadLightPos')
+Ch.StickToCamera = Ext.Net.CreateChannel(ModuleUUID, 'StickToCamera')
 
-Channels.StickToCamera = Ext.Net.CreateChannel(ModuleUUID, 'StickToCamera')
-
-Channels.MarkerHandler = Ext.Net.CreateChannel(ModuleUUID, 'MarkerHandler')
+Ch.MarkerHandler = Ext.Net.CreateChannel(ModuleUUID, 'MarkerHandler')
 
 
-Channels.CreateOriginPoint = Ext.Net.CreateChannel(ModuleUUID, 'CreateOriginPoint')
-Channels.DeleteOriginPoint = Ext.Net.CreateChannel(ModuleUUID, 'DeleteOriginPoint')
-Channels.MoveOriginPoint = Ext.Net.CreateChannel(ModuleUUID, 'MoveOriginPoint')
-Channels.ToCamOriginPoint = Ext.Net.CreateChannel(ModuleUUID, 'ToCamOriginPoint')
+Ch.CreateOriginPoint = Ext.Net.CreateChannel(ModuleUUID, 'CreateOriginPoint')
+Ch.DeleteOriginPoint = Ext.Net.CreateChannel(ModuleUUID, 'DeleteOriginPoint')
+Ch.MoveOriginPoint = Ext.Net.CreateChannel(ModuleUUID, 'MoveOriginPoint')
+Ch.ToCamOriginPoint = Ext.Net.CreateChannel(ModuleUUID, 'ToCamOriginPoint')
 
-Channels.SelectedGobo = Ext.Net.CreateChannel(ModuleUUID, 'SelectedGobo')
-Channels.CreateGobo = Ext.Net.CreateChannel(ModuleUUID, 'CreateGobo')
-Channels.DeleteGobo = Ext.Net.CreateChannel(ModuleUUID, 'DeleteGobo')
-Channels.HideGobo = Ext.Net.CreateChannel(ModuleUUID, 'HideGobo')
-Channels.GoboTranslate = Ext.Net.CreateChannel(ModuleUUID, 'GoboTranslate')
-Channels.GoboRotation = Ext.Net.CreateChannel(ModuleUUID, 'GoboRotation')
+Ch.SelectedGobo = Ext.Net.CreateChannel(ModuleUUID, 'SelectedGobo')
+Ch.CreateGobo = Ext.Net.CreateChannel(ModuleUUID, 'CreateGobo')
+Ch.DeleteGobo = Ext.Net.CreateChannel(ModuleUUID, 'DeleteGobo')
+Ch.HideGobo = Ext.Net.CreateChannel(ModuleUUID, 'HideGobo')
+Ch.GoboTranslate = Ext.Net.CreateChannel(ModuleUUID, 'GoboTranslate')
+Ch.GoboRotation = Ext.Net.CreateChannel(ModuleUUID, 'GoboRotation')
 
-Channels.MazzleBeam = Ext.Net.CreateChannel(ModuleUUID, 'MazzleBeam')
+Ch.MazzleBeam = Ext.Net.CreateChannel(ModuleUUID, 'MazzleBeam')
 
-Channels.DeleteEverything = Ext.Net.CreateChannel(ModuleUUID, 'DeleteEverything')
+Ch.DeleteEverything = Ext.Net.CreateChannel(ModuleUUID, 'DeleteEverything')
 
-Channels.SceneSave = Ext.Net.CreateChannel(ModuleUUID, 'SceneSave')
-Channels.SceneLoad = Ext.Net.CreateChannel(ModuleUUID, 'SceneLoad')
+Ch.SceneSave = Ext.Net.CreateChannel(ModuleUUID, 'SceneSave')
+Ch.SceneLoad = Ext.Net.CreateChannel(ModuleUUID, 'SceneLoad')
 
-Channels.GetTriggers = Ext.Net.CreateChannel(ModuleUUID, 'GetTriggers')
+Ch.GetTriggers = Ext.Net.CreateChannel(ModuleUUID, 'GetTriggers')
 
-Channels.ApplyANL = Ext.Net.CreateChannel(ModuleUUID, 'ApplyANL')
-Channels.ResetANL = Ext.Net.CreateChannel(ModuleUUID, 'ResetANL')
+Ch.ApplyANL = Ext.Net.CreateChannel(ModuleUUID, 'ApplyANL')
+Ch.ResetANL = Ext.Net.CreateChannel(ModuleUUID, 'ResetANL')

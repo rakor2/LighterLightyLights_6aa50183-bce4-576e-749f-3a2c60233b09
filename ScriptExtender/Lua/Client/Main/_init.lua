@@ -1,6 +1,7 @@
 Ext.Require('Client/Main/ListenersClient.lua')
 Ext.Require('Client/Main/MainHandlersClient.lua')
 Ext.Require('Client/Main/AnalHandlersClient.lua')
+Ext.Require('Client/Main/DocsUI.lua')
 Ext.Require('Client/Main/AnalUI.lua')
 Ext.Require('Client/Main/OriginUI.lua')
 Ext.Require('Client/Main/GoboUI.lua')

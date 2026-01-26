@@ -1,4 +1,7 @@
 LLGlobals.States = LLGlobals.States or {}
+LLGlobals.DummyNameMap = {}
+LLGlobals.SaveLoad = {}
+LLGlobals.CameraPositions = {}
 
 
 
@@ -13,6 +16,7 @@ end)
 
 Ext.Events.ResetCompleted:Subscribe(function()
     LLGlobals.SourceTranslate = _C().Transform.Transform.Translate
+    CharacterLightSetupState(lightSetupState)
 end)
 
 
@@ -64,9 +68,10 @@ function getSelectedLightType()
     local entity = getSelectedLightEntity()
     if not entity then return end
     local lightType = entity.LightType
-    if      lightType == 2 then  return 'Directional'
-    elseif  lightType == 1 then  return 'Spotlight'
-    else                         return 'Point'
+
+    if     lightType == 2 then return 'Directional'
+    elseif lightType == 1 then return 'Spotlight'
+    else                       return 'Point'
     end
 end
 
@@ -86,7 +91,7 @@ function SelectLight()
     LLGlobals.selectedEntity = getSelectedEntity()
     LLGlobals.selectedLightType = getSelectedLightType()
     local name = getSelectedLightName()
-    Channels.SelectedLight:SendToServer(LLGlobals.selectedUuid)
+    Ch.SelectedLight:SendToServer(LLGlobals.selectedUuid)
     UpdateCreatedLightsCombo()
     UpdateElements(LLGlobals.selectedUuid)
 
@@ -163,8 +168,8 @@ function UpdateTranformInfo(x, y, z, rx, ry, rz)
 end
 
 
-lightType = defaultLightType
 
+lightType = defaultLightType
 
 function CreateLight()
     if LLGlobals.States.allowLightCreation then
@@ -176,7 +181,7 @@ function CreateLight()
             Position = Position
         }
 
-        Channels.CreateLight:RequestToServer(Data, function (Response)
+        Ch.CreateLight:RequestToServer(Data, function (Response)
             if Response then
                 LLGlobals.CreatedLightsServer = Response[1]
                 LLGlobals.selectedUuid = Response[2]
@@ -201,7 +206,7 @@ function CreateLight()
 
                     if stickToggleOff and Utils.subID and Utils.subID['Stick'] then
                         E.checkStick.Checked = false
-                        stickToCameraCheck()
+                        StickToCamera()
                     end
 
                     Helpers.Timer:OnTicks(10, function ()
@@ -223,16 +228,12 @@ end
 
 
 
-
-
-
-
 --- TBD: remove some DUPLICATIONS HAHAHAHAH GET IT????? LMAOOOOOOOOOOOOOOOOOO
 function DuplicateLight()
     local prevoiusUuid = LLGlobals.selectedUuid
     local OriginalLight = LLGlobals.LightParametersClient[prevoiusUuid]
 
-    Channels.DuplicateLight:RequestToServer(Data, function (Response)
+    Ch.DuplicateLight:RequestToServer(Data, function (Response)
         if Response then
             LLGlobals.CreatedLightsServer = Response[1]
             LLGlobals.selectedUuid = Response[2]
@@ -241,10 +242,8 @@ function DuplicateLight()
 
             if lightTypeOld == 1 then
                lightTypeOld = 'Spotlight'
-
             elseif lightTypeOld == 2 then
                 lightTypeOld = 'Directional'
-
             else
                 lightTypeOld = 'Point'
             end
@@ -279,7 +278,7 @@ function DuplicateLight()
 
             if stickToggleOff and Utils.subID and Utils.subID['Stick'] then
                 E.checkStick.Checked = false
-                stickToCameraCheck()
+                StickToCamera()
             end
 
             Helpers.Timer:OnTicks(16, function ()
@@ -294,7 +293,7 @@ end
 
 
 
-Channels.CurrentEntityTransform:SetHandler(function (Data)
+Ch.CurrentEntityTransform:SetHandler(function (Data)
     local rx, ry, rz = table.unpack(Data.HumanRotation)
     local x,y,z = table.unpack(Data.Translate)
     UpdateTranformInfo(x, y, z, rx, ry, rz)
@@ -328,7 +327,6 @@ function GatherLightsAndMarkers()
     for _, entity in ipairs(gov) do
         for _, guid in pairs(Guido) do
             if entity.GameObjectVisual.RootTemplateId:find(guid) then
-                -- DPrint(entity)
                 table.insert(EntitiesToDelete, entity.Uuid.EntityUuid)
             end
         end
@@ -340,7 +338,7 @@ function GatherLightsAndMarkers()
             table.insert(EntitiesToDelete, entity.Uuid.EntityUuid)
         end
     end
-    Channels.DeleteEverything:SendToServer(EntitiesToDelete)
+    Ch.DeleteEverything:SendToServer(EntitiesToDelete)
 end
 
 
@@ -411,7 +409,7 @@ end
 
 
 
-Channels.MarkerHandler:SetHandler(function (Data)
+Ch.MarkerHandler:SetHandler(function (Data)
     Helpers.Timer:OnTicks(15, function ()
         LLGlobals.markerEntity = Ext.Entity.Get(Data)
         LLGlobals.markerEntity.Visual.Visual:SetWorldScale({markerScale, markerScale, markerScale})
@@ -513,13 +511,10 @@ function SetLightDirectionalParameters(parameter, value)
 
         elseif parameter == 'DirectionLightAttenuationSide' then
             lightEntity.DirectionLightAttenuationSide = value
-
         elseif parameter == 'DirectionLightAttenuationSide2' then
             lightEntity.DirectionLightAttenuationSide2 = value
-
         elseif parameter == 'DirectionLightDimensions' then
             lightEntity.DirectionLightDimensions = value
-
         end
         LLGlobals.LightParametersClient[LLGlobals.selectedUuid][parameter] = value
 
@@ -535,6 +530,7 @@ function SetLightFill(value)
         LLGlobals.LightParametersClient[LLGlobals.selectedUuid].Flags = value
     end
 end
+
 
 
 function SetLightChannel(value)
@@ -572,17 +568,15 @@ function MoveEntity(entity, axis, offset, step, mode, objectType)
 
         if objectType == 'Light' then
             if mode == 'World' then
-                Channels.EntityTranslate:SendToServer(Data)
-            else
-                Channels.EntityRotationOrbit:SendToServer(Data)
+                Ch.EntityTranslate:SendToServer(Data)
+            else -- Character relatve
+                Ch.EntityRotationOrbit:SendToServer(Data)
             end
 
         elseif objectType == 'Point' then
-            Channels.MoveOriginPoint:SendToServer(Data)
-
-        elseif objectType == 'Gobo' then
-            return 0
+            Ch.MoveOriginPoint:SendToServer(Data)
         end
+
     end
 end
 
@@ -597,7 +591,7 @@ function RotateEntity(entity, axis, offset, step, objectType)
             Translate = LLGlobals.SourceTranslate
         }
         if objectType == 'Light' then
-            Channels.EntityRotation:SendToServer(Data)
+            Ch.EntityRotation:SendToServer(Data)
 
         elseif objectType == 'Point' then
         elseif objectType == 'Gobo' then
@@ -608,7 +602,7 @@ end
 
 
 function SourceCutscene(state)
-    local entity = _C()
+    local entity = entity or _C()
 
     if not entity then return end
 
@@ -624,13 +618,13 @@ function SourceCutscene(state)
         if Dummy:TLPreviewDummyPlayer() then
             local Transform = Dummy:TLPreviewDummyPlayerTransform()
             LLGlobals.SourceTranslate = Transform.Translate
-            Channels.CurrentEntityTransform:SendToServer(LLGlobals.SourceTranslate)
+            Ch.CurrentEntityTransform:SendToServer(LLGlobals.SourceTranslate)
         else
             Utils:SubUnsubToTick('unsub', 'SourceCutscene',_)
             -- DPrint('SourceCutscene off')
             E.checkCutsceneSrc.Checked = false
             LLGlobals.SourceTranslate = entity.Transform.Transform.Translate
-            Channels.CurrentEntityTransform:SendToServer(nil)
+            Ch.CurrentEntityTransform:SendToServer(nil)
         end
     end)
     else
@@ -639,7 +633,7 @@ function SourceCutscene(state)
             -- DPrint('SourceCutscene off 2')
             LLGlobals.SourceTranslate = entity.Transform.Transform.Translate
         end
-        Channels.CurrentEntityTransform:SendToServer(nil)
+        Ch.CurrentEntityTransform:SendToServer(nil)
     end
 end
 
@@ -647,7 +641,6 @@ end
 
 function SourcePoint(state)
     local entity = LLGlobals.pointEntity
-
     if not entity then E.checkOriginSrc.Checked = false return end
 
     E.checkPMSrc.Checked = false
@@ -661,18 +654,18 @@ function SourcePoint(state)
         if not E.checkOriginSrc.Checked then return end
         if not entity.Transform then return end
 
-        local Transform = entity.Transform.Transform
+        local Transform = entity.stickToCameraCheckTransform.Transform
         LLGlobals.SourceTranslate = Transform.Translate
-        Channels.CurrentEntityTransform:SendToServer(LLGlobals.SourceTranslate)
+        Ch.CurrentEntityTransform:SendToServer(LLGlobals.SourceTranslate)
     end)
     else
         if Utils.subID and Utils.subID['SourcePoint'] then
             Utils:SubUnsubToTick('unsub', 'SourcePoint',_)
             LLGlobals.SourceTranslate = _C().Transform.Transform.Translate
         end
-        Channels.CurrentEntityTransform:SendToServer(nil)
+        Ch.CurrentEntityTransform:SendToServer(nil)
     end
-    return 0
+    return false
 end
 
 --- TBD: fix this garbo
@@ -684,7 +677,6 @@ function SourcePhotoMode(state)
     E.checkOriginSrc.Checked = false
 
     if state then
-
         Utils:SubUnsubToTick('sub', 'SourcePhotoMode', function ()
 
         if not E.checkPMSrc.Checked then return end
@@ -693,16 +685,16 @@ function SourcePhotoMode(state)
         if not entity or not entity.Visual then E.checkPMSrc.Checked = false return end
         local Transform = entity.Visual.Visual.WorldTransform
         LLGlobals.SourceTranslate = Transform.Translate
-        Channels.CurrentEntityTransform:SendToServer(LLGlobals.SourceTranslate)
+        Ch.CurrentEntityTransform:SendToServer(LLGlobals.SourceTranslate)
     end)
     else
         if Utils.subID and Utils.subID['SourcePhotoMode'] then
             Utils:SubUnsubToTick('unsub', 'SourcePhotoMode',_)
             LLGlobals.SourceTranslate = _C().Transform.Transform.Translate
         end
-        Channels.CurrentEntityTransform:SendToServer(nil)
+        Ch.CurrentEntityTransform:SendToServer(nil)
     end
-    return 0
+    return false
 end
 
 
@@ -718,7 +710,7 @@ function SourceClient(state)
         if _C() and _C().Visual and _C().Visual.Visual.WorldTransform then
             local Transform = _C().Visual.Visual.WorldTransform
             LLGlobals.SourceTranslate = Transform.Translate
-            Channels.CurrentEntityTransform:SendToServer(LLGlobals.SourceTranslate)
+            Ch.CurrentEntityTransform:SendToServer(LLGlobals.SourceTranslate)
         end
     end)
     else
@@ -726,11 +718,13 @@ function SourceClient(state)
             Utils:SubUnsubToTick('unsub', 'SourceClient',_)
             LLGlobals.SourceTranslate = _C().Transform.Transform.Translate
         end
-        Channels.CurrentEntityTransform:SendToServer(nil)
+        Ch.CurrentEntityTransform:SendToServer(nil)
     end
 end
 
-function stickToCameraCheck()
+
+
+function StickToCamera()
     Utils:SubUnsubToTick('sub', 'Stick', function ()
         if E.checkStick.Checked then
 
@@ -740,7 +734,7 @@ function stickToCameraCheck()
                 Translate = Translate,
                 RotationQuat = RotationQuat
             }
-            Channels.StickToCamera:SendToServer(Data)
+            Ch.StickToCamera:SendToServer(Data)
 
 
             local x,y,z = table.unpack(Translate)
@@ -768,37 +762,19 @@ function CreateLightNumberNotification(lightName)
     selectedLightNotification = p:AddText(lightName)
     windowNotification.AlwaysAutoResize = true
 end
-
-
-
 CreateLightNumberNotification()
 
 
 
 function CharacterLightSetupState(state)
-    local entities
-    local _, e = pcall(function ()
-        entities = Ext.Entity.GetAllEntitiesWithComponent('CharacterLight')
-        for _, entity in pairs(entities) do
-            entity.CharacterLight.Enabled = state
-        end
-    end)
-    if e then return DPrint('Only available for SE Devel') end
+    Entities = Ext.Entity.GetAllEntitiesWithComponent('CharacterLight')
+    for _, entity in pairs(Entities) do
+        entity.CharacterLight.Enabled = not state
+    end
 end
 
 
 
-
-LLGlobals.DummyNameMap = {}
-visTemplatesOptionsIndex = {}
-
-rotMod = 1500
-stepMod = 1500
-scaleMod = 1500
-
-
-
-LLGlobals.CameraPositions = {}
 function CameraSaveLoadPosition(index)
     local activeCam = Camera:GetActiveCamera()
     local pmCamera = Camera:GetPhotoModeCamera()
@@ -829,9 +805,6 @@ end
 
 
 
-
-LLGlobals.SaveLoad = {}
-
 MCM.SetKeybindingCallback('ll_move_to_cursor', function()
     if LLGlobals.DummyNameMap then
         local index = E.visTemComob.SelectedIndex + 1
@@ -845,6 +818,7 @@ MCM.SetKeybindingCallback('ll_move_to_cursor', function()
         UpdateCharacterInfo(index)
     end
 end)
+
 
 
 function UpdateCharacterInfo(index)
@@ -866,6 +840,9 @@ function UpdateCharacterInfo(index)
 end
 
 
+rotMod = 1500
+stepMod = 1500
+scaleMod = 1500
 
 function MoveCharacter(axis, value, stepMod, index)
     if LLGlobals.DummyNameMap then
@@ -909,6 +886,7 @@ function MoveCharacter(axis, value, stepMod, index)
         end
     end
 end
+
 
 
 function RotateCharacter(axis, value, rotMod, index)
@@ -1001,7 +979,7 @@ local buttonCount = 0
 
 
 
---refactored by slop. too lazy
+--refactored by slop. too lazy xd
 function SaveVisTempCharacterPosition()
     local index = E.visTemComob.SelectedIndex + 1
     local selectedName = E.visTemComob.Options[index]
@@ -1078,7 +1056,6 @@ end
 
 
 
-
 function MoveTail(axis, value, stepMod, index)
     local tailVis = nil
     local pos
@@ -1110,7 +1087,7 @@ end
 
 function RotateTail(axis, value, rotMod, index)
     local tailVis = nil
-    if LLGlobals.DummyNameMap[E.visTemComob.Options[index]]and LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual then
+    if LLGlobals.DummyNameMap[E.visTemComob.Options[index]] and LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual then
         for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments do
             if LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("tail") then
                 tailVis = LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.Attachments[i]
@@ -1197,52 +1174,6 @@ end
 
 
 
-function DisableVFXEffects(isChecked)
-    if vfxSubscription then
-        Ext.Events.Tick:Unsubscribe(vfxSubscription)
-        vfxSubscription = nil
-    end
-
-    if not isChecked then
-        return
-    end
-
-    vfxSubscription = Ext.Events.Tick:Subscribe(function()
-        local effects = Ext.Entity.GetAllEntitiesWithComponent("Effect")
-        for _, entity in ipairs(effects) do
-            if entity.Effect and string.find(entity.Effect.EffectName, "VFX_") then
-                local components = entity.Effect.Timeline.Components
-                if components then
-                    for _, component in ipairs(components) do
-                        for property, values in pairs(component.Properties) do
-                            if values.FullName == "Radial Blur.Opacity" then
-                                for _, keyFrame in ipairs(values.KeyFrames) do
-                                    if keyFrame.Frames then
-                                        for _, frame in ipairs(keyFrame.Frames) do
-                                            if frame then
-                                                local success, value = pcall(function() return frame.Value end)
-                                                if success then
-                                                    frame.Value = 0
-                                                end
-                                            end
-                                        end
-                                    end
-                                end
-                            end
-                            if values.FullName == "Falloff Start-End" then
-                                values.Min = 0
-                                values.Max = 0
-                            end
-                        end
-                    end
-                end
-            end
-        end
-        tickCounter = tickCounter + 1
-    end)
-end
-
-
 function StartFollowIGCS()
     Utils:SubUnsubToTick('sub', 'look', function ()
         local camera = Camera:GetActiveCamera()
@@ -1259,18 +1190,3 @@ function StopFollowIGCS()
     end
     E.checkFollowIGCS.Checked = false
 end
-
-
-
-Ext.RegisterConsoleCommand('look', function (cmd, ...)
-    Utils:SubUnsubToTick('sub', 'look', function ()
-        local Transform = Camera:GetActiveCamera().Transform.Transform
-        Camera:GetPhotoModeCamera().PhotoModeCameraTransform.Transform = Transform
-    end)
-end)
-
-
-
-Ext.RegisterConsoleCommand('looks', function (cmd, ...)
-    Utils:SubUnsubToTick('unsub', 'look', _)
-end)

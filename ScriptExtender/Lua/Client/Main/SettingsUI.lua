@@ -1,7 +1,7 @@
 function Settings2Tab(p)
 
     local imputPasspord = p:AddInputText('')
-    
+
     local btnSubmit = p:AddButton('Enter')
     btnSubmit.SameLine = true
     btnSubmit.OnClick = function ()
@@ -21,15 +21,12 @@ function Settings2Tab(p)
     textSad.Visible = false
 
 
+
     p:AddSeparatorText('UI')
 
 
 
-
     local collapseDefault = p:AddCollapsingHeader('Opened by default')
-    
-
-
     local collapseOBDMain = collapseDefault:AddTree('Main')
 
 
@@ -69,7 +66,7 @@ function Settings2Tab(p)
     E.checkMainDirOpenedByDefault.Checked = openByDefaultMainDir
 
 
-    
+
     E.checkMainAddOpenedByDefault = collapseOBDMain:AddCheckbox('Additional parameters')
     E.checkMainAddOpenedByDefault.OnChange = function (e)
         openByDefaultMainAdd = e.Checked
@@ -107,16 +104,10 @@ function Settings2Tab(p)
 
 
 
-
-
-
     local collapseOBDPM = collapseDefault:AddTree('PM')
 
 
-    
 
-
-    
     E.checkPMCameraOpenedByDefault = collapseOBDPM:AddCheckbox('Camera')
     E.checkPMCameraOpenedByDefault.OnChange = function (e)
         openByDefaultPMCamera = e.Checked
@@ -179,7 +170,6 @@ function Settings2Tab(p)
     E.checkPMSaveOpenedByDefault.Checked = openByDefaultPMSave
 
 
-    
 
     local c = 0
     E.checkPickerSize = p:AddCheckbox('Bigger color picker')
@@ -189,7 +179,7 @@ function Settings2Tab(p)
             c = c + 1
             if c < 3 then
                 local textColorWarning = p:AddText([[Can not apply this setting, you have lights on the scene]])
-                    Helpers.Timer:OnTicks(200, function ()
+                    Helpers.Timer:OnTicks(400, function ()
                         textColorWarning:Destroy()
                     end)
                 return
@@ -213,13 +203,6 @@ function Settings2Tab(p)
     end
     E.checkPickerSize.Checked = biggerPicker
 
-    
-    -- E.slFadeTime = p:AddSlider('Elements fade time')
-    -- E.slFadeTime.Value = {fadeTime, 0, 0, 0}
-    -- E.slFadeTime.OnChange = function (e)
-    --     fadeTime = e.Value[1]
-    --     SettingsSave()
-    -- end
 
     E.slFadeTime = p:AddSlider('Elements fade time')
     E.slFadeTime.Value = {fadeTime, 0, 0, 0}
@@ -232,7 +215,8 @@ function Settings2Tab(p)
 
     p:AddSeparatorText('Mod')
 
-    
+
+
     E.checkDefaultType = p:AddCombo('Default type')
     E.checkDefaultType.Options = {'Point', 'Spotlight', 'Directional'}
     E.checkDefaultType.SelectedIndex = table.find(E.checkDefaultType.Options, defaultLightType) - 1
@@ -242,7 +226,7 @@ function Settings2Tab(p)
     end
 
 
-    -- why do I heve this E? I don't remember...
+
     E.slMarkerSize = p:AddSlider('Default marker size', DEFAULT_MARKER_SCALE, 0.01, DEFAULT_MARKER_SCALE, 1)
     E.slMarkerSize.Value = {markerScale, 0, 0, 0}
     E.slMarkerSize.OnChange = function (e)
@@ -252,20 +236,27 @@ function Settings2Tab(p)
         LLGlobals.markerEntity.Visual.Visual:SetWorldScale({markerScale, markerScale, markerScale})
     end
 
+
+
     E.slDefCamSpeed = p:AddSlider('Default camera speed', 0, 0.1, 10, 1)
     E.slDefCamSpeed.Value = {defaultCameraSpeed, 0, 0, 0}
     E.slDefCamSpeed.OnChange = function (e)
-        defaultCameraSpeed = e.Value[1] 
+        defaultCameraSpeed = e.Value[1]
         SettingsSave()
     end
+
+
 
     E.checkLightSetupState = p:AddCheckbox('CharacterLight setup off by default')
     E.checkLightSetupState.Checked = lightSetupState
     E.checkLightSetupState.OnChange = function (e)
         lightSetupState = e.Checked
+        E.checkLightSetup.Checked = lightSetupState
+        CharacterLightSetupState(lightSetupState)
         SettingsSave()
     end
-    
+
+
 
     E.checkToggleMarker = p:AddCheckbox('Marker off by default')
     E.checkToggleMarker.Checked = markerOff
@@ -274,11 +265,39 @@ function Settings2Tab(p)
         SettingsSave()
     end
 
+
+
     E.checkStickToggle = p:AddCheckbox('Disable stick on light creation')
     E.checkStickToggle.Checked = stickToggleOff
     E.checkStickToggle.OnChange = function (e)
         stickToggleOff = e.Checked
         SettingsSave()
     end
+
+
+
+    function TableTest()
+        local colCnt = 0
+        local MAX_ROW = 5
+        local MAX_COL = 10
+
+        while colCnt ~= MAX_ROW do
+            for col = 1, MAX_COL do
+                local x = p:AddButton(col - 1 .. ' ' .. colCnt)
+
+                if col == 1 then
+                    x.SameLine = false
+                else
+                    x.SameLine = true
+                end
+
+                if col == MAX_COL then
+                    colCnt = colCnt + 1
+                end
+            end
+        end
+    end
+    -- PagMan it works
+    -- TableTest()
 
 end
