@@ -221,6 +221,15 @@ function Settings2Tab(p)
     --     SettingsSave()
     -- end
 
+    E.slFadeTime = p:AddSlider('Elements fade time')
+    E.slFadeTime.Value = {fadeTime, 0, 0, 0}
+    E.slFadeTime.OnChange = function (e)
+        fadeTime = e.Value[1]
+        SettingsSave()
+    end
+
+
+
     p:AddSeparatorText('Mod')
 
     

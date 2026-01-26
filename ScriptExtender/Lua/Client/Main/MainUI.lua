@@ -246,6 +246,104 @@ function MainWindow(mw)
     --     end
     -- end
     -- funnyStuff()
+    function funnyStuff()
+        local allElements = {}
+        -- local allButtons = {}
+
+        for _, element in pairs(E) do
+            table.insert(allElements, element)
+        end
+
+        for _, element in pairs(ER) do
+            table.insert(allElements, element)
+        end
+
+        -- for _, element in pairs(ER) do
+        --     table.insert(allButtons, element)
+        -- end
+
+        -- for _, element in pairs(allButtons) do
+        --     element.OnClick = function(e)
+        --         local elementType = tostring(e):match('^(%w+)')
+
+        --         if elementType == 'Button' then
+        --             -- Imgui.FadeColor(e, 'Button', Style.Colors.buttonHovered, Style.Colors.button, fadeTime)
+        --             -- Imgui.FadeColor(e, 'ButtonActive', Style.Colors.buttonHovered, Style.Colors.buttonActive, fadeTime)
+        --             -- Imgui.FadeColor(e, 'ButtonHovered', Style.Colors.buttonActive, Style.Colors.buttonHovered, fadeTime)
+        --         elseif elementType == 'Checkbox' then
+        --             Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, fadeTime)
+        --         elseif elementType == 'SliderScalar' or elementType == 'SliderInt' then
+        --             Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, fadeTime)
+        --             Imgui.FadeColor(e, 'FrameBgHovered', Style.Colors.frameBgActive, Style.Colors.frameBgHovered, fadeTime)
+        --         elseif elementType == 'InputText' then
+        --             Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, fadeTime)
+        --         elseif elementType == 'ColorEdit' then
+        --             Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, fadeTime)
+        --         elseif elementType == 'Combo' then
+        --             Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, fadeTime)
+        --         elseif elementType == 'TabItem' then
+        --             Imgui.FadeColor(e, 'TabActive', Style.Colors.tabHovered, Style.Colors.tabActive, fadeTime)
+        --             -- Imgui.FadeColor(e, 'TabHovered', Style.Colors.tabHovered, Style.Colors.tab, fadeTime)
+        --             Imgui.FadeColor(e, 'Tab', Style.Colors.tabHovered, Style.Colors.tab, fadeTime)
+        --         elseif elementType == 'CollapsingHeader' then
+        --             Imgui.FadeColor(e, 'Header', Style.Colors.headerHovered, Style.Colors.header, fadeTime)
+        --         end
+        --     end
+        -- end
+
+        for _, element in pairs(allElements) do
+            element.OnHoverEnter = function(e)
+                local elementType = tostring(e):match('^(%w+)')
+                if elementType == 'Button' then
+                    Imgui.FadeColor(e, 'Button', Style.Colors.buttonHovered, Style.Colors.button, fadeTime)
+                elseif elementType == 'Checkbox' then
+                    Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, fadeTime)
+                elseif elementType == 'SliderScalar' or elementType == 'SliderInt' then
+                    Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, fadeTime)
+                    Imgui.FadeColor(e, 'FrameBgHovered', Style.Colors.frameBgHovered, Style.Colors.frameBgHovered, fadeTime)
+                elseif elementType == 'InputText' then
+                    Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, fadeTime)
+                elseif elementType == 'ColorEdit' then
+                    Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, fadeTime)
+                elseif elementType == 'Combo' then
+                    Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, fadeTime)
+                elseif elementType == 'TabItem' then
+                    Imgui.FadeColor(e, 'TabActive', Style.Colors.tabHovered, Style.Colors.tabActive, fadeTime)
+                    -- Imgui.FadeColor(e, 'TabHovered', Style.Colors.tabHovered, Style.Colors.tab, fadeTime)
+                    Imgui.FadeColor(e, 'Tab', Style.Colors.tabHovered, Style.Colors.tab, fadeTime)
+                elseif elementType == 'CollapsingHeader' then
+                    Imgui.FadeColor(e, 'Header', Style.Colors.headerHovered, Style.Colors.header, fadeTime)
+                end
+            end
+
+            --     element.OnHoverLeave = function(e)
+            --         local elementType = tostring(e):match('^(%w+)')
+
+            --         if elementType == 'Button' then
+            --             Imgui.FadeColor(e, 'Button', Style.Colors.buttonHovered, Style.Colors.button, fadeTime)
+            --         elseif elementType == 'Checkbox' then
+            --             Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, fadeTime)
+            --         elseif elementType == 'SliderScalar' or elementType == 'SliderInt' then
+            --             Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, fadeTime)
+            --             Imgui.FadeColor(e, 'FrameBgHovered', Style.Colors.frameBgHovered, Style.Colors.frameBgHovered, fadeTime)
+            --         elseif elementType == 'InputText' then
+            --             Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, fadeTime)
+            --         elseif elementType == 'ColorEdit' then
+            --             Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, fadeTime)
+            --         elseif elementType == 'Combo' then
+            --             Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, fadeTime)
+            --         elseif elementType == 'TabItem' then
+            --             Imgui.FadeColor(e, 'TabActive', Style.Colors.tabHovered, Style.Colors.tabActive, fadeTime)
+            --             -- Imgui.FadeColor(e, 'TabHovered', Style.Colors.tabHovered, Style.Colors.tab, fadeTime)
+            --             Imgui.FadeColor(e, 'Tab', Style.Colors.tabHovered, Style.Colors.tab, fadeTime)
+            --         elseif elementType == 'CollapsingHeader' then
+            --             Imgui.FadeColor(e, 'Header', Style.Colors.headerHovered, Style.Colors.header, fadeTime)
+            --         end
+            --     end
+            -- end
+        end
+    end
+    funnyStuff()
 --#endregion
 
     buttonSizes()
