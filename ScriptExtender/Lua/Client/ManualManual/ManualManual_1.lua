@@ -96,22 +96,24 @@ For example: some animations move characters only visually, while their actual "
 		Topic = "The tabs",
 		SubTopic = "Atmosphere and Lighting",
 		content = {
-			{ type = "Heading", text = [[Atmosphere and Lighting]] },
+			{ type = "Heading", size = 'Big', text = [[Atmosphere and Lighting]] },
 			{ type = "Content", size = CONTENT_SIZE, text = [[You can control the entire level's lighting and atmosphere by switching between default Lighting and Atmosphere presets.
 These presets affect sun and moon position, atmosphere color, fog parameters, and other related settings.]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Reset presets ", text = [[You can always reset level's lighting or atmosphere preset to default by clicking corresponding reset button.]] },
-			{ type = "Heading", text = [[Manual parameters control]] },
+			{ type = "Separator"},
+			{ type = "Heading", size = 'Big', text = [[Manual parameters control]] },
 			{ type = "Content", size = CONTENT_SIZE, text = [[If you want to tune lighting and atmosphere parameters manually, you can do so in the Parameters section.
 
 1. Select any preset as a base.
 2. Modify the parameters and apply them.
 It is recommended to assign a keybind for applying parameters for a faster workflow.
-]] },
+			]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Reset parameters ", text = [[Left click resets parameters for the currently selected preset.
 Right click resets parameters for all presets.]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Preset search issue ", text = [[Sometimes, when searching for a preset, it may appear as the first item in the list but cannot be clicked.
 Due to UI limitations, in this case you need to right click on the list to select the first entry.]] },
-			{ type = "Heading", text = [[Preset manager]] },
+			{ type = "Separator"},
+			{ type = "Heading", size = 'Big', text = [[Preset manager]] },
 			{ type = "Content", size = CONTENT_SIZE, text = [[You can save your tuned presets using the Preset Manager. Later, you can apply then to any of the vanilla presets.]] },
 		},
 	},
@@ -120,8 +122,9 @@ Due to UI limitations, in this case you need to right click on the list to selec
 		SubTopic = "Atmosphere and Lighting",
         content = {
             { type = "Heading", text = [[Tips]] },
-			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Env effects", 			text = [[You can apply different environmental effects, such as rain, blood rain, ashes, snow blizzard, using EnvironmentalEffect in Atmosphere parameters. You can find all the effects in the toolkit by searchinh EffectResources named "VFX_Environment" or 'VFX_ATM"; or you can find some of them in the mod's articles.
-
+			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Env effects", text = [[You can apply different environmental effects, such as rain, blood rain, ashes, snow blizzard, using EnvironmentalEffect in Atmosphere parameters. You can find all the effects in the toolkit by searching EffectResources named "VFX_Environment" or 'VFX_ATM", and you can find some of them in the mod's articles.]]},
+			{ type = "InputText", widget_id = "article", width = 500, centered = true, default = "https://www.nexusmods.com/baldursgate3/articles/1648" },
+			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "", text = [[
 1. Find desired VFX.
 2. Copy the name.
 3. Paste in one of the EnvironmentalEffect slots.
@@ -159,15 +162,18 @@ Due to UI limitations, in this case you need to right click on the list to selec
 7. Return to the clickable entry saved in Step 4 and then click it. This should snap the second character, selected in Step 5, into position and align them correctly with the first character dummy.
 8. Done.
 ]] },
-			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = [[Opposite "Look at"]], 	text = [[The basic foundation of this is the fact that moving dummies in Lighty Lights does not cause the game to recalculate their head angles, and the functionality of Lighty Lights' dummy movement is, in essence, not recognised by the vanilla tools, so it will continue to think that your dummy is where it was last moved in the "true" photo mode tools (or where it started if you did not move them at all). This can be used to photographers' advantage.
+			{ type = "InputText", centered = true, widget_id = "demo_align", width = 500, default = "https://www.youtube.com/watch?v=o5NYgMnK3fc" },
+			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = [[Opposite "Look at"]], 	text = [[The basic foundation of this is the fact that moving dummies in Lighty Lights does not cause the game to recalculate their head angles, and the functionality of Lighty Lights' dummy movement is, in essence, not recognised by the vanilla game, so it will continue to think that your dummy is where it was last moved (or where it started if you did not move them at all). This can be used to our advantage.
 
 1. Enable Look at for both dummies.
 2. Enable "Head doesn't follow the camera".
-3. Select first dummy in LL and vanilla UI and have that character look at disired direction.
-4. After the first dummy's head is correctly in position, use the "Yaw" to rotate them.
-5. Select your second dummy and rotate them as well; when you done, select the dummy in vanilla PM UI, rotate them by 1 unit forth and back using any vanilla slider, you will see that the head updated its position.
-6. Done.
+3. Select the first dummy in LL and vanilla UI and make the second dummy look at disired direction using Look at sliders or Move to cam.
+4. Use "Yaw" or other sliders to rotate the first dummy. For example, if you want opposite directions, rotate it by 180.
+5. Rotate them by 1 unit forth and back using any vanilla slider; you will see, that the head updated its position.
+6. Repeat steps 4 and 5 untill you achieve your life goals
+7. Done.
 ]] },
+			{ type = "InputText", centered = true, widget_id = "demo_look", width = 500, default = "https://www.youtube.com/watch?v=qCWpg4ZYuew" },
 		},
 	},
 	{
