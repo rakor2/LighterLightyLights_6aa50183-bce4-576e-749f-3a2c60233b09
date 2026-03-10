@@ -1388,6 +1388,138 @@ function MainTab(p)
     textCF.SameLine = true
 
 
+    local treexD = E.orbitTree:AddTree('Grouped')
+
+
+
+    LLGlobals.LightsToInclude = {}
+
+
+
+    E.checkGroup = treexD:AddCheckbox('Include selected light to the group')
+    UI:Config(E.checkGroup, {
+        OnChange = function (e)
+            if not LLGlobals.selectedUuid then return end
+            LLGlobals.LightsToInclude[getSelectedUuid()] = e.Checked
+        end
+    })
+
+
+
+    local function MoveGrouped(axis, value)
+        for lightUuid, _ in pairs(LLGlobals.CreatedLightsServer) do
+            if LLGlobals.LightsToInclude[lightUuid] then
+                local lightEntity = Ext.Entity.Get(lightUuid)
+                MoveEntity(lightEntity, axis, value, E.modPosSlider.Value[1], 'Orbit', 'Light')
+            end
+        end
+    end
+
+
+
+    E.slGroupX = treexD:AddSlider('', 0, -1000, 1000, 0.1)
+    UI:Config(E.slGroupX, {
+        OnChange = function(e)
+            if not LLGlobals.selectedUuid then return end
+            MoveGrouped('x', e.Value[1])
+            e.Value = {0, 0, 0, 0}
+        end
+    })
+
+
+
+    E.btnGropuPosX_CW = treexD:AddButton('<')
+    UI:Config(E.btnGropuPosX_CW, {
+        SameLine = true,
+        OnClick = function(e)
+            MoveGrouped('x', -100)
+        end
+    })
+
+
+
+    E.btnGropuPosX_CCW = treexD:AddButton('>')
+    UI:Config(E.btnGropuPosX_CCW, {
+        SameLine = true,
+        OnClick = function(e)
+            MoveGrouped('x', 100)
+        end
+    })
+
+
+
+    local textCWCCW = treexD:AddText('Cw/Ccw')
+    textCWCCW.SameLine = true
+
+
+
+    E.slGroupZ = treexD:AddSlider('', 0, -1000, 1000, 0.1)
+    UI:Config(E.slGroupZ, {
+        OnChange = function(e)
+            MoveGrouped('z', e.Value[1])
+            e.Value = {0, 0, 0, 0}
+        end
+    })
+
+
+
+    E.btnGropuPosX_Down = treexD:AddButton('<')
+    UI:Config(E.btnGropuPosX_Down, {
+        SameLine = true,
+        OnClick = function(e)
+            MoveGrouped('y', -100)
+        end
+    })
+
+
+
+    E.btnGropuPosX_Up = treexD:AddButton('>')
+    UI:Config(E.btnGropuPosX_Up, {
+        SameLine = true,
+        OnClick = function(e)
+            MoveGrouped('y', 100)
+        end
+    })
+
+
+
+    local textDU = treexD:AddText('Down/Up')
+    textDU.SameLine = true
+
+
+
+    E.slGroupY = treexD:AddSlider('', 0, -1000, 1000, 0.1)
+    UI:Config(E.slGroupY, {
+        OnChange = function(e)
+            MoveGrouped('y', e.Value[1])
+            e.Value = {0, 0, 0, 0}
+        end
+    })
+
+
+
+    E.btnGropuPosX_F = treexD:AddButton('<')
+    UI:Config(E.btnGropuPosX_F, {
+        SameLine = true,
+        OnClick = function(e)
+            MoveGrouped('z', -100)
+        end
+    })
+
+
+
+    E.btnGropuPosX_C = treexD:AddButton('>')
+    UI:Config(E.btnGropuPosX_C, {
+        SameLine = true,
+        OnClick = function(e)
+            MoveGrouped('z', 100)
+        end
+    })
+
+
+    local textCCF = treexD:AddText('Close/Far')
+    textCCF.SameLine = true
+
 
     E.orbitTree:AddSeparator('')
 
