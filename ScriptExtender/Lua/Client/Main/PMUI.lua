@@ -203,6 +203,23 @@ function BetterPMTab(parent)
         -- DPrint('Selected character combo: %s', selectedCharacter)
         UpdateCharacterInfo(E.visTemComob.SelectedIndex + 1)
     end
+    function UpdatePMDummyCombo(e)
+        local e = e or E.visTemComob
+        PM.DummyWidgets[LLGlobals.DummyNames[selectedCharacter]].Window:SetColor('WindowBg', Style.Colors.windowBg)
+        PM.DummyWidgets[LLGlobals.DummyNames[selectedCharacter]].Window:SetColor('Text', Style.Colors.textColor)
+
+        selectedCharacter = e.SelectedIndex + 1
+        E.cmbBoneDummies.SelectedIndex = e.SelectedIndex
+        UpdateCharacterInfo(selectedCharacter)
+        SetVarValuesToSliders()
+
+        PM.DummyWidgets[LLGlobals.DummyNames[selectedCharacter]].Window:SetColor('WindowBg', Style.Colors.special)
+        SetHighlightColor(PM.DummyWidgets[LLGlobals.DummyNames[selectedCharacter]].Window)
+
+        -- DPrint('Selected dummy: %s', LLGlobals.DummyNames[selectedCharacter])
+        -- gizmoSelectDummy()
+    end
+
     selectedCharacter = E.visTemComob.SelectedIndex + 1
 
 

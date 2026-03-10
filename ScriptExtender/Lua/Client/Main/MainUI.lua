@@ -62,6 +62,24 @@ IMGUI:AntiStupiditySystem()
 
 
 
+if Mods.GizmoLib then
+    function initGizmoLibColors()
+        local tb = GL_GLOBALS.TransformToolbar
+        tb.TopToolBar:SetColor("WindowBg", Style.Colors.windowBg)
+        tb.TopToolBar:SetColor("Text", Style.Colors.textColor)
+        tb.TopToolBar:SetColor("FrameBg", Style.Colors.frameBg)
+        tb.TopToolBar:SetColor("TextDisabled", Style.Colors.textDisabled)
+        tb.TopToolBar:SetColor("Button", Style.Colors.button)
+
+        tb.CloseButton:SetColor("Button", Style.Colors.special)
+        tb.CloseButton:SetColor("ButtonActive", Style.Colors.buttonActive)
+        tb.CloseButton:SetColor("ButtonHovered", Style.Colors.buttonHovered)
+        Mods.GizmoLib.MCM.Set("boxsel_border_color", Style.Colors.special)
+    end
+end
+
+
+
 function LLMCM(mt2)
     LLMCM = mt2
 
