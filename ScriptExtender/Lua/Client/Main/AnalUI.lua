@@ -392,288 +392,131 @@ function Anal2Tab(p)
     E.collapseParamsATM.IDContext = 'awdaowikdn'
 
 
-    --slop
-    function CreateUI(uuid, resource, mainParent, order)
+    local function delayedApply()
+        Utils:AntiSpam(applyDelay[1], function()
+            ApplyParameters()
+        end)
+    end
+
+    --- TBD: UNSLOP IT WHEN IM NOT DUMB
+    --- UPD: Kinda unsloped
+    function CreateUI(uuid, resource, mainParent, PARAMETER_ORDER)
         Imgui.ClearChildren(mainParent)
-        local treeParameterName
-        local treeSubParameterName
-        local PARAMETER_ORDER = order
+
 
         local function isIgnored(key)
             for _, ignoreKey in ipairs(IGNORE_PARAMS) do
-                if key == ignoreKey then
-                    return true
-                end
+                if key == ignoreKey then return true end
             end
             return false
         end
+
 
         local function getSortedKeys(tbl)
             local keys = {}
             local orderMap = {}
-
-            for i, key in ipairs(PARAMETER_ORDER) do
-                orderMap[key] = i
-            end
-
+            for i, key in ipairs(PARAMETER_ORDER) do orderMap[key] = i end
             for k in pairs(tbl) do
-                if not isIgnored(k) then
-                    table.insert(keys, k)
-                end
+                if not isIgnored(k) then table.insert(keys, k) end
             end
-
             table.sort(keys, function(a, b)
-                local orderA = orderMap[a] or 9999
-                local orderB = orderMap[b] or 9999
-
-                if orderA ~= orderB then
-                    return orderA < orderB
-                else
-                    return a < b
-                end
+                local oa, ob = orderMap[a] or 9999, orderMap[b] or 9999
+                if oa ~= ob then return oa < ob end
+                return tostring(a) < tostring(b)
             end)
-
             return keys
         end
 
-        local function isColorParam(key)
-            local excludeKeys = {
-                "BlendedColorCorrection",
-                "ColorCorrection",
-                "ColorCorrectionInterpolationFactor"
-            }
 
-            for _, excludeKey in ipairs(excludeKeys) do
-                if key == excludeKey or string.find(key, excludeKey) then
-                    return false
-                end
-            end
+        local function applyChange(uuid, resource, p, value)
+            local target = Resource:GetResource(uuid, resource)
+            for i = 1, #p - 1 do target = target[p[i]] end
 
-            local colorKeys = {
-                "Color", "Albedo", "BaseColor", "TopColor",
-                "LinearClearColor", "CirrusCloudsColor",
-                "ColorAdjustedForIntensity", "ColorTemperatureAdjustment",
-                "SunColor", "ScatteringSunColor",
-            }
-            for _, colorKey in ipairs(colorKeys) do
-                if key == colorKey or string.find(key, colorKey) then
-                    return true
-                end
-            end
-            return false
+            target[p[#p]] = value
+            delayedApply()
         end
 
-        local function isVectorParam(key)
-            local vectorKeys = {
-                "NoiseFrequency", "NoiseRotation", "NoiseWind",
-                "RotationAsVec3", "Offset", "ProcStarsSaturation"
-            }
-            for _, vectorKey in ipairs(vectorKeys) do
-                if key == vectorKey or string.find(key, vectorKey) then
-                    return true
-                end
-            end
-            return false
+
+        local function getConf(p)
+            local conf = CONFIG[table.concat(p, ".")] or {}
+            return conf.min or 0, conf.max or 1, conf.log or false
         end
 
-        local function isStringParam(key)
-            local stringKeys = {
-                "GUID", "ResourceGUID", "Tex", "ParentGUID",
-                "AlbedoTexResourceGUID", "NormalTexResourceGUID",
-                "TearsAlbedoTexResourceGUID", "TearsNormalTexResourceGUID",
-                "TexResourceGUID", "SkydomeTex"
-            }
-            for _, stringKey in ipairs(stringKeys) do
-                if key == stringKey or string.find(key, stringKey) then
-                    return true
-                end
-            end
-            return false
-        end
-
-        local function isBooleanParam(key)
-            local booleanKeys = {
-                "Enabled", "CastLightEnabled", "UseTemperature",
-                "RotateSkydomeEnabled", "ScatteringEnabled", "SkydomeEnabled",
-                "ShadowEnabled", "LocalCoverageEnabled", "LinearClearColorOverride",
-                "TimelineFogOverride", "CirrusCloudsEnabled", "ProcStarsEnabled"
-            }
-            for _, booleanKey in ipairs(booleanKeys) do
-                if key == booleanKey or string.find(key, booleanKey) then
-                    return true
-                end
-            end
-            return false
-        end
-
-        local function isIntParam(key)
-            local intKeys = {
-                "ShadowObscurity", "SunlightObscurity", "CascadeCount", "PhysicalModel",
-            }
-            for _, intKey in ipairs(intKeys) do
-                if key == intKey or string.find(key, intKey) then
-                    return true
-                end
-            end
-            return false
-        end
 
         local function trev(tbl, tbl2, depth, parent, path)
-            tbl2 = tbl2 or {}
+            tbl2  = tbl2  or {}
             depth = depth or 1
-            path = path or {}
+            path  = path  or {}
 
             for _, k in ipairs(getSortedKeys(tbl)) do
                 local v = tbl[k]
-                local currentPath = {}
-                for i, p in ipairs(path) do
-                    currentPath[i] = p
-                end
-                table.insert(currentPath, k)
+                local p = {table.unpack(path)}
+                table.insert(p, k)
 
                 if type(v) == 'table' or type(v) == 'userdata' then
-                    if isColorParam(k) then
-                        if parent then
-                            local colorEdit = parent:AddColorEdit(k)
-                            colorEdit.IDContext = Ext.Math.Random(1,1000)
-                            colorEdit.Color = {v[1] or 0, v[2] or 0, v[3] or 0, 1}
-                            local p = currentPath
-                            colorEdit.OnChange = function(e)
-                                local target = Resource:GetResource(uuid, resource)
-                                for i = 1, #p - 1 do
-                                    target = target[p[i]]
-                                end
-                                target[p[#p]] = {e.Color[1], e.Color[2], e.Color[3]}
-                            end
+                    local ok4, v4 = pcall(function() return v[4] end)
+                    local ok3, v3 = pcall(function() return v[3] end)
+                    local IAMok2, v2 = pcall(function() return v[2] end)
+                    local isScal = v == 'number'
+                    local isVec4 = ok4 and type(v4) == 'number'
+                    local isVec3 = not isVec4 and ok3 and type(v3) == 'number'
+                    local isVec2 = not isVec4 and not isVec3 and IAMok2 and type(v2) == 'number'
+
+                    if isVec4 or isVec3 then
+                        local w = parent:AddColorEdit(k)
+                        w.IDContext = Ext.Math.Random(1, 1000)
+                        w.Color = {v[1] or 0, v[2] or 0, v[3] or 0, v[4] or 1}
+                        w.NoAlpha = isVec3 and true or false
+                        w.OnChange = function(e)
+                            applyChange(uuid, resource, p,
+                                isVec3 and {e.Color[1], e.Color[2], e.Color[3]} or {e.Color[1], e.Color[2], e.Color[3], e.Color[4]})
                         end
-                        tbl2[k] = v
-                    elseif isVectorParam(k) then
-                        if parent then
-                            local p = currentPath
-                            local keyPath = table.concat(p, ".")
-                            local conf = CONFIG[keyPath]
-                            local minVal, maxVal, isLog = 0, 1, false
-                            if conf then
-                                minVal = conf.min or minVal
-                                maxVal = conf.max or maxVal
-                                isLog = conf.log or false
-                            end
 
-                            local slider = parent:AddSlider(k, 1, minVal, maxVal, 1)
-                            slider.IDContext = Ext.Math.Random(1,1000)
-                            slider.Value = {v[1] or 0, v[2] or 0, v[3] or 0, 0}
-                            if isLog then slider.Logarithmic = true end
-
-
-                            if k == 'ProcStarsSaturation' or k == 'Offset' or k == 'XYOffset' then --haha
-                                slider.Components = 2
-                                slider.OnChange = function(e)
-                                    local target = Resource:GetResource(uuid, resource)
-                                    for i = 1, #p - 1 do
-                                        target = target[p[i]]
-                                    end
-                                    target[p[#p]] = {e.Value[1], e.Value[2]}
-                                end
-                            else
-                                slider.Components = 3
-                                slider.OnChange = function(e)
-                                    local target = Resource:GetResource(uuid, resource)
-                                    for i = 1, #p - 1 do
-                                        target = target[p[i]]
-                                    end
-                                    target[p[#p]] = {e.Value[1], e.Value[2], e.Value[3]}
-                                end
-                            end
-
+                    elseif isVec2 then
+                        local minVal, maxVal, isLog = getConf(p)
+                        local w = parent:AddSlider(k, 1, minVal, maxVal, 1)
+                        w.IDContext = Ext.Math.Random(1, 1000)
+                        w.Value = {v[1] or 0, v[2] or 0, 0, 0}
+                        w.Components = 2
+                        w.Logarithmic = isLog and true or false
+                        w.OnChange = function(e)
+                            applyChange(uuid, resource, p, {e.Value[1], e.Value[2]})
                         end
-                        tbl2[k] = v
-                    else
+
+                    elseif not isVec4 and not isVec3 and not isVec2 then
+                        tbl2[k] = {}
                         if depth == 1 then
-                            treeParameterName = mainParent:AddTree(k)
-                            tbl2[k] = {}
-                            trev(v, tbl2[k], depth + 1, treeParameterName, currentPath)
+                            trev(v, tbl2[k], depth + 1, mainParent:AddTree(k), p)
                         elseif depth == 2 then
-                            treeSubParameterName = parent:AddTree(k)
-                            tbl2[k] = {}
-                            trev(v, tbl2[k], depth + 1, treeSubParameterName, currentPath)
+                            trev(v, tbl2[k], depth + 1, parent:AddTree(k), p)
                         else
-                            tbl2[k] = {}
-                            trev(v, tbl2[k], depth + 1, parent, currentPath)
+                            trev(v, tbl2[k], depth + 1, parent, p)
                         end
                     end
-                else
-                    if parent then
-                        local p = currentPath
-                        if isBooleanParam(k) or type(v) == 'boolean' then
-                            local checkbox = parent:AddCheckbox(k)
-                            checkbox.IDContext = Ext.Math.Random(1,1000)
-                            checkbox.Checked = v
-                            checkbox.OnChange = function(e)
-                                local target = Resource:GetResource(uuid, resource)
-                                for i = 1, #p - 1 do
-                                    target = target[p[i]]
-                                end
-                                target[p[#p]] = e.Checked
-                            end
-                        elseif isStringParam(k) or type(v) == 'string' then
-                            local inputText = parent:AddInputText(k)
-                            inputText.IDContext = Ext.Math.Random(1,1000)
-                            inputText.Text = tostring(v)
-                            inputText.OnChange = function(e)
-                                local target = Resource:GetResource(uuid, resource)
-                                for i = 1, #p - 1 do
-                                    target = target[p[i]]
-                                end
-                                target[p[#p]] = e.Text
-                            end
-                        elseif isIntParam(k) then
-                            local keyPath = table.concat(p, ".")
-                            local conf = CONFIG[keyPath]
-                            local minVal, maxVal, isLog = 0, 100, false
-                            if conf then
-                                minVal = conf.min or minVal
-                                maxVal = conf.max or maxVal
-                                isLog = conf.log or false
-                            end
+                    tbl2[k] = tbl2[k] or v
 
-                            local sliderInt = parent:AddSliderInt(k, 1, minVal, maxVal, 1)
-                            sliderInt.IDContext = Ext.Math.Random(1,1000)
-                            sliderInt.Value = {v, 0, 0, 0}
-                            if isLog then sliderInt.Logarithmic = true end
+                elseif Ext.Types.GetValueType(v) == 'boolean' then
+                    local w = parent:AddCheckbox(k)
+                    w.IDContext = Ext.Math.Random(1, 1000)
+                    w.Checked = v
+                    w.OnChange = function(e) applyChange(uuid, resource, p, e.Checked) end
 
-                            sliderInt.OnChange = function(e)
-                                local target = Resource:GetResource(uuid, resource)
-                                for i = 1, #p - 1 do
-                                    target = target[p[i]]
-                                end
-                                target[p[#p]] = e.Value[1]
-                            end
+                elseif type(v) == 'string' then
+                    local w = parent:AddInputText(k)
+                    w.IDContext = Ext.Math.Random(1, 1000)
+                    w.Text = tostring(v)
+                    w.OnChange = function(e) applyChange(uuid, resource, p, e.Text) end
 
-                        else
-                            local keyPath = table.concat(p, ".")
-                            local conf = CONFIG[keyPath]
-                            local minVal, maxVal, isLog = 0, 1, false
-                            if conf then
-                                minVal = conf.min or minVal
-                                maxVal = conf.max or maxVal
-                                isLog = conf.log or false
-                            end
-                            local slValue = parent:AddSlider(k, 1, minVal, maxVal, 1)
-                            slValue.IDContext = Ext.Math.Random(1,1000)
-                            slValue.Value = {v, 0, 0, 0}
-                            if isLog then slValue.Logarithmic = true end
-
-                            slValue.OnChange = function(e)
-                                local target = Resource:GetResource(uuid, resource)
-                                for i = 1, #p - 1 do
-                                    target = target[p[i]]
-                                end
-                                target[p[#p]] = e.Value[1]
-                            end
-                        end
-                    end
-                    tbl2[k] = v
+                else --- int or float
+                    local minVal, maxVal, isLog = getConf(p)
+                    local isInt = math.type(v) == 'integer'
+                    local w = isInt and parent:AddSliderInt(k, 1, minVal, maxVal, 1) or parent:AddSlider(k, 1, minVal, maxVal, 1)
+                    w.IDContext = Ext.Math.Random(1, 1000)
+                    w.Value = {v, 0, 0, 0}
+                    if isLog then w.Logarithmic = true end
+                    w.OnChange = function(e) applyChange(uuid, resource, p, e.Value[1]) end
                 end
+                tbl2[k] = v
             end
             return tbl2
         end
