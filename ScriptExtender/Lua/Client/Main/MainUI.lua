@@ -808,48 +808,24 @@ function MainTab(p)
 
 
 
-    E.pickerRecentColor1 = E.treeGen:AddColorEdit('')
-    UI:Config(E.pickerRecentColor1, {
-        NoAlpha = true,
-        Float = false,
-        InputRGB = true,
-        DisplayHex = true,
-        NoInputs = true
-    })
-    E.pickerRecentColor2 = E.treeGen:AddColorEdit('')
-    E.pickerRecentColor3 = E.treeGen:AddColorEdit('')
-    E.pickerRecentColor4 = E.treeGen:AddColorEdit('')
-    E.pickerRecentColor5 = E.treeGen:AddColorEdit('')
-    E.pickerRecentColor6 = E.treeGen:AddColorEdit('')
-    E.pickerRecentColor7 = E.treeGen:AddColorEdit('')
-    E.pickerRecentColor8 = E.treeGen:AddColorEdit('')
-    E.pickerRecentColor9 = E.treeGen:AddColorEdit('')
-    E.pickerRecentColor10 = E.treeGen:AddColorEdit('')
-    E.pickerRecentColor11 = E.treeGen:AddColorEdit('')
-    E.pickerRecentColor12 = E.treeGen:AddColorEdit('')
+    for i = 1, 12 do
+        local picker = E.treeGen:AddColorEdit('')
+        picker.NoAlpha = true
+        picker.Float = false
+        picker.InputRGB = true
+        picker.DisplayHex = true
+        picker.NoInputs = true
+        if i > 1 then picker.SameLine = true end
 
-    for _, picker in pairs({
-        E.pickerRecentColor2,
-        E.pickerRecentColor3,
-        E.pickerRecentColor4,
-        E.pickerRecentColor5,
-        E.pickerRecentColor6,
-        E.pickerRecentColor7,
-        E.pickerRecentColor8,
-        E.pickerRecentColor9,
-        E.pickerRecentColor10,
-        E.pickerRecentColor11,
-        E.pickerRecentColor12,
-    })
-    do
-        UI:Config(picker, {
-            SameLine = true,
-            NoAlpha = true,
-            Float = false,
-            InputRGB = true,
-            DisplayHex = true,
-            NoInputs = true
-        })
+        local color = RecentColors[tostring(i)] or {0, 0, 0, 1}
+        picker.Color = color
+
+        picker.OnChange = function(e)
+            RecentColors[tostring(i)] = {e.Color[1], e.Color[2], e.Color[3], 1}
+            SettingsSave()
+        end
+
+        E.recentPickers[i] = picker
     end
 
 
