@@ -4,6 +4,7 @@ ltn_templates2 = {
     ["TUH_LTN_Icy"] = "5ad10360-89bf-b8e2-7d38-410df3b191bd",
     ["LTN_TUH_Snow_Field"] = "4e730f51-3b58-4792-c092-11bf4a301465",
     ["TUH_LTN_D_1"] = "31c48933-8ed7-778e-4f2a-6eb829687617",
+    ["LTN_TUH_tfk"] = "75fc23e4-5446-05e6-8d1d-628d48c82674",
 
     ["LTN_BGH_Highberrys_Cellar_A"] = "4ffe46ad-b46b-0a3a-c739-d71f1bf209d9",
     ["LTN_BGO_Camp_A"] = "f2c0d648-869a-dee1-4842-8ec9e37b0441",

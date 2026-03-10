@@ -6,12 +6,12 @@ if Mods.GizmoLib then
 end
 
 
-Settings = {}
 ZipBomb = ZipBomb or {}
-currentCacheVersion = '1.7.Bober'
+
+CACHE_VERSION = '1.7.Bober'
 
 
---- TBD: unhardcode
+
 local DEFAULT_SETTINGS = {
     {'openByDefaultPMCamera',   false},
     {'openByDefaultPMInfo',     false},
@@ -99,6 +99,7 @@ end
 
 
 
+
 if Ext.IO.LoadFile('LightyLights/settings.json') then
     SettingsLoad()
 else
@@ -138,7 +139,7 @@ function CacheLightingValues()
                 values
             }
 
-            CachedLighting.Version = currentCacheVersion
+            CachedLighting.Version = CACHE_VERSION
         end
     end
     return CachedLighting
@@ -170,7 +171,7 @@ function CacheAtmosphereValues()
                 { Name = name },
                 values
             }
-            CachedAtmosphere.Version = currentCacheVersion
+            CachedAtmosphere.Version = CACHE_VERSION
         end
     end
     return CachedAtmosphere
@@ -193,8 +194,8 @@ function SaveCacheToFile()
 
     local CachedLighting = CacheLightingValues()
     local CachedAtmosphere = CacheAtmosphereValues()
-    CachedLighting.Version = currentCacheVersion
-    CachedAtmosphere.Version = currentCacheVersion
+    CachedLighting.Version = CACHE_VERSION
+    CachedAtmosphere.Version = CACHE_VERSION
     local jsonLtn = Ext.Json.Stringify(CachedLighting)
     Ext.IO.SaveFile('LightyLights/CachedLighting.json', jsonLtn)
     local jsonAtm = Ext.Json.Stringify(CachedAtmosphere)

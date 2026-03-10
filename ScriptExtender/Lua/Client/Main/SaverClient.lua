@@ -6,7 +6,6 @@ function Saver2Tab(p)
 
     local btnSaveScene = p:AddButton('Save scene')
     btnSaveScene.OnClick = function (e)
-
         ClientState = {
             CL_CreatedLightsServer = LLGlobals.CreatedLightsServer,
             CL_LightsUuidNameMap = LLGlobals.LightsUuidNameMap,
@@ -17,17 +16,13 @@ function Saver2Tab(p)
             CL_selectedGobo = LLGlobals.selectedGobo,
             CL_nameIndex = nameIndex,
         }
-
-
-
         Ch.SceneSave:SendToServer(ClientState)
-
     end
+
 
 
     local btnLoadScene = p:AddButton('Load scene')
     btnLoadScene.OnClick = function (e)
-
         Ch.SceneLoad:RequestToServer({},function (Response)
             ClientState = Response
 
@@ -45,10 +40,6 @@ function Saver2Tab(p)
             Helpers.Timer:OnTicks(50, function ()
                 MainWindow(mw)
             end)
-
         end)
-
-
     end
-
 end

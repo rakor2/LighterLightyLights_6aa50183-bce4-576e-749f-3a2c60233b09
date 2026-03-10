@@ -6,7 +6,7 @@ function Gobo2Tab(p)
         ['4eab6f6d-5d94-4827-9331-ae3f67747410'] = 'Window',
         ['13c358b1-9afc-4acf-b121-fa38994d72d2'] = 'Stars',
         ['34329d13-f74d-46ac-928c-c6b40b87b644'] = 'Star',
-        ['0435655f-4c3b-48dc-970e-55afc2956cd6'] = 'Asstation',
+        ['0435655f-4c3b-48dc-970e-55afc2956cd6'] = 'Asstarion',
         ['213674c9-8606-4f08-aaea-7ef3b7339e6e'] = 'Bhaal bs',
         ['fc270e8b-7192-47af-b440-f5a87dd3d2cf'] = 'Water',
         ['1b86fb4a-330e-413e-ba8f-fbb1e51846fe'] = 'Blinds',
@@ -184,6 +184,3 @@ function Gobo2Tab(p)
         HideGobo()
     end
 end
-
-
-

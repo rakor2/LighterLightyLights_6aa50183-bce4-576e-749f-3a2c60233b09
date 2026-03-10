@@ -1,4 +1,14 @@
 function BetterPMTab(parent)
+    local function getSelectedDummyOwnerUuid()
+        local entity = LLGlobals.DummyNameMap[E.cmbBoneDummies.Options[selectedCharacter]]
+        if entity then
+            local characterUuid = entity.Dummy.Entity.Uuid.EntityUuid
+            if characterUuid then
+                return characterUuid
+            end
+        end
+    end
+
 
     local camSepa = parent:AddSeparatorText('Camera controls')
 
@@ -9,31 +19,37 @@ function BetterPMTab(parent)
 
     Ext.Stats.GetStatsManager().ExtraData['PhotoModeCameraMovementSpeed'] = defaultCameraSpeed
 
-    E.camSpeed = E.camCollapse:AddSlider('Speed', 0, 0.01, 100, 0.1) --default, min, max, step
-    E.camSpeed.IDContext = 'slider_UniqueSliderID'
-    E.camSpeed.SameLine = false
-    E.camSpeed.Logarithmic = true
-    E.camSpeed.Components = 1
-    E.camSpeed.Value = {defaultCameraSpeed, 0, 0, 0}
-    E.camSpeed.OnChange = function()
-         Ext.Stats.GetStatsManager().ExtraData['PhotoModeCameraMovementSpeed'] = E.camSpeed.Value[1]
-    end
+    E.camSpeed = E.camCollapse:AddSlider('Speed', 0, 0.01, 100, 0.1)
+        UI:Config(E.camSpeed, {
+            IDContext  = 'slider_UniqueSliderID',
+            SameLine   = false,
+            Logarithmic = true,
+            Components = 1,
+            Value      = {defaultCameraSpeed, 0, 0, 0},
+            OnChange   = function()
+                Ext.Stats.GetStatsManager().ExtraData['PhotoModeCameraMovementSpeed'] = E.camSpeed.Value[1]
+            end
+        })
 
 
 
     E.slFarPlane = E.camCollapse:AddSlider('Far plane distance', 1000, 0, 5000, 1)
-    E.slFarPlane.Logarithmic = true
-    E.slFarPlane.OnChange = function(e)
-        CameraControlls('Far_plane', e.Value[1])
-    end
+        UI:Config(E.slFarPlane, {
+            Logarithmic = true,
+            OnChange    = function(e)
+                CameraControlls('Far_plane', e.Value[1])
+            end
+        })
 
 
 
     E.slNearPlane = E.camCollapse:AddSlider('Near plane distance', 0.025, 0.001, 0.025, 1)
-    E.slNearPlane.Logarithmic = true
-    E.slNearPlane.OnChange = function(e)
-        CameraControlls('Near_plane', e.Value[1])
-    end
+        UI:Config(E.slNearPlane, {
+            Logarithmic = true,
+            OnChange    = function(e)
+                CameraControlls('Near_plane', e.Value[1])
+            end
+        })
 
 
 
@@ -43,21 +59,23 @@ function BetterPMTab(parent)
 
 
     E.dofStrength = E.dofCollapse:AddSlider("Strength", 0, 22, 1, 0.001)
-    E.dofStrength.IDContext = "DofStr"
-    E.dofStrength.SameLine = false
-    E.dofStrength.Logarithmic = true
-    E.dofStrength.Components = 1
-    E.dofStrength.Value = { 1, 0, 0, 0 }
-    E.dofStrength.OnChange = function()
-        local success, result = pcall(function()
-            return Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFStrength
-        end)
+        UI:Config(E.dofStrength, {
+            IDContext   = "DofStr",
+            SameLine    = false,
+            Logarithmic = true,
+            Components  = 1,
+            Value       = {1, 0, 0, 0},
+            OnChange    = function()
+                local success, result = pcall(function()
+                    return Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFStrength
+                end)
 
-        if success and result then
-            local preciseDofStr = (E.dofStrength.Value[1])
-            Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFStrength = preciseDofStr
-        end
-    end
+                if success and result then
+                    local preciseDofStr = (E.dofStrength.Value[1])
+                    Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFStrength = preciseDofStr
+                end
+            end
+        })
 
 
     local getDofStrengthSub = Ext.Events.Tick:Subscribe(function()
@@ -85,35 +103,41 @@ function BetterPMTab(parent)
 
 
     E.dofDistance = E.dofCollapse:AddSlider("", 0, 0, 30, 0.001)
-    E.dofDistance.IDContext = "DofDist"
-    E.dofDistance.SameLine = false
-    E.dofDistance.Logarithmic = true
-    E.dofDistance.Components = 1
-    E.dofDistance.Value = { 1, 0, 0, 0 }
-    E.dofDistance.OnChange = function()
-        dofChange(E.dofDistance.Value[1])
-    end
+        UI:Config(E.dofDistance, {
+            IDContext   = "DofDist",
+            SameLine    = false,
+            Logarithmic = true,
+            Components  = 1,
+            Value       = {1, 0, 0, 0},
+            OnChange    = function()
+                dofChange(E.dofDistance.Value[1])
+            end
+        })
 
 
 
-    E.btnDofDistanceDec= E.dofCollapse:AddButton('<')
-    E.btnDofDistanceDec.SameLine = true
-    E.btnDofDistanceDec.OnClick = function ()
-        dofChange(E.dofDistance.Value[1] + 0.0005)
-    end
+    E.btnDofDistanceDec = E.dofCollapse:AddButton('<')
+        UI:Config(E.btnDofDistanceDec, {
+            SameLine = true,
+            OnClick  = function()
+                dofChange(E.dofDistance.Value[1] + 0.0005)
+            end
+        })
 
 
 
     E.btnDofDistanceInc = E.dofCollapse:AddButton('>')
-    E.btnDofDistanceInc.SameLine = true
-    E.btnDofDistanceInc.OnClick = function ()
-        dofChange(E.dofDistance.Value[1] - 0.0005)
-    end
+        UI:Config(E.btnDofDistanceInc, {
+            SameLine = true,
+            OnClick  = function()
+                dofChange(E.dofDistance.Value[1] - 0.0005)
+            end
+        })
 
 
 
     textDofDistance = E.dofCollapse:AddText('Distance')
-    textDofDistance.SameLine = true
+        UI:Config(textDofDistance, { SameLine = true })
 
 
 
@@ -125,84 +149,97 @@ function BetterPMTab(parent)
     local savedButtons = {}
 
     E.btnSavePos = E.collapseSavePos:AddButton('Save')
-    E.btnSavePos.IDContext = '238492kjndflkjsdnf'
-    E.btnSavePos.OnClick = function ()
+        UI:Config(E.btnSavePos, {
+            IDContext = '238492kjndflkjsdnf',
+            OnClick   = function()
+                if not LLGlobals.States.inPhotoMode then return end
 
-        if not LLGlobals.States.inPhotoMode then return end
+                btnCounter = btnCounter + 1
+                local currentIndex = btnCounter
+                local size = 0
 
-        btnCounter = btnCounter + 1
-        local currentIndex = btnCounter
-        local size = 38
-
-        CameraSaveLoadPosition(currentIndex)
-
-        E.windowLoadPos.Size = {
-            E.windowLoadPos.Size[1],
-            E.windowLoadPos.Size[2] + size
-        }
-
-        local btnDelete = E.windowLoadPos:AddButton('X')
-        btnDelete.IDContext = 'delete_' .. currentIndex
-
-        local btnLoad = E.windowLoadPos:AddButton('')
-        btnLoad.IDContext = 'load_' .. currentIndex
-        btnLoad.SameLine = true
-        btnLoad.Label = tostring(currentIndex)
-
-        savedButtons[currentIndex] = {
-            load = btnLoad,
-            delete = btnDelete
-        }
-
-        btnDelete.OnClick = function ()
-            if savedButtons[currentIndex] then
-                savedButtons[currentIndex].load:Destroy()
-                savedButtons[currentIndex].delete:Destroy()
-                savedButtons[currentIndex] = nil
-                LLGlobals.CameraPositions[tostring(currentIndex)] = nil
+                CameraSaveLoadPosition(currentIndex)
 
                 E.windowLoadPos.Size = {
                     E.windowLoadPos.Size[1],
-                    E.windowLoadPos.Size[2] - size
+                    E.windowLoadPos.Size[2] + size
                 }
-            end
-        end
 
-        btnLoad.OnClick = function ()
-            local index = tostring(currentIndex)
-            if LLGlobals.CameraPositions[index] then
-                local camera = Camera:GetActiveCamera()
-                camera.PhotoModeCameraSavedTransform.field_0.Translate = LLGlobals.CameraPositions[index].activeTranslate
-                camera.PhotoModeCameraSavedTransform.field_0.RotationQuat = LLGlobals.CameraPositions[index].activeRotationQuat
-                camera.PhotoModeCameraSavedTransform.field_0.Scale = LLGlobals.CameraPositions[index].activeScale
+                local btnDelete = E.windowLoadPos:AddButton('X')
+                    UI:Config(btnDelete, { IDContext = 'delete_' .. currentIndex })
 
-                Helpers.Timer:OnTicks(5, function ()
-                    Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.RecallCameraTransform:Execute()
-                end)
+                local btnLoad = E.windowLoadPos:AddButton('')
+                    UI:Config(btnLoad, {
+                        IDContext = 'load_' .. currentIndex,
+                        SameLine  = true,
+                        Label     = tostring(currentIndex)
+                    })
+
+                savedButtons[currentIndex] = {
+                    load   = btnLoad,
+                    delete = btnDelete
+                }
+
+                btnDelete.OnClick = function()
+                    if savedButtons[currentIndex] then
+                        savedButtons[currentIndex].load:Destroy()
+                        savedButtons[currentIndex].delete:Destroy()
+                        savedButtons[currentIndex] = nil
+                        LLGlobals.CameraPositions[tostring(currentIndex)] = nil
+
+                        E.windowLoadPos.Size = {
+                            E.windowLoadPos.Size[1],
+                            E.windowLoadPos.Size[2] - size
+                        }
+                    end
+                end
+
+                btnLoad.OnClick = function()
+                    local index = tostring(currentIndex)
+                    if LLGlobals.CameraPositions[index] then
+                        local camera = Camera:GetActiveCamera()
+                        camera.PhotoModeCameraSavedTransform.Transform.Translate     = LLGlobals.CameraPositions[index].activeTranslate
+                        camera.PhotoModeCameraSavedTransform.Transform.RotationQuat  = LLGlobals.CameraPositions[index].activeRotationQuat
+                        camera.PhotoModeCameraSavedTransform.Transform.Scale         = LLGlobals.CameraPositions[index].activeScale
+
+                        Helpers.Timer:OnTicks(5, function()
+                            Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.RecallCameraTransform:Execute()
+                        end)
+                    end
+                end
             end
-        end
-    end
+        })
 
 
     E.windowLoadPos = E.collapseSavePos:AddChildWindow('Load')
-    E.windowLoadPos.Size = {0, 1}
+    E.windowLoadPos.Size = {0, 100}
 
     local sepa2 = parent:AddSeparatorText('Dummy controls')
 
 
+    -- LLGlobals.gizmo = API.CreateManipulator()
+    -- LLGlobals.gizmo.Config.IsSelectableEntity = function(info)
+    --     return info.Type == "Unknown"
+    -- end
 
-    E.visTemComob = parent:AddCombo('Dummies')
-    E.visTemComob.IDContext = 'E.visTemComob123'
-    E.visTemComob.SelectedIndex = 0
-    E.visTemComob.Options = {'Not in Photo Mode'}
-    E.visTemComob.HeightLargest = true
-    E.visTemComob.SameLine = false
-    E.visTemComob.OnChange = function()
-        selectedCharacter = E.visTemComob.SelectedIndex + 1
-        -- DPrint('Combo option: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
-        -- DPrint('Selected character combo: %s', selectedCharacter)
-        UpdateCharacterInfo(E.visTemComob.SelectedIndex + 1)
+
+
+    -- API.Events.OnTransformEnd:Subscribe(function(data)
+    --     local dummy =  LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]]
+    --     local Ser = Ext.Types.Serialize(dummy.Visual.Visual.WorldTransform)
+    --     Ext.Types.Unserialize(dummy.DummyOriginalTransform.Transform, Ser)
+    --     -- DDump(dummy.Visual.Visual.WorldTransform)
+    -- end)
+
+
+
+    local function gizmoSelectDummy()
+        local ent = LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]]
+        LLGlobals.gizmo:Select({ent.Dummy.Entity})
     end
+
+
+
     function UpdatePMDummyCombo(e)
         local e = e or E.visTemComob
         PM.DummyWidgets[LLGlobals.DummyNames[selectedCharacter]].Window:SetColor('WindowBg', Style.Colors.windowBg)
@@ -282,48 +319,54 @@ function BetterPMTab(parent)
     E.infoCollapse.DefaultOpen = openByDefaultPMInfo
 
 
+
     E.posInput = E.infoCollapse:AddInputScalar('Position')
-    E.posInput.Components = 3
-    E.posInput.Value = {0, 0, 0, 0}
+        UI:Config(E.posInput, {
+            Components = 3,
+            Value      = {0, 0, 0, 0}
+        })
 
 
 
     E.rotInput = E.infoCollapse:AddInputScalar('Rotation')
-    E.rotInput.Components = 3
-    E.rotInput.Value = {0, 0, 0, 0}
+        UI:Config(E.rotInput, {
+            Components = 3,
+            Value      = {0, 0, 0, 0}
+        })
 
 
 
     E.scaleInput = E.infoCollapse:AddInputScalar('Scale')
-    E.scaleInput.Components = 3
-    E.scaleInput.Value = {1, 1, 1, 0}
+        UI:Config(E.scaleInput, {
+            Components = 3,
+            Value      = {1, 1, 1, 0}
+        })
 
 
 
     E.applyButton = E.infoCollapse:AddButton('Apply')
-    E.applyButton.IDContext = "loadApply"
-    E.applyButton.SameLine = false
-    E.applyButton.OnClick = function()
-        if LLGlobals.DummyNameMap and LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]] then
+        UI:Config(E.applyButton, {
+            IDContext = "loadApply",
+            SameLine  = false,
+            OnClick   = function()
+                if LLGlobals.DummyNameMap and LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]] then
 
-            local transform = LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform
-            local transform2 = LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].DummyOriginalTransform.Transform
+                    local transform  = LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform
+                    local transform2 = LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].DummyOriginalTransform.Transform
 
+                    local deg  = {E.rotInput.Value[1], E.rotInput.Value[2], E.rotInput.Value[3]}
+                    local quats = Math.EulerToQuats(deg)
 
-            local deg = {E.rotInput.Value[1], E.rotInput.Value[2], E.rotInput.Value[3]}
-            local quats = Math:EulerToQuats(deg)
+                    transform.RotationQuat = quats
+                    transform.Scale        = {E.scaleInput.Value[1], E.scaleInput.Value[2], E.scaleInput.Value[3]}
+                    transform.Translate    = {E.posInput.Value[1],   E.posInput.Value[2],   E.posInput.Value[3]}
 
-            transform.RotationQuat = quats
-            transform.Scale = {E.scaleInput.Value[1], E.scaleInput.Value[2], E.scaleInput.Value[3]}
-            transform.Translate = {E.posInput.Value[1], E.posInput.Value[2], E.posInput.Value[3]}
-
-            transform2.RotationQuat = quats
-            transform2.Scale = {E.scaleInput.Value[1], E.scaleInput.Value[2], E.scaleInput.Value[3]}
-            transform2.Translate = {E.posInput.Value[1], E.posInput.Value[2], E.posInput.Value[3]}
-
-        end
-
-    end
+                    transform2.RotationQuat = quats
+                    transform2.Scale        = {E.scaleInput.Value[1], E.scaleInput.Value[2], E.scaleInput.Value[3]}
+                    transform2.Translate    = {E.posInput.Value[1],   E.posInput.Value[2],   E.posInput.Value[3]}
+                end
+            end
+        })
 
 
     E.infoCollapse:AddSeparator()
@@ -335,90 +378,81 @@ function BetterPMTab(parent)
 
 
 
-    E.stemModSlider = E.charPosCollapse:AddSliderInt("", 0, 1, 10000, 1) --default, min, max, step
-    E.stemModSlider.IDContext = "modSlider"
-    E.stemModSlider.SameLine = false
-    E.stemModSlider.Components = 1
-    E.stemModSlider.Logarithmic = true
-    E.stemModSlider.Value = { 1500, 0, 0, 0 }
-    E.stemModSlider.OnChange = function()
-        stepMod = E.stemModSlider.Value[1]
-    end
+    E.stemModSlider = E.charPosCollapse:AddSliderInt("", 0, 1, 10000, 1)
+        UI:Config(E.stemModSlider, {
+            IDContext   = "modSlider",
+            SameLine    = false,
+            Components  = 1,
+            Logarithmic = true,
+            Value       = {1500, 0, 0, 0},
+            OnChange    = function()
+                stepMod = E.stemModSlider.Value[1]
+            end
+        })
 
 
 
-    E.resetStemMod = E.charPosCollapse:AddButton('Mod')
-    E.resetStemMod.IDContext = "modSl1231232323131ider"
-    E.resetStemMod.SameLine = true
-    E.resetStemMod.OnClick = function()
-        E.stemModSlider.Value = { 1500, 0, 0, 0 }
-    end
+    E.resetStemMod = E.charPosCollapse:AddButton('How fast are the sliders')
+        UI:Config(E.resetStemMod, {
+            IDContext = "modSl1231232323131ider",
+            SameLine  = true,
+            OnClick   = function()
+                E.stemModSlider.Value = {1500, 0, 0, 0}
+            end
+        })
 
 
 
     E.posX = E.charPosCollapse:AddSlider("W/E", 0, -100, 100, 1)
-    E.posX.IDContext = "sliderX"
-    E.posX.SameLine = false
-    E.posX.Components = 1
-    E.posX.Value = { 0, 0, 0, 0 }
-    E.posX.OnChange = function(e)
-        -- local value = E.posX.Value[1]
-
-        -- DPrint('Selected character name selectedCharacter: %s', E.visTemComob.Options[selectedCharacter])
-        -- DPrint('Selected character name Index: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
-        -- DPrint('Selected character W/E: %s', selectedCharacter)
-
-        MoveCharacter("x", e.Value[1], stepMod, selectedCharacter)
-
-        -- DPrint('Pre SliderValue W/E: %s', e.Value[1])
-        E.posX.Value = {0, 0, 0, 0}
-        -- DPrint('Post SliderValue W/E: %s', e.Value[1])
-    end
+        UI:Config(E.posX, {
+            IDContext  = "sliderX",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function(e)
+                MoveCharacter("x", e.Value[1], stepMod, selectedCharacter)
+                E.posX.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.posY = E.charPosCollapse:AddSlider("D/U", 0, -100, 100, 1)
-    E.posY.IDContext = "sliderY"
-    E.posY.SameLine = false
-    E.posY.Components = 1
-    E.posY.Value = { 0, 0, 0, 0 }
-    E.posY.OnChange = function(e)
-        -- local value = E.posY.Value[1]
-
-        -- DPrint('Selected character name selectedCharacter: %s', E.visTemComob.Options[selectedCharacter])
-        -- DPrint('Selected character name Index: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
-        -- DPrint('Selected character D/U: %s', selectedCharacter)
-
-
-        MoveCharacter("y", e.Value[1], stepMod, selectedCharacter)
-        -- DPrint('Pre SliderValue D/U: %s', e.Value[1])
-        E.posY.Value = { 0, 0, 0, 0 }
-        -- DPrint('Post SliderValue D/U: %s', e.Value[1])
-
-    end
+        UI:Config(E.posY, {
+            IDContext  = "sliderY",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function(e)
+                MoveCharacter("y", e.Value[1], stepMod, selectedCharacter)
+                E.posY.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.posZ = E.charPosCollapse:AddSlider("S/N", 0, -100, 100, 1)
-    E.posZ.IDContext = "sliderZ"
-    E.posZ.SameLine = false
-    E.posZ.Components = 1
-    E.posZ.Value = { 0, 0, 0, 0 }
-    E.posZ.OnChange = function(e)
-        -- local value = E.posZ.Value[1]
+        UI:Config(E.posZ, {
+            IDContext  = "sliderZ",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function(e)
+                MoveCharacter("z", e.Value[1], stepMod, selectedCharacter)
+                E.posZ.Value = {0, 0, 0, 0}
+            end
+        })
 
-        -- DPrint('Selected character name selectedCharacter: %s', E.visTemComob.Options[selectedCharacter])
-        -- DPrint('Selected character name Index: %s', E.visTemComob.Options[E.visTemComob.SelectedIndex + 1])
-        -- DPrint('Selected character S/N: %s', selectedCharacter)
 
 
-        MoveCharacter("z", e.Value[1], stepMod, selectedCharacter)
-        -- DPrint('Pre SliderValue S/N: %s', e.Value[1])
-        E.posZ.Value = { 0, 0, 0, 0 }
-        -- DPrint('Post SliderValue S/N: %s', e.Value[1])
-
-    end
-
+    E.posReset = E.charPosCollapse:AddButton('Reset')
+        UI:Config(E.posReset, {
+            OnClick = function(e)
+                local x, y, z = table.unpack(LLGlobals.DummyVeryOriginalTransforms[getSelectedDummyOwnerUuid()].Translate)
+                LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate = {x, y, z}
+                UpdateCharacterInfo(selectedCharacter)
+            end
+        })
 
 
     E.charPosCollapse:AddSeparator()
@@ -431,72 +465,85 @@ function BetterPMTab(parent)
 
 
     E.rotationModSlider = E.charRotCollapse:AddSliderInt("", 0, 1, 10000, 1)
-    E.rotationModSlider.IDContext = "rotModSlider"
-    E.rotationModSlider.Logarithmic = true
-    E.rotationModSlider.SameLine = false
-    E.rotationModSlider.Components = 1
-    E.rotationModSlider.Value = { 1500, 0, 0, 0 }
-    E.rotationModSlider.OnChange = function()
-        rotMod = E.rotationModSlider.Value[1]
-    end
+        UI:Config(E.rotationModSlider, {
+            IDContext   = "rotModSlider",
+            Logarithmic = true,
+            SameLine    = false,
+            Components  = 1,
+            Value       = {1500, 0, 0, 0},
+            OnChange    = function()
+                rotMod = E.rotationModSlider.Value[1]
+            end
+        })
 
 
 
-    E.resetRotMod = E.charRotCollapse:AddButton('Mod')
-    E.resetRotMod.IDContext = "modSl1231111123131ider"
-    E.resetRotMod.SameLine = true
-    E.resetRotMod.OnClick = function()
-        E.rotationModSlider.Value = { 1500, 0, 0, 0 }
-    end
+    E.resetRotMod = E.charRotCollapse:AddButton('How fast are the sliders')
+        UI:Config(E.resetRotMod, {
+            IDContext = "modSl1231111123131ider",
+            SameLine  = true,
+            OnClick   = function()
+                E.rotationModSlider.Value = {1500, 0, 0, 0}
+            end
+        })
 
 
 
     E.rotX = E.charRotCollapse:AddSlider("Pitch", 0, -100, 100, 1)
-    E.rotX.IDContext = "E.rotX"
-    E.rotX.SameLine = false
-    E.rotX.Components = 1
-    E.rotX.Value = { 0, 0, 0, 0 }
-    E.rotX.OnChange = function()
-        local value = E.rotX.Value[1]
-        RotateCharacter("x", value, rotMod, selectedCharacter)
-        E.rotX.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.rotX, {
+            IDContext  = "E.rotX",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.rotX.Value[1]
+                RotateCharacter("x", value, rotMod, selectedCharacter)
+                E.rotX.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.rotY = E.charRotCollapse:AddSlider("Yaw", 0, -100, 100, 1)
-    E.rotY.IDContext = "E.rotY"
-    E.rotY.SameLine = false
-    E.rotY.Components = 1
-    E.rotY.Value = { 0, 0, 0, 0 }
-    E.rotY.OnChange = function()
-        local value = E.rotY.Value[1]
-        RotateCharacter("y", value, rotMod, selectedCharacter)
-        E.rotY.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.rotY, {
+            IDContext  = "E.rotY",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.rotY.Value[1]
+                RotateCharacter("y", value, rotMod, selectedCharacter)
+                E.rotY.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.rotZ = E.charRotCollapse:AddSlider("Roll", 0, -100, 100, 1)
-    E.rotZ.IDContext = "E.rotZ"
-    E.rotZ.SameLine = false
-    E.rotZ.Components = 1
-    E.rotZ.Value = { 0, 0, 0, 0 }
-    E.rotZ.OnChange = function()
-        local value = E.rotZ.Value[1]
-        RotateCharacter("z", value, rotMod, selectedCharacter)
-        E.rotZ.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.rotZ, {
+            IDContext  = "E.rotZ",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.rotZ.Value[1]
+                RotateCharacter("z", value, rotMod, selectedCharacter)
+                E.rotZ.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.resetRot = E.charRotCollapse:AddButton("Reset")
-    E.resetRot.IDContext = "E.resetRot"
-    E.resetRot.SameLine = false
-    E.resetRot.OnClick = function()
-        LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat =  {0.0, 1.0, 0.0, 0.0}
-        UpdateCharacterInfo(selectedCharacter)
-    end
+        UI:Config(E.resetRot, {
+            IDContext = "E.resetRot",
+            SameLine  = false,
+            OnClick   = function()
+                local x, y, z, w = table.unpack(LLGlobals.DummyVeryOriginalTransforms[getSelectedDummyOwnerUuid()].RotationQuat)
+                LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat = {x, y, z, w}
+                UpdateCharacterInfo(selectedCharacter)
+            end
+        })
 
     E.charRotCollapse:AddSeparator()
 
@@ -508,86 +555,101 @@ function BetterPMTab(parent)
 
 
     E.scaleModSlider = E.charScaleCollapse:AddSliderInt("", 0, 1, 10000, 1)
-    E.scaleModSlider.IDContext = "sacleModSlider"
-    E.scaleModSlider.Logarithmic = true
-    E.scaleModSlider.SameLine = false
-    E.scaleModSlider.Components = 1
-    E.scaleModSlider.Value = { 1500, 0, 0, 0 }
-    E.scaleModSlider.OnChange = function()
-        scaleMod = E.scaleModSlider.Value[1]
-    end
+        UI:Config(E.scaleModSlider, {
+            IDContext   = "sacleModSlider",
+            Logarithmic = true,
+            SameLine    = false,
+            Components  = 1,
+            Value       = {1500, 0, 0, 0},
+            OnChange    = function()
+                scaleMod = E.scaleModSlider.Value[1]
+            end
+        })
 
 
 
-    E.resetScaMod = E.charScaleCollapse:AddButton('Mod')
-    E.resetScaMod.IDContext = "modSl123123131ider"
-    E.resetScaMod.SameLine = true
-    E.resetScaMod.OnClick = function()
-        E.scaleModSlider.Value = { 1500, 0, 0, 0 }
-    end
+    E.resetScaMod = E.charScaleCollapse:AddButton('How fast are the sliders')
+        UI:Config(E.resetScaMod, {
+            IDContext = "modSl123123131ider",
+            SameLine  = true,
+            OnClick   = function()
+                E.scaleModSlider.Value = {1500, 0, 0, 0}
+            end
+        })
 
 
 
     E.scaleLenght = E.charScaleCollapse:AddSlider("Length", 0, -100, 100, 1)
-    E.scaleLenght.IDContext = "scaleLenght123"
-    E.scaleLenght.SameLine = false
-    E.scaleLenght.Components = 1
-    E.scaleLenght.Value = { 0, 0, 0, 0 }
-    E.scaleLenght.OnChange = function()
-        local value = E.scaleLenght.Value[1]
-        ScaleCharacter("x", value, scaleMod, selectedCharacter)
-        E.scaleLenght.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.scaleLenght, {
+            IDContext  = "scaleLenght123",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.scaleLenght.Value[1]
+                ScaleCharacter("x", value, scaleMod, selectedCharacter)
+                E.scaleLenght.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.scaleWidth = E.charScaleCollapse:AddSlider("Height", 0, -100, 100, 1)
-    E.scaleWidth.IDContext = "scaleWidth232"
-    E.scaleWidth.SameLine = false
-    E.scaleWidth.Components = 1
-    E.scaleWidth.Value = { 0, 0, 0, 0 }
-    E.scaleWidth.OnChange = function()
-        local value = E.scaleWidth.Value[1]
-        ScaleCharacter("y", value, scaleMod, selectedCharacter)
-        E.scaleWidth.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.scaleWidth, {
+            IDContext  = "scaleWidth232",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.scaleWidth.Value[1]
+                ScaleCharacter("y", value, scaleMod, selectedCharacter)
+                E.scaleWidth.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.scaleHeight = E.charScaleCollapse:AddSlider("Width", 0, -100, 100, 1)
-    E.scaleHeight.IDContext = "scaleHeight323"
-    E.scaleHeight.SameLine = false
-    E.scaleHeight.Components = 1
-    E.scaleHeight.Value = { 0, 0, 0, 0 }
-    E.scaleHeight.OnChange = function()
-        local value = E.scaleHeight.Value[1]
-        ScaleCharacter("z", value, scaleMod, selectedCharacter)
-        E.scaleHeight.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.scaleHeight, {
+            IDContext  = "scaleHeight323",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.scaleHeight.Value[1]
+                ScaleCharacter("z", value, scaleMod, selectedCharacter)
+                E.scaleHeight.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.scaleAll = E.charScaleCollapse:AddSlider("All", 0, -100, 100, 1)
-    E.scaleAll.IDContext = "scalescaleAll323"
-    E.scaleAll.SameLine = false
-    E.scaleAll.Components = 1
-    E.scaleAll.Value = { 0, 0, 0, 0 }
-    E.scaleAll.OnChange = function()
-        local value = E.scaleAll.Value[1]
-        ScaleCharacter("all", value, scaleMod, selectedCharacter)
-        E.scaleAll.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.scaleAll, {
+            IDContext  = "scalescaleAll323",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.scaleAll.Value[1]
+                ScaleCharacter("all", value, scaleMod, selectedCharacter)
+                E.scaleAll.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.resetScale = E.charScaleCollapse:AddButton("Reset")
-    E.resetScale.IDContext = "E.resetScale"
-    E.resetScale.SameLine = false
-    E.resetScale.OnClick = function()
-        LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Scale = { 1, 1, 1 }
-        E.infoScale.Label = string.format('L: %.2f  H: %.2f  W: %.2f', 1, 1, 1)
-        UpdateCharacterInfo(selectedCharacter)
-    end
+        UI:Config(E.resetScale, {
+            IDContext = "E.resetScale",
+            SameLine  = false,
+            OnClick   = function()
+                local x, y, z = table.unpack(LLGlobals.DummyVeryOriginalTransforms[getSelectedDummyOwnerUuid()].Scale)
+                LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Scale = {x, y, z}
+                UpdateCharacterInfo(selectedCharacter)
+                -- E.scaleInput.Label = string.format('L: %.2f  H: %.2f  W: %.2f', 1, 1, 1)
+            end
+        })
 
 
     E.charScaleCollapse:AddSeparator()
@@ -599,64 +661,72 @@ function BetterPMTab(parent)
     E.treeTail = E.collapseParts:AddTree('Tail')
 
     E.tailPosCollapse = E.treeTail:AddTree("Position")
-    E.tailPosCollapse.IDContext = 'wwwwdwd'
-    E.tailPosCollapse.DefaultOpen = false
+        UI:Config(E.tailPosCollapse, {
+            IDContext    = 'wwwwdwd',
+            DefaultOpen  = false
+        })
 
 
 
     E.tposX = E.tailPosCollapse:AddSlider("W/E", 0, -100, 100, 1)
-    E.tposX.IDContext = "slide123rX"
-    E.tposX.SameLine = false
-    E.tposX.Components = 1
-    E.tposX.Value = { 0, 0, 0, 0 }
-    E.tposX.OnChange = function()
-        local value = E.tposX.Value[1]
-        -- DPrint(E.visTemComob.Options[selectedCharacter])
-        MoveTail("x", value, 3000, selectedCharacter)
-
-        E.tposX.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.tposX, {
+            IDContext  = "slide123rX",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.tposX.Value[1]
+                MoveTail("x", value, 3000, selectedCharacter)
+                E.tposX.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.tposY = E.tailPosCollapse:AddSlider("D/U", 0, -100, 100, 1)
-    E.tposY.IDContext = "slid123erY"
-    E.tposY.SameLine = false
-    E.tposY.Components = 1
-    E.tposY.Value = { 0, 0, 0, 0 }
-    E.tposY.OnChange = function()
-        local value = E.tposY.Value[1]
-        MoveTail("y", value, 3000, selectedCharacter)
-        E.tposY.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.tposY, {
+            IDContext  = "slid123erY",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.tposY.Value[1]
+                MoveTail("y", value, 3000, selectedCharacter)
+                E.tposY.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.tposZ = E.tailPosCollapse:AddSlider("S/N", 0, -100, 100, 1)
-    E.tposZ.IDContext = "slid123123erZ"
-    E.tposZ.SameLine = false
-    E.tposZ.Components = 1
-    E.tposZ.Value = { 0, 0, 0, 0 }
-    E.tposZ.OnChange = function()
-        local value = E.tposZ.Value[1]
-        MoveTail("z", value, 3000, selectedCharacter)
-        E.tposZ.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.tposZ, {
+            IDContext  = "slid123123erZ",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.tposZ.Value[1]
+                MoveTail("z", value, 3000, selectedCharacter)
+                E.tposZ.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.resettPos = E.tailPosCollapse:AddButton("Reset")
-    E.resettPos.IDContext = "resetttrot"
-    E.resettPos.SameLine = false
-    E.resettPos.OnClick = function()
-        for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
-            if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
-                LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(
-                    LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate)
-                break
+        UI:Config(E.resettPos, {
+            IDContext = "resetttrot",
+            SameLine  = false,
+            OnClick   = function()
+                for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
+                    if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
+                        LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(
+                            LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate)
+                        break
+                    end
+                end
             end
-        end
-    end
+        })
 
 
 
@@ -665,62 +735,72 @@ function BetterPMTab(parent)
 
 
     E.tailRotCollapse = E.treeTail:AddTree("Rotation")
-    E.tailRotCollapse.IDContext = 'asdasdasdasdasds'
-    E.tailRotCollapse.DefaultOpen = false
+        UI:Config(E.tailRotCollapse, {
+            IDContext   = 'asdasdasdasdasds',
+            DefaultOpen = false
+        })
 
 
 
     E.trotX = E.tailRotCollapse:AddSlider("Pitch", 0, -100, 100, 1)
-    E.trotX.IDContext = "ro123tX"
-    E.trotX.SameLine = false
-    E.trotX.Components = 1
-    E.trotX.Value = { 0, 0, 0, 0 }
-    E.trotX.OnChange = function()
-        local value = E.trotX.Value[1]
-        RotateTail("x", value, 3000, selectedCharacter)
-        E.trotX.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.trotX, {
+            IDContext  = "ro123tX",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.trotX.Value[1]
+                RotateTail("x", value, 3000, selectedCharacter)
+                E.trotX.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.trotY = E.tailRotCollapse:AddSlider("Yaw", 0, -100, 100, 1)
-    E.trotY.IDContext = "r123otY"
-    E.trotY.SameLine = false
-    E.trotY.Components = 1
-    E.trotY.Value = { 0, 0, 0, 0 }
-    E.trotY.OnChange = function()
-        local value = E.trotY.Value[1]
-        RotateTail("y", value, 3000, selectedCharacter)
-        E.trotY.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.trotY, {
+            IDContext  = "r123otY",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.trotY.Value[1]
+                RotateTail("y", value, 3000, selectedCharacter)
+                E.trotY.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.trotZ = E.tailRotCollapse:AddSlider("Roll", 0, -100, 100, 1)
-    E.trotZ.IDContext = "ro12312tZ"
-    E.trotZ.SameLine = false
-    E.trotZ.Components = 1
-    E.trotZ.Value = { 0, 0, 0, 0 }
-    E.trotZ.OnChange = function()
-        local value = E.trotZ.Value[1]
-        RotateTail("z", value, 3000, selectedCharacter)
-        E.trotZ.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.trotZ, {
+            IDContext  = "ro12312tZ",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.trotZ.Value[1]
+                RotateTail("z", value, 3000, selectedCharacter)
+                E.trotZ.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.resettRot = E.tailRotCollapse:AddButton("Reset")
-    E.resettRot.IDContext = "resetttrot"
-    E.resettRot.SameLine = false
-    E.resettRot.OnClick = function()
-        for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
-            if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
-                LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldRotate(
-                    LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat)
-                break
+        UI:Config(E.resettRot, {
+            IDContext = "resetttrot",
+            SameLine  = false,
+            OnClick   = function()
+                for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
+                    if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
+                        LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldRotate(
+                            LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat)
+                        break
+                    end
+                end
             end
-        end
-    end
+        })
 
     E.tailRotCollapse:AddSeparator()
 
@@ -730,125 +810,144 @@ function BetterPMTab(parent)
 
 
     E.hornsPosCollapse = E.treeHorns:AddTree("Position")
-    E.hornsPosCollapse.IDContext = 'as123123da323sdds'
-    E.hornsPosCollapse.DefaultOpen = false
+        UI:Config(E.hornsPosCollapse, {
+            IDContext   = 'as123123da323sdds',
+            DefaultOpen = false
+        })
 
 
 
     E.hposX = E.hornsPosCollapse:AddSlider("W/E", 0, -100, 100, 1)
-    E.hposX.IDContext = "slid123e123rX"
-    E.hposX.SameLine = false
-    E.hposX.Components = 1
-    E.hposX.Value = { 0, 0, 0, 0 }
-    E.hposX.OnChange = function()
-        local value = E.hposX.Value[1]
-        -- DPrint(E.visTemComob.Options[selectedCharacter])
-        MoveHorns("x", value, 3000, selectedCharacter)
-
-        E.hposX.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.hposX, {
+            IDContext  = "slid123e123rX",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.hposX.Value[1]
+                MoveHorns("x", value, 3000, selectedCharacter)
+                E.hposX.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.hposY = E.hornsPosCollapse:AddSlider("D/U", 0, -100, 100, 1)
-    E.hposY.IDContext = "slid13123erY"
-    E.hposY.SameLine = false
-    E.hposY.Components = 1
-    E.hposY.Value = { 0, 0, 0, 0 }
-    E.hposY.OnChange = function()
-        local value = E.hposY.Value[1]
-        MoveHorns("y", value, 3000, selectedCharacter)
-        E.hposY.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.hposY, {
+            IDContext  = "slid13123erY",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.hposY.Value[1]
+                MoveHorns("y", value, 3000, selectedCharacter)
+                E.hposY.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.hposZ = E.hornsPosCollapse:AddSlider("S/N", 0, -100, 100, 1)
-    E.hposZ.IDContext = "sli23d123123erZ"
-    E.hposZ.SameLine = false
-    E.hposZ.Components = 1
-    E.hposZ.Value = { 0, 0, 0, 0 }
-    E.hposZ.OnChange = function()
-        local value = E.hposZ.Value[1]
-        MoveHorns("z", value, 3000, selectedCharacter)
-        E.hposZ.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.hposZ, {
+            IDContext  = "sli23d123123erZ",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.hposZ.Value[1]
+                MoveHorns("z", value, 3000, selectedCharacter)
+                E.hposZ.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.resethPos = E.hornsPosCollapse:AddButton("Reset")
-    E.resethPos.IDContext = "re11sehhhhpos"
-    E.resethPos.SameLine = false
-    E.resethPos.OnClick = function()
-        for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
-            if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
-                LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(
-                    LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate)
-                break
+        UI:Config(E.resethPos, {
+            IDContext = "re11sehhhhpos",
+            SameLine  = false,
+            OnClick   = function()
+                for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
+                    if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
+                        LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(
+                            LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate)
+                        break
+                    end
+                end
             end
-        end
-    end
+        })
 
     E.hornsPosCollapse:AddSeparator()
 
 
+
     E.hornsRotCollapse = E.treeHorns:AddTree("Rotation")
-    E.hornsRotCollapse.IDContext = 'asdas123123dasdasdasds'
-    E.hornsRotCollapse.DefaultOpen = false
+        UI:Config(E.hornsRotCollapse, {
+            IDContext   = 'asdas123123dasdasdasds',
+            DefaultOpen = false
+        })
 
 
 
     E.hrotX = E.hornsRotCollapse:AddSlider("Pitch", 0, -100, 100, 1)
-    E.hrotX.IDContext = "ro1312323tX"
-    E.hrotX.SameLine = false
-    E.hrotX.Components = 1
-    E.hrotX.Value = { 0, 0, 0, 0 }
-    E.hrotX.OnChange = function()
-        local value = E.hrotX.Value[1]
-        RotateHorns("x", value, 3000, selectedCharacter)
-        E.hrotX.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.hrotX, {
+            IDContext  = "ro1312323tX",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.hrotX.Value[1]
+                RotateHorns("x", value, 3000, selectedCharacter)
+                E.hrotX.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.hrotY = E.hornsRotCollapse:AddSlider("Yaw", 0, -100, 100, 1)
-    E.hrotY.IDContext = "r1213otY"
-    E.hrotY.SameLine = false
-    E.hrotY.Components = 1
-    E.hrotY.Value = { 0, 0, 0, 0 }
-    E.hrotY.OnChange = function()
-        local value = E.hrotY.Value[1]
-        RotateHorns("y", value, 3000, selectedCharacter)
-        E.hrotY.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.hrotY, {
+            IDContext  = "r1213otY",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.hrotY.Value[1]
+                RotateHorns("y", value, 3000, selectedCharacter)
+                E.hrotY.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.hrotZ = E.hornsRotCollapse:AddSlider("Roll", 0, -100, 100, 1)
-    E.hrotZ.IDContext = "ro1233312tZ"
-    E.hrotZ.SameLine = false
-    E.hrotZ.Components = 1
-    E.hrotZ.Value = { 0, 0, 0, 0 }
-    E.hrotZ.OnChange = function()
-        local value = E.hrotZ.Value[1]
-        RotateHorns("z", value, 3000, selectedCharacter)
-        E.hrotZ.Value = { 0, 0, 0, 0 }
-    end
+        UI:Config(E.hrotZ, {
+            IDContext  = "ro1233312tZ",
+            SameLine   = false,
+            Components = 1,
+            Value      = {0, 0, 0, 0},
+            OnChange   = function()
+                local value = E.hrotZ.Value[1]
+                RotateHorns("z", value, 3000, selectedCharacter)
+                E.hrotZ.Value = {0, 0, 0, 0}
+            end
+        })
 
 
 
     E.resethRot = E.hornsRotCollapse:AddButton("Reset")
-    E.resethRot.IDContext = "rese123hhhrot"
-    E.resethRot.SameLine = false
-    E.resethRot.OnClick = function()
-        for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
-            if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
-                LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldRotate(
-                    LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat)
-                break
+        UI:Config(E.resethRot, {
+            IDContext = "rese123hhhrot",
+            SameLine  = false,
+            OnClick   = function()
+                for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
+                    if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
+                        LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldRotate(
+                            LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat)
+                        break
+                    end
+                end
             end
-        end
-    end
+        })
 
     E.hornsRotCollapse:AddSeparator()
 
@@ -857,114 +956,111 @@ function BetterPMTab(parent)
     --LookAt
 
 
-    E.collapseLookAt = parent:AddCollapsingHeader('Look at')
-    E.collapseLookAt.IDContext = 'wwwswdawdwdwd'
-    E.collapseLookAt.DefaultOpen = openByDefaultPMLook
+    -- E.collapseLookAt = parent:AddCollapsingHeader('Look at')
+    -- E.collapseLookAt.IDContext = 'wwwswdawdwdwd'
+    -- E.collapseLookAt.DefaultOpen = openByDefaultPMLook
 
 
 
-    local targetPos
+    -- local targetPos
 
-    E.btnMoveToCamLookAt = E.collapseLookAt:AddButton('Move to cam')
-    E.btnMoveToCamLookAt.SameLine = false
-    E.btnMoveToCamLookAt.OnClick = function ()
-        targetPos = Camera:GetActiveCamera().Transform.Transform.Translate
-        Ext.Net.PostMessageToServer('LL_MoveLookAtTargetToCam', Ext.Json.Stringify(targetPos))
-    end
-
-
-
-    E.btnCreateLookAt = E.collapseLookAt:AddButton('Marker')
-    E.btnCreateLookAt.SameLine = true
-    E.btnCreateLookAt.OnClick = function ()
-        Ext.Net.PostMessageToServer('LL_CreateLookAtTarget', '')
-    end
-
-
-    E.btnDeleteLookAt = E.collapseLookAt:AddButton('Delete')
-    E.btnDeleteLookAt.SameLine = true
-    E.btnDeleteLookAt.OnClick = function ()
-        Ext.Net.PostMessageToServer('LL_DeleteLookAtTarget', '')
-    end
+    -- E.btnMoveToCamLookAt = E.collapseLookAt:AddButton('Move to cam')
+    -- E.btnMoveToCamLookAt.SameLine = false
+    -- E.btnMoveToCamLookAt.OnClick = function ()
+    --     targetPos = Camera:GetActiveCamera().Transform.Transform.Translate
+    --     Ext.Net.PostMessageToServer('LL_MoveLookAtTargetToCam', Ext.Json.Stringify(targetPos))
+    -- end
 
 
 
-    local lookAtSlDefault = 0.1
+    -- E.btnCreateLookAt = E.collapseLookAt:AddButton('Marker')
+    -- E.btnCreateLookAt.SameLine = true
+    -- E.btnCreateLookAt.OnClick = function ()
+    --     Ext.Net.PostMessageToServer('LL_CreateLookAtTarget', '')
+    -- end
+
+
+    -- E.btnDeleteLookAt = E.collapseLookAt:AddButton('Delete')
+    -- E.btnDeleteLookAt.SameLine = true
+    -- E.btnDeleteLookAt.OnClick = function ()
+    --     Ext.Net.PostMessageToServer('LL_DeleteLookAtTarget', '')
+    -- end
 
 
 
-    E.slLookAt = E.collapseLookAt:AddSlider('X Y Z', 0, -lookAtSlDefault, lookAtSlDefault, 1)
-    E.slLookAt.IDContext = '1312sss31asdad'
-    E.slLookAt.SameLine = false
-    E.slLookAt.Components = 3
-    E.slLookAt.Value = {0, 0, 0, 0}
-    E.slLookAt.OnChange = function()
-        targetPos = targetPos or _C().Transform.Transform.Translate
-        targetPos[1] = targetPos[1] + E.slLookAt.Value[1]
-        targetPos[2] = targetPos[2] + E.slLookAt.Value[2]
-        targetPos[3] = targetPos[3] + E.slLookAt.Value[3]
-        Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1].PhotoModeCameraTransform.Transform.Translate = {targetPos[1],targetPos[2],targetPos[3]}
-        local data = {
-            x = targetPos[1],
-            y = targetPos[2],
-            z = targetPos[3],
-        }
-        Ext.Net.PostMessageToServer('LL_MoveLookAtTarget', Ext.Json.Stringify(data))
-        E.slLookAt.Value = {0, 0, 0, 0}
-    end
+    -- local lookAtSlDefault = 0.1
 
 
 
+    -- E.slLookAt = E.collapseLookAt:AddSlider('X Y Z', 0, -lookAtSlDefault, lookAtSlDefault, 1)
+    -- E.slLookAt.IDContext = '1312sss31asdad'
+    -- E.slLookAt.SameLine = false
+    -- E.slLookAt.Components = 3
+    -- E.slLookAt.Value = {0, 0, 0, 0}
+    -- E.slLookAt.OnChange = function()
+    --     targetPos = targetPos or _C().Transform.Transform.Translate
+    --     targetPos[1] = targetPos[1] + E.slLookAt.Value[1]
+    --     targetPos[2] = targetPos[2] + E.slLookAt.Value[2]
+    --     targetPos[3] = targetPos[3] + E.slLookAt.Value[3]
+    --     Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1].PhotoModeCameraTransform.Transform.Translate = {targetPos[1],targetPos[2],targetPos[3]}
+    --     local data = {
+    --         x = targetPos[1],
+    --         y = targetPos[2],
+    --         z = targetPos[3],
+    --     }
+    --     Ext.Net.PostMessageToServer('LL_MoveLookAtTarget', Ext.Json.Stringify(data))
+    --     E.slLookAt.Value = {0, 0, 0, 0}
+    -- end
 
 
 
-    E.btnUpdateCamPos = E.collapseLookAt:AddCheckbox([[Head doesn't follow the camera]])
-    E.btnUpdateCamPos.SameLine = false
-    E.btnUpdateCamPos.OnChange = function (e)
+    -- E.btnUpdateCamPos = E.collapseLookAt:AddCheckbox([[Head doesn't follow the camera]])
+    -- E.btnUpdateCamPos.SameLine = false
+    -- E.btnUpdateCamPos.OnChange = function (e)
 
-        if not Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1] then e.Checked = false return end
+    --     if not Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1] then e.Checked = false return end
 
-        if e.Checked then
-            Utils:SubUnsubToTick('sub', 'LL_LookAt', function ()
-                if not Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1] then
-                    Utils:SubUnsubToTick('unsub','LL_LookAt', _)
-                    e.Checked = false
-                    return
-                end
-                targetPos = targetPos or _C().Transform.Transform.Translate
-                Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1].PhotoModeCameraTransform.Transform.Translate = {targetPos[1],targetPos[2],targetPos[3]}
-            end)
-        else
-            if not Utils.subID and Utils.subID['LL_LookAt'] then
-                e.Checked = false
-                return
-            end
-            Utils:SubUnsubToTick('unsub','LL_LookAt', _)
-            e.Checked = false
-        end
+    --     if e.Checked then
+    --         Utils:SubUnsubToTick('sub', 'LL_LookAt', function ()
+    --             if not Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1] then
+    --                 Utils:SubUnsubToTick('unsub','LL_LookAt', _)
+    --                 e.Checked = false
+    --                 return
+    --             end
+    --             targetPos = targetPos or _C().Transform.Transform.Translate
+    --             Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1].PhotoModeCameraTransform.Transform.Translate = {targetPos[1],targetPos[2],targetPos[3]}
+    --         end)
+    --     else
+    --         if not Utils.subID and Utils.subID['LL_LookAt'] then
+    --             e.Checked = false
+    --             return
+    --         end
+    --         Utils:SubUnsubToTick('unsub','LL_LookAt', _)
+    --         e.Checked = false
+    --     end
 
-    end
-
-
-
-    E.checkFollowIGCS = E.collapseLookAt:AddCheckbox('Head does follow IGCS')
-    E.checkFollowIGCS.OnChange = function (e)
-        if e.Checked then
-
-            if not Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1] then
-                e.Checked = false
-                return
-            end
-
-            StartFollowIGCS()
-        else
-            StopFollowIGCS()
-        end
-    end
+    -- end
 
 
 
-    E.collapseLookAt:AddSeparator()
+    -- E.checkFollowIGCS = E.collapseLookAt:AddCheckbox('Head does follow IGCS')
+    -- E.checkFollowIGCS.OnChange = function (e)
+    --     if e.Checked then
+
+    --         if not Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1] then
+    --             e.Checked = false
+    --             return
+    --         end
+
+    --         StartFollowIGCS()
+    --     else
+    --         StopFollowIGCS()
+    --     end
+    -- end
+
+
+
+    -- E.collapseLookAt:AddSeparator()
 
 
 
@@ -979,17 +1075,18 @@ function BetterPMTab(parent)
 
 
     E.saveButton = E.saveLoadCollapse:AddButton("Save")
-    E.saveButton.IDContext = "saveIdddasdasda"
-    E.saveButton.SameLine = false
-    E.saveButton.OnClick = function()
-        if LLGlobals.DummyNameMap then
-            SaveVisTempCharacterPosition()
-        end
-    end
+        UI:Config(E.saveButton, {
+            IDContext = "saveIdddasdasda",
+            SameLine  = false,
+            OnClick   = function()
+                if LLGlobals.DummyNameMap then
+                    SaveVisTempCharacterPosition()
+                end
+            end
+        })
 
 
     E.saveLoadCollapse:AddSeparator()
-
 
 
 end

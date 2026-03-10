@@ -1,6 +1,7 @@
 {
   "SchemaVersion": 1,
   "ModName": "Lighty Lights",
+  "KeybindingSortMode": "blueprint",
   "Tabs": [
     {
       "TabId": "LightyLights-main",
@@ -12,11 +13,39 @@
           "Settings": [
             {
               "Id": "ll_toggle_window",
-              "Name": "! Toggle window",
+              "Name": "Toggle main window",
               "Type": "keybinding_v2",
               "Default": {
                 "Keyboard": {
                   "Key": "NUM_4",
+                  "ModifierKeys": ["LAlt"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_duplicate",
+              "Name": "Duplicate selected light",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "C",
+                  "ModifierKeys": ["LAlt"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_stick",
+              "Name": "Stick light to camera",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "R",
                   "ModifierKeys": ["LAlt"]
                 }
               },
@@ -53,62 +82,6 @@
               }
             },
             {
-              "Id": "ll_toggle_marker",
-              "Name": "Toggle marker",
-              "Type": "keybinding_v2",
-              "Default": {
-                "Keyboard": {
-                  "Key": "",
-                  "ModifierKeys": []
-                }
-              },
-              "Options": {
-                "BlockIfLevelNotStarted": true
-              }
-            },
-            {
-              "Id": "ll_toggle_all_markers",
-              "Name": "Toggle all markers",
-              "Type": "keybinding_v2",
-              "Default": {
-                "Keyboard": {
-                  "Key": "",
-                  "ModifierKeys": []
-                }
-              },
-              "Options": {
-                "BlockIfLevelNotStarted": true
-              }
-            },
-            {
-              "Id": "ll_duplicate",
-              "Name": "Duplicate selected light",
-              "Type": "keybinding_v2",
-              "Default": {
-                "Keyboard": {
-                  "Key": "C",
-                  "ModifierKeys": ["LAlt"]
-                }
-              },
-              "Options": {
-                "BlockIfLevelNotStarted": true
-              }
-            },
-            {
-              "Id": "ll_stick",
-              "Name": "Stick light to camera",
-              "Type": "keybinding_v2",
-              "Default": {
-                "Keyboard": {
-                  "Key": "R",
-                  "ModifierKeys": ["LAlt"]
-                }
-              },
-              "Options": {
-                "BlockIfLevelNotStarted": true
-              }
-            },
-            {
               "Id": "ll_prev",
               "Name": "Previous light",
               "Type": "keybinding_v2",
@@ -130,6 +103,34 @@
                 "Keyboard": {
                   "Key": "E",
                   "ModifierKeys": ["LAlt"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_toggle_marker",
+              "Name": "Toggle marker",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "",
+                  "ModifierKeys": []
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_toggle_all_markers",
+              "Name": "Toggle all markers",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "",
+                  "ModifierKeys": []
                 }
               },
               "Options": {
@@ -192,6 +193,49 @@
                 "BlockIfLevelNotStarted": true
               }
             },
+
+            {
+              "Id": "ll_toggle_bz_symm",
+              "Name": "Toggle bone symmetry",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "F",
+                  "ModifierKeys": ["LAlt"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_pm_prev_dummy",
+              "Name": "Previous dummy",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "Q",
+                  "ModifierKeys": ["LShift"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_pm_next_dummy",
+              "Name": "Next dummy",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "E",
+                  "ModifierKeys": ["LShift"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
             {
               "Id": "ll_move_to_cursor",
               "Name": "Move selected character to cursor",
@@ -207,8 +251,8 @@
               }
             }
           ]
-        }
-      ]
-    }
-  ]
+}
+]
+}
+]
 }

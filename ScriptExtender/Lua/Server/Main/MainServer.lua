@@ -93,7 +93,7 @@ Ch.CreateLight:SetRequestHandler(function (Data)
 
         LLGlobals.LightParametersServer[LLGlobals.selectedUuid] = {}
         LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate = {x,y + OFFSET ,z}
-        LLGlobals.LightParametersServer[LLGlobals.selectedUuid].RotationQuat = Math:EulerToQuats(HumanRotation)
+        LLGlobals.LightParametersServer[LLGlobals.selectedUuid].RotationQuat = Math.EulerToQuats(HumanRotation)
         LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = HumanRotation
         LLGlobals.selectedEntity = Ext.Entity.Get(LLGlobals.selectedUuid)
         LLGlobals.CreatedLightsServer[LLGlobals.selectedUuid] = LLGlobals.selectedUuid
@@ -122,6 +122,8 @@ end)
 
 
 Ch.DuplicateLight:SetRequestHandler(function ()
+    if not LLGlobals.selectedUuid then return end
+
     local uuid = getAvailableRootTemplate()
     local x,y,z = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate)
     local rx,ry,rz = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation)
@@ -136,7 +138,7 @@ Ch.DuplicateLight:SetRequestHandler(function ()
     local HumanRotation = {rx,ry,rz}
     LLGlobals.LightParametersServer[LLGlobals.selectedUuid] = {}
     LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate = {x,y,z}
-    LLGlobals.LightParametersServer[LLGlobals.selectedUuid].RotationQuat = Math:EulerToQuats(HumanRotation)
+    LLGlobals.LightParametersServer[LLGlobals.selectedUuid].RotationQuat = Math.EulerToQuats(HumanRotation)
     LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = HumanRotation
     LLGlobals.OrbitParams[LLGlobals.selectedUuid] = PreviousOrbitParams
     LLGlobals.CreatedLightsServer[LLGlobals.selectedUuid] = LLGlobals.selectedUuid
@@ -172,21 +174,24 @@ function CreateMarker(single)
         Osi.ToTransform(LLGlobals.markerUuid, x, y, z, rx - R_OFFSET, ry, rz)
         Data = LLGlobals.markerUuid
         Ch.MarkerHandler:Broadcast(Data)
+        return LLGlobals.markerUuid
     else
         LLGlobals.States.allMarkersExisting = not LLGlobals.States.allMarkersExisting
 
         if LLGlobals.States.allMarkersExisting then
-            for k,v in pairs(LLGlobals.CreatedLightsServer) do
+            for lightUuid,v in pairs(LLGlobals.CreatedLightsServer) do
+                LLGlobals.CreatedAllMarkers[lightUuid] = LLGlobals.CreatedAllMarkers[lightUuid] or {}
                 local x,y,z = table.unpack(LLGlobals.LightParametersServer[v].Translate)
                 local rx,ry,rz = table.unpack(LLGlobals.LightParametersServer[v].HumanRotation)
                 local uuid = lightMarker2GUID
 
                 local markerUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
                 Osi.ToTransform(markerUuid, x, y, z, rx - R_OFFSET, ry, rz)
-                table.insert(LLGlobals.CreatedAllMarkers, markerUuid)
+                LLGlobals.CreatedAllMarkers[lightUuid] = markerUuid
+                return LLGlobals.CreatedAllMarkers
             end
         else
-            for _, markerUuid in pairs(LLGlobals.CreatedAllMarkers) do
+            for lightUuid, markerUuid in pairs(LLGlobals.CreatedAllMarkers) do
                 Osi.RequestDelete(markerUuid)
             end
 
@@ -235,8 +240,7 @@ end
 
 
 Ch.MarkerHandler:SetRequestHandler(function (Data)
-    CreateMarker(false)
-    return Reseponse
+    return CreateMarker(false)
 end)
 
 
@@ -326,6 +330,7 @@ Ch.DeleteLight:SetHandler(function (request)
     end
     UpdateBeamPosition()
 end)
+
 
 
 Ext.RegisterConsoleCommand('lldumpall', function (cmd, ...)
@@ -761,3 +766,7 @@ end
 
 
 
+Ch.PlayAnimation:SetHandler(function(Data)
+    DPrint(Data)
+    PlayLoopingAnimation(Data, '', '555f55c9-860d-4e5d-85ac-ceae8b1dde6e', '', '','','', '')
+end)

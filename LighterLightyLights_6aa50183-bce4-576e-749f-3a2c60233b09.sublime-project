@@ -1,0 +1,28 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+		},
+	],
+	"settings":
+	{
+		"LSP":
+		{
+			"LSP-lua":
+			{
+				"settings":
+				{
+					"Lua.diagnostics.disable":
+					[
+						"lowercase-global",
+						"undefined-field",
+						"redundant-parameter",
+						"empty-block",
+						"undefined-global",
+					],
+				},
+			},
+		},
+	},
+}

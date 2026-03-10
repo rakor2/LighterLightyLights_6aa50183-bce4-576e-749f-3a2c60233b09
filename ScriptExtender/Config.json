@@ -1,5 +1,5 @@
 {
-    "RequiredVersion": 28,
+    "RequiredVersion": 30,
     "ModTable": "LL2",
     "FeatureFlags": ["Lua"]
 }

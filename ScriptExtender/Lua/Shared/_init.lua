@@ -6,4 +6,13 @@ Ext.Require("Shared/ATM_Triggers.lua")
 Ext.Require("Shared/LTN_Triggers.lua")
 Ext.Require("Shared/ATM_Templates.lua")
 Ext.Require("Shared/LTN_Templates.lua")
--- Ext.Require("Shared/CommunityLibrary/_InitDefaults.lua")
+
+
+
+function _DD(fileName, entity, getAll)
+	if not getAll then
+		Ext.IO.SaveFile(fileName .. '.json', Ext.DumpExport(entity))
+	else
+		Ext.IO.SaveFile(fileName .. '.json', Ext.DumpExport(entity:GetAllComponents()))
+	end
+end

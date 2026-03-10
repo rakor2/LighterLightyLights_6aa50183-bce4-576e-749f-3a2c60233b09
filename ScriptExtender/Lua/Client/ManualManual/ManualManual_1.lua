@@ -2,6 +2,8 @@ local CONTENT_SIZE = 'Large'
 local CALLOUT_SIZE = 'Large'
 local INDENT = 250
 
+
+
 ManualManual_Contents = {}
 ManualManual_Contents[1] =
 {
@@ -39,7 +41,7 @@ Previous light - Alt + Q.]] },
             { type = "Heading", text = [[Parameters]]},
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Type", 				text = [[Selects the light type to create: point, spotlight, directional.]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Color", 				text = [[Light's color.]] },
-			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Saved colors", 		text = [[You can drag and drop a color from the picker onto one of the icons to save it.]] },
+			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Saved colors", 		text = [[You can drag and drop a color from the picker onto one of the icons to save it. You can also change colors manually. The colors do save.]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Power", 				text = [[Light's intensity.]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Distance", 			text = [[How far light emits light.]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Light channel",	 	text = [[Lets you choose whether the light affects the world, characters, or both.]] },
@@ -67,6 +69,7 @@ Previous light - Alt + Q.]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Stick to camera", 	text = [[Sticks selected light to camera - Alt + R.]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "World relative", 	text = [[Moves light along world axis: North, South, East, West.]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Character relative",	text = [[Move light relative to a character or another type of source, in a orbit like way.]] },
+			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Grouped",			text = [[Include selected light to the group to control the whole group at the same time]] },
 			{ type = "CallOut", prefix_size = CALLOUT_SIZE, size = CONTENT_SIZE, text_block_indent = INDENT, prefix = "Rotation",			text = [[Just rotation, idk. Keep in mind, that you don't ever use Roll for Point and Spotlight, you use it only for Directional. Because rn the mod uses dogshit way of calculating rotation, which causes the gimbal lock.]] },
 		},
 	},

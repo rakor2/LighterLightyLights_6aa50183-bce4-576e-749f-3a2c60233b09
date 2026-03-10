@@ -1,24 +1,30 @@
 function Settings2Tab(p)
-
     local imputPasspord = p:AddInputText('')
-
+    local img
     local btnSubmit = p:AddButton('Enter')
-    btnSubmit.SameLine = true
-    btnSubmit.OnClick = function ()
-        if imputPasspord.Text == 'Love' then
-            textSad.Visible = true
-        else
-            Imgui.Jiggle(btnSubmit, 10)
-            Imgui.BorderPulse(btnSubmit, 10)
-            imputPasspord.Text = ''
-        end
-    end
+        UI:Config(btnSubmit, {
+            SameLine = true,
+            OnClick = function ()
+                if imputPasspord.Text == 'Love' then
+                    img.Visible = true
+                elseif imputPasspord.Text == 'Dani' then
+                    img2.Visible = true
+                else
+                    Imgui.Jiggle(btnSubmit, 10)
+                    Imgui.BorderPulse(btnSubmit, 10)
+                    imputPasspord.Text = ''
+                end
+            end
+        })
 
     local textThePass = p:AddText('the password')
-    textThePass.SameLine = true
+        UI:Config(textThePass, {SameLine = true})
 
-    textSad = p:AddText([[I wish I could actually put something here. Just be happy! I guess...]])
-    textSad.Visible = false
+    img = p:AddImage('05c85d4f-6b79-0a4a-c26b-5fc9fce239ff', {512, 256})
+    img.Visible = false
+
+    img2 = p:AddText('Love you!')
+    img2.Visible = false
 
 
 
@@ -32,75 +38,91 @@ function Settings2Tab(p)
 
 
     E.checkMainGenOpenedByDefault = collapseOBDMain:AddCheckbox('General')
-    E.checkMainGenOpenedByDefault.OnChange = function (e)
-        openByDefaultMainGen = e.Checked
-        SettingsSave()
-    end
-    E.checkMainGenOpenedByDefault.Checked = openByDefaultMainGen
+        UI:Config(E.checkMainGenOpenedByDefault, {
+            Checked = openByDefaultMainGen,
+            OnChange = function (e)
+                openByDefaultMainGen = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
     E.checkMainPointOpenedByDefault = collapseOBDMain:AddCheckbox('Point')
-    E.checkMainPointOpenedByDefault.OnChange = function (e)
-        openByDefaultMainPoint = e.Checked
-        SettingsSave()
-    end
-    E.checkMainPointOpenedByDefault.Checked = openByDefaultMainPoint
+        UI:Config(E.checkMainPointOpenedByDefault, {
+            Checked = openByDefaultMainPoint,
+            OnChange = function (e)
+                openByDefaultMainPoint = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
     E.checkMainSpotOpenedByDefault = collapseOBDMain:AddCheckbox('Spotlight')
-    E.checkMainSpotOpenedByDefault.OnChange = function (e)
-        openByDefaultMainSpot = e.Checked
-        SettingsSave()
-    end
-    E.checkMainSpotOpenedByDefault.Checked = openByDefaultMainSpot
+        UI:Config(E.checkMainSpotOpenedByDefault, {
+            Checked = openByDefaultMainSpot,
+            OnChange = function (e)
+                openByDefaultMainSpot = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
     E.checkMainDirOpenedByDefault = collapseOBDMain:AddCheckbox('Directional')
-    E.checkMainDirOpenedByDefault.OnChange = function (e)
-        openByDefaultMainDir = e.Checked
-        SettingsSave()
-    end
-    E.checkMainDirOpenedByDefault.Checked = openByDefaultMainDir
+        UI:Config(E.checkMainDirOpenedByDefault, {
+            Checked = openByDefaultMainDir,
+            OnChange = function (e)
+                openByDefaultMainDir = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
     E.checkMainAddOpenedByDefault = collapseOBDMain:AddCheckbox('Additional parameters')
-    E.checkMainAddOpenedByDefault.OnChange = function (e)
-        openByDefaultMainAdd = e.Checked
-        SettingsSave()
-    end
-    E.checkMainAddOpenedByDefault.Checked = openByDefaultMainAdd
+        UI:Config(E.checkMainAddOpenedByDefault, {
+            Checked = openByDefaultMainAdd,
+            OnChange = function (e)
+                openByDefaultMainAdd = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
     E.checkMainWorldOpenedByDefault = collapseOBDMain:AddCheckbox('World relative')
-    E.checkMainWorldOpenedByDefault.OnChange = function (e)
-        openByDefaultMainWorld = e.Checked
-        SettingsSave()
-    end
-    E.checkMainWorldOpenedByDefault.Checked = openByDefaultMainWorld
+        UI:Config(E.checkMainWorldOpenedByDefault, {
+            Checked = openByDefaultMainWorld,
+            OnChange = function (e)
+                openByDefaultMainWorld = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
     E.checkMainCharOpenedByDefault = collapseOBDMain:AddCheckbox('Character relative')
-    E.checkMainCharOpenedByDefault.OnChange = function (e)
-        openByDefaultMainChar = e.Checked
-        SettingsSave()
-    end
-    E.checkMainCharOpenedByDefault.Checked = openByDefaultMainChar
+        UI:Config(E.checkMainCharOpenedByDefault, {
+            Checked = openByDefaultMainChar,
+            OnChange = function (e)
+                openByDefaultMainChar = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
     E.checkMainRotOpenedByDefault = collapseOBDMain:AddCheckbox('Rotation')
-    E.checkMainRotOpenedByDefault.IDContext = 'adwdawda'
-    E.checkMainRotOpenedByDefault.OnChange = function (e)
-        openByDefaultMainRot = e.Checked
-        SettingsSave()
-    end
-    E.checkMainRotOpenedByDefault.Checked = openByDefaultMainRot
+        UI:Config(E.checkMainRotOpenedByDefault, {
+            IDContext = 'adwdawda',
+            Checked = openByDefaultMainRot,
+            OnChange = function (e)
+                openByDefaultMainRot = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
@@ -109,108 +131,142 @@ function Settings2Tab(p)
 
 
     E.checkPMCameraOpenedByDefault = collapseOBDPM:AddCheckbox('Camera')
-    E.checkPMCameraOpenedByDefault.OnChange = function (e)
-        openByDefaultPMCamera = e.Checked
-        SettingsSave()
-    end
-    E.checkPMCameraOpenedByDefault.Checked = openByDefaultPMCamera
+        UI:Config(E.checkPMCameraOpenedByDefault, {
+            Checked = openByDefaultPMCamera,
+            OnChange = function (e)
+                openByDefaultPMCamera = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
     E.checkPMInfoOpenedByDefault = collapseOBDPM:AddCheckbox('Info')
-    E.checkPMInfoOpenedByDefault.OnChange = function (e)
-        openByDefaultPMInfo = e.Checked
-        SettingsSave()
-    end
-    E.checkPMInfoOpenedByDefault.Checked = openByDefaultPMInfo
+        UI:Config(E.checkPMInfoOpenedByDefault, {
+            Checked = openByDefaultPMInfo,
+            OnChange = function (e)
+                openByDefaultPMInfo = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
     E.checkPMPosOpenedByDefault = collapseOBDPM:AddCheckbox('Position')
-    E.checkPMPosOpenedByDefault.OnChange = function (e)
-        openByDefaultPMPos = e.Checked
-        SettingsSave()
-    end
-    E.checkPMPosOpenedByDefault.Checked = openByDefaultPMPos
+        UI:Config(E.checkPMPosOpenedByDefault, {
+            Checked = openByDefaultPMPos,
+            OnChange = function (e)
+                openByDefaultPMPos = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
     E.checkPMRotOpenedByDefault = collapseOBDPM:AddCheckbox('Rotation')
-    E.checkPMRotOpenedByDefault.OnChange = function (e)
-        openByDefaultPMRot = e.Checked
-        SettingsSave()
-    end
-    E.checkPMRotOpenedByDefault.Checked = openByDefaultPMRot
+        UI:Config(E.checkPMRotOpenedByDefault, {
+            Checked = openByDefaultPMRot,
+            OnChange = function (e)
+                openByDefaultPMRot = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
     E.checkPMScaleOpenedByDefault = collapseOBDPM:AddCheckbox('Scale')
-    E.checkPMScaleOpenedByDefault.OnChange = function (e)
-        openByDefaultPMScale = e.Checked
-        SettingsSave()
-    end
-    E.checkPMScaleOpenedByDefault.Checked = openByDefaultPMScale
+        UI:Config(E.checkPMScaleOpenedByDefault, {
+            Checked = openByDefaultPMScale,
+            OnChange = function (e)
+                openByDefaultPMScale = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
     E.checkPMLookOpenedByDefault = collapseOBDPM:AddCheckbox('Look at')
-    E.checkPMLookOpenedByDefault.OnChange = function (e)
-        openByDefaultPMLook = e.Checked
-        SettingsSave()
-    end
-    E.checkPMLookOpenedByDefault.Checked = openByDefaultPMLook
+        UI:Config(E.checkPMLookOpenedByDefault, {
+            Checked = openByDefaultPMLook,
+            OnChange = function (e)
+                openByDefaultPMLook = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
     E.checkPMSaveOpenedByDefault = collapseOBDPM:AddCheckbox('Save')
-    E.checkPMSaveOpenedByDefault.OnChange = function (e)
-        openByDefaultPMSave = e.Checked
-        SettingsSave()
-    end
-    E.checkPMSaveOpenedByDefault.Checked = openByDefaultPMSave
+        UI:Config(E.checkPMSaveOpenedByDefault, {
+            Checked = openByDefaultPMSave,
+            OnChange = function (e)
+                openByDefaultPMSave = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
     local c = 0
     E.checkPickerSize = p:AddCheckbox('Bigger color picker')
-    E.checkPickerSize.OnChange = function (e)
-        if LLGlobals.selectedUuid then
-            e.Checked = not e.Checked
-            c = c + 1
-            if c < 3 then
-                local textColorWarning = p:AddText([[Can not apply this setting, you have lights on the scene]])
-                    Helpers.Timer:OnTicks(400, function ()
-                        textColorWarning:Destroy()
-                    end)
-                return
-            else
-                local textColorWarning = p:AddText([[STOP CLICKING]])
-                    Helpers.Timer:OnTicks(200, function ()
-                        textColorWarning:Destroy()
-                    end)
-                return
+        UI:Config(E.checkPickerSize, {
+            Checked = biggerPicker,
+            OnChange = function (e)
+                if LLGlobals.selectedUuid then
+                    e.Checked = not e.Checked
+                    c = c + 1
+                    if c < 3 then
+                        local textColorWarning = p:AddText([[Can not apply this setting, you have lights on the scene
+                    or in photo mode]])
+                        Helpers.Timer:OnTicks(400, function ()
+                            textColorWarning:Destroy()
+                        end)
+                        return
+                    else
+                        local textColorWarning = p:AddText([[STOP CLICKING]])
+                        Helpers.Timer:OnTicks(200, function ()
+                            textColorWarning:Destroy()
+                        end)
+                        return
+                    end
+                end
+
+                biggerPicker = e.Checked
+                Imgui.ClearChildren(E.main2)
+
+                Helpers.Timer:OnTicks(10, function ()
+                    MainTab(E.main2)
+                end)
+                SettingsSave()
             end
-        end
-        biggerPicker = e.Checked
+        })
 
-        Imgui.ClearChildren(mw)
-
-        Helpers.Timer:OnTicks(10, function ()
-            MainWindow(mw)
-        end)
-        SettingsSave()
-
-    end
-    E.checkPickerSize.Checked = biggerPicker
 
 
     E.slFadeTime = p:AddSlider('Elements fade time')
-    E.slFadeTime.Value = {fadeTime, 0, 0, 0}
-    E.slFadeTime.OnChange = function (e)
-        fadeTime = e.Value[1]
-        SettingsSave()
-    end
+        UI:Config(E.slFadeTime, {
+            Value = {fadeTime, 0, 0, 0},
+            OnChange = function (e)
+                fadeTime = e.Value[1]
+                SettingsSave()
+            end
+        })
 
+
+
+    E.comboGradients = p:AddCombo('Bone zone gradient')
+        UI:Config(E.comboGradients, {
+            Options = {'Rainbow','Fire','Ice','Forest','Daniela','Gold','Void','Mono'},
+            SelectedIndex = defaultGradient - 1 or 0,
+            OnChange = function(e)
+                defaultGradient = e.SelectedIndex + 1
+                SettingsSave()
+                ResetBoneZoneColors()
+            end
+        })
+
+    p:AddText([[    Gradients are for readability, choose the one that is most readable,
+    not fashionable]])
 
 
     p:AddSeparatorText('Mod')
@@ -218,85 +274,117 @@ function Settings2Tab(p)
 
 
     E.checkDefaultType = p:AddCombo('Default type')
-    E.checkDefaultType.Options = {'Point', 'Spotlight', 'Directional'}
-    E.checkDefaultType.SelectedIndex = table.find(E.checkDefaultType.Options, defaultLightType) - 1
-    E.checkDefaultType.OnChange = function (e)
-        defaultLightType = E.checkDefaultType.Options[E.checkDefaultType.SelectedIndex +1]
-        SettingsSave()
-    end
+        UI:Config(E.checkDefaultType, {
+            Options = {'Point', 'Spotlight', 'Directional'},
+            SelectedIndex = table.find({'Point', 'Spotlight', 'Directional'}, defaultLightType) - 1,
+            OnChange = function (e)
+                defaultLightType = E.checkDefaultType.Options[E.checkDefaultType.SelectedIndex + 1]
+                SettingsSave()
+            end
+        })
 
 
 
     E.slMarkerSize = p:AddSlider('Default marker size', DEFAULT_MARKER_SCALE, 0.01, DEFAULT_MARKER_SCALE, 1)
-    E.slMarkerSize.Value = {markerScale, 0, 0, 0}
-    E.slMarkerSize.OnChange = function (e)
-        markerScale = e.Value[1]
-        SettingsSave()
-        if not LLGlobals.markerEntity then return end
-        LLGlobals.markerEntity.Visual.Visual:SetWorldScale({markerScale, markerScale, markerScale})
-    end
+        UI:Config(E.slMarkerSize, {
+            Value = {markerScale, 0, 0, 0},
+            OnChange = function (e)
+                markerScale = e.Value[1]
+                SettingsSave()
+                if not LLGlobals.markerEntity then return end
+                LLGlobals.markerEntity.Visual.Visual:SetWorldScale({markerScale, markerScale, markerScale})
+            end
+        })
 
 
 
-    E.slDefCamSpeed = p:AddSlider('Default camera speed', 0, 0.1, 10, 1)
-    E.slDefCamSpeed.Value = {defaultCameraSpeed, 0, 0, 0}
-    E.slDefCamSpeed.OnChange = function (e)
-        defaultCameraSpeed = e.Value[1]
-        SettingsSave()
-    end
-
-
-
-    E.checkLightSetupState = p:AddCheckbox('CharacterLight setup off by default')
-    E.checkLightSetupState.Checked = lightSetupState
-    E.checkLightSetupState.OnChange = function (e)
-        lightSetupState = e.Checked
-        E.checkLightSetup.Checked = lightSetupState
-        CharacterLightSetupState(lightSetupState)
-        SettingsSave()
-    end
+    E.checkColMark = p:AddCheckbox('Colorful markers')
+        UI:Config(E.checkColMark, {
+            Checked = colorfulMarkers,
+            OnChange = function (e)
+                colorfulMarkers = e.Checked
+                SettingsSave()
+            end
+        })
 
 
 
     E.checkToggleMarker = p:AddCheckbox('Marker off by default')
-    E.checkToggleMarker.Checked = markerOff
-    E.checkToggleMarker.OnChange = function (e)
-        markerOff = e.Checked
-        SettingsSave()
-    end
+        UI:Config(E.checkToggleMarker, {
+            Checked = markerOff,
+            OnChange = function (e)
+                markerOff = e.Checked
+                SettingsSave()
+            end
+        })
+
+
+
+    E.slDefCamSpeed = p:AddSlider('Default camera speed', 0, 0.1, 10, 1)
+        UI:Config(E.slDefCamSpeed, {
+            Value = {defaultCameraSpeed, 0, 0, 0},
+            OnChange = function (e)
+                defaultCameraSpeed = e.Value[1]
+                SettingsSave()
+            end
+        })
+
+
+
+    E.checkLightSetupState = p:AddCheckbox('CharacterLight setup off by default')
+        UI:Config(E.checkLightSetupState, {
+            Checked = lightSetupState,
+            OnChange = function (e)
+                lightSetupState = e.Checked
+                E.checkLightSetup.Checked = lightSetupState
+                CharacterLightSetupState(lightSetupState)
+                SettingsSave()
+            end
+        })
 
 
 
     E.checkStickToggle = p:AddCheckbox('Disable stick on light creation')
-    E.checkStickToggle.Checked = stickToggleOff
-    E.checkStickToggle.OnChange = function (e)
-        stickToggleOff = e.Checked
-        SettingsSave()
-    end
-
-
-
-    function TableTest()
-        local colCnt = 0
-        local MAX_ROW = 5
-        local MAX_COL = 10
-
-        while colCnt ~= MAX_ROW do
-            for col = 1, MAX_COL do
-                local x = p:AddButton(col - 1 .. ' ' .. colCnt)
-
-                if col == 1 then
-                    x.SameLine = false
-                else
-                    x.SameLine = true
-                end
-
-                if col == MAX_COL then
-                    colCnt = colCnt + 1
-                end
+        UI:Config(E.checkStickToggle, {
+            Checked = stickToggleOff,
+            OnChange = function (e)
+                stickToggleOff = e.Checked
+                SettingsSave()
             end
-        end
-    end
+        })
+
+
+
+    E.txtApplyDelay = p:AddSliderInt('AnL apply delay', 500, 1, 1000, 1)
+        UI:Config(E.txtApplyDelay, {
+            Value = applyDelay or {500,0,0,0},
+            OnChange = function(e)
+                applyDelay = e.Value
+                SettingsSave()
+            end
+        })
+
+    -- function TableTest()
+    --     local colCnt = 0
+    --     local MAX_ROW = 5
+    --     local MAX_COL = 10
+
+    --     while colCnt ~= MAX_ROW do
+    --         for col = 1, MAX_COL do
+    --             local x = p:AddButton(col - 1 .. ' ' .. colCnt)
+
+    --             if col == 1 then
+    --                 x.SameLine = false
+    --             else
+    --                 x.SameLine = true
+    --             end
+
+    --             if col == MAX_COL then
+    --                 colCnt = colCnt + 1
+    --             end
+    --         end
+    --     end
+    -- end
     -- PagMan it works
     -- TableTest()
 

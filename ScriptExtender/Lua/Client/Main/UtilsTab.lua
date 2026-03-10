@@ -89,5 +89,4 @@ function Utils2Tab(p)
         CharacterLightSetupState(e.Checked)
     end
 
-
 end

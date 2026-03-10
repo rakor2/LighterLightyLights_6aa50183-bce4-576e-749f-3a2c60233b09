@@ -4,6 +4,7 @@ atm_templates2 = {
     ["ATM_TUH_Icy"] = "621fb97d-7569-4803-6519-bfbf902ecd17",
     ["ATM_TUH_Snow_Field"] = "962d7bd2-1f4f-eca7-1d3f-c033cf567e08",
     ["TUH_ATM_D_1"] = "f6a246ef-a559-b78e-7250-c2969960620b",
+    ["ATM_TUH_tfk"] = "52bfee96-8b23-5cd0-f5f1-bc65743c39ad",
 
     ["ATM_AtmosphericTest"] = "1b311a12-59cc-018f-e9b0-9a670cad8034",
     ["ATM_BGH_Highberrys_Cellar"] = "6d27f492-b106-cfcd-99ec-8ec5480058c0",
@@ -265,5 +266,6 @@ atm_templates2 = {
     ["ATM_WLD_VillageSubs_A"] = "fa2d881b-cf64-6141-a810-7101fd3570c8",
     ["ATM_WLD_ZhentarimBasement_Subterrain_A_Basement"] = "404c3f00-a574-a9d2-c93f-d1545b69417f",
     ["ATM_EV10_Dungeon_JaheiraBasement"] = "53a993ba-e4a8-257e-de3e-081e50ecec81",
-    ["Sword_ATM_Black"] = "f42cb1d0-d5be-84f4-3b84-155161e86a4f",
+    -- ["Sword_ATM_Black"] = "f42cb1d0-d5be-84f4-3b84-155161e86a4f",
+    -- ["ATM_Default_EV11_Dawn_GithCreche"] = "2d7e104a-026e-a5bc-00c8-e16ab628590e",
 }

@@ -109,6 +109,7 @@ function LLMCM(mt2)
     styleCombo.OnChange = function(widget)
         StyleSettings.selectedStyle = widget.SelectedIndex + 1
         ApplyStyle(mw, StyleSettings.selectedStyle)
+        ResetBoneZoneColors()
 
         if windowNotification then
             E.checkSelectedLightNotification.Checked = false
@@ -121,9 +122,18 @@ function LLMCM(mt2)
             API.Rebuild('LL2', 'Lighty Lights Elucidator')
         end
 
-        SettingsSave()
+        if Mods.GizmoLib then
+            initGizmoLibColors()
+        end
 
+        SettingsSave()
     end
+
+
+    if Mods.GizmoLib then
+        initGizmoLibColors()
+    end
+
 
     ApplyStyle(mw, StyleSettings.selectedStyle)
     MainWindow(mw)
@@ -156,7 +166,10 @@ function MainWindow(mw)
     E.betterPM = mainTabBar:AddTabItem('PM')
     BetterPMTab(E.betterPM)
 
-    E.origin2PointTab = mainTabBar:AddTabItem('Origin point')
+    E.boneZone = mainTabBar:AddTabItem('BoneZone')
+    BoneZoneTab(E.boneZone)
+
+    E.origin2PointTab = mainTabBar:AddTabItem('OriginPoint')
     Origin2PointTab(E.origin2PointTab)
 
     E.goboTab = mainTabBar:AddTabItem('Gobo')
@@ -193,7 +206,7 @@ function MainWindow(mw)
         for _, element in pairs(ER) do
             table.insert(allElements, element)
         end
-
+        --#region
         -- for _, element in pairs(ER) do
         --     table.insert(allButtons, element)
         -- end
@@ -226,7 +239,7 @@ function MainWindow(mw)
         --         end
         --     end
         -- end
-
+        --#endregion
         for _, element in pairs(allElements) do
             element.OnHoverEnter = function(e)
                 local elementType = tostring(e):match('^(%w+)')
@@ -251,7 +264,7 @@ function MainWindow(mw)
                     Imgui.FadeColor(e, 'Header', Style.Colors.headerHovered, Style.Colors.header, fadeTime)
                 end
             end
-
+            --#region
             --     element.OnHoverLeave = function(e)
             --         local elementType = tostring(e):match('^(%w+)')
 
@@ -277,6 +290,7 @@ function MainWindow(mw)
             --         end
             --     end
             -- end
+            --#endregion
         end
     end
     funnyStuff()
@@ -348,6 +362,7 @@ MCM.SetKeybindingCallback('ll_selected_popup', function()
 end)
 
 
+
 MCM.SetKeybindingCallback('ll_apply_anl', function()
     ApplyParameters()
 end)
@@ -397,8 +412,8 @@ end)
 
 
 function MainTab(p)
-    local rngMax = #QOTD
-    p:AddSeparatorText(QOTD[Ext.Math.Random(1, rngMax)])
+    local rngMax = #MOTD
+    p:AddSeparatorText(MOTD[Ext.Math.Random(1, rngMax)])
 
     E.checkTypePoint = p:AddCheckbox('Point')
     E.checkTypePoint.Checked = defaultLightType == 'Point'
@@ -436,6 +451,7 @@ function MainTab(p)
     E.btnCreate2.SameLine = true
     E.btnCreate2.OnClick = function ()
         CreateLight()
+        E.checkGroup.Checked = false
     end
 
 
@@ -446,6 +462,7 @@ function MainTab(p)
     E.comboIHateCombos.OnChange = function (e)
         LLGlobals.syncedSelectedIndex = E.comboIHateCombos.SelectedIndex
         E.comboIHateCombos2.SelectedIndex = LLGlobals.syncedSelectedIndex
+        E.checkGroup.Checked = LLGlobals.LightsToInclude[getSelectedUuid()] or false
         SelectLight()
     end
 
@@ -461,6 +478,7 @@ function MainTab(p)
         end
         LLGlobals.syncedSelectedIndex = element.SelectedIndex
         E.comboIHateCombos2.SelectedIndex = LLGlobals.syncedSelectedIndex
+        E.checkGroup.Checked = LLGlobals.LightsToInclude[getSelectedUuid()] or false
         SelectLight()
     end
 
@@ -486,6 +504,7 @@ function MainTab(p)
         end
         LLGlobals.syncedSelectedIndex = element.SelectedIndex
         E.comboIHateCombos2.SelectedIndex = LLGlobals.syncedSelectedIndex
+        E.checkGroup.Checked = LLGlobals.LightsToInclude[getSelectedUuid()] or false
         SelectLight()
     end
 
@@ -593,7 +612,7 @@ function MainTab(p)
     end
 
 
-
+    local confirmTimer
     ER.btnDeleteAll = p:AddButton('Delete all')
     ER.btnDeleteAll.SameLine = true
     ER.btnDeleteAll.OnClick = function ()
@@ -649,6 +668,7 @@ function MainTab(p)
     ER.btnDuplicate.OnClick = function ()
         if not LLGlobals.selectedUuid then return end
         DuplicateLight()
+        E.checkGroup.Checked = false
     end
 
 
@@ -699,10 +719,10 @@ function MainTab(p)
     end
 
 
-
+    local all = false
     function toggleAllLightsBtn()
         if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
-            local all = not all
+            all = not all
 
             for _, uuid in pairs(LLGlobals.CreatedLightsServer) do
                 local lightEntity = getLightEntity(uuid)
@@ -838,11 +858,13 @@ function MainTab(p)
         textPicker.SameLine = true
     else
         E.pickerLightColor = E.treeGen:AddColorEdit('')
-        textPicker = E.treeGen:AddText('Color (click me)')
+        textPicker = E.treeGen:AddText('Color (lick me)')
         textPicker.SameLine = true
     end
 
 
+    RecentColors = RecentColors or {}
+    E.recentPickers = {}
 
     for i = 1, 12 do
         local picker = E.treeGen:AddColorEdit('')
@@ -908,7 +930,7 @@ function MainTab(p)
     E.slLightTemp.Logarithmic = true
     E.slLightTemp.OnChange = function (e)
         if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
-            local Color = Math:KelvinToRGB(e.Value[1])
+            local Color = Math.KelvinToRGB(e.Value[1])
             SetLightColor({Color[1], Color[2], Color[3]})
             E.pickerLightColor.Color = {Color[1], Color[2], Color[3], 0}
             LLGlobals.LightParametersClient[LLGlobals.selectedUuid].Temperature = e.Value[1] --This is just for the slidere
@@ -1142,9 +1164,10 @@ function MainTab(p)
 
 
 
-    E.slLightDirDim = E.treeDir:AddSlider('Wid/Hei/Len', 0, 0, 100, 1)
+    E.slLightDirDim = E.treeDir:AddSlider('Width/Height/Length', 0, 0, 100, 1)
     E.slLightDirDim.IDContext = 'lkasenfaolkejfn'
     E.slLightDirDim.Components = 3
+    E.slLightDirDim.Value = {5, 5, 15, 0}
     E.slLightDirDim.Logarithmic = true
     E.slLightDirDim.OnChange = function (e)
         if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
@@ -1337,7 +1360,6 @@ function MainTab(p)
     E.btnPosX_CW.SameLine = true
     E.btnPosX_CW.OnClick = function (e)
         for k, v in pairs(LLGlobals.LightParametersClient) do
-            DPrint(k)
             local entity = Ext.Entity.Get(k)
             MoveEntity(entity, 'x', -100, E.modPosSlider.Value[1], 'Orbit', 'Light')
         end
@@ -1751,10 +1773,10 @@ function MainTab(p)
 
 
 
-    ER.modPosReset = p:AddButton('Pos modifier')
-    ER.modPosReset.IDContext = 'MOdd'
-    ER.modPosReset.SameLine = true
-    ER.modPosReset.OnClick = function ()
+    E.modPosReset = p:AddButton('How fast pos sliders')
+    E.modPosReset.IDContext = 'MOdd'
+    E.modPosReset.SameLine = true
+    E.modPosReset.OnClick = function ()
         E.modPosSlider.Value = {modPosDefault,0,0,0}
     end
 
@@ -1767,13 +1789,12 @@ function MainTab(p)
 
 
 
-    ER.modRotReset = p:AddButton('Rot modifier')
-    ER.modRotReset.IDContext = 'MOddRot'
-    ER.modRotReset.SameLine = true
-    ER.modRotReset.OnClick = function ()
+    E.modRotReset = p:AddButton('How fast rot sliders')
+    E.modRotReset.IDContext = 'MOddRot'
+    E.modRotReset.SameLine = true
+    E.modRotReset.OnClick = function ()
         E.modRotSlider.Value = {modRotDefault,0,0,0}
     end
-
 end
 
 

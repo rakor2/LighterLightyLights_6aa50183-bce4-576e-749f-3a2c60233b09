@@ -1,4 +1,3 @@
-
 Ch.CreateOriginPoint:SetRequestHandler(function (Data)
     if LLGlobals.States.pointIsExisting then return end
     local x, y, z = table.unpack(getSourcePosition())
@@ -19,6 +18,7 @@ Ch.DeleteOriginPoint:SetHandler(function (Data)
         LLGlobals.States.pointIsExisting = false
     end
 end)
+
 
 
 --fuck it, I'll just make everything separate, idc

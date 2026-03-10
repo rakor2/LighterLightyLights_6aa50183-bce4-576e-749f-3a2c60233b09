@@ -23,6 +23,8 @@ Ch.CreateGobo:SetRequestHandler(function (Data)
     return goboUuid
 end)
 
+
+
 local GoboUuidNameMap = {
     ['a0d2ac1c-efb5-4f64-9f7d-b01db470e091'] = 'Tree',
     ['c1c8b026-e3c8-4975-bb4f-6b29450c2d18'] = 'Figures',
@@ -39,6 +41,8 @@ local GoboUuidNameMap = {
     ['731867e3-0dab-4b13-9d78-13275087a446'] = 'Idk',
     ['7608ddb7-6fac-453d-b972-c002ff694ccc'] = 'Shape flower',
 }
+
+
 
 Ch.DeleteGobo:SetHandler(function (Data)
     local goboToDelete
@@ -69,8 +73,12 @@ Ch.DeleteGobo:SetHandler(function (Data)
     end
 end)
 
+
+
 Ch.HideGobo:SetHandler(function (Data)
 end)
+
+
 
 
 -- tasty slopppppppppp
@@ -92,6 +100,7 @@ Ch.GoboTranslate:SetHandler(function (Data)
 
     UpdateGoboPosition()
 end)
+
 
 
 function UpdateGoboPosition()
@@ -126,5 +135,3 @@ function UpdateGoboPosition()
 
     Osi.ToTransform(goboUuid, gx, gy, gz, lrx, lry, lrz)
 end
-
-

@@ -1,0 +1,5130 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"getSelec",
+				"getSelectedLightEntity()"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"t",
+				"true"
+			],
+			[
+				"photo",
+				"photomode"
+			],
+			[
+				"li",
+				"lightSetupState"
+			],
+			[
+				"_",
+				"__mul(a, b)"
+			],
+			[
+				"va",
+				"varName"
+			],
+			[
+				"dpi",
+				"DPrint(...)"
+			],
+			[
+				"r",
+				"return"
+			],
+			[
+				"C",
+				"Config(element, config)"
+			],
+			[
+				"bu",
+				"buttonHovered"
+			],
+			[
+				"text",
+				"textDisabled"
+			],
+			[
+				"Bu",
+				"Button"
+			],
+			[
+				"Va",
+				"Value"
+			],
+			[
+				"Sett",
+				"SettingsSave()"
+			],
+			[
+				"Com",
+				"Config(element, config)"
+			],
+			[
+				"Comg",
+				"Config(element, config)"
+			],
+			[
+				"inp",
+				"inputPoseName"
+			],
+			[
+				"S",
+				"SubUnsubToTick(action, key, fn)"
+			],
+			[
+				"ui",
+				"UI"
+			],
+			[
+				"En",
+				"EntityUuid"
+			],
+			[
+				"Help",
+				"Helpers"
+			],
+			[
+				"Tra",
+				"Translate"
+			],
+			[
+				"isL",
+				"isLip"
+			],
+			[
+				"isCh",
+				"isChin"
+			],
+			[
+				"is",
+				"isCheek"
+			],
+			[
+				"bon",
+				"boneName"
+			],
+			[
+				"bo",
+				"boneName"
+			],
+			[
+				"isVe",
+				"isVec3"
+			],
+			[
+				"n",
+				"number"
+			],
+			[
+				"e",
+				"elseif"
+			],
+			[
+				"ret",
+				"return"
+			],
+			[
+				"VE",
+				"Vector"
+			],
+			[
+				"Vec",
+				"Vec3"
+			],
+			[
+				"SetVa",
+				"SetValueToVarAndTableIt(varName, value)"
+			],
+			[
+				"Root",
+				"Root_M"
+			],
+			[
+				"Get",
+				"GetValueFromGenomeVariable(entity, varName)"
+			],
+			[
+				"He",
+				"Height"
+			],
+			[
+				"Wi",
+				"Width"
+			],
+			[
+				"lab",
+				"label"
+			],
+			[
+				"Dumm",
+				"DummyWidgets"
+			],
+			[
+				"p",
+				"PrevOption(element)"
+			],
+			[
+				"Upda",
+				"UpdatePMDummyCombo(e)"
+			],
+			[
+				"Th",
+				"ThumbFinger1_L"
+			],
+			[
+				"d",
+				"dir"
+			],
+			[
+				"dd",
+				"DDump(...)"
+			],
+			[
+				"fa",
+				"falloff"
+			],
+			[
+				"IKFa",
+				"IKFalloffFingers"
+			],
+			[
+				"I",
+				"IKFalloff"
+			],
+			[
+				"Ta",
+				"TailVisualResources"
+			],
+			[
+				"b",
+				"boneGroupName"
+			],
+			[
+				"Rota",
+				"RotationQuat"
+			],
+			[
+				"T",
+				"Translate"
+			],
+			[
+				"Dum",
+				"Dummy"
+			],
+			[
+				"eye_",
+				"eye_l"
+			],
+			[
+				"W",
+				"WinSize"
+			],
+			[
+				"Las",
+				"LastSize"
+			],
+			[
+				"Photo",
+				"'PhotoModeSession'"
+			],
+			[
+				"O",
+				"OnCreate"
+			],
+			[
+				"Ori",
+				"Origins"
+			],
+			[
+				"D",
+				"Distance"
+			],
+			[
+				"ca",
+				"CamTranslate"
+			],
+			[
+				"pra",
+				"parentTrans"
+			],
+			[
+				"GEt",
+				"GetAllEntitiesWithComponent"
+			],
+			[
+				"se",
+				"selectedCharacter"
+			],
+			[
+				"co",
+				"Config(element, config)"
+			],
+			[
+				"Sa",
+				"SameLine"
+			],
+			[
+				"getSele",
+				"getSelectedDummyOwnerUuid()"
+			],
+			[
+				"Add",
+				"AddButton"
+			],
+			[
+				"overw",
+				"overwrites"
+			],
+			[
+				"g",
+				"groupName"
+			],
+			[
+				"Defa",
+				"DefaultOpen"
+			],
+			[
+				"G",
+				"GetObjectType"
+			],
+			[
+				"Enb",
+				"EnvironmentEffectEnabledForTimeline"
+			],
+			[
+				"ADd",
+				"AddText"
+			],
+			[
+				"Hel",
+				"Helpers"
+			],
+			[
+				"Grad",
+				"GradientVoid(k, boneCnt)"
+			],
+			[
+				"Chec",
+				"Checked"
+			],
+			[
+				"a",
+				"axisIndex"
+			],
+			[
+				"Fi",
+				"find"
+			],
+			[
+				"SetSl",
+				"SetVarValuesToSliders()"
+			],
+			[
+				"get",
+				"getDummyOwnerUuid(entity)"
+			],
+			[
+				"lo",
+				"lowerName"
+			],
+			[
+				"Che",
+				"Checked"
+			],
+			[
+				"Co",
+				"Config(element, config)"
+			],
+			[
+				"Dar",
+				"DarkRed"
+			],
+			[
+				"Frame",
+				"FrameBg"
+			],
+			[
+				"bone",
+				"boneName"
+			],
+			[
+				"Window",
+				"WindowBg"
+			],
+			[
+				"head",
+				"header"
+			],
+			[
+				"Unfo",
+				"Unfortunate"
+			],
+			[
+				"ax",
+				"axisIndex"
+			],
+			[
+				"getSe",
+				"getSelectedUuid()"
+			],
+			[
+				"Huma",
+				"HumanValue"
+			],
+			[
+				"Bone",
+				"BoneTransforms"
+			],
+			[
+				"Tran",
+				"Translate"
+			],
+			[
+				"el",
+				"elseif"
+			],
+			[
+				"Ro",
+				"Rotation"
+			],
+			[
+				"MAX",
+				"MAX_SCALE"
+			],
+			[
+				"testtre",
+				"testTreeTrans"
+			],
+			[
+				"automa",
+				"automatically"
+			],
+			[
+				"Reg",
+				"RegisterNetListener(channel, handler)"
+			],
+			[
+				"pose",
+				"poseDoesntExist"
+			],
+			[
+				"ti",
+				"timerStart"
+			],
+			[
+				"M",
+				"MonotonicTime"
+			],
+			[
+				"var",
+				"varName"
+			],
+			[
+				"ll",
+				"LLGlobals"
+			],
+			[
+				"c",
+				"characterUuid"
+			],
+			[
+				"en",
+				"entity"
+			],
+			[
+				"AddSepa",
+				"AddSeparatorText"
+			],
+			[
+				"AddChi",
+				"AddChildWindow"
+			],
+			[
+				"pho",
+				"inPhotoMode"
+			],
+			[
+				"fun",
+				"func"
+			],
+			[
+				"Ge",
+				"GetAllEntitiesWithComponent"
+			],
+			[
+				"Cate",
+				"CategoryOrder"
+			],
+			[
+				"sa",
+				"SaveCategories"
+			],
+			[
+				"Op",
+				"Options"
+			],
+			[
+				"Save",
+				"SaveCategories"
+			],
+			[
+				"Catego",
+				"Categories"
+			],
+			[
+				"On",
+				"OnClick"
+			],
+			[
+				"AddW",
+				"AddChildWindow"
+			],
+			[
+				"i",
+				"inPhotoMode"
+			],
+			[
+				"tr",
+				"tree"
+			],
+			[
+				"Bo",
+				"BodyOrder"
+			],
+			[
+				"Re",
+				"Require(fileName)"
+			],
+			[
+				"tt",
+				"txtName"
+			],
+			[
+				"E",
+				"Euler"
+			],
+			[
+				"Pl",
+				"please"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "ScriptExtender/Lua/Client/Main/MainUI.lua",
+			"settings":
+			{
+				"buffer_size": 58420,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					44,
+					1,
+					"",
+					null,
+					"AQAAAPYPAAAAAAAABxAAAAAAAAALAAAAQm9uZVpvbmVUYWI",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAALNAAAAAAAAAs0AAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					49,
+					1,
+					"cut",
+					null,
+					"AQAAAHo1AAAAAAAAejUAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB6NQAAAAAAAHo1AAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					65,
+					3,
+					"left_delete",
+					null,
+					"AwAAAAMQAAAAAAAAAxAAAAAAAAAEAAAAcmVlZAIQAAAAAAAAAhAAAAAAAAABAAAAZwEQAAAAAAAAARAAAAAAAAABAAAAQQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAHEAAAAAAAAAMQAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					83,
+					1,
+					"cut",
+					null,
+					"AQAAAIQMAAAAAAAAhAwAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACEDAAAAAAAAIQMAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					86,
+					1,
+					"cut",
+					null,
+					"AQAAAIMMAAAAAAAAgwwAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACDDAAAAAAAAIMMAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					89,
+					1,
+					"cut",
+					null,
+					"AQAAAJoMAAAAAAAAmgwAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACaDAAAAAAAAJoMAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					93,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAIIMAAAAAAAAiwwAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACCDAAAAAAAAIIMAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					96,
+					1,
+					"trim_trailing_white_space",
+					null,
+					"AQAAAIMMAAAAAAAAgwwAAAAAAAAIAAAAICAgICAgICA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACLDAAAAAAAAIsMAAAAAAAAAAAAAAAA8L8"
+				]
+			]
+		},
+		{
+			"file": "ScriptExtender/Lua/Client/Main/MainHandlersClient.lua",
+			"settings":
+			{
+				"buffer_size": 42774,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			},
+			"undo_stack":
+			[
+				[
+					44,
+					1,
+					"paste",
+					null,
+					"AQAAAC8xAAAAAAAAezEAAAAAAABLAAAARS5zbExpZ2h0RGlyRGltLlZhbHVlID0gRGltIGFuZCB7RGltWzFdLCBEaW1bMl0sRGltWzNdLCAwfSBvciB7NSwgNSwgMTUsIDB9",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB6MQAAAAAAAC8xAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					58,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"AwAAAC4OAAAAAAAAMw4AAAAAAAAAAAAAMw4AAAAAAAA4DgAAAAAAAAAAAAAvDgAAAAAAAC8OAAAAAAAABAAAACAgICA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAuDgAAAAAAAC4OAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					60,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAC8OAAAAAAAAMA4AAAAAAAAAAAAAMQ4AAAAAAAAxDgAAAAAAAAQAAAAgICAg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAvDgAAAAAAAC8OAAAAAAAAAAAAAAAASEA"
+				],
+				[
+					61,
+					1,
+					"reindent",
+					null,
+					"AQAAADAOAAAAAAAANA4AAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAwDgAAAAAAADAOAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					62,
+					1,
+					"insert",
+					{
+						"characters": "\nввг"
+					},
+					"BQAAADQOAAAAAAAAOQ4AAAAAAAAAAAAAMA4AAAAAAAAwDgAAAAAAAAQAAAAgICAgNQ4AAAAAAAA2DgAAAAAAAAAAAAA2DgAAAAAAADcOAAAAAAAAAAAAADcOAAAAAAAAOA4AAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA0DgAAAAAAADQOAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					63,
+					3,
+					"left_delete",
+					null,
+					"AwAAADcOAAAAAAAANw4AAAAAAAACAAAA0LM2DgAAAAAAADYOAAAAAAAAAgAAANCyNQ4AAAAAAAA1DgAAAAAAAAIAAADQsg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA4DgAAAAAAADgOAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					64,
+					1,
+					"insert",
+					{
+						"characters": "ddu"
+					},
+					"AwAAADUOAAAAAAAANg4AAAAAAAAAAAAANg4AAAAAAAA3DgAAAAAAAAAAAAA3DgAAAAAAADgOAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA1DgAAAAAAADUOAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					65,
+					1,
+					"insert_completion",
+					{
+						"completion": "lsp_select_completion {\"index\":5,\"session_name\":\"LSP-lua\"}",
+						"format": "command",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "DDump(...)"
+					},
+					"AgAAADUOAAAAAAAANQ4AAAAAAAADAAAAZGR1NQ4AAAAAAAA6DgAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA4DgAAAAAAADgOAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					66,
+					1,
+					"insert_snippet",
+					{
+						"contents": "($0)"
+					},
+					"AQAAADoOAAAAAAAAPA4AAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA6DgAAAAAAADoOAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					69,
+					1,
+					"insert",
+					{
+						"characters": "getSelec"
+					},
+					"CAAAADsOAAAAAAAAPA4AAAAAAAAAAAAAPA4AAAAAAAA9DgAAAAAAAAAAAAA9DgAAAAAAAD4OAAAAAAAAAAAAAD4OAAAAAAAAPw4AAAAAAAAAAAAAPw4AAAAAAABADgAAAAAAAAAAAABADgAAAAAAAEEOAAAAAAAAAAAAAEEOAAAAAAAAQg4AAAAAAAAAAAAAQg4AAAAAAABDDgAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA7DgAAAAAAADsOAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					73,
+					1,
+					"insert_completion",
+					{
+						"completion": "lsp_select_completion {\"index\":23,\"session_name\":\"LSP-lua\"}",
+						"format": "command",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "getSelectedLightEntity()"
+					},
+					"AgAAADsOAAAAAAAAOw4AAAAAAAAIAAAAZ2V0U2VsZWM7DgAAAAAAAFEOAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABDDgAAAAAAAEMOAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					74,
+					1,
+					"insert_snippet",
+					{
+						"contents": "($0)"
+					},
+					"AQAAAFEOAAAAAAAAUw4AAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABRDgAAAAAAAFEOAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					127,
+					3,
+					"cut",
+					null,
+					"AwAAAJsCAAAAAAAAmwIAAAAAAAABAAAACpsCAAAAAAAAmwIAAAAAAAABAAAACpsCAAAAAAAAmwIAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACbAgAAAAAAAJsCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					135,
+					1,
+					"insert",
+					{
+						"characters": "              "
+					},
+					"DgAAAEEAAAAAAAAAQgAAAAAAAAAAAAAAQgAAAAAAAABDAAAAAAAAAAAAAABDAAAAAAAAAEQAAAAAAAAAAAAAAEQAAAAAAAAARQAAAAAAAAAAAAAARQAAAAAAAABGAAAAAAAAAAAAAABGAAAAAAAAAEcAAAAAAAAAAAAAAEcAAAAAAAAASAAAAAAAAAAAAAAASAAAAAAAAABJAAAAAAAAAAAAAABJAAAAAAAAAEoAAAAAAAAAAAAAAEoAAAAAAAAASwAAAAAAAAAAAAAASwAAAAAAAABMAAAAAAAAAAAAAABMAAAAAAAAAE0AAAAAAAAAAAAAAE0AAAAAAAAATgAAAAAAAAAAAAAATgAAAAAAAABPAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABBAAAAAAAAAEEAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					138,
+					1,
+					"insert",
+					{
+						"characters": "                   "
+					},
+					"EwAAAGcAAAAAAAAAaAAAAAAAAAAAAAAAaAAAAAAAAABpAAAAAAAAAAAAAABpAAAAAAAAAGoAAAAAAAAAAAAAAGoAAAAAAAAAawAAAAAAAAAAAAAAawAAAAAAAABsAAAAAAAAAAAAAABsAAAAAAAAAG0AAAAAAAAAAAAAAG0AAAAAAAAAbgAAAAAAAAAAAAAAbgAAAAAAAABvAAAAAAAAAAAAAABvAAAAAAAAAHAAAAAAAAAAAAAAAHAAAAAAAAAAcQAAAAAAAAAAAAAAcQAAAAAAAAByAAAAAAAAAAAAAAByAAAAAAAAAHMAAAAAAAAAAAAAAHMAAAAAAAAAdAAAAAAAAAAAAAAAdAAAAAAAAAB1AAAAAAAAAAAAAAB1AAAAAAAAAHYAAAAAAAAAAAAAAHYAAAAAAAAAdwAAAAAAAAAAAAAAdwAAAAAAAAB4AAAAAAAAAAAAAAB4AAAAAAAAAHkAAAAAAAAAAAAAAHkAAAAAAAAAegAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABnAAAAAAAAAGcAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					139,
+					1,
+					"left_delete",
+					null,
+					"AQAAAHkAAAAAAAAAeQAAAAAAAAABAAAAIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB6AAAAAAAAAHoAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					142,
+					1,
+					"insert",
+					{
+						"characters": "           "
+					},
+					"CwAAAJgAAAAAAAAAmQAAAAAAAAAAAAAAmQAAAAAAAACaAAAAAAAAAAAAAACaAAAAAAAAAJsAAAAAAAAAAAAAAJsAAAAAAAAAnAAAAAAAAAAAAAAAnAAAAAAAAACdAAAAAAAAAAAAAACdAAAAAAAAAJ4AAAAAAAAAAAAAAJ4AAAAAAAAAnwAAAAAAAAAAAAAAnwAAAAAAAACgAAAAAAAAAAAAAACgAAAAAAAAAKEAAAAAAAAAAAAAAKEAAAAAAAAAogAAAAAAAAAAAAAAogAAAAAAAACjAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACYAAAAAAAAAJgAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					145,
+					2,
+					"move_text_up",
+					null,
+					"BAAAAH4AAAAAAAAAfgAAAAAAAAAqAAAATExHbG9iYWxzLkNhbWVyYVBvc2l0aW9ucyAgICAgICAgICAgID0ge30KVAAAAAAAAAB+AAAAAAAAAAAAAABUAAAAAAAAAFQAAAAAAAAAKgAAAExMR2xvYmFscy5DYW1lcmFQb3NpdGlvbnMgICAgICAgICAgICA9IHt9CioAAAAAAAAAVAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACnAAAAAAAAAKcAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					158,
+					1,
+					"cut",
+					null,
+					"AQAAAFkOAAAAAAAAWQ4AAAAAAAAkAAAAICAgIEREdW1wKGdldFNlbGVjdGVkTGlnaHRFbnRpdHkoKSkK",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB8DgAAAAAAAHwOAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					161,
+					2,
+					"cut",
+					null,
+					"AgAAAFgOAAAAAAAAWA4AAAAAAAABAAAAClgOAAAAAAAAWA4AAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABYDgAAAAAAAFgOAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					164,
+					1,
+					"cut",
+					null,
+					"AQAAAFcOAAAAAAAAVw4AAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABXDgAAAAAAAFcOAAAAAAAAAAAAAAAA8L8"
+				]
+			]
+		},
+		{
+			"contents": "function BetterPMTab(parent)\n    local function getSelectedDummyOwnerUuid()\n        local entity = LLGlobals.DummyNameMap[E.cmbBoneDummies.Options[selectedCharacter]]\n        if entity then\n            local characterUuid = entity.Dummy.Entity.Uuid.EntityUuid\n            if characterUuid then\n                return characterUuid\n            end\n        end\n    end\n\n\n    local camSepa = parent:AddSeparatorText('Camera controls')\n\n    E.camCollapse = parent:AddCollapsingHeader('Parameters')\n    E.camCollapse.DefaultOpen = openByDefaultPMCamera\n\n\n\n    Ext.Stats.GetStatsManager().ExtraData['PhotoModeCameraMovementSpeed'] = defaultCameraSpeed\n\n    E.camSpeed = E.camCollapse:AddSlider('Speed', 0, 0.01, 100, 0.1) --default, min, max, step\n    E.camSpeed.IDContext = 'slider_UniqueSliderID'\n    E.camSpeed.SameLine = false\n    E.camSpeed.Logarithmic = true\n    E.camSpeed.Components = 1\n    E.camSpeed.Value = {defaultCameraSpeed, 0, 0, 0}\n    E.camSpeed.OnChange = function()\n         Ext.Stats.GetStatsManager().ExtraData['PhotoModeCameraMovementSpeed'] = E.camSpeed.Value[1]\n    end\n\n\n\n    E.slFarPlane = E.camCollapse:AddSlider('Far plane distance', 1000, 0, 5000, 1)\n    E.slFarPlane.Logarithmic = true\n    E.slFarPlane.OnChange = function(e)\n        CameraControlls('Far_plane', e.Value[1])\n    end\n\n\n\n    E.slNearPlane = E.camCollapse:AddSlider('Near plane distance', 0.025, 0.001, 0.025, 1)\n    E.slNearPlane.Logarithmic = true\n    E.slNearPlane.OnChange = function(e)\n        CameraControlls('Near_plane', e.Value[1])\n    end\n\n\n\n    E.dofCollapse = parent:AddCollapsingHeader(\"DoF\")\n    E.dofCollapse.DefaultOpen = false\n\n\n\n    E.dofStrength = E.dofCollapse:AddSlider(\"Strength\", 0, 22, 1, 0.001)\n    E.dofStrength.IDContext = \"DofStr\"\n    E.dofStrength.SameLine = false\n    E.dofStrength.Logarithmic = true\n    E.dofStrength.Components = 1\n    E.dofStrength.Value = { 1, 0, 0, 0 }\n    E.dofStrength.OnChange = function()\n        local success, result = pcall(function()\n            return Ext.UI.GetRoot():Find(\"ContentRoot\"):Child(21).DataContext.DOFStrength\n        end)\n\n        if success and result then\n            local preciseDofStr = (E.dofStrength.Value[1])\n            Ext.UI.GetRoot():Find(\"ContentRoot\"):Child(21).DataContext.DOFStrength = preciseDofStr\n        end\n    end\n\n\n    local getDofStrengthSub = Ext.Events.Tick:Subscribe(function()\n        local success, result = pcall(function()\n            return Ext.UI.GetRoot():Find(\"ContentRoot\"):Child(21).DataContext.DOFStrength\n        end)\n\n        if success and result then\n            getDofStrength = result\n            E.dofStrength.Value = { getDofStrength, 0, 0, 0 }\n        end\n    end)\n\n\n    local function dofChange(value)\n        local success, result = pcall(function()\n            return Ext.UI.GetRoot():Find(\"ContentRoot\"):Child(21).DataContext.DOFDistance\n        end)\n\n        if success and result then\n            Ext.UI.GetRoot():Find(\"ContentRoot\"):Child(21).DataContext.DOFDistance = value\n        end\n    end\n\n\n\n    E.dofDistance = E.dofCollapse:AddSlider(\"\", 0, 0, 30, 0.001)\n    E.dofDistance.IDContext = \"DofDist\"\n    E.dofDistance.SameLine = false\n    E.dofDistance.Logarithmic = true\n    E.dofDistance.Components = 1\n    E.dofDistance.Value = { 1, 0, 0, 0 }\n    E.dofDistance.OnChange = function()\n        dofChange(E.dofDistance.Value[1])\n    end\n\n\n\n    E.btnDofDistanceDec= E.dofCollapse:AddButton('<')\n    E.btnDofDistanceDec.SameLine = true\n    E.btnDofDistanceDec.OnClick = function ()\n        dofChange(E.dofDistance.Value[1] + 0.0005)\n    end\n\n\n\n    E.btnDofDistanceInc = E.dofCollapse:AddButton('>')\n    E.btnDofDistanceInc.SameLine = true\n    E.btnDofDistanceInc.OnClick = function ()\n        dofChange(E.dofDistance.Value[1] - 0.0005)\n    end\n\n\n\n    textDofDistance = E.dofCollapse:AddText('Distance')\n    textDofDistance.SameLine = true\n\n\n\n    E.collapseSavePos = parent:AddCollapsingHeader('Save/Load position')\n\n\n\n    local btnCounter = 0\n    local savedButtons = {}\n\n    E.btnSavePos = E.collapseSavePos:AddButton('Save')\n    E.btnSavePos.IDContext = '238492kjndflkjsdnf'\n    E.btnSavePos.OnClick = function ()\n\n        if not LLGlobals.States.inPhotoMode then return end\n\n        btnCounter = btnCounter + 1\n        local currentIndex = btnCounter\n        local size = 0\n        -- local size = 38\n\n        CameraSaveLoadPosition(currentIndex)\n\n        E.windowLoadPos.Size = {\n            E.windowLoadPos.Size[1],\n            E.windowLoadPos.Size[2] + size\n        }\n\n        local btnDelete = E.windowLoadPos:AddButton('X')\n        btnDelete.IDContext = 'delete_' .. currentIndex\n\n        local btnLoad = E.windowLoadPos:AddButton('')\n        btnLoad.IDContext = 'load_' .. currentIndex\n        btnLoad.SameLine = true\n        btnLoad.Label = tostring(currentIndex)\n\n        savedButtons[currentIndex] = {\n            load = btnLoad,\n            delete = btnDelete\n        }\n\n        btnDelete.OnClick = function ()\n            if savedButtons[currentIndex] then\n                savedButtons[currentIndex].load:Destroy()\n                savedButtons[currentIndex].delete:Destroy()\n                savedButtons[currentIndex] = nil\n                LLGlobals.CameraPositions[tostring(currentIndex)] = nil\n\n                E.windowLoadPos.Size = {\n                    E.windowLoadPos.Size[1],\n                    E.windowLoadPos.Size[2] - size\n                }\n            end\n        end\n\n        btnLoad.OnClick = function ()\n            local index = tostring(currentIndex)\n            if LLGlobals.CameraPositions[index] then\n                local camera = Camera:GetActiveCamera()\n                camera.PhotoModeCameraSavedTransform.Transform.Translate = LLGlobals.CameraPositions[index].activeTranslate\n                camera.PhotoModeCameraSavedTransform.Transform.RotationQuat = LLGlobals.CameraPositions[index].activeRotationQuat\n                camera.PhotoModeCameraSavedTransform.Transform.Scale = LLGlobals.CameraPositions[index].activeScale\n\n                Helpers.Timer:OnTicks(5, function ()\n                    Ext.UI.GetRoot():Find(\"ContentRoot\"):Child(21).DataContext.RecallCameraTransform:Execute()\n                end)\n            end\n        end\n    end\n\n\n    E.windowLoadPos = E.collapseSavePos:AddChildWindow('Load')\n    E.windowLoadPos.Size = {0, 100}\n\n    local sepa2 = parent:AddSeparatorText('Dummy controls')\n\n\n    -- LLGlobals.gizmo = API.CreateManipulator()\n    -- LLGlobals.gizmo.Config.IsSelectableEntity = function(info)\n    --     return info.Type == \"Unknown\"\n    -- end\n\n\n\n    -- API.Events.OnTransformEnd:Subscribe(function(data)\n    --     local dummy =  LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]]\n    --     local Ser = Ext.Types.Serialize(dummy.Visual.Visual.WorldTransform)\n    --     Ext.Types.Unserialize(dummy.DummyOriginalTransform.Transform, Ser)\n    --     -- DDump(dummy.Visual.Visual.WorldTransform)\n    -- end)\n\n\n\n    local function gizmoSelectDummy()\n        local ent = LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]]\n        LLGlobals.gizmo:Select({ent.Dummy.Entity})\n    end\n\n\n\n    function UpdatePMDummyCombo(e)\n        local e = e or E.visTemComob\n        PM.DummyWidgets[LLGlobals.DummyNames[selectedCharacter]].Window:SetColor('WindowBg', Style.Colors.windowBg)\n        PM.DummyWidgets[LLGlobals.DummyNames[selectedCharacter]].Window:SetColor('Text', Style.Colors.textColor)\n\n        selectedCharacter = e.SelectedIndex + 1\n        E.cmbBoneDummies.SelectedIndex = e.SelectedIndex\n        UpdateCharacterInfo(selectedCharacter)\n        SetVarValuesToSliders()\n\n        PM.DummyWidgets[LLGlobals.DummyNames[selectedCharacter]].Window:SetColor('WindowBg', Style.Colors.special)\n        SetHighlightColor(PM.DummyWidgets[LLGlobals.DummyNames[selectedCharacter]].Window)\n\n        -- DPrint('Selected dummy: %s', LLGlobals.DummyNames[selectedCharacter])\n        -- gizmoSelectDummy()\n    end\n\n\n\n    E.visTemComob = parent:AddCombo('')\n    E.visTemComob.IDContext = 'E.visTemComob123'\n    E.visTemComob.SelectedIndex = 1\n    E.visTemComob.Options = {'Not in Photo Mode'}\n    E.visTemComob.HeightLargest = true\n    E.visTemComob.SameLine = false\n    E.visTemComob.OnChange = function(e)\n    if not LLGlobals.States.inPhotoMode then return end\n        UpdatePMDummyCombo(e)\n    end\n    selectedCharacter = E.visTemComob.SelectedIndex + 1\n    E.visTemComob.OnRightClick = function(e)\n        gizmoSelectDummy()\n    end\n\n\n    E.btnDumPrev = parent:AddButton('<')\n        UI:Config(E.btnDumPrev, {\n            SameLine = true,\n            OnClick = function(e)\n                UI:PrevOption(E.visTemComob)\n                UpdatePMDummyCombo()\n            end\n        })\n\n\n\n    E.btnDumNext = parent:AddButton('>')\n        UI:Config(E.btnDumNext, {\n            SameLine = true,\n            OnClick = function(e)\n                UI:NextOption(E.visTemComob)\n                UpdatePMDummyCombo()\n            end\n        })\n\n\n\n    local txtDum = parent:AddText('Dummies')\n    txtDum.SameLine = true\n\n    E.checkDummiesPop = parent:AddCheckbox('Dummies popup')\n    E.checkDummiesPop.OnChange = function (e)\n    if not LLGlobals.States.inPhotoMode then E.checkDummiesPop.Checked = false return end\n        for _, v in pairs(PM.DummyWidgets) do\n            v.Window.Visible = E.checkDummiesPop.Checked\n        end\n    end\n\n\n\n    E.infoCollapse = parent:AddCollapsingHeader('Info')\n    E.infoCollapse.DefaultOpen = openByDefaultPMInfo\n\n\n\n    E.posInput = E.infoCollapse:AddInputScalar('Position')\n    E.posInput.Components = 3\n    E.posInput.Value = {0, 0, 0, 0}\n\n\n\n    E.rotInput = E.infoCollapse:AddInputScalar('Rotation')\n    E.rotInput.Components = 3\n    E.rotInput.Value = {0, 0, 0, 0}\n\n\n\n    E.scaleInput = E.infoCollapse:AddInputScalar('Scale')\n    E.scaleInput.Components = 3\n    E.scaleInput.Value = {1, 1, 1, 0}\n\n\n\n    E.applyButton = E.infoCollapse:AddButton('Apply')\n    E.applyButton.IDContext = \"loadApply\"\n    E.applyButton.SameLine = false\n    E.applyButton.OnClick = function()\n        if LLGlobals.DummyNameMap and LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]] then\n\n            local transform = LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform\n            local transform2 = LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].DummyOriginalTransform.Transform\n\n\n            local deg = {E.rotInput.Value[1], E.rotInput.Value[2], E.rotInput.Value[3]}\n            local quats = Math.EulerToQuats(deg)\n\n            transform.RotationQuat = quats\n            transform.Scale = {E.scaleInput.Value[1], E.scaleInput.Value[2], E.scaleInput.Value[3]}\n            transform.Translate = {E.posInput.Value[1], E.posInput.Value[2], E.posInput.Value[3]}\n\n            transform2.RotationQuat = quats\n            transform2.Scale = {E.scaleInput.Value[1], E.scaleInput.Value[2], E.scaleInput.Value[3]}\n            transform2.Translate = {E.posInput.Value[1], E.posInput.Value[2], E.posInput.Value[3]}\n        end\n    end\n\n\n    E.infoCollapse:AddSeparator()\n\n\n\n    E.charPosCollapse = parent:AddCollapsingHeader(\"Position\")\n    E.charPosCollapse.DefaultOpen = openByDefaultPMPos\n\n\n\n    E.stemModSlider = E.charPosCollapse:AddSliderInt(\"\", 0, 1, 10000, 1) --default, min, max, step\n    E.stemModSlider.IDContext = \"modSlider\"\n    E.stemModSlider.SameLine = false\n    E.stemModSlider.Components = 1\n    E.stemModSlider.Logarithmic = true\n    E.stemModSlider.Value = { 1500, 0, 0, 0 }\n    E.stemModSlider.OnChange = function()\n        stepMod = E.stemModSlider.Value[1]\n    end\n\n\n\n    E.resetStemMod = E.charPosCollapse:AddButton('How fast are the sliders')\n    E.resetStemMod.IDContext = \"modSl1231232323131ider\"\n    E.resetStemMod.SameLine = true\n    E.resetStemMod.OnClick = function()\n        E.stemModSlider.Value = { 1500, 0, 0, 0 }\n    end\n\n\n\n    E.posX = E.charPosCollapse:AddSlider(\"W/E\", 0, -100, 100, 1)\n    E.posX.IDContext = \"sliderX\"\n    E.posX.SameLine = false\n    E.posX.Components = 1\n    E.posX.Value = { 0, 0, 0, 0 }\n    E.posX.OnChange = function(e)\n        MoveCharacter(\"x\", e.Value[1], stepMod, selectedCharacter)\n        E.posX.Value = {0, 0, 0, 0}\n    end\n\n\n\n    E.posY = E.charPosCollapse:AddSlider(\"D/U\", 0, -100, 100, 1)\n    E.posY.IDContext = \"sliderY\"\n    E.posY.SameLine = false\n    E.posY.Components = 1\n    E.posY.Value = { 0, 0, 0, 0 }\n    E.posY.OnChange = function(e)\n        MoveCharacter(\"y\", e.Value[1], stepMod, selectedCharacter)\n        E.posY.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.posZ = E.charPosCollapse:AddSlider(\"S/N\", 0, -100, 100, 1)\n    E.posZ.IDContext = \"sliderZ\"\n    E.posZ.SameLine = false\n    E.posZ.Components = 1\n    E.posZ.Value = { 0, 0, 0, 0 }\n    E.posZ.OnChange = function(e)\n        MoveCharacter(\"z\", e.Value[1], stepMod, selectedCharacter)\n        E.posZ.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.posReset = E.charPosCollapse:AddButton('Reset')\n        UI:Config(E.posReset, {\n            OnClick = function(e)\n                local x, y, z = table.unpack(LLGlobals.DummyVeryOriginalTransforms[getSelectedDummyOwnerUuid()].Translate)\n                LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate =  {x, y, z}\n                UpdateCharacterInfo(selectedCharacter)\n            end\n        })\n\n\n    E.charPosCollapse:AddSeparator()\n\n\n\n    E.charRotCollapse = parent:AddCollapsingHeader(\"Rotation\")\n    E.charRotCollapse.DefaultOpen = openByDefaultPMRot\n\n\n\n    E.rotationModSlider = E.charRotCollapse:AddSliderInt(\"\", 0, 1, 10000, 1)\n    E.rotationModSlider.IDContext = \"rotModSlider\"\n    E.rotationModSlider.Logarithmic = true\n    E.rotationModSlider.SameLine = false\n    E.rotationModSlider.Components = 1\n    E.rotationModSlider.Value = { 1500, 0, 0, 0 }\n    E.rotationModSlider.OnChange = function()\n        rotMod = E.rotationModSlider.Value[1]\n    end\n\n\n\n    E.resetRotMod = E.charRotCollapse:AddButton('How fast are the sliders')\n    E.resetRotMod.IDContext = \"modSl1231111123131ider\"\n    E.resetRotMod.SameLine = true\n    E.resetRotMod.OnClick = function()\n        E.rotationModSlider.Value = { 1500, 0, 0, 0 }\n    end\n\n\n\n    E.rotX = E.charRotCollapse:AddSlider(\"Pitch\", 0, -100, 100, 1)\n    E.rotX.IDContext = \"E.rotX\"\n    E.rotX.SameLine = false\n    E.rotX.Components = 1\n    E.rotX.Value = { 0, 0, 0, 0 }\n    E.rotX.OnChange = function()\n        local value = E.rotX.Value[1]\n        RotateCharacter(\"x\", value, rotMod, selectedCharacter)\n        E.rotX.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.rotY = E.charRotCollapse:AddSlider(\"Yaw\", 0, -100, 100, 1)\n    E.rotY.IDContext = \"E.rotY\"\n    E.rotY.SameLine = false\n    E.rotY.Components = 1\n    E.rotY.Value = { 0, 0, 0, 0 }\n    E.rotY.OnChange = function()\n        local value = E.rotY.Value[1]\n        RotateCharacter(\"y\", value, rotMod, selectedCharacter)\n        E.rotY.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.rotZ = E.charRotCollapse:AddSlider(\"Roll\", 0, -100, 100, 1)\n    E.rotZ.IDContext = \"E.rotZ\"\n    E.rotZ.SameLine = false\n    E.rotZ.Components = 1\n    E.rotZ.Value = { 0, 0, 0, 0 }\n    E.rotZ.OnChange = function()\n        local value = E.rotZ.Value[1]\n        RotateCharacter(\"z\", value, rotMod, selectedCharacter)\n        E.rotZ.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.resetRot = E.charRotCollapse:AddButton(\"Reset\")\n    E.resetRot.IDContext = \"E.resetRot\"\n    E.resetRot.SameLine = false\n    E.resetRot.OnClick = function()\n        local x, y, z, w = table.unpack(LLGlobals.DummyVeryOriginalTransforms[getSelectedDummyOwnerUuid()].RotationQuat)\n        LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat =  {x, y, z, w}\n        UpdateCharacterInfo(selectedCharacter)\n    end\n\n    E.charRotCollapse:AddSeparator()\n\n\n\n    E.charScaleCollapse = parent:AddCollapsingHeader(\"Scale\")\n    E.charScaleCollapse.DefaultOpen = openByDefaultPMScale\n\n\n\n    E.scaleModSlider = E.charScaleCollapse:AddSliderInt(\"\", 0, 1, 10000, 1)\n    E.scaleModSlider.IDContext = \"sacleModSlider\"\n    E.scaleModSlider.Logarithmic = true\n    E.scaleModSlider.SameLine = false\n    E.scaleModSlider.Components = 1\n    E.scaleModSlider.Value = { 1500, 0, 0, 0 }\n    E.scaleModSlider.OnChange = function()\n        scaleMod = E.scaleModSlider.Value[1]\n    end\n\n\n\n    E.resetScaMod = E.charScaleCollapse:AddButton('How fast are the sliders')\n    E.resetScaMod.IDContext = \"modSl123123131ider\"\n    E.resetScaMod.SameLine = true\n    E.resetScaMod.OnClick = function()\n        E.scaleModSlider.Value = { 1500, 0, 0, 0 }\n    end\n\n\n\n    E.scaleLenght = E.charScaleCollapse:AddSlider(\"Length\", 0, -100, 100, 1)\n    E.scaleLenght.IDContext = \"scaleLenght123\"\n    E.scaleLenght.SameLine = false\n    E.scaleLenght.Components = 1\n    E.scaleLenght.Value = { 0, 0, 0, 0 }\n    E.scaleLenght.OnChange = function()\n        local value = E.scaleLenght.Value[1]\n        ScaleCharacter(\"x\", value, scaleMod, selectedCharacter)\n        E.scaleLenght.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.scaleWidth = E.charScaleCollapse:AddSlider(\"Height\", 0, -100, 100, 1)\n    E.scaleWidth.IDContext = \"scaleWidth232\"\n    E.scaleWidth.SameLine = false\n    E.scaleWidth.Components = 1\n    E.scaleWidth.Value = { 0, 0, 0, 0 }\n    E.scaleWidth.OnChange = function()\n        local value = E.scaleWidth.Value[1]\n        ScaleCharacter(\"y\", value, scaleMod, selectedCharacter)\n        E.scaleWidth.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.scaleHeight = E.charScaleCollapse:AddSlider(\"Width\", 0, -100, 100, 1)\n    E.scaleHeight.IDContext = \"scaleHeight323\"\n    E.scaleHeight.SameLine = false\n    E.scaleHeight.Components = 1\n    E.scaleHeight.Value = { 0, 0, 0, 0 }\n    E.scaleHeight.OnChange = function()\n        local value = E.scaleHeight.Value[1]\n        ScaleCharacter(\"z\", value, scaleMod, selectedCharacter)\n        E.scaleHeight.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.scaleAll = E.charScaleCollapse:AddSlider(\"All\", 0, -100, 100, 1)\n    E.scaleAll.IDContext = \"scalescaleAll323\"\n    E.scaleAll.SameLine = false\n    E.scaleAll.Components = 1\n    E.scaleAll.Value = { 0, 0, 0, 0 }\n    E.scaleAll.OnChange = function()\n        local value = E.scaleAll.Value[1]\n        ScaleCharacter(\"all\", value, scaleMod, selectedCharacter)\n        E.scaleAll.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.resetScale = E.charScaleCollapse:AddButton(\"Reset\")\n    E.resetScale.IDContext = \"E.resetScale\"\n    E.resetScale.SameLine = false\n    E.resetScale.OnClick = function()\n        local x, y, z = table.unpack(LLGlobals.DummyVeryOriginalTransforms[getSelectedDummyOwnerUuid()].Scale)\n        LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Scale =  {x, y, z}\n        UpdateCharacterInfo(selectedCharacter)\n        -- E.scaleInput.Label = string.format('L: %.2f  H: %.2f  W: %.2f', 1, 1, 1)\n    end\n\n\n    E.charScaleCollapse:AddSeparator()\n\n\n\n    E.collapseParts = parent:AddCollapsingHeader('Other body parts')\n\n    E.treeTail = E.collapseParts:AddTree('Tail')\n\n    E.tailPosCollapse = E.treeTail:AddTree(\"Position\")\n    E.tailPosCollapse.IDContext = 'wwwwdwd'\n    E.tailPosCollapse.DefaultOpen = false\n\n\n\n    E.tposX = E.tailPosCollapse:AddSlider(\"W/E\", 0, -100, 100, 1)\n    E.tposX.IDContext = \"slide123rX\"\n    E.tposX.SameLine = false\n    E.tposX.Components = 1\n    E.tposX.Value = { 0, 0, 0, 0 }\n    E.tposX.OnChange = function()\n        local value = E.tposX.Value[1]\n        -- DPrint(E.visTemComob.Options[selectedCharacter])\n        MoveTail(\"x\", value, 3000, selectedCharacter)\n\n        E.tposX.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.tposY = E.tailPosCollapse:AddSlider(\"D/U\", 0, -100, 100, 1)\n    E.tposY.IDContext = \"slid123erY\"\n    E.tposY.SameLine = false\n    E.tposY.Components = 1\n    E.tposY.Value = { 0, 0, 0, 0 }\n    E.tposY.OnChange = function()\n        local value = E.tposY.Value[1]\n        MoveTail(\"y\", value, 3000, selectedCharacter)\n        E.tposY.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.tposZ = E.tailPosCollapse:AddSlider(\"S/N\", 0, -100, 100, 1)\n    E.tposZ.IDContext = \"slid123123erZ\"\n    E.tposZ.SameLine = false\n    E.tposZ.Components = 1\n    E.tposZ.Value = { 0, 0, 0, 0 }\n    E.tposZ.OnChange = function()\n        local value = E.tposZ.Value[1]\n        MoveTail(\"z\", value, 3000, selectedCharacter)\n        E.tposZ.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.resettPos = E.tailPosCollapse:AddButton(\"Reset\")\n    E.resettPos.IDContext = \"resetttrot\"\n    E.resettPos.SameLine = false\n    E.resettPos.OnClick = function()\n        for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do\n            if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then\n                LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(\n                    LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate)\n                break\n            end\n        end\n    end\n\n\n\n    E.tailPosCollapse:AddSeparator()\n\n\n\n    E.tailRotCollapse = E.treeTail:AddTree(\"Rotation\")\n    E.tailRotCollapse.IDContext = 'asdasdasdasdasds'\n    E.tailRotCollapse.DefaultOpen = false\n\n\n\n    E.trotX = E.tailRotCollapse:AddSlider(\"Pitch\", 0, -100, 100, 1)\n    E.trotX.IDContext = \"ro123tX\"\n    E.trotX.SameLine = false\n    E.trotX.Components = 1\n    E.trotX.Value = { 0, 0, 0, 0 }\n    E.trotX.OnChange = function()\n        local value = E.trotX.Value[1]\n        RotateTail(\"x\", value, 3000, selectedCharacter)\n        E.trotX.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.trotY = E.tailRotCollapse:AddSlider(\"Yaw\", 0, -100, 100, 1)\n    E.trotY.IDContext = \"r123otY\"\n    E.trotY.SameLine = false\n    E.trotY.Components = 1\n    E.trotY.Value = { 0, 0, 0, 0 }\n    E.trotY.OnChange = function()\n        local value = E.trotY.Value[1]\n        RotateTail(\"y\", value, 3000, selectedCharacter)\n        E.trotY.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.trotZ = E.tailRotCollapse:AddSlider(\"Roll\", 0, -100, 100, 1)\n    E.trotZ.IDContext = \"ro12312tZ\"\n    E.trotZ.SameLine = false\n    E.trotZ.Components = 1\n    E.trotZ.Value = { 0, 0, 0, 0 }\n    E.trotZ.OnChange = function()\n        local value = E.trotZ.Value[1]\n        RotateTail(\"z\", value, 3000, selectedCharacter)\n        E.trotZ.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.resettRot = E.tailRotCollapse:AddButton(\"Reset\")\n    E.resettRot.IDContext = \"resetttrot\"\n    E.resettRot.SameLine = false\n    E.resettRot.OnClick = function()\n        for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do\n            if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then\n                LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldRotate(\n                    LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat)\n                break\n            end\n        end\n    end\n\n    E.tailRotCollapse:AddSeparator()\n\n\n    E.treeHorns = E.collapseParts:AddTree('Horns')\n\n\n\n    E.hornsPosCollapse = E.treeHorns:AddTree(\"Position\")\n    E.hornsPosCollapse.IDContext = 'as123123da323sdds'\n    E.hornsPosCollapse.DefaultOpen = false\n\n\n\n    E.hposX = E.hornsPosCollapse:AddSlider(\"W/E\", 0, -100, 100, 1)\n    E.hposX.IDContext = \"slid123e123rX\"\n    E.hposX.SameLine = false\n    E.hposX.Components = 1\n    E.hposX.Value = { 0, 0, 0, 0 }\n    E.hposX.OnChange = function()\n        local value = E.hposX.Value[1]\n        -- DPrint(E.visTemComob.Options[selectedCharacter])\n        MoveHorns(\"x\", value, 3000, selectedCharacter)\n\n        E.hposX.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.hposY = E.hornsPosCollapse:AddSlider(\"D/U\", 0, -100, 100, 1)\n    E.hposY.IDContext = \"slid13123erY\"\n    E.hposY.SameLine = false\n    E.hposY.Components = 1\n    E.hposY.Value = { 0, 0, 0, 0 }\n    E.hposY.OnChange = function()\n        local value = E.hposY.Value[1]\n        MoveHorns(\"y\", value, 3000, selectedCharacter)\n        E.hposY.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.hposZ = E.hornsPosCollapse:AddSlider(\"S/N\", 0, -100, 100, 1)\n    E.hposZ.IDContext = \"sli23d123123erZ\"\n    E.hposZ.SameLine = false\n    E.hposZ.Components = 1\n    E.hposZ.Value = { 0, 0, 0, 0 }\n    E.hposZ.OnChange = function()\n        local value = E.hposZ.Value[1]\n        MoveHorns(\"z\", value, 3000, selectedCharacter)\n        E.hposZ.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.resethPos = E.hornsPosCollapse:AddButton(\"Reset\")\n    E.resethPos.IDContext = \"re11sehhhhpos\"\n    E.resethPos.SameLine = false\n    E.resethPos.OnClick = function()\n        for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do\n            if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find(\"horns\") then\n                LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(\n                    LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate)\n                break\n            end\n        end\n    end\n\n    E.hornsPosCollapse:AddSeparator()\n\n\n    E.hornsRotCollapse = E.treeHorns:AddTree(\"Rotation\")\n    E.hornsRotCollapse.IDContext = 'asdas123123dasdasdasds'\n    E.hornsRotCollapse.DefaultOpen = false\n\n\n\n    E.hrotX = E.hornsRotCollapse:AddSlider(\"Pitch\", 0, -100, 100, 1)\n    E.hrotX.IDContext = \"ro1312323tX\"\n    E.hrotX.SameLine = false\n    E.hrotX.Components = 1\n    E.hrotX.Value = { 0, 0, 0, 0 }\n    E.hrotX.OnChange = function()\n        local value = E.hrotX.Value[1]\n        RotateHorns(\"x\", value, 3000, selectedCharacter)\n        E.hrotX.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.hrotY = E.hornsRotCollapse:AddSlider(\"Yaw\", 0, -100, 100, 1)\n    E.hrotY.IDContext = \"r1213otY\"\n    E.hrotY.SameLine = false\n    E.hrotY.Components = 1\n    E.hrotY.Value = { 0, 0, 0, 0 }\n    E.hrotY.OnChange = function()\n        local value = E.hrotY.Value[1]\n        RotateHorns(\"y\", value, 3000, selectedCharacter)\n        E.hrotY.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.hrotZ = E.hornsRotCollapse:AddSlider(\"Roll\", 0, -100, 100, 1)\n    E.hrotZ.IDContext = \"ro1233312tZ\"\n    E.hrotZ.SameLine = false\n    E.hrotZ.Components = 1\n    E.hrotZ.Value = { 0, 0, 0, 0 }\n    E.hrotZ.OnChange = function()\n        local value = E.hrotZ.Value[1]\n        RotateHorns(\"z\", value, 3000, selectedCharacter)\n        E.hrotZ.Value = { 0, 0, 0, 0 }\n    end\n\n\n\n    E.resethRot = E.hornsRotCollapse:AddButton(\"Reset\")\n    E.resethRot.IDContext = \"rese123hhhrot\"\n    E.resethRot.SameLine = false\n    E.resethRot.OnClick = function()\n        for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do\n            if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find(\"horns\") then\n                LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldRotate(\n                    LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat)\n                break\n            end\n        end\n    end\n\n    E.hornsRotCollapse:AddSeparator()\n\n\n\n    --LookAt\n\n\n    -- E.collapseLookAt = parent:AddCollapsingHeader('Look at')\n    -- E.collapseLookAt.IDContext = 'wwwswdawdwdwd'\n    -- E.collapseLookAt.DefaultOpen = openByDefaultPMLook\n\n\n\n    -- local targetPos\n\n    -- E.btnMoveToCamLookAt = E.collapseLookAt:AddButton('Move to cam')\n    -- E.btnMoveToCamLookAt.SameLine = false\n    -- E.btnMoveToCamLookAt.OnClick = function ()\n    --     targetPos = Camera:GetActiveCamera().Transform.Transform.Translate\n    --     Ext.Net.PostMessageToServer('LL_MoveLookAtTargetToCam', Ext.Json.Stringify(targetPos))\n    -- end\n\n\n\n    -- E.btnCreateLookAt = E.collapseLookAt:AddButton('Marker')\n    -- E.btnCreateLookAt.SameLine = true\n    -- E.btnCreateLookAt.OnClick = function ()\n    --     Ext.Net.PostMessageToServer('LL_CreateLookAtTarget', '')\n    -- end\n\n\n    -- E.btnDeleteLookAt = E.collapseLookAt:AddButton('Delete')\n    -- E.btnDeleteLookAt.SameLine = true\n    -- E.btnDeleteLookAt.OnClick = function ()\n    --     Ext.Net.PostMessageToServer('LL_DeleteLookAtTarget', '')\n    -- end\n\n\n\n    -- local lookAtSlDefault = 0.1\n\n\n\n    -- E.slLookAt = E.collapseLookAt:AddSlider('X Y Z', 0, -lookAtSlDefault, lookAtSlDefault, 1)\n    -- E.slLookAt.IDContext = '1312sss31asdad'\n    -- E.slLookAt.SameLine = false\n    -- E.slLookAt.Components = 3\n    -- E.slLookAt.Value = {0, 0, 0, 0}\n    -- E.slLookAt.OnChange = function()\n    --     targetPos = targetPos or _C().Transform.Transform.Translate\n    --     targetPos[1] = targetPos[1] + E.slLookAt.Value[1]\n    --     targetPos[2] = targetPos[2] + E.slLookAt.Value[2]\n    --     targetPos[3] = targetPos[3] + E.slLookAt.Value[3]\n    --     Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1].PhotoModeCameraTransform.Transform.Translate = {targetPos[1],targetPos[2],targetPos[3]}\n    --     local data = {\n    --         x = targetPos[1],\n    --         y = targetPos[2],\n    --         z = targetPos[3],\n    --     }\n    --     Ext.Net.PostMessageToServer('LL_MoveLookAtTarget', Ext.Json.Stringify(data))\n    --     E.slLookAt.Value = {0, 0, 0, 0}\n    -- end\n\n\n\n\n\n\n    -- E.btnUpdateCamPos = E.collapseLookAt:AddCheckbox([[Head doesn't follow the camera]])\n    -- E.btnUpdateCamPos.SameLine = false\n    -- E.btnUpdateCamPos.OnChange = function (e)\n\n    --     if not Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1] then e.Checked = false return end\n\n    --     if e.Checked then\n    --         Utils:SubUnsubToTick('sub', 'LL_LookAt', function ()\n    --             if not Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1] then\n    --                 Utils:SubUnsubToTick('unsub','LL_LookAt', _)\n    --                 e.Checked = false\n    --                 return\n    --             end\n    --             targetPos = targetPos or _C().Transform.Transform.Translate\n    --             Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1].PhotoModeCameraTransform.Transform.Translate = {targetPos[1],targetPos[2],targetPos[3]}\n    --         end)\n    --     else\n    --         if not Utils.subID and Utils.subID['LL_LookAt'] then\n    --             e.Checked = false\n    --             return\n    --         end\n    --         Utils:SubUnsubToTick('unsub','LL_LookAt', _)\n    --         e.Checked = false\n    --     end\n\n    -- end\n\n\n\n    -- E.checkFollowIGCS = E.collapseLookAt:AddCheckbox('Head does follow IGCS')\n    -- E.checkFollowIGCS.OnChange = function (e)\n    --     if e.Checked then\n\n    --         if not Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1] then\n    --             e.Checked = false\n    --             return\n    --         end\n\n    --         StartFollowIGCS()\n    --     else\n    --         StopFollowIGCS()\n    --     end\n    -- end\n\n\n\n    -- E.collapseLookAt:AddSeparator()\n\n\n\n    E.saveLoadCollapse = parent:AddCollapsingHeader('Save/Load postition')\n    E.saveLoadCollapse.DefaultOpen = openByDefaultPMSave\n\n\n    saveLoadWindow = E.saveLoadCollapse:AddChildWindow('')\n    saveLoadWindow.AlwaysAutoResize = false\n    saveLoadWindow.Size = {0, 1}\n\n\n\n    E.saveButton = E.saveLoadCollapse:AddButton(\"Save\")\n    E.saveButton.IDContext = \"saveIdddasdasda\"\n    E.saveButton.SameLine = false\n    E.saveButton.OnClick = function()\n        if LLGlobals.DummyNameMap then\n            SaveVisTempCharacterPosition()\n        end\n    end\n\n\n    E.saveLoadCollapse:AddSeparator()\n\n\nend",
+			"file": "ScriptExtender/Lua/Client/Main/PMUI.lua",
+			"file_size": 32896,
+			"file_write_time": 134175716375068103,
+			"settings":
+			{
+				"buffer_size": 31909,
+				"line_ending": "Windows"
+			},
+			"undo_stack":
+			[
+				[
+					15,
+					1,
+					"reindent",
+					null,
+					"AQAAAG0eAAAAAAAAdR4AAAAAAAAAAAAA",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABtHgAAAAAAAG0eAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					16,
+					1,
+					"insert",
+					{
+						"characters": "\ndp"
+					},
+					"BAAAAHUeAAAAAAAAfh4AAAAAAAAAAAAAbR4AAAAAAABtHgAAAAAAAAgAAAAgICAgICAgIHYeAAAAAAAAdx4AAAAAAAAAAAAAdx4AAAAAAAB4HgAAAAAAAAAAAAA",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB1HgAAAAAAAHUeAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					17,
+					1,
+					"insert_completion",
+					{
+						"completion": "lsp_select_completion {\"index\":13,\"session_name\":\"LSP-lua\"}",
+						"format": "command",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "DPrint(...)"
+					},
+					"AgAAAHYeAAAAAAAAdh4AAAAAAAACAAAAZHB2HgAAAAAAAHweAAAAAAAAAAAAAA",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB4HgAAAAAAAHgeAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					18,
+					1,
+					"insert_snippet",
+					{
+						"contents": "($0)"
+					},
+					"AQAAAHweAAAAAAAAfh4AAAAAAAAAAAAA",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB8HgAAAAAAAHweAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					19,
+					1,
+					"insert_snippet",
+					{
+						"contents": "'$0'"
+					},
+					"AQAAAH0eAAAAAAAAfx4AAAAAAAAAAAAA",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB9HgAAAAAAAH0eAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					20,
+					1,
+					"insert",
+					{
+						"characters": "Selected"
+					},
+					"CAAAAH4eAAAAAAAAfx4AAAAAAAAAAAAAfx4AAAAAAACAHgAAAAAAAAAAAACAHgAAAAAAAIEeAAAAAAAAAAAAAIEeAAAAAAAAgh4AAAAAAAAAAAAAgh4AAAAAAACDHgAAAAAAAAAAAACDHgAAAAAAAIQeAAAAAAAAAAAAAIQeAAAAAAAAhR4AAAAAAAAAAAAAhR4AAAAAAACGHgAAAAAAAAAAAAA",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB+HgAAAAAAAH4eAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					21,
+					1,
+					"insert",
+					{
+						"characters": " chja"
+					},
+					"BQAAAIYeAAAAAAAAhx4AAAAAAAAAAAAAhx4AAAAAAACIHgAAAAAAAAAAAACIHgAAAAAAAIkeAAAAAAAAAAAAAIkeAAAAAAAAih4AAAAAAAAAAAAAih4AAAAAAACLHgAAAAAAAAAAAAA",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACGHgAAAAAAAIYeAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					22,
+					2,
+					"left_delete",
+					null,
+					"AgAAAIoeAAAAAAAAih4AAAAAAAABAAAAYYkeAAAAAAAAiR4AAAAAAAABAAAAag",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACLHgAAAAAAAIseAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					23,
+					1,
+					"insert",
+					{
+						"characters": "ar"
+					},
+					"AgAAAIkeAAAAAAAAih4AAAAAAAAAAAAAih4AAAAAAACLHgAAAAAAAAAAAAA",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACJHgAAAAAAAIkeAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					24,
+					4,
+					"left_delete",
+					null,
+					"BAAAAIoeAAAAAAAAih4AAAAAAAABAAAAcokeAAAAAAAAiR4AAAAAAAABAAAAYYgeAAAAAAAAiB4AAAAAAAABAAAAaIceAAAAAAAAhx4AAAAAAAABAAAAYw",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACLHgAAAAAAAIseAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					25,
+					1,
+					"insert",
+					{
+						"characters": "dummy"
+					},
+					"BQAAAIceAAAAAAAAiB4AAAAAAAAAAAAAiB4AAAAAAACJHgAAAAAAAAAAAACJHgAAAAAAAIoeAAAAAAAAAAAAAIoeAAAAAAAAix4AAAAAAAAAAAAAix4AAAAAAACMHgAAAAAAAAAAAAA",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACHHgAAAAAAAIceAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					28,
+					1,
+					"insert",
+					{
+						"characters": ":"
+					},
+					"AQAAAIweAAAAAAAAjR4AAAAAAAAAAAAA",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACMHgAAAAAAAIweAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					29,
+					1,
+					"insert",
+					{
+						"characters": " %s"
+					},
+					"AwAAAI0eAAAAAAAAjh4AAAAAAAAAAAAAjh4AAAAAAACPHgAAAAAAAAAAAACPHgAAAAAAAJAeAAAAAAAAAAAAAA",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACNHgAAAAAAAI0eAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					31,
+					1,
+					"insert",
+					{
+						"characters": ","
+					},
+					"AQAAAJEeAAAAAAAAkh4AAAAAAAAAAAAA",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACRHgAAAAAAAJEeAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					32,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAJIeAAAAAAAAkx4AAAAAAAAAAAAA",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACSHgAAAAAAAJIeAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					33,
+					1,
+					"paste",
+					null,
+					"AQAAAJMeAAAAAAAAuh4AAAAAAAAAAAAA",
+					"CwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACTHgAAAAAAAJMeAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					47,
+					1,
+					"paste",
+					null,
+					"AQAAAGQfAAAAAAAAgh8AAAAAAAAQAAAARS5jbWJCb25lRHVtbWllcw",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB0HwAAAAAAAGQfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					81,
+					1,
+					"reindent",
+					null,
+					"AQAAAOceAAAAAAAA6x4AAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADnHgAAAAAAAOceAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					87,
+					1,
+					"reindent",
+					null,
+					"AQAAAOYeAAAAAAAA6h4AAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADmHgAAAAAAAOYeAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					90,
+					1,
+					"insert",
+					{
+						"characters": "if"
+					},
+					"AwAAAO8eAAAAAAAA8B4AAAAAAAAAAAAA5h4AAAAAAADmHgAAAAAAAAQAAAAgICAg7B4AAAAAAADtHgAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADvHgAAAAAAAO8eAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					91,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAO0eAAAAAAAA7h4AAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADtHgAAAAAAAO0eAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					92,
+					1,
+					"paste",
+					null,
+					"AQAAAO4eAAAAAAAA/h4AAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADuHgAAAAAAAO4eAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					93,
+					1,
+					"insert",
+					{
+						"characters": " then"
+					},
+					"BQAAAP4eAAAAAAAA/x4AAAAAAAAAAAAA/x4AAAAAAAAAHwAAAAAAAAAAAAAAHwAAAAAAAAEfAAAAAAAAAAAAAAEfAAAAAAAAAh8AAAAAAAAAAAAAAh8AAAAAAAADHwAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAD+HgAAAAAAAP4eAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					94,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAAMfAAAAAAAABB8AAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAADHwAAAAAAAAMfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					95,
+					1,
+					"insert",
+					{
+						"characters": "\nend"
+					},
+					"BgAAAAQfAAAAAAAADR8AAAAAAAAAAAAADR8AAAAAAAAOHwAAAAAAAAAAAAAOHwAAAAAAAA8fAAAAAAAAAAAAAA8fAAAAAAAAEB8AAAAAAAAAAAAABR8AAAAAAAAFHwAAAAAAAAgAAAAgICAgICAgIAUfAAAAAAAACR8AAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAEHwAAAAAAAAQfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					101,
+					1,
+					"insert",
+					{
+						"characters": "\ni"
+					},
+					"AgAAAAQfAAAAAAAADR8AAAAAAAAAAAAADR8AAAAAAAAOHwAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAEHwAAAAAAAAQfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					102,
+					1,
+					"left_delete",
+					null,
+					"AQAAAA0fAAAAAAAADR8AAAAAAAABAAAAaQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAOHwAAAAAAAA4fAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					103,
+					1,
+					"insert",
+					{
+						"characters": "local"
+					},
+					"BQAAAA0fAAAAAAAADh8AAAAAAAAAAAAADh8AAAAAAAAPHwAAAAAAAAAAAAAPHwAAAAAAABAfAAAAAAAAAAAAABAfAAAAAAAAER8AAAAAAAAAAAAAER8AAAAAAAASHwAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAANHwAAAAAAAA0fAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					104,
+					1,
+					"insert",
+					{
+						"characters": " dU"
+					},
+					"AwAAABIfAAAAAAAAEx8AAAAAAAAAAAAAEx8AAAAAAAAUHwAAAAAAAAAAAAAUHwAAAAAAABUfAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAASHwAAAAAAABIfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					105,
+					1,
+					"left_delete",
+					null,
+					"AQAAABQfAAAAAAAAFB8AAAAAAAABAAAAVQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAVHwAAAAAAABUfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					106,
+					1,
+					"insert",
+					{
+						"characters": "i"
+					},
+					"AQAAABQfAAAAAAAAFR8AAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAUHwAAAAAAABQfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					107,
+					1,
+					"left_delete",
+					null,
+					"AQAAABQfAAAAAAAAFB8AAAAAAAABAAAAaQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAVHwAAAAAAABUfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					108,
+					1,
+					"insert",
+					{
+						"characters": "Index"
+					},
+					"BQAAABQfAAAAAAAAFR8AAAAAAAAAAAAAFR8AAAAAAAAWHwAAAAAAAAAAAAAWHwAAAAAAABcfAAAAAAAAAAAAABcfAAAAAAAAGB8AAAAAAAAAAAAAGB8AAAAAAAAZHwAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAUHwAAAAAAABQfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					109,
+					1,
+					"insert",
+					{
+						"characters": " ="
+					},
+					"AgAAABkfAAAAAAAAGh8AAAAAAAAAAAAAGh8AAAAAAAAbHwAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAZHwAAAAAAABkfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					110,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAABsfAAAAAAAAHB8AAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAbHwAAAAAAABsfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					116,
+					1,
+					"paste",
+					null,
+					"AQAAABwfAAAAAAAAOh8AAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAcHwAAAAAAABwfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					126,
+					1,
+					"paste",
+					null,
+					"AQAAAL8fAAAAAAAAxR8AAAAAAAAeAAAARS5jbWJCb25lRHVtbWllcy5TZWxlY3RlZEluZGV4",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAC/HwAAAAAAAN0fAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					129,
+					1,
+					"trim_trailing_white_space",
+					null,
+					"AQAAAAMfAAAAAAAAAx8AAAAAAAABAAAAIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABDHwAAAAAAAEMfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					147,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"AwAAAD4fAAAAAAAAQR8AAAAAAAAAAAAACB8AAAAAAAALHwAAAAAAAAAAAADrHgAAAAAAAO4eAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABBHwAAAAAAAOceAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					154,
+					1,
+					"left_delete",
+					null,
+					"AQAAAMcfAAAAAAAAxx8AAAAAAAAKAAAAZEluZGV4IG9yIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADRHwAAAAAAAMcfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					156,
+					1,
+					"left_delete",
+					null,
+					"AQAAAMcfAAAAAAAAxx8AAAAAAAABAAAAMA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADIHwAAAAAAAMgfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					157,
+					1,
+					"insert",
+					{
+						"characters": "1"
+					},
+					"AQAAAMcfAAAAAAAAyB8AAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADHHwAAAAAAAMcfAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					176,
+					2,
+					"cut",
+					null,
+					"AgAAAOQeAAAAAAAA5B4AAAAAAAABAAAACuQeAAAAAAAA5B4AAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADkHgAAAAAAAOQeAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					182,
+					3,
+					"cut",
+					null,
+					"AwAAAOUeAAAAAAAA5R4AAAAAAAAgAAAAICAgIC0tIGlmIEUuY21iQm9uZUR1bW1pZXMgdGhlbgrlHgAAAAAAAOUeAAAAAAAAOQAAACAgICAtLSAgICAgbG9jYWwgZEluZGV4ID0gRS5jbWJCb25lRHVtbWllcy5TZWxlY3RlZEluZGV4CuUeAAAAAAAA5R4AAAAAAAALAAAAICAgIC0tIGVuZAo",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAD+HgAAAAAAAP4eAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					188,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"AQAAAHYeAAAAAAAAeR4AAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAC7HgAAAAAAALseAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					196,
+					1,
+					"cut",
+					null,
+					"AQAAAL8eAAAAAAAAvx4AAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAC/HgAAAAAAAL8eAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					204,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"AgAAAOIiAAAAAAAA4yIAAAAAAAAAAAAA4yIAAAAAAADkIgAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADiIgAAAAAAAOIiAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					207,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAOohAAAAAAAA6yEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADqIQAAAAAAAOohAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					220,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAG4kAAAAAAAAbyQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABuJAAAAAAAAG4kAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					223,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAN4kAAAAAAAA3yQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADeJAAAAAAAAN4kAAAAAAAAAAAAAAAA8L8"
+				]
+			]
+		},
+		{
+			"file": "ScriptExtender/Lua/Shared/Tables.lua",
+			"settings":
+			{
+				"buffer_size": 16828,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					5,
+					1,
+					"duplicate_line",
+					null,
+					"AQAAAGEXAAAAAAAAgBcAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABgFwAAAAAAAGAXAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					8,
+					1,
+					"insert",
+					{
+						"characters": "Luna"
+					},
+					"BAAAAGYXAAAAAAAAZxcAAAAAAAAXAAAAbm90IGp1c3QgYSBidWcgaW4gYSBqdWdnFwAAAAAAAGgXAAAAAAAAAAAAAGgXAAAAAAAAaRcAAAAAAAAAAAAAaRcAAAAAAABqFwAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABmFwAAAAAAAH0XAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					9,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAGoXAAAAAAAAaxcAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABqFwAAAAAAAGoXAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					10,
+					1,
+					"insert",
+					{
+						"characters": "b"
+					},
+					"AQAAAGsXAAAAAAAAbBcAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABrFwAAAAAAAGsXAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					11,
+					1,
+					"left_delete",
+					null,
+					"AQAAAGsXAAAAAAAAaxcAAAAAAAABAAAAYg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABsFwAAAAAAAGwXAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					12,
+					1,
+					"insert",
+					{
+						"characters": "B"
+					},
+					"AQAAAGsXAAAAAAAAbBcAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABrFwAAAAAAAGsXAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					13,
+					1,
+					"left_delete",
+					null,
+					"AQAAAGsXAAAAAAAAaxcAAAAAAAABAAAAQg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABsFwAAAAAAAGwXAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					14,
+					1,
+					"insert",
+					{
+						"characters": "R2"
+					},
+					"AgAAAGsXAAAAAAAAbBcAAAAAAAAAAAAAbBcAAAAAAABtFwAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABrFwAAAAAAAGsXAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					21,
+					3,
+					"left_delete",
+					null,
+					"AwAAAD4XAAAAAAAAPhcAAAAAAAABAAAAZz0XAAAAAAAAPRcAAAAAAAABAAAAbjwXAAAAAAAAPBcAAAAAAAABAAAAbw",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA/FwAAAAAAAD8XAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					22,
+					1,
+					"insert",
+					{
+						"characters": "pagman"
+					},
+					"BgAAADwXAAAAAAAAPRcAAAAAAAAAAAAAPRcAAAAAAAA+FwAAAAAAAAAAAAA+FwAAAAAAAD8XAAAAAAAAAAAAAD8XAAAAAAAAQBcAAAAAAAAAAAAAQBcAAAAAAABBFwAAAAAAAAAAAABBFwAAAAAAAEIXAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA8FwAAAAAAADwXAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					34,
+					1,
+					"duplicate_line",
+					null,
+					"AQAAAEUXAAAAAAAAahcAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABEFwAAAAAAAEQXAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					37,
+					1,
+					"insert",
+					{
+						"characters": "Juan"
+					},
+					"BAAAAEoXAAAAAAAASxcAAAAAAAAdAAAAaWJhaSBwcmVzZW50YSBmaWdodGVycyBwYWdtYW5LFwAAAAAAAEwXAAAAAAAAAAAAAEwXAAAAAAAATRcAAAAAAAAAAAAATRcAAAAAAABOFwAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABKFwAAAAAAAGcXAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					38,
+					1,
+					"insert",
+					{
+						"characters": " lets"
+					},
+					"BQAAAE4XAAAAAAAATxcAAAAAAAAAAAAATxcAAAAAAABQFwAAAAAAAAAAAABQFwAAAAAAAFEXAAAAAAAAAAAAAFEXAAAAAAAAUhcAAAAAAAAAAAAAUhcAAAAAAABTFwAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABOFwAAAAAAAE4XAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					39,
+					1,
+					"insert",
+					{
+						"characters": " gooooo"
+					},
+					"BwAAAFMXAAAAAAAAVBcAAAAAAAAAAAAAVBcAAAAAAABVFwAAAAAAAAAAAABVFwAAAAAAAFYXAAAAAAAAAAAAAFYXAAAAAAAAVxcAAAAAAAAAAAAAVxcAAAAAAABYFwAAAAAAAAAAAABYFwAAAAAAAFkXAAAAAAAAAAAAAFkXAAAAAAAAWhcAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABTFwAAAAAAAFMXAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					40,
+					1,
+					"insert",
+					{
+						"characters": " :"
+					},
+					"AgAAAFoXAAAAAAAAWxcAAAAAAAAAAAAAWxcAAAAAAABcFwAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABaFwAAAAAAAFoXAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					41,
+					1,
+					"left_delete",
+					null,
+					"AQAAAFsXAAAAAAAAWxcAAAAAAAABAAAAOg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABcFwAAAAAAAFwXAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					42,
+					1,
+					"insert",
+					{
+						"characters": "PagMan"
+					},
+					"BgAAAFsXAAAAAAAAXBcAAAAAAAAAAAAAXBcAAAAAAABdFwAAAAAAAAAAAABdFwAAAAAAAF4XAAAAAAAAAAAAAF4XAAAAAAAAXxcAAAAAAAAAAAAAXxcAAAAAAABgFwAAAAAAAAAAAABgFwAAAAAAAGEXAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABbFwAAAAAAAFsXAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					54,
+					1,
+					"paste",
+					null,
+					"AQAAADwXAAAAAAAAQhcAAAAAAAAGAAAAcGFnbWFu",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA8FwAAAAAAAEIXAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					3,
+					1,
+					"duplicate_line",
+					null,
+					"AQAAAJIXAAAAAAAAoRcAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAkRcAAAAAAACRFwAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					6,
+					1,
+					"paste",
+					null,
+					"AQAAAJcXAAAAAAAAthcAAAAAAAAHAAAATHVuYSBSMg",
+					"AQAAAAAAAAABAAAAlxcAAAAAAACeFwAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					15,
+					1,
+					"paste",
+					null,
+					"AQAAAJcXAAAAAAAAwhcAAAAAAAAfAAAAeW91dHViZS5jb20vd2F0Y2g/dj1zNWNHd3ZxNTBjbw",
+					"AQAAAAAAAAABAAAAlxcAAAAAAAC2FwAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		},
+		{
+			"file": "ScriptExtender/Lua/Client/Main/BoneZoneUI.lua",
+			"settings":
+			{
+				"buffer_size": 10942,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			},
+			"undo_stack":
+			[
+				[
+					9,
+					1,
+					"cut",
+					null,
+					"AQAAAOUbAAAAAAAA5RsAAAAAAAA0AAAAICAgICAgICAgICAgICAgIERQcmludChMTEdsb2JhbHMuU3RhdGVzLmJ6U3ltbWV0cnkpCg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAYHAAAAAAAABgcAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					41,
+					1,
+					"cut",
+					null,
+					"AQAAAD0WAAAAAAAAPRYAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA9FgAAAAAAAD0WAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					44,
+					1,
+					"cut",
+					null,
+					"AQAAADwWAAAAAAAAPBYAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA8FgAAAAAAADwWAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					50,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAADwWAAAAAAAAPRYAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA8FgAAAAAAADwWAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					59,
+					2,
+					"left_delete",
+					null,
+					"AgAAAI8HAAAAAAAAjwcAAAAAAAAVDAAACgogICAgLS0tVGVtcG9yYWwgZ2FyYm8KICAgIC0tIEUuYnRuVGFpbFNwcmluZyA9IGJ6OkFkZEJ1dHRvbignRGlzYWJsZSB0YWlsIHBoeXNpY3MnKQogICAgLS0gICAgIFVJOkNvbmZpZyhFLmJ0blRhaWxTcHJpbmcsIHsKICAgIC0tICAgICAgICAgLS0gU2FtZUxpbmUgPSB0cnVlLAogICAgLS0gICAgICAgICBPbkNsaWNrID0gZnVuY3Rpb24oZSkKICAgIC0tICAgICAgICAgICAgIEV4dC5SZXNvdXJjZS5HZXQoJzYzYWM0ZTgwLTcyZjItNTViYi0xZmU3LWViOGM3YTdlMDIwYicsICdTa2VsZXRvbicpLlNwcmluZ1Jlc291cmNlSUQgPSAiIiAtLSBUSUZfRl9UYWlsX0Jhc2UKICAgIC0tICAgICAgICAgICAgIEV4dC5SZXNvdXJjZS5HZXQoJ2ZmYzA5MzVjLTM3NWQtNmY4NC1jMTNiLWQ1NDUyMDVmMDMwMScsICdTa2VsZXRvbicpLlNwcmluZ1Jlc291cmNlSUQgPSAiIiAtLSBUSUZfTV9UYWlsX0Jhc2UKICAgIC0tICAgICAgICAgICAgIEV4dC5SZXNvdXJjZS5HZXQoJzY5MDZlM2NjLTdiOGQtYTg2MC1kY2NmLTlhZDVjODdmMGUxMycsICdTa2VsZXRvbicpLlNwcmluZ1Jlc291cmNlSUQgPSAiIiAtLSBUSUZfRlNfVGFpbF9CYXNlCiAgICAtLSAgICAgICAgICAgICBFeHQuUmVzb3VyY2UuR2V0KCdlNzllYzM1ZC1hZWMyLTU5ZjctM2FkMy04MWZkOWMyY2NmYWUnLCAnU2tlbGV0b24nKS5TcHJpbmdSZXNvdXJjZUlEID0gIiIgLS0gVElGX01TX1RhaWxfQmFzZQogICAgLS0gICAgICAgICAgICAgRXh0LlJlc291cmNlLkdldCgnNmM2NTQ3YzItZWEzMy1jNDk4LTIwZTktMWU1NDQ3ZTJhYjlhJywgJ1NrZWxldG9uJykuU3ByaW5nUmVzb3VyY2VJRCA9ICIiIC0tIERHQl9GX1RhaWxfQmFzZQogICAgLS0gICAgICAgICAgICAgRXh0LlJlc291cmNlLkdldCgnN2IzNWFiYzgtYmY3Yi02ODEwLWUyYTAtMjgwOTFlY2FjN2QxJywgJ1NrZWxldG9uJykuU3ByaW5nUmVzb3VyY2VJRCA9ICIiIC0tIERHQl9NX1RhaWxfQmFzZQogICAgLS0gICAgICAgICAgICAgRXh0LlJlc291cmNlLkdldCgnYTkxZTA0NzgtN2Q2My04ZjE5LTE1MDYtOWY1ZDZlOWVmNWRhJywgJ1NrZWxldG9uJykuU3ByaW5nUmVzb3VyY2VJRCA9ICIiIC0tIENBTUJJT05fRl9UYWlsX0Jhc2UKICAgIC0tICAgICAgICAgICAgIEV4dC5SZXNvdXJjZS5HZXQoJzM3MGVlZTRiLTNlYTQtZGQxMS01MWQ2LWE1ZDlmNmQyNjE1NCcsICdTa2VsZXRvbicpLlNwcmluZ1Jlc291cmNlSUQgPSAiIiAtLSBDQU1CSU9OX01fVGFpbF9CYXNlCiAgICAtLSAgICAgICAgICAgICAtLSBsb2NhbCBlbnRpdHkgPSBnZXRTZWxlY3RlZER1bW15KCkKICAgIC0tICAgICAgICAgICAgIC0tIFNldFZhbHVlVG9HZW5vbWVWYXJpYWJsZShlbnRpdHksICdUYWlsU3ByaW5nU3RhdGUnLCBlLkNoZWNrZWQpCiAgICAtLSAgICAgICAgIGVuZAogICAgLS0gICAgIH0pCgogICAgLS0gRS5idG5UYWlsU3ByaW5nT24gPSBiejpBZGRCdXR0b24oJ0VuYWJsZSB0YWlsIHBoeXNpY3MnKQogICAgLS0gICAgIFVJOkNvbmZpZyhFLmJ0blRhaWxTcHJpbmdPbiwgewogICAgLS0gICAgICAgICBTYW1lTGluZSA9IHRydWUsCiAgICAtLSAgICAgICAgIE9uQ2xpY2sgPSBmdW5jdGlvbihlKQogICAgLS0gICAgICAgICAgICAgRXh0LlJlc291cmNlLkdldCgnNjNhYzRlODAtNzJmMi01NWJiLTFmZTctZWI4YzdhN2UwMjBiJywgJ1NrZWxldG9uJykuU3ByaW5nUmVzb3VyY2VJRCA9ICJkMzFkOTU4ZS0zMDZhLWM4MWMtNTBkMi01ZmQ4Njc0OWI0OGUiIC0tIFRJRl9GX1RhaWxfQmFzZQogICAgLS0gICAgICAgICAgICAgRXh0LlJlc291cmNlLkdldCgnZmZjMDkzNWMtMzc1ZC02Zjg0LWMxM2ItZDU0NTIwNWYwMzAxJywgJ1NrZWxldG9uJykuU3ByaW5nUmVzb3VyY2VJRCA9ICI0YzAxNDBhMi02ZTlkLTJhZWEtMzRhMC1iNDI4MGU3OGI3ZDIiIC0tIFRJRl9NX1RhaWxfQmFzZQogICAgLS0gICAgICAgICAgICAgRXh0LlJlc291cmNlLkdldCgnNjkwNmUzY2MtN2I4ZC1hODYwLWRjY2YtOWFkNWM4N2YwZTEzJywgJ1NrZWxldG9uJykuU3ByaW5nUmVzb3VyY2VJRCA9ICIwOTIyYTEzOC01ZWE4LTEyNzMtMzM0Zi04MDAxMzQ5MmUwZDMiIC0tIFRJRl9GU19UYWlsX0Jhc2UKICAgIC0tICAgICAgICAgICAgIEV4dC5SZXNvdXJjZS5HZXQoJ2U3OWVjMzVkLWFlYzItNTlmNy0zYWQzLTgxZmQ5YzJjY2ZhZScsICdTa2VsZXRvbicpLlNwcmluZ1Jlc291cmNlSUQgPSAiMDRmOWI0MDMtZTM3ZS03ZmM0LTk3M2YtOTY3ZTYwMzk4OWZmIiAtLSBUSUZfTVNfVGFpbF9CYXNlCiAgICAtLSAgICAgICAgICAgICBFeHQuUmVzb3VyY2UuR2V0KCc2YzY1NDdjMi1lYTMzLWM0OTgtMjBlOS0xZTU0NDdlMmFiOWEnLCAnU2tlbGV0b24nKS5TcHJpbmdSZXNvdXJjZUlEID0gIjA5MjJhMTM4LTVlYTgtMTI3My0zMzRmLTgwMDEzNDkyZTBkMyIgLS0gREdCX0ZfVGFpbF9CYXNlCiAgICAtLSAgICAgICAgICAgICBFeHQuUmVzb3VyY2UuR2V0KCc3YjM1YWJjOC1iZjdiLTY4MTAtZTJhMC0yODA5MWVjYWM3ZDEnLCAnU2tlbGV0b24nKS5TcHJpbmdSZXNvdXJjZUlEID0gIjA0ZjliNDAzLWUzN2UtN2ZjNC05NzNmLTk2N2U2MDM5ODlmZiIgLS0gREdCX01fVGFpbF9CYXNlCiAgICAtLSAgICAgICAgICAgICBFeHQuUmVzb3VyY2UuR2V0KCdhOTFlMDQ3OC03ZDYzLThmMTktMTUwNi05ZjVkNmU5ZWY1ZGEnLCAnU2tlbGV0b24nKS5TcHJpbmdSZXNvdXJjZUlEID0gImQzMWQ5NThlLTMwNmEtYzgxYy01MGQyLTVmZDg2NzQ5YjQ4ZSIgLS0gQ0FNQklPTl9GX1RhaWxfQmFzZQogICAgLS0gICAgICAgICAgICAgRXh0LlJlc291cmNlLkdldCgnMzcwZWVlNGItM2VhNC1kZDExLTUxZDYtYTVkOWY2ZDI2MTU0JywgJ1NrZWxldG9uJykuU3ByaW5nUmVzb3VyY2VJRCA9ICIwNGY5YjQwMy1lMzdlLTdmYzQtOTczZi05NjdlNjAzOTg5ZmYiIC0tIENBTUJJT05fTV9UYWlsX0Jhc2UKICAgIC0tICAgICAgICAgICAgIC0tIGxvY2FsIGVudGl0eSA9IGdldFNlbGVjdGVkRHVtbXkoKQogICAgLS0gICAgICAgICAgICAgLS0gU2V0VmFsdWVUb0dlbm9tZVZhcmlhYmxlKGVudGl0eSwgJ1RhaWxTcHJpbmdTdGF0ZScsIGUuQ2hlY2tlZCkKICAgIC0tICAgICAgICAgZW5kCiAgICAtLSAgICAgfSkKjgcAAAAAAACOBwAAAAAAAAEAAAAK",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACkEwAAAAAAAI8HAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					60,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"AgAAAI4HAAAAAAAAjwcAAAAAAAAAAAAAjwcAAAAAAACQBwAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACOBwAAAAAAAI4HAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					68,
+					1,
+					"cut",
+					null,
+					"AQAAAHIAAAAAAAAAcgAAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAByAAAAAAAAAHIAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					78,
+					1,
+					"cut",
+					null,
+					"AQAAAFQAAAAAAAAAVAAAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABUAAAAAAAAAFQAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					83,
+					1,
+					"cut",
+					null,
+					"AQAAACIAAAAAAAAAIgAAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAiAAAAAAAAACIAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					87,
+					1,
+					"insert",
+					{
+						"characters": "\n\n\n"
+					},
+					"BQAAACEAAAAAAAAAJgAAAAAAAAAAAAAAJgAAAAAAAAArAAAAAAAAAAAAAAAiAAAAAAAAACIAAAAAAAAABAAAACAgICAnAAAAAAAAACwAAAAAAAAAAAAAACMAAAAAAAAAIwAAAAAAAAAEAAAAICAgIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAhAAAAAAAAACEAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					90,
+					1,
+					"trim_trailing_white_space",
+					null,
+					"AQAAACQAAAAAAAAAJAAAAAAAAAAEAAAAICAgIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAjAAAAAAAAACMAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					104,
+					1,
+					"cut",
+					null,
+					"AQAAAGgDAAAAAAAAaAMAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABoAwAAAAAAAGgDAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					110,
+					2,
+					"cut",
+					null,
+					"AgAAAGgDAAAAAAAAaAMAAAAAAAABAAAACmgDAAAAAAAAaAMAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABoAwAAAAAAAGgDAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					113,
+					1,
+					"cut",
+					null,
+					"AQAAAJEDAAAAAAAAkQMAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACRAwAAAAAAAJEDAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					116,
+					1,
+					"cut",
+					null,
+					"AQAAAFQEAAAAAAAAVAQAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABUBAAAAAAAAFQEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					124,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"AgAAAJEDAAAAAAAAkgMAAAAAAAAAAAAAkgMAAAAAAACTAwAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACRAwAAAAAAAJEDAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					131,
+					1,
+					"cut",
+					null,
+					"AQAAABgDAAAAAAAAGAMAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAYAwAAAAAAABgDAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					137,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAB0DAAAAAAAAHgMAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAdAwAAAAAAAB0DAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					143,
+					1,
+					"cut",
+					null,
+					"AQAAACMAAAAAAAAAIwAAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAjAAAAAAAAACMAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					146,
+					1,
+					"cut",
+					null,
+					"AQAAACMAAAAAAAAAIwAAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAjAAAAAAAAACMAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					173,
+					1,
+					"",
+					null,
+					"AQAAABMAAAAAAAAAJAAAAAAAAAALAAAAQm9uZVpvbmVUYWI",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADwAgAAAAAAAPACAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					196,
+					1,
+					"left_delete",
+					null,
+					"AQAAAB4AAAAAAAAAHgAAAAAAAAAGAAAAQWdyZWVk",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAkAAAAAAAAAB4AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					297,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAFIEAAAAAAAAUwQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABSBAAAAAAAAFIEAAAAAAAAAAAAAAAA8L8"
+				]
+			]
+		},
+		{
+			"file": "ScriptExtender/Lua/Client/Main/UtilsTab.lua",
+			"settings":
+			{
+				"buffer_size": 3192,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			},
+			"undo_stack":
+			[
+				[
+					13,
+					1,
+					"move_text_down",
+					null,
+					"AgAAACsBAAAAAAAAKwEAAAAAAAA4AAAAICAgICAgICAgICAgICAgIGxpZ2h0RW50LkxpZ2h0LlRlbXBsYXRlLkVuYWJsZWQgPSBmYWxzZQo7AQAAAAAAAHMBAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABiAQAAAAAAAGIBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					14,
+					1,
+					"move_text_up",
+					null,
+					"AgAAADsBAAAAAAAAOwEAAAAAAAA4AAAAICAgICAgICAgICAgICAgIGxpZ2h0RW50LkxpZ2h0LlRlbXBsYXRlLkVuYWJsZWQgPSBmYWxzZQorAQAAAAAAAGMBAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAByAQAAAAAAAHIBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					15,
+					1,
+					"duplicate_line",
+					null,
+					"AQAAAGMBAAAAAAAAmwEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABiAQAAAAAAAGIBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					17,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"AQAAADsBAAAAAAAAPgEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABiAQAAAAAAAGIBAAAAAAAAAAAAAACghEA"
+				],
+				[
+					21,
+					9,
+					"left_delete",
+					null,
+					"CQAAAIwBAAAAAAAAjAEAAAAAAAABAAAAZYsBAAAAAAAAiwEAAAAAAAABAAAAdIoBAAAAAAAAigEAAAAAAAABAAAAYYkBAAAAAAAAiQEAAAAAAAABAAAAbIgBAAAAAAAAiAEAAAAAAAABAAAAcIcBAAAAAAAAhwEAAAAAAAABAAAAbYYBAAAAAAAAhgEAAAAAAAABAAAAZYUBAAAAAAAAhQEAAAAAAAABAAAAVIQBAAAAAAAAhAEAAAAAAAABAAAALg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACNAQAAAAAAAI0BAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					26,
+					1,
+					"insert",
+					{
+						"characters": "\nelse"
+					},
+					"BwAAAJQBAAAAAAAApQEAAAAAAAAAAAAApQEAAAAAAACmAQAAAAAAAAAAAACmAQAAAAAAAKcBAAAAAAAAAAAAAKcBAAAAAAAAqAEAAAAAAAAAAAAAqAEAAAAAAACpAQAAAAAAAAAAAACVAQAAAAAAAJUBAAAAAAAAEAAAACAgICAgICAgICAgICAgICCVAQAAAAAAAKEBAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACUAQAAAAAAAJQBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					27,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAKUBAAAAAAAAtgEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAClAQAAAAAAAKUBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					29,
+					1,
+					"duplicate_line",
+					null,
+					"AQAAAJUBAAAAAAAAxAEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB2AQAAAAAAAHYBAAAAAAAAAAAAAAAAaEA"
+				],
+				[
+					30,
+					2,
+					"move_text_down",
+					null,
+					"BAAAAJUBAAAAAAAAlQEAAAAAAAAvAAAAICAgICAgICAgICAgICAgIGxpZ2h0RW50LkxpZ2h0LkVuYWJsZWQgPSBmYWxzZQqmAQAAAAAAANUBAAAAAAAAAAAAAKYBAAAAAAAApgEAAAAAAAAvAAAAICAgICAgICAgICAgICAgIGxpZ2h0RW50LkxpZ2h0LkVuYWJsZWQgPSBmYWxzZQq3AQAAAAAAAOYBAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAClAQAAAAAAAKUBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					32,
+					1,
+					"cut",
+					null,
+					"AQAAAKYBAAAAAAAApgEAAAAAAAARAAAAICAgICAgICAgICAgICAgIAo",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAC2AQAAAAAAALYBAAAAAAAAAAAAAAAAaEA"
+				],
+				[
+					35,
+					1,
+					"delete_word",
+					{
+						"forward": false
+					},
+					"AQAAAM8BAAAAAAAAzwEAAAAAAAAFAAAAZmFsc2U",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADUAQAAAAAAANQBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					36,
+					1,
+					"insert",
+					{
+						"characters": "false"
+					},
+					"BQAAAM8BAAAAAAAA0AEAAAAAAAAAAAAA0AEAAAAAAADRAQAAAAAAAAAAAADRAQAAAAAAANIBAAAAAAAAAAAAANIBAAAAAAAA0wEAAAAAAAAAAAAA0wEAAAAAAADUAQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADPAQAAAAAAAM8BAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					44,
+					1,
+					"insert",
+					{
+						"characters": "true"
+					},
+					"BAAAAM8BAAAAAAAA0AEAAAAAAAAFAAAAZmFsc2XQAQAAAAAAANEBAAAAAAAAAAAAANEBAAAAAAAA0gEAAAAAAAAAAAAA0gEAAAAAAADTAQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADPAQAAAAAAANQBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					59,
+					1,
+					"cut",
+					null,
+					"AQAAACsBAAAAAAAAKwEAAAAAAAA7AAAAICAgICAgICAgICAgICAgIC0tIGxpZ2h0RW50LkxpZ2h0LlRlbXBsYXRlLkVuYWJsZWQgPSBmYWxzZQo",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABlAQAAAAAAAGUBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					63,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"AQAAADsBAAAAAAAAPgEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABZAQAAAAAAAFkBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					66,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"AQAAAH4BAAAAAAAAgQEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACbAQAAAAAAAJsBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					76,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAACoBAAAAAAAAOwEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAqAQAAAAAAACoBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					77,
+					1,
+					"insert",
+					{
+						"characters": "for"
+					},
+					"AwAAADsBAAAAAAAAPAEAAAAAAAAAAAAAPAEAAAAAAAA9AQAAAAAAAAAAAAA9AQAAAAAAAD4BAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA7AQAAAAAAADsBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					78,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAD4BAAAAAAAAPwEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA+AQAAAAAAAD4BAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					79,
+					4,
+					"left_delete",
+					null,
+					"BAAAAD4BAAAAAAAAPgEAAAAAAAABAAAAID0BAAAAAAAAPQEAAAAAAAABAAAAcjwBAAAAAAAAPAEAAAAAAAABAAAAbzsBAAAAAAAAOwEAAAAAAAABAAAAZg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA/AQAAAAAAAD8BAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					82,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"BAAAAEEAAAAAAAAARgAAAAAAAAAAAAAAMAEAAAAAAAAwAQAAAAAAABAAAAAgICAgICAgICAgICAgICAgRgAAAAAAAABLAAAAAAAAAAAAAABCAAAAAAAAAEIAAAAAAAAABAAAACAgICA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABBAAAAAAAAAEEAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					84,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAEIAAAAAAAAAQwAAAAAAAAAAAAAARAAAAAAAAABEAAAAAAAAAAQAAAAgICAg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABCAAAAAAAAAEIAAAAAAAAAAAAAAAAASEA"
+				],
+				[
+					85,
+					1,
+					"reindent",
+					null,
+					"AQAAAEMAAAAAAAAARwAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABDAAAAAAAAAEMAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					86,
+					1,
+					"insert",
+					{
+						"characters": "local"
+					},
+					"BQAAAEcAAAAAAAAASAAAAAAAAAAAAAAASAAAAAAAAABJAAAAAAAAAAAAAABJAAAAAAAAAEoAAAAAAAAAAAAAAEoAAAAAAAAASwAAAAAAAAAAAAAASwAAAAAAAABMAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABHAAAAAAAAAEcAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					87,
+					1,
+					"insert",
+					{
+						"characters": " u"
+					},
+					"AgAAAEwAAAAAAAAATQAAAAAAAAAAAAAATQAAAAAAAABOAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABMAAAAAAAAAEwAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					88,
+					1,
+					"left_delete",
+					null,
+					"AQAAAE0AAAAAAAAATQAAAAAAAAABAAAAdQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABOAAAAAAAAAE4AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					89,
+					1,
+					"insert",
+					{
+						"characters": "isLightyu"
+					},
+					"CQAAAE0AAAAAAAAATgAAAAAAAAAAAAAATgAAAAAAAABPAAAAAAAAAAAAAABPAAAAAAAAAFAAAAAAAAAAAAAAAFAAAAAAAAAAUQAAAAAAAAAAAAAAUQAAAAAAAABSAAAAAAAAAAAAAABSAAAAAAAAAFMAAAAAAAAAAAAAAFMAAAAAAAAAVAAAAAAAAAAAAAAAVAAAAAAAAABVAAAAAAAAAAAAAABVAAAAAAAAAFYAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABNAAAAAAAAAE0AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					90,
+					1,
+					"left_delete",
+					null,
+					"AQAAAFUAAAAAAAAAVQAAAAAAAAABAAAAdQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABWAAAAAAAAAFYAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					91,
+					1,
+					"insert",
+					{
+						"characters": "Lights"
+					},
+					"BgAAAFUAAAAAAAAAVgAAAAAAAAAAAAAAVgAAAAAAAABXAAAAAAAAAAAAAABXAAAAAAAAAFgAAAAAAAAAAAAAAFgAAAAAAAAAWQAAAAAAAAAAAAAAWQAAAAAAAABaAAAAAAAAAAAAAABaAAAAAAAAAFsAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABVAAAAAAAAAFUAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					92,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAFsAAAAAAAAAXAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABbAAAAAAAAAFsAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					95,
+					1,
+					"insert",
+					{
+						"characters": " gfun"
+					},
+					"BQAAAEwAAAAAAAAATQAAAAAAAAAAAAAATQAAAAAAAABOAAAAAAAAAAAAAABOAAAAAAAAAE8AAAAAAAAAAAAAAE8AAAAAAAAAUAAAAAAAAAAAAAAAUAAAAAAAAABRAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABMAAAAAAAAAEwAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					96,
+					4,
+					"left_delete",
+					null,
+					"BAAAAFAAAAAAAAAAUAAAAAAAAAABAAAAbk8AAAAAAAAATwAAAAAAAAABAAAAdU4AAAAAAAAATgAAAAAAAAABAAAAZk0AAAAAAAAATQAAAAAAAAABAAAAZw",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABRAAAAAAAAAFEAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					97,
+					1,
+					"insert",
+					{
+						"characters": "gu"
+					},
+					"AgAAAE0AAAAAAAAATgAAAAAAAAAAAAAATgAAAAAAAABPAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABNAAAAAAAAAE0AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					98,
+					2,
+					"left_delete",
+					null,
+					"AgAAAE4AAAAAAAAATgAAAAAAAAABAAAAdU0AAAAAAAAATQAAAAAAAAABAAAAZw",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABPAAAAAAAAAE8AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					99,
+					1,
+					"insert",
+					{
+						"characters": "fun"
+					},
+					"AwAAAE0AAAAAAAAATgAAAAAAAAAAAAAATgAAAAAAAABPAAAAAAAAAAAAAABPAAAAAAAAAFAAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABNAAAAAAAAAE0AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					100,
+					1,
+					"insert_completion",
+					{
+						"completion": "lsp_select_completion {\"index\":0,\"session_name\":\"LSP-lua\"}",
+						"format": "command",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "function"
+					},
+					"AgAAAE0AAAAAAAAATQAAAAAAAAADAAAAZnVuTQAAAAAAAABVAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABQAAAAAAAAAFAAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					104,
+					1,
+					"left_delete",
+					null,
+					"AQAAAGQAAAAAAAAAZAAAAAAAAAABAAAAIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABlAAAAAAAAAGUAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					105,
+					1,
+					"insert",
+					{
+						"characters": "*"
+					},
+					"AQAAAGQAAAAAAAAAZQAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABkAAAAAAAAAGQAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					106,
+					1,
+					"insert_snippet",
+					{
+						"contents": "($0)"
+					},
+					"AQAAAGUAAAAAAAAAZwAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABlAAAAAAAAAGUAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					107,
+					1,
+					"run_macro_file",
+					{
+						"file": "res://Packages/Default/Delete Left Right.sublime-macro"
+					},
+					"AgAAAGUAAAAAAAAAZQAAAAAAAAABAAAAKGUAAAAAAAAAZQAAAAAAAAABAAAAKQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABmAAAAAAAAAGYAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					108,
+					1,
+					"left_delete",
+					null,
+					"AQAAAGQAAAAAAAAAZAAAAAAAAAABAAAAKg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABlAAAAAAAAAGUAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					109,
+					1,
+					"insert",
+					{
+						"characters": ")"
+					},
+					"AQAAAGQAAAAAAAAAZQAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABkAAAAAAAAAGQAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					110,
+					1,
+					"left_delete",
+					null,
+					"AQAAAGQAAAAAAAAAZAAAAAAAAAABAAAAKQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABlAAAAAAAAAGUAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					111,
+					1,
+					"insert_snippet",
+					{
+						"contents": "($0)"
+					},
+					"AQAAAGQAAAAAAAAAZgAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABkAAAAAAAAAGQAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					112,
+					1,
+					"insert",
+					{
+						"characters": "lightTemplate"
+					},
+					"DQAAAGUAAAAAAAAAZgAAAAAAAAAAAAAAZgAAAAAAAABnAAAAAAAAAAAAAABnAAAAAAAAAGgAAAAAAAAAAAAAAGgAAAAAAAAAaQAAAAAAAAAAAAAAaQAAAAAAAABqAAAAAAAAAAAAAABqAAAAAAAAAGsAAAAAAAAAAAAAAGsAAAAAAAAAbAAAAAAAAAAAAAAAbAAAAAAAAABtAAAAAAAAAAAAAABtAAAAAAAAAG4AAAAAAAAAAAAAAG4AAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAAABwAAAAAAAAAAAAAABwAAAAAAAAAHEAAAAAAAAAAAAAAHEAAAAAAAAAcgAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABlAAAAAAAAAGUAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					113,
+					1,
+					"insert",
+					{
+						"characters": "Name"
+					},
+					"BAAAAHIAAAAAAAAAcwAAAAAAAAAAAAAAcwAAAAAAAAB0AAAAAAAAAAAAAAB0AAAAAAAAAHUAAAAAAAAAAAAAAHUAAAAAAAAAdgAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAByAAAAAAAAAHIAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					116,
+					1,
+					"insert",
+					{
+						"characters": "\nend"
+					},
+					"BgAAAHcAAAAAAAAAgAAAAAAAAAAAAAAAgAAAAAAAAACBAAAAAAAAAAAAAACBAAAAAAAAAIIAAAAAAAAAAAAAAIIAAAAAAAAAgwAAAAAAAAAAAAAAeAAAAAAAAAB4AAAAAAAAAAgAAAAgICAgICAgIHgAAAAAAAAAfAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB3AAAAAAAAAHcAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					117,
+					1,
+					"run_macro_file",
+					{
+						"file": "res://Packages/Default/Add Line Before.sublime-macro"
+					},
+					"AgAAAHgAAAAAAAAAeQAAAAAAAAAAAAAAeAAAAAAAAACAAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB/AAAAAAAAAH8AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					118,
+					1,
+					"insert",
+					{
+						"characters": "for"
+					},
+					"AwAAAIAAAAAAAAAAgQAAAAAAAAAAAAAAgQAAAAAAAACCAAAAAAAAAAAAAACCAAAAAAAAAIMAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACAAAAAAAAAAIAAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					119,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAIMAAAAAAAAAhAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACDAAAAAAAAAIMAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					120,
+					1,
+					"insert",
+					{
+						"characters": "ligh"
+					},
+					"BAAAAIQAAAAAAAAAhQAAAAAAAAAAAAAAhQAAAAAAAACGAAAAAAAAAAAAAACGAAAAAAAAAIcAAAAAAAAAAAAAAIcAAAAAAAAAiAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACEAAAAAAAAAIQAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					121,
+					1,
+					"insert_completion",
+					{
+						"completion": "lsp_select_completion {\"index\":59,\"session_name\":\"LSP-lua\"}",
+						"format": "command",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "lightType"
+					},
+					"AgAAAIQAAAAAAAAAhAAAAAAAAAAEAAAAbGlnaIQAAAAAAAAAjQAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACIAAAAAAAAAIgAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					122,
+					4,
+					"left_delete",
+					null,
+					"BAAAAIwAAAAAAAAAjAAAAAAAAAABAAAAZYsAAAAAAAAAiwAAAAAAAAABAAAAcIoAAAAAAAAAigAAAAAAAAABAAAAeYkAAAAAAAAAiQAAAAAAAAABAAAAVA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACNAAAAAAAAAI0AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					123,
+					1,
+					"insert",
+					{
+						"characters": "Template"
+					},
+					"CAAAAIkAAAAAAAAAigAAAAAAAAAAAAAAigAAAAAAAACLAAAAAAAAAAAAAACLAAAAAAAAAIwAAAAAAAAAAAAAAIwAAAAAAAAAjQAAAAAAAAAAAAAAjQAAAAAAAACOAAAAAAAAAAAAAACOAAAAAAAAAI8AAAAAAAAAAAAAAI8AAAAAAAAAkAAAAAAAAAAAAAAAkAAAAAAAAACRAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACJAAAAAAAAAIkAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					124,
+					1,
+					"insert",
+					{
+						"characters": ","
+					},
+					"AQAAAJEAAAAAAAAAkgAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACRAAAAAAAAAJEAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					125,
+					1,
+					"insert",
+					{
+						"characters": " _"
+					},
+					"AgAAAJIAAAAAAAAAkwAAAAAAAAAAAAAAkwAAAAAAAACUAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACSAAAAAAAAAJIAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					126,
+					1,
+					"insert",
+					{
+						"characters": " in"
+					},
+					"AwAAAJQAAAAAAAAAlQAAAAAAAAAAAAAAlQAAAAAAAACWAAAAAAAAAAAAAACWAAAAAAAAAJcAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACUAAAAAAAAAJQAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					127,
+					1,
+					"insert",
+					{
+						"characters": " pairs"
+					},
+					"BgAAAJcAAAAAAAAAmAAAAAAAAAAAAAAAmAAAAAAAAACZAAAAAAAAAAAAAACZAAAAAAAAAJoAAAAAAAAAAAAAAJoAAAAAAAAAmwAAAAAAAAAAAAAAmwAAAAAAAACcAAAAAAAAAAAAAACcAAAAAAAAAJ0AAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACXAAAAAAAAAJcAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					128,
+					1,
+					"insert_snippet",
+					{
+						"contents": "($0)"
+					},
+					"AQAAAJ0AAAAAAAAAnwAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACdAAAAAAAAAJ0AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					129,
+					1,
+					"paste",
+					null,
+					"AQAAAJ4AAAAAAAAAqwAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACeAAAAAAAAAJ4AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					131,
+					1,
+					"insert",
+					{
+						"characters": " do"
+					},
+					"AwAAAKwAAAAAAAAArQAAAAAAAAAAAAAArQAAAAAAAACuAAAAAAAAAAAAAACuAAAAAAAAAK8AAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACsAAAAAAAAAKwAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					132,
+					1,
+					"insert",
+					{
+						"characters": "\nemd"
+					},
+					"BAAAAK8AAAAAAAAAvAAAAAAAAAAAAAAAvAAAAAAAAAC9AAAAAAAAAAAAAAC9AAAAAAAAAL4AAAAAAAAAAAAAAL4AAAAAAAAAvwAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACvAAAAAAAAAK8AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					133,
+					2,
+					"left_delete",
+					null,
+					"AgAAAL4AAAAAAAAAvgAAAAAAAAABAAAAZL0AAAAAAAAAvQAAAAAAAAABAAAAbQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAC/AAAAAAAAAL8AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					134,
+					1,
+					"insert",
+					{
+						"characters": "nd"
+					},
+					"BAAAAL0AAAAAAAAAvgAAAAAAAAAAAAAAvgAAAAAAAAC/AAAAAAAAAAAAAACwAAAAAAAAALAAAAAAAAAADAAAACAgICAgICAgICAgILAAAAAAAAAAuAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAC9AAAAAAAAAL0AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					135,
+					1,
+					"run_macro_file",
+					{
+						"file": "res://Packages/Default/Add Line Before.sublime-macro"
+					},
+					"AgAAALAAAAAAAAAAsQAAAAAAAAAAAAAAsAAAAAAAAAC8AAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAC7AAAAAAAAALsAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					136,
+					1,
+					"insert",
+					{
+						"characters": "if"
+					},
+					"AgAAALwAAAAAAAAAvQAAAAAAAAAAAAAAvQAAAAAAAAC+AAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAC8AAAAAAAAALwAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					137,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAL4AAAAAAAAAvwAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAC+AAAAAAAAAL4AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					147,
+					1,
+					"paste",
+					null,
+					"AQAAAL8AAAAAAAAA0AAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAC/AAAAAAAAAL8AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					148,
+					1,
+					"insert",
+					{
+						"characters": " =="
+					},
+					"AwAAANAAAAAAAAAA0QAAAAAAAAAAAAAA0QAAAAAAAADSAAAAAAAAAAAAAADSAAAAAAAAANMAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADQAAAAAAAAANAAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					149,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAANMAAAAAAAAA1AAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADTAAAAAAAAANMAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					157,
+					1,
+					"paste",
+					null,
+					"AQAAANQAAAAAAAAA4QAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADUAAAAAAAAANQAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					158,
+					1,
+					"insert",
+					{
+						"characters": " th"
+					},
+					"AwAAAOEAAAAAAAAA4gAAAAAAAAAAAAAA4gAAAAAAAADjAAAAAAAAAAAAAADjAAAAAAAAAOQAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADhAAAAAAAAAOEAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					159,
+					1,
+					"insert_completion",
+					{
+						"completion": "lsp_select_completion {\"index\":0,\"session_name\":\"LSP-lua\"}",
+						"format": "command",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "then"
+					},
+					"AgAAAOIAAAAAAAAA4gAAAAAAAAACAAAAdGjiAAAAAAAAAOYAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADkAAAAAAAAAOQAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					160,
+					1,
+					"insert",
+					{
+						"characters": " re"
+					},
+					"AwAAAOYAAAAAAAAA5wAAAAAAAAAAAAAA5wAAAAAAAADoAAAAAAAAAAAAAADoAAAAAAAAAOkAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADmAAAAAAAAAOYAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					162,
+					1,
+					"insert_completion",
+					{
+						"completion": "lsp_select_completion {\"index\":1,\"session_name\":\"LSP-lua\"}",
+						"format": "command",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "return"
+					},
+					"AgAAAOcAAAAAAAAA5wAAAAAAAAACAAAAcmXnAAAAAAAAAO0AAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADpAAAAAAAAAOkAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					163,
+					7,
+					"left_delete",
+					null,
+					"BwAAAOwAAAAAAAAA7AAAAAAAAAABAAAAbusAAAAAAAAA6wAAAAAAAAABAAAAcuoAAAAAAAAA6gAAAAAAAAABAAAAdekAAAAAAAAA6QAAAAAAAAABAAAAdOgAAAAAAAAA6AAAAAAAAAABAAAAZecAAAAAAAAA5wAAAAAAAAABAAAAcuYAAAAAAAAA5gAAAAAAAAABAAAAIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADtAAAAAAAAAO0AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					165,
+					1,
+					"insert",
+					{
+						"characters": " re"
+					},
+					"AwAAAOYAAAAAAAAA5wAAAAAAAAAAAAAA5wAAAAAAAADoAAAAAAAAAAAAAADoAAAAAAAAAOkAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADmAAAAAAAAAOYAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					167,
+					1,
+					"insert_completion",
+					{
+						"completion": "lsp_select_completion {\"index\":1,\"session_name\":\"LSP-lua\"}",
+						"format": "command",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "return"
+					},
+					"AgAAAOcAAAAAAAAA5wAAAAAAAAACAAAAcmXnAAAAAAAAAO0AAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADpAAAAAAAAAOkAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					168,
+					1,
+					"insert",
+					{
+						"characters": " t"
+					},
+					"AgAAAO0AAAAAAAAA7gAAAAAAAAAAAAAA7gAAAAAAAADvAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADtAAAAAAAAAO0AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					170,
+					1,
+					"insert_completion",
+					{
+						"completion": "lsp_select_completion {\"index\":1,\"session_name\":\"LSP-lua\"}",
+						"format": "command",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "true"
+					},
+					"AgAAAO4AAAAAAAAA7gAAAAAAAAABAAAAdO4AAAAAAAAA8gAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADvAAAAAAAAAO8AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					176,
+					1,
+					"reindent",
+					null,
+					"AQAAAPEBAAAAAAAAAQIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADxAQAAAAAAAPEBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					177,
+					1,
+					"insert",
+					{
+						"characters": "if"
+					},
+					"AgAAAAECAAAAAAAAAgIAAAAAAAAAAAAAAgIAAAAAAAADAgAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAABAgAAAAAAAAECAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					178,
+					1,
+					"insert",
+					{
+						"characters": " not"
+					},
+					"BAAAAAMCAAAAAAAABAIAAAAAAAAAAAAABAIAAAAAAAAFAgAAAAAAAAAAAAAFAgAAAAAAAAYCAAAAAAAAAAAAAAYCAAAAAAAABwIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAADAgAAAAAAAAMCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					179,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAAcCAAAAAAAACAIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAHAgAAAAAAAAcCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					180,
+					1,
+					"insert",
+					{
+						"characters": "is"
+					},
+					"AgAAAAgCAAAAAAAACQIAAAAAAAAAAAAACQIAAAAAAAAKAgAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAIAgAAAAAAAAgCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					181,
+					1,
+					"insert_completion",
+					{
+						"completion": "lsp_select_completion {\"index\":2,\"session_name\":\"LSP-lua\"}",
+						"format": "command",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "isLightyLights(lightTemplateName)"
+					},
+					"AgAAAAgCAAAAAAAACAIAAAAAAAACAAAAaXMIAgAAAAAAABYCAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAKAgAAAAAAAAoCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					182,
+					1,
+					"insert_snippet",
+					{
+						"contents": "($0)"
+					},
+					"AQAAABYCAAAAAAAAGAIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAWAgAAAAAAABYCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					188,
+					1,
+					"paste",
+					null,
+					"AQAAABcCAAAAAAAALgIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAXAgAAAAAAABcCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					189,
+					1,
+					"insert",
+					{
+						"characters": "."
+					},
+					"AQAAAC4CAAAAAAAALwIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAuAgAAAAAAAC4CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					192,
+					1,
+					"paste",
+					null,
+					"AQAAAC8CAAAAAAAAOwIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAvAgAAAAAAAC8CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					195,
+					1,
+					"insert",
+					{
+						"characters": " then"
+					},
+					"BQAAADwCAAAAAAAAPQIAAAAAAAAAAAAAPQIAAAAAAAA+AgAAAAAAAAAAAAA+AgAAAAAAAD8CAAAAAAAAAAAAAD8CAAAAAAAAQAIAAAAAAAAAAAAAQAIAAAAAAABBAgAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA8AgAAAAAAADwCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					196,
+					1,
+					"insert_completion",
+					{
+						"completion": "lsp_select_completion {\"index\":0,\"session_name\":\"LSP-lua\"}",
+						"format": "command",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "then"
+					},
+					"AgAAAD0CAAAAAAAAPQIAAAAAAAAEAAAAdGhlbj0CAAAAAAAAQQIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABBAgAAAAAAAEECAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					197,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAEECAAAAAAAAVgIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABBAgAAAAAAAEECAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					200,
+					1,
+					"insert",
+					{
+						"characters": "\nend"
+					},
+					"BwAAANoCAAAAAAAA5wIAAAAAAAAAAAAAQgIAAAAAAABCAgAAAAAAABQAAAAgICAgICAgICAgICAgICAgICAgINMCAAAAAAAA1AIAAAAAAAAAAAAA1AIAAAAAAADVAgAAAAAAAAAAAADVAgAAAAAAANYCAAAAAAAAAAAAAMcCAAAAAAAAxwIAAAAAAAAMAAAAICAgICAgICAgICAgxwIAAAAAAADPAgAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADaAgAAAAAAANoCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					205,
+					1,
+					"indent",
+					null,
+					"BAAAAEMCAAAAAAAARwIAAAAAAAAAAAAAeQIAAAAAAAB9AgAAAAAAAAAAAACOAgAAAAAAAJICAAAAAAAAAAAAAMMCAAAAAAAAxwIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADGAgAAAAAAAEICAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					210,
+					1,
+					"insert",
+					{
+						"characters": "\t"
+					},
+					"AQAAAN8CAAAAAAAA4wIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADfAgAAAAAAAN8CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					220,
+					1,
+					"cut",
+					null,
+					"AQAAAEICAAAAAAAAQgIAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABCAgAAAAAAAEICAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					223,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"AQAAAFYCAAAAAAAAVgIAAAAAAAADAAAALS0g",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB3AgAAAAAAAHcCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					225,
+					7,
+					"left_delete",
+					null,
+					"BwAAAGsCAAAAAAAAawIAAAAAAAABAAAAZGoCAAAAAAAAagIAAAAAAAABAAAAZWkCAAAAAAAAaQIAAAAAAAABAAAAbGgCAAAAAAAAaAIAAAAAAAABAAAAYmcCAAAAAAAAZwIAAAAAAAABAAAAYWYCAAAAAAAAZgIAAAAAAAABAAAAbmUCAAAAAAAAZQIAAAAAAAABAAAARQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABsAgAAAAAAAGwCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					226,
+					1,
+					"insert",
+					{
+						"characters": "gain"
+					},
+					"BAAAAGUCAAAAAAAAZgIAAAAAAAAAAAAAZgIAAAAAAABnAgAAAAAAAAAAAABnAgAAAAAAAGgCAAAAAAAAAAAAAGgCAAAAAAAAaQIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABlAgAAAAAAAGUCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					227,
+					4,
+					"left_delete",
+					null,
+					"BAAAAGgCAAAAAAAAaAIAAAAAAAABAAAAbmcCAAAAAAAAZwIAAAAAAAABAAAAaWYCAAAAAAAAZgIAAAAAAAABAAAAYWUCAAAAAAAAZQIAAAAAAAABAAAAZw",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABpAgAAAAAAAGkCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					228,
+					1,
+					"insert",
+					{
+						"characters": "Gain"
+					},
+					"BAAAAGUCAAAAAAAAZgIAAAAAAAAAAAAAZgIAAAAAAABnAgAAAAAAAAAAAABnAgAAAAAAAGgCAAAAAAAAAAAAAGgCAAAAAAAAaQIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABlAgAAAAAAAGUCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					235,
+					1,
+					"insert",
+					{
+						"characters": "\n\nlocal"
+					},
+					"CAAAAAYBAAAAAAAACwEAAAAAAAAAAAAACwEAAAAAAAAQAQAAAAAAAAAAAAAHAQAAAAAAAAcBAAAAAAAABAAAACAgICAMAQAAAAAAAA0BAAAAAAAAAAAAAA0BAAAAAAAADgEAAAAAAAAAAAAADgEAAAAAAAAPAQAAAAAAAAAAAAAPAQAAAAAAABABAAAAAAAAAAAAABABAAAAAAAAEQEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAGAQAAAAAAAAYBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					236,
+					1,
+					"insert",
+					{
+						"characters": " Lights"
+					},
+					"BwAAABEBAAAAAAAAEgEAAAAAAAAAAAAAEgEAAAAAAAATAQAAAAAAAAAAAAATAQAAAAAAABQBAAAAAAAAAAAAABQBAAAAAAAAFQEAAAAAAAAAAAAAFQEAAAAAAAAWAQAAAAAAAAAAAAAWAQAAAAAAABcBAAAAAAAAAAAAABcBAAAAAAAAGAEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAARAQAAAAAAABEBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					237,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAABgBAAAAAAAAGQEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAYAQAAAAAAABgBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					238,
+					1,
+					"left_delete",
+					null,
+					"AQAAABgBAAAAAAAAGAEAAAAAAAABAAAAIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAZAQAAAAAAABkBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					239,
+					1,
+					"insert",
+					{
+						"characters": "="
+					},
+					"AQAAABgBAAAAAAAAGQEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAYAQAAAAAAABgBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					240,
+					1,
+					"insert",
+					{
+						"characters": " ="
+					},
+					"AgAAABkBAAAAAAAAGgEAAAAAAAAAAAAAGgEAAAAAAAAbAQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAZAQAAAAAAABkBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					241,
+					3,
+					"left_delete",
+					null,
+					"AwAAABoBAAAAAAAAGgEAAAAAAAABAAAAPRkBAAAAAAAAGQEAAAAAAAABAAAAIBgBAAAAAAAAGAEAAAAAAAABAAAAPQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAbAQAAAAAAABsBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					242,
+					1,
+					"insert",
+					{
+						"characters": " ="
+					},
+					"AgAAABgBAAAAAAAAGQEAAAAAAAAAAAAAGQEAAAAAAAAaAQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAYAQAAAAAAABgBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					243,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAABoBAAAAAAAAGwEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAaAQAAAAAAABoBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					244,
+					1,
+					"insert_snippet",
+					{
+						"contents": "{$0}"
+					},
+					"AQAAABsBAAAAAAAAHQEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAbAQAAAAAAABsBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					253,
+					1,
+					"insert",
+					{
+						"characters": "\nLigj"
+					},
+					"BQAAAB0BAAAAAAAAIgEAAAAAAAAAAAAAIgEAAAAAAAAjAQAAAAAAAAAAAAAjAQAAAAAAACQBAAAAAAAAAAAAACQBAAAAAAAAJQEAAAAAAAAAAAAAJQEAAAAAAAAmAQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAdAQAAAAAAAB0BAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					254,
+					6,
+					"left_delete",
+					null,
+					"BgAAACUBAAAAAAAAJQEAAAAAAAABAAAAaiQBAAAAAAAAJAEAAAAAAAABAAAAZyMBAAAAAAAAIwEAAAAAAAABAAAAaSIBAAAAAAAAIgEAAAAAAAABAAAATB4BAAAAAAAAHgEAAAAAAAAEAAAAICAgIB0BAAAAAAAAHQEAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAmAQAAAAAAACYBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					257,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"AQAAAG0CAAAAAAAAcAIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACIAgAAAAAAAIgCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					260,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAFgCAAAAAAAAbQIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABYAgAAAAAAAFgCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					265,
+					2,
+					"cut",
+					null,
+					"AgAAAFkCAAAAAAAAWQIAAAAAAAAVAAAAICAgICAgICAgICAgICAgICAgICAKWQIAAAAAAABZAgAAAAAAADMAAAAgICAgICAgICAgICAgICAgICAgIC0tIGxpZ2h0RW50LkxpZ2h0LkdhaW4gPSBmYWxzZQo",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABtAgAAAAAAAG0CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					268,
+					1,
+					"cut",
+					null,
+					"AQAAAFkCAAAAAAAAWQIAAAAAAAAVAAAAICAgICAgICAgICAgICAgIGVsc2UK",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABtAgAAAAAAAG0CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					271,
+					1,
+					"cut",
+					null,
+					"AQAAAFkCAAAAAAAAWQIAAAAAAAA1AAAAICAgICAgICAgICAgICAgICAgICAtLSBsaWdodEVudC5MaWdodC5FbmFibGVkID0gdHJ1ZQo",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACNAgAAAAAAAI0CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					281,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"AwAAAHwCAAAAAAAAiQIAAAAAAAAAAAAAiQIAAAAAAACWAgAAAAAAAAAAAAB9AgAAAAAAAH0CAAAAAAAADAAAACAgICAgICAgICAgIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB8AgAAAAAAAHwCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					283,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAH0CAAAAAAAAfgIAAAAAAAAAAAAAfwIAAAAAAAB/AgAAAAAAAAwAAAAgICAgICAgICAgICA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB9AgAAAAAAAH0CAAAAAAAAAAAAAAAAYkA"
+				],
+				[
+					284,
+					1,
+					"reindent",
+					null,
+					"AQAAAH4CAAAAAAAAigIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB+AgAAAAAAAH4CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					294,
+					2,
+					"left_delete",
+					null,
+					"AwAAABwCAAAAAAAAHAIAAAAAAAADAAAAb3QgewIAAAAAAAB7AgAAAAAAAAwAAAAgICAgICAgICAgICAbAgAAAAAAABsCAAAAAAAAAQAAAG4",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAfAgAAAAAAABwCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					297,
+					8,
+					"left_delete",
+					null,
+					"CAAAAGcCAAAAAAAAZwIAAAAAAAABAAAAZGYCAAAAAAAAZgIAAAAAAAABAAAAbmUCAAAAAAAAZQIAAAAAAAABAAAAZWECAAAAAAAAYQIAAAAAAAAEAAAAICAgIF0CAAAAAAAAXQIAAAAAAAAEAAAAICAgIFkCAAAAAAAAWQIAAAAAAAAEAAAAICAgIFUCAAAAAAAAVQIAAAAAAAAEAAAAICAgIFQCAAAAAAAAVAIAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABoAgAAAAAAAGgCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					298,
+					1,
+					"insert",
+					{
+						"characters": " re"
+					},
+					"AwAAAFQCAAAAAAAAVQIAAAAAAAAAAAAAVQIAAAAAAABWAgAAAAAAAAAAAABWAgAAAAAAAFcCAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABUAgAAAAAAAFQCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					300,
+					1,
+					"insert_completion",
+					{
+						"completion": "lsp_select_completion {\"index\":1,\"session_name\":\"LSP-lua\"}",
+						"format": "command",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "return"
+					},
+					"AgAAAFUCAAAAAAAAVQIAAAAAAAACAAAAcmVVAgAAAAAAAFsCAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABXAgAAAAAAAFcCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					301,
+					1,
+					"insert",
+					{
+						"characters": " end"
+					},
+					"BAAAAFsCAAAAAAAAXAIAAAAAAAAAAAAAXAIAAAAAAABdAgAAAAAAAAAAAABdAgAAAAAAAF4CAAAAAAAAAAAAAF4CAAAAAAAAXwIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABbAgAAAAAAAFsCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					304,
+					2,
+					"cut",
+					null,
+					"AgAAAHACAAAAAAAAcAIAAAAAAAABAAAACnACAAAAAAAAcAIAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABwAgAAAAAAAHACAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					324,
+					1,
+					"insert",
+					{
+						"characters": "Checkbox"
+					},
+					"CAAAADYBAAAAAAAANwEAAAAAAAAJAAAAQWRkQnV0dG9uNwEAAAAAAAA4AQAAAAAAAAAAAAA4AQAAAAAAADkBAAAAAAAAAAAAADkBAAAAAAAAOgEAAAAAAAAAAAAAOgEAAAAAAAA7AQAAAAAAAAAAAAA7AQAAAAAAADwBAAAAAAAAAAAAADwBAAAAAAAAPQEAAAAAAAAAAAAAPQEAAAAAAAA+AQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA2AQAAAAAAAD8BAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					331,
+					1,
+					"insert",
+					{
+						"characters": "Ob"
+					},
+					"AgAAAG8BAAAAAAAAcAEAAAAAAAAHAAAAT25DbGlja3ABAAAAAAAAcQEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABvAQAAAAAAAHYBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					332,
+					1,
+					"left_delete",
+					null,
+					"AQAAAHABAAAAAAAAcAEAAAAAAAABAAAAYg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABxAQAAAAAAAHEBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					333,
+					1,
+					"insert",
+					{
+						"characters": "nChane"
+					},
+					"BgAAAHABAAAAAAAAcQEAAAAAAAAAAAAAcQEAAAAAAAByAQAAAAAAAAAAAAByAQAAAAAAAHMBAAAAAAAAAAAAAHMBAAAAAAAAdAEAAAAAAAAAAAAAdAEAAAAAAAB1AQAAAAAAAAAAAAB1AQAAAAAAAHYBAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABwAQAAAAAAAHABAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					352,
+					1,
+					"paste",
+					null,
+					"AQAAAB8BAAAAAAAAyAEAAAAAAADuAQAAICAgIEUuYnRuUHJlcGxhY2VkID0gcDpDaGVja2JveCgnRGlzYWJsZSBwcmUtcGxhY2VkIGxpZ2h0cycpCiAgICBFLmJ0blByZXBsYWNlZC5PbkNoYW5lID0gZnVuY3Rpb24gKGUpCiAgICAgICAgZm9yIF8sIGxpZ2h0RW50IGluIHBhaXJzKEV4dC5FbnRpdHkuR2V0QWxsRW50aXRpZXNXaXRoQ29tcG9uZW50KCdMaWdodCcpKSBkbwogICAgICAgICAgICBpZiBsaWdodEVudC5MaWdodC5UZW1wbGF0ZSB0aGVuCiAgICAgICAgICAgICAgICBpZiBpc0xpZ2h0eUxpZ2h0cyhsaWdodEVudC5MaWdodC5UZW1wbGF0ZS5UZW1wbGF0ZU5hbWUpIHRoZW4gcmV0dXJuIGVuZAogICAgICAgICAgICBlbmQKCiAgICAgICAgZW5kCiAgICAgICAgdGV4dFByZXBsYWNlLlZpc2libGUgPSB0cnVlCgogICAgICAgIEhlbHBlcnMuVGltZXI6T25UaWNrcygzMDAsIGZ1bmN0aW9uICgpCiAgICAgICAgICAgIHRleHRQcmVwbGFjZS5WaXNpYmxlID0gZmFsc2UKICAgICAgICBlbmQpCiAgICBlbmQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAANAwAAAAAAAB8BAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					355,
+					1,
+					"indent",
+					null,
+					"BQAAAB8BAAAAAAAAIwEAAAAAAAAAAAAAXwEAAAAAAABjAQAAAAAAAAAAAACCAQAAAAAAAIYBAAAAAAAAAAAAAKwBAAAAAAAAsAEAAAAAAAAAAAAA1QEAAAAAAADZAQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADJAQAAAAAAAB8BAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					358,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"AwAAANwBAAAAAAAA4QEAAAAAAAAAAAAA4QEAAAAAAADmAQAAAAAAAAAAAADdAQAAAAAAAN0BAAAAAAAABAAAACAgICA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADcAQAAAAAAANwBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					361,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAB4BAAAAAAAAHwEAAAAAAAAAAAAA3wEAAAAAAADfAQAAAAAAAAQAAAAgICAg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAeAQAAAAAAAB4BAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					364,
+					1,
+					"cut",
+					null,
+					"AQAAAAgBAAAAAAAACAEAAAAAAAAWAAAAICAgIGxvY2FsIExpZ2h0cyA9IHt9Cg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAdAQAAAAAAAB0BAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					367,
+					1,
+					"paste",
+					null,
+					"AQAAAEcAAAAAAAAAJQYAAAAAAADAAAAAbG9jYWwgZnVuY3Rpb24gaXNMaWdodHlMaWdodHMobGlnaHRUZW1wbGF0ZU5hbWUpCiAgICAgICAgZm9yIGxpZ2h0VGVtcGxhdGUsIF8gaW4gcGFpcnMoUm9vdFRlbXBsYXRlcykgZG8KICAgICAgICAgICAgaWYgbGlnaHRUZW1wbGF0ZU5hbWUgPT0gbGlnaHRUZW1wbGF0ZSB0aGVuIHJldHVybiB0cnVlCiAgICAgICAgZW5kCiAgICBlbmQK",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAHAQAAAAAAAEcAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					370,
+					1,
+					"indent",
+					null,
+					"KAAAAGkAAAAAAAAAbQAAAAAAAAAAAAAAngAAAAAAAACiAAAAAAAAAAAAAADWAAAAAAAAANoAAAAAAAAAAAAAAB0BAAAAAAAAIQEAAAAAAAAAAAAAKQEAAAAAAAAtAQAAAAAAAAAAAAA+AQAAAAAAAEIBAAAAAAAAAAAAAEcBAAAAAAAASwEAAAAAAAAAAAAAeQEAAAAAAAB9AQAAAAAAAAAAAACRAQAAAAAAAJUBAAAAAAAAAAAAAMEBAAAAAAAAxQEAAAAAAAAAAAAA6QEAAAAAAADtAQAAAAAAAAAAAABCAgAAAAAAAEYCAAAAAAAAAAAAAHACAAAAAAAAdAIAAAAAAAAAAAAAlgIAAAAAAACaAgAAAAAAAAAAAADtAgAAAAAAAPECAAAAAAAAAAAAAA8DAAAAAAAAEwMAAAAAAAAAAAAAJAMAAAAAAAAoAwAAAAAAAAAAAAByAwAAAAAAAHYDAAAAAAAAAAAAALMDAAAAAAAAtwMAAAAAAAAAAAAA1QMAAAAAAADZAwAAAAAAAAAAAADqAwAAAAAAAO4DAAAAAAAAAAAAABoEAAAAAAAAHgQAAAAAAAAAAAAASgQAAAAAAABOBAAAAAAAAAAAAAB7BAAAAAAAAH8EAAAAAAAAAAAAAKcEAAAAAAAAqwQAAAAAAAAAAAAA0QQAAAAAAADVBAAAAAAAAAAAAADkBAAAAAAAAOgEAAAAAAAAAAAAAAgFAAAAAAAADAUAAAAAAAAAAAAALQUAAAAAAAAxBQAAAAAAAAAAAABKBQAAAAAAAE4FAAAAAAAAAAAAAFsFAAAAAAAAXwUAAAAAAAAAAAAAaAUAAAAAAABsBQAAAAAAAAAAAACnBQAAAAAAAKsFAAAAAAAAAAAAAOcFAAAAAAAA6wUAAAAAAAAAAAAAGQYAAAAAAAAdBgAAAAAAAAAAAABMBgAAAAAAAFAGAAAAAAAAAAAAAHoGAAAAAAAAfgYAAAAAAAAAAAAAiwYAAAAAAACPBgAAAAAAAAAAAACyBgAAAAAAALYGAAAAAAAAAAAAAL4GAAAAAAAAwgYAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAlBgAAAAAAAGkAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					377,
+					1,
+					"cut",
+					null,
+					"AQAAAJEBAAAAAAAAkQEAAAAAAABNAAAAICAgICAgICAgICAgLS0g0JLRi9C60LvRjtGH0LDQtdC8IOKAlCDRgdC+0YXRgNCw0L3Rj9C10Lwg0Lgg0L7QsdC90YPQu9GP0LXQvAo",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADAAQAAAAAAAMABAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					391,
+					1,
+					"cut",
+					null,
+					"AQAAAEACAAAAAAAAQAIAAAAAAAA2AAAAICAgICAgICAgICAgICAgIC0tINCf0YDQvtC/0YPRgdC60LDQtdC8INC90LDRiCDQvNC+0LQK",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABlAgAAAAAAAGUCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					399,
+					1,
+					"cut",
+					null,
+					"AQAAAM4CAAAAAAAAzgIAAAAAAAB9AAAAICAgICAgICAgICAgICAgIC0tINCf0YDQvtC/0YPRgdC60LDQtdC8INGD0LbQtSDQvdGD0LvQtdCy0YvQtSAo0L3QtSDRgtGA0L7Qs9Cw0LXQvCDRgtC+INGH0YLQviDQuCDRgtCw0Log0LLRi9C60LvRjtGH0LXQvdC+KQo",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAbAwAAAAAAABsDAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					407,
+					1,
+					"cut",
+					null,
+					"AQAAAMQEAAAAAAAAxAQAAAAAAABrAAAAICAgICAgICAgICAgLS0g0JLQutC70Y7Rh9Cw0LXQvCDigJQg0LLQvtGB0YHRgtCw0L3QsNCy0LvQuNCy0LDQtdC8INGB0L7RhdGA0LDQvdGR0L3QvdGL0LUg0LfQvdCw0YfQtdC90LjRjwo",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADxBAAAAAAAAPEEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					410,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAMMEAAAAAAAA0AQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADDBAAAAAAAAMMEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					413,
+					1,
+					"trim_trailing_white_space",
+					null,
+					"AQAAAMQEAAAAAAAAxAQAAAAAAAAMAAAAICAgICAgICAgICAg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADQBAAAAAAAANAEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					422,
+					1,
+					"insert",
+					{
+						"characters": "WorldLi"
+					},
+					"IwAAALUFAAAAAAAAtgUAAAAAAAAVAAAAUHJlcGxhY2VkTGlnaHRzQmFja3Vw6wQAAAAAAADsBAAAAAAAABUAAABQcmVwbGFjZWRMaWdodHNCYWNrdXCGAwAAAAAAAIcDAAAAAAAAFQAAAFByZXBsYWNlZExpZ2h0c0JhY2t1cJ0BAAAAAAAAngEAAAAAAAAVAAAAUHJlcGxhY2VkTGlnaHRzQmFja3VwTQAAAAAAAABOAAAAAAAAABUAAABQcmVwbGFjZWRMaWdodHNCYWNrdXBmBQAAAAAAAGcFAAAAAAAAAAAAALAEAAAAAAAAsQQAAAAAAAAAAAAAXwMAAAAAAABgAwAAAAAAAAAAAACKAQAAAAAAAIsBAAAAAAAAAAAAAE4AAAAAAAAATwAAAAAAAAAAAAAAawUAAAAAAABsBQAAAAAAAAAAAAC0BAAAAAAAALUEAAAAAAAAAAAAAGIDAAAAAAAAYwMAAAAAAAAAAAAAjAEAAAAAAACNAQAAAAAAAAAAAABPAAAAAAAAAFAAAAAAAAAAAAAAAHAFAAAAAAAAcQUAAAAAAAAAAAAAuAQAAAAAAAC5BAAAAAAAAAAAAABlAwAAAAAAAGYDAAAAAAAAAAAAAI4BAAAAAAAAjwEAAAAAAAAAAAAAUAAAAAAAAABRAAAAAAAAAAAAAAB1BQAAAAAAAHYFAAAAAAAAAAAAALwEAAAAAAAAvQQAAAAAAAAAAAAAaAMAAAAAAABpAwAAAAAAAAAAAACQAQAAAAAAAJEBAAAAAAAAAAAAAFEAAAAAAAAAUgAAAAAAAAAAAAAAegUAAAAAAAB7BQAAAAAAAAAAAADABAAAAAAAAMEEAAAAAAAAAAAAAGsDAAAAAAAAbAMAAAAAAAAAAAAAkgEAAAAAAACTAQAAAAAAAAAAAABSAAAAAAAAAFMAAAAAAAAAAAAAAH8FAAAAAAAAgAUAAAAAAAAAAAAAxAQAAAAAAADFBAAAAAAAAAAAAABuAwAAAAAAAG8DAAAAAAAAAAAAAJQBAAAAAAAAlQEAAAAAAAAAAAAAUwAAAAAAAABUAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAUAAABNAAAAAAAAAGIAAAAAAAAAAAAAAAAA8L+dAQAAAAAAALIBAAAAAAAAAAAAAAAA8L+GAwAAAAAAAJsDAAAAAAAAAAAAAAAA8L/rBAAAAAAAAAAFAAAAAAAAAAAAAAAA8L+1BQAAAAAAAMoFAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					423,
+					1,
+					"insert",
+					{
+						"characters": "ghts"
+					},
+					"FAAAAIQFAAAAAAAAhQUAAAAAAAAAAAAAyAQAAAAAAADJBAAAAAAAAAAAAABxAwAAAAAAAHIDAAAAAAAAAAAAAJYBAAAAAAAAlwEAAAAAAAAAAAAAVAAAAAAAAABVAAAAAAAAAAAAAACJBQAAAAAAAIoFAAAAAAAAAAAAAMwEAAAAAAAAzQQAAAAAAAAAAAAAdAMAAAAAAAB1AwAAAAAAAAAAAACYAQAAAAAAAJkBAAAAAAAAAAAAAFUAAAAAAAAAVgAAAAAAAAAAAAAAjgUAAAAAAACPBQAAAAAAAAAAAADQBAAAAAAAANEEAAAAAAAAAAAAAHcDAAAAAAAAeAMAAAAAAAAAAAAAmgEAAAAAAACbAQAAAAAAAAAAAABWAAAAAAAAAFcAAAAAAAAAAAAAAJMFAAAAAAAAlAUAAAAAAAAAAAAA1AQAAAAAAADVBAAAAAAAAAAAAAB6AwAAAAAAAHsDAAAAAAAAAAAAAJwBAAAAAAAAnQEAAAAAAAAAAAAAVwAAAAAAAABYAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAUAAABUAAAAAAAAAFQAAAAAAAAAAAAAAAAA8L+WAQAAAAAAAJYBAAAAAAAAAAAAAAAA8L9xAwAAAAAAAHEDAAAAAAAAAAAAAAAA8L/IBAAAAAAAAMgEAAAAAAAAAAAAAAAA8L+EBQAAAAAAAIQFAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					436,
+					1,
+					"paste",
+					null,
+					"AQAAAGMAAAAAAAAA6wAAAAAAAADYAAAAbG9jYWwgZnVuY3Rpb24gaXNMaWdodHlMaWdodHMobGlnaHRUZW1wbGF0ZU5hbWUpCiAgICAgICAgZm9yIGxpZ2h0VGVtcGxhdGUsIF8gaW4gcGFpcnMoUm9vdFRlbXBsYXRlcykgZG8KICAgICAgICAgICAgaWYgbGlnaHRUZW1wbGF0ZU5hbWUgPT0gbGlnaHRUZW1wbGF0ZSB0aGVuIHJldHVybiB0cnVlIGVuZAogICAgICAgIGVuZAogICAgICAgIHJldHVybiBmYWxzZQogICAgZW5k",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA7AQAAAAAAAGMAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					439,
+					1,
+					"reindent",
+					{
+						"single_line": true
+					},
+					"AwAAAIwAAAAAAAAAlAAAAAAAAAAAAAAAiAAAAAAAAACIAAAAAAAAAAQAAAAgICAg7AAAAAAAAADwAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADrAAAAAAAAAF8AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					444,
+					1,
+					"paste",
+					null,
+					"AQAAAPQBAAAAAAAAIwIAAAAAAABGAAAAaWYgbGlnaHQuVGVtcGxhdGUgYW5kIGlzTGlnaHR5TGlnaHRzKGxpZ2h0LlRlbXBsYXRlLlRlbXBsYXRlTmFtZSkgdGhlbg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA6AgAAAAAAAPQBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					460,
+					1,
+					"left_delete",
+					null,
+					"AwAAAOIAAAAAAAAA4gAAAAAAAAAIAAAAIDEsIHRydWXhAAAAAAAAAOEAAAAAAAAAAQAAACzgAAAAAAAAAOAAAAAAAAAAAQAAACc",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADqAAAAAAAAAOIAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					461,
+					1,
+					"insert",
+					{
+						"characters": "'"
+					},
+					"AQAAAOAAAAAAAAAA4QAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADgAAAAAAAAAOAAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					491,
+					2,
+					"cut",
+					null,
+					"AgAAABsCAAAAAAAAGwIAAAAAAAAiAAAAICAgICAgICAgICAgICAgICAgICBnb3RvIGNvbnRpbnVlChsCAAAAAAAAGwIAAAAAAAAUAAAAICAgICAgICAgICAgICAgIGVuZAo",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA8AgAAAAAAADwCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					522,
+					1,
+					"left_delete",
+					null,
+					"AgAAAPsBAAAAAAAA+wEAAAAAAAABAAAAc38AAAAAAAAAfwAAAAAAAAABAAAAcw",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAIAAACAAAAAAAAAAIAAAAAAAAAAAAAAAAAA8L/8AQAAAAAAAPwBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					597,
+					1,
+					"insert",
+					{
+						"characters": "entity"
+					},
+					"EgAAABcEAAAAAAAAGAQAAAAAAAAEAAAAdXVpZN4CAAAAAAAA3wIAAAAAAAAEAAAAdXVpZKgCAAAAAAAAqQIAAAAAAAAEAAAAdXVpZBIEAAAAAAAAEwQAAAAAAAAAAAAA3AIAAAAAAADdAgAAAAAAAAAAAACpAgAAAAAAAKoCAAAAAAAAAAAAABUEAAAAAAAAFgQAAAAAAAAAAAAA3gIAAAAAAADfAgAAAAAAAAAAAACqAgAAAAAAAKsCAAAAAAAAAAAAABgEAAAAAAAAGQQAAAAAAAAAAAAA4AIAAAAAAADhAgAAAAAAAAAAAACrAgAAAAAAAKwCAAAAAAAAAAAAABsEAAAAAAAAHAQAAAAAAAAAAAAA4gIAAAAAAADjAgAAAAAAAAAAAACsAgAAAAAAAK0CAAAAAAAAAAAAAB4EAAAAAAAAHwQAAAAAAAAAAAAA5AIAAAAAAADlAgAAAAAAAAAAAACtAgAAAAAAAK4CAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAMAAACoAgAAAAAAAKwCAAAAAAAAAAAAAAAA8L/eAgAAAAAAAOICAAAAAAAAAAAAAAAA8L8XBAAAAAAAABsEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					667,
+					1,
+					"paste",
+					null,
+					"BQAAAGgEAAAAAAAAcAQAAAAAAAAGAAAAZW50aXR5GwQAAAAAAAAjBAAAAAAAAAYAAABlbnRpdHldAwAAAAAAAGUDAAAAAAAABgAAAGVudGl0eeACAAAAAAAA6AIAAAAAAAAGAAAAZW50aXR5qAIAAAAAAACwAgAAAAAAAAYAAABlbnRpdHk",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAUAAACoAgAAAAAAAK4CAAAAAAAAAAAAAAAA8L/gAgAAAAAAAOYCAAAAAAAAAAAAAAAA8L9dAwAAAAAAAGMDAAAAAAAAAAAAAAAA8L8bBAAAAAAAACEEAAAAAAAAAAAAAAAA8L9oBAAAAAAAAG4EAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					672,
+					1,
+					"cut",
+					null,
+					"AQAAAJICAAAAAAAAkgIAAAAAAAA0AAAAICAgICAgICAgICAgICAgIGxvY2FsIGxpZ2h0RW50ID0gdG9zdHJpbmcobGlnaHRFbnQpCg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADFAgAAAAAAAMUCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					681,
+					2,
+					"left_delete",
+					null,
+					"AgAAADgDAAAAAAAAOAMAAAAAAAABAAAAIDcDAAAAAAAANwMAAAAAAAABAAAAIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA5AwAAAAAAADkDAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					766,
+					1,
+					"insert",
+					{
+						"characters": "\nif"
+					},
+					"AwAAABQEAAAAAAAAJQQAAAAAAAAAAAAAJQQAAAAAAAAmBAAAAAAAAAAAAAAmBAAAAAAAACcEAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAUBAAAAAAAABQEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					767,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAACcEAAAAAAAAKAQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAnBAAAAAAAACcEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					768,
+					1,
+					"paste",
+					null,
+					"AQAAACgEAAAAAAAAPQQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAoBAAAAAAAACgEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					777,
+					1,
+					"insert",
+					{
+						"characters": "saved"
+					},
+					"GQAAAMcEAAAAAAAAyAQAAAAAAAAGAAAAYmFja3VwlAQAAAAAAACVBAAAAAAAAAYAAABiYWNrdXBcBAAAAAAAAF0EAAAAAAAABgAAAGJhY2t1cCgEAAAAAAAAKQQAAAAAAAAGAAAAYmFja3Vw9QMAAAAAAAD2AwAAAAAAAAYAAABiYWNrdXC0BAAAAAAAALUEAAAAAAAAAAAAAIYEAAAAAAAAhwQAAAAAAAAAAAAAUwQAAAAAAABUBAAAAAAAAAAAAAAkBAAAAAAAACUEAAAAAAAAAAAAAPYDAAAAAAAA9wMAAAAAAAAAAAAAuQQAAAAAAAC6BAAAAAAAAAAAAACKBAAAAAAAAIsEAAAAAAAAAAAAAFYEAAAAAAAAVwQAAAAAAAAAAAAAJgQAAAAAAAAnBAAAAAAAAAAAAAD3AwAAAAAAAPgDAAAAAAAAAAAAAL4EAAAAAAAAvwQAAAAAAAAAAAAAjgQAAAAAAACPBAAAAAAAAAAAAABZBAAAAAAAAFoEAAAAAAAAAAAAACgEAAAAAAAAKQQAAAAAAAAAAAAA+AMAAAAAAAD5AwAAAAAAAAAAAADDBAAAAAAAAMQEAAAAAAAAAAAAAJIEAAAAAAAAkwQAAAAAAAAAAAAAXAQAAAAAAABdBAAAAAAAAAAAAAAqBAAAAAAAACsEAAAAAAAAAAAAAPkDAAAAAAAA+gMAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAUAAAD1AwAAAAAAAPsDAAAAAAAAAAAAAAAA8L8oBAAAAAAAAC4EAAAAAAAAAAAAAAAA8L9cBAAAAAAAAGIEAAAAAAAAAAAAAAAA8L+UBAAAAAAAAJoEAAAAAAAAAAAAAAAA8L/HBAAAAAAAAM0EAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					788,
+					1,
+					"insert",
+					{
+						"characters": " then"
+					},
+					"BQAAADsEAAAAAAAAPAQAAAAAAAAAAAAAPAQAAAAAAAA9BAAAAAAAAAAAAAA9BAAAAAAAAD4EAAAAAAAAAAAAAD4EAAAAAAAAPwQAAAAAAAAAAAAAPwQAAAAAAABABAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA7BAAAAAAAADsEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					789,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAEAEAAAAAAAAQQQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABABAAAAAAAAEAEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					792,
+					1,
+					"indent",
+					null,
+					"AwAAAEIEAAAAAAAARgQAAAAAAAAAAAAAeQQAAAAAAAB9BAAAAAAAAAAAAACvBAAAAAAAALMEAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADTBAAAAAAAAEIEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					794,
+					1,
+					"insert",
+					{
+						"characters": "\nend"
+					},
+					"BgAAAN8EAAAAAAAA9AQAAAAAAAAAAAAA9AQAAAAAAAD1BAAAAAAAAAAAAAD1BAAAAAAAAPYEAAAAAAAAAAAAAPYEAAAAAAAA9wQAAAAAAAAAAAAA4AQAAAAAAADgBAAAAAAAABQAAAAgICAgICAgICAgICAgICAgICAgIOAEAAAAAAAA8AQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADfBAAAAAAAAN8EAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					797,
+					1,
+					"trim_trailing_white_space",
+					null,
+					"AQAAAEAEAAAAAAAAQAQAAAAAAAABAAAAIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAATBAAAAAAAABMEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					804,
+					1,
+					"paste",
+					null,
+					"AQAAACcEAAAAAAAAOwQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAnBAAAAAAAACcEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					806,
+					1,
+					"insert",
+					{
+						"characters": " anmd"
+					},
+					"BQAAADsEAAAAAAAAPAQAAAAAAAAAAAAAPAQAAAAAAAA9BAAAAAAAAAAAAAA9BAAAAAAAAD4EAAAAAAAAAAAAAD4EAAAAAAAAPwQAAAAAAAAAAAAAPwQAAAAAAABABAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA7BAAAAAAAADsEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					807,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAEAEAAAAAAAAQQQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABABAAAAAAAAEAEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					808,
+					3,
+					"left_delete",
+					null,
+					"AwAAAEAEAAAAAAAAQAQAAAAAAAABAAAAID8EAAAAAAAAPwQAAAAAAAABAAAAZD4EAAAAAAAAPgQAAAAAAAABAAAAbQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABBBAAAAAAAAEEEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					809,
+					1,
+					"insert",
+					{
+						"characters": "d"
+					},
+					"AQAAAD4EAAAAAAAAPwQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA+BAAAAAAAAD4EAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					810,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAD8EAAAAAAAAQAQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA/BAAAAAAAAD8EAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					815,
+					6,
+					"left_delete",
+					null,
+					"BgAAADoEAAAAAAAAOgQAAAAAAAABAAAAdDkEAAAAAAAAOQQAAAAAAAABAAAAaDgEAAAAAAAAOAQAAAAAAAABAAAAZzcEAAAAAAAANwQAAAAAAAABAAAAaTYEAAAAAAAANgQAAAAAAAABAAAATDUEAAAAAAAANQQAAAAAAAABAAAALg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA7BAAAAAAAADsEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					825,
+					1,
+					"insert",
+					{
+						"characters": " --"
+					},
+					"AwAAAHwCAAAAAAAAfQIAAAAAAAAAAAAAfQIAAAAAAAB+AgAAAAAAAAAAAAB+AgAAAAAAAH8CAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB8AgAAAAAAAHwCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					826,
+					1,
+					"insert",
+					{
+						"characters": " RAR"
+					},
+					"BAAAAH8CAAAAAAAAgAIAAAAAAAAAAAAAgAIAAAAAAACBAgAAAAAAAAAAAACBAgAAAAAAAIICAAAAAAAAAAAAAIICAAAAAAAAgwIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB/AgAAAAAAAH8CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					827,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAIMCAAAAAAAAhAIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACDAgAAAAAAAIMCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					828,
+					1,
+					"left_delete",
+					null,
+					"AQAAAIMCAAAAAAAAgwIAAAAAAAABAAAAIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACEAgAAAAAAAIQCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					829,
+					1,
+					"insert",
+					{
+						"characters": "E"
+					},
+					"AQAAAIMCAAAAAAAAhAIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACDAgAAAAAAAIMCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					830,
+					1,
+					"insert",
+					{
+						"characters": " PAGMAN"
+					},
+					"BwAAAIQCAAAAAAAAhQIAAAAAAAAAAAAAhQIAAAAAAACGAgAAAAAAAAAAAACGAgAAAAAAAIcCAAAAAAAAAAAAAIcCAAAAAAAAiAIAAAAAAAAAAAAAiAIAAAAAAACJAgAAAAAAAAAAAACJAgAAAAAAAIoCAAAAAAAAAAAAAIoCAAAAAAAAiwIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACEAgAAAAAAAIQCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					834,
+					1,
+					"insert",
+					{
+						"characters": "-"
+					},
+					"AQAAAH8CAAAAAAAAgAIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB/AgAAAAAAAH8CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					858,
+					1,
+					"cut",
+					null,
+					"AQAAAH0CAAAAAAAAfQIAAAAAAAAPAAAALS0tIFJBUkUgUEFHTUFO",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACMAgAAAAAAAH0CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					861,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAABgCAAAAAAAAGQIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAYAgAAAAAAABgCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					862,
+					1,
+					"paste",
+					null,
+					"AQAAABkCAAAAAAAAKAIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAZAgAAAAAAABkCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					865,
+					1,
+					"insert",
+					{
+						"characters": "GI"
+					},
+					"AgAAACICAAAAAAAAIwIAAAAAAAAAAAAAIwIAAAAAAAAkAgAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAiAgAAAAAAACICAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					866,
+					1,
+					"left_delete",
+					null,
+					"AQAAACMCAAAAAAAAIwIAAAAAAAABAAAASQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAkAgAAAAAAACQCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					867,
+					1,
+					"insert",
+					{
+						"characters": "OTI"
+					},
+					"AwAAACMCAAAAAAAAJAIAAAAAAAAAAAAAJAIAAAAAAAAlAgAAAAAAAAAAAAAlAgAAAAAAACYCAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAjAgAAAAAAACMCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					868,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAACYCAAAAAAAAJwIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAmAgAAAAAAACYCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					869,
+					2,
+					"left_delete",
+					null,
+					"AgAAACYCAAAAAAAAJgIAAAAAAAABAAAAICUCAAAAAAAAJQIAAAAAAAABAAAASQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAnAgAAAAAAACcCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					870,
+					1,
+					"insert",
+					{
+						"characters": "O"
+					},
+					"AQAAACUCAAAAAAAAJgIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAlAgAAAAAAACUCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					871,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAACYCAAAAAAAAJwIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAmAgAAAAAAACYCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					874,
+					1,
+					"trim_trailing_white_space",
+					null,
+					"AQAAAJECAAAAAAAAkQIAAAAAAAABAAAAIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACSAgAAAAAAAJICAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					878,
+					6,
+					"left_delete",
+					null,
+					"BgAAAIACAAAAAAAAgAIAAAAAAAAEAAAAICAgIHwCAAAAAAAAfAIAAAAAAAAEAAAAICAgIHgCAAAAAAAAeAIAAAAAAAAEAAAAICAgIHQCAAAAAAAAdAIAAAAAAAAEAAAAICAgIHACAAAAAAAAcAIAAAAAAAAEAAAAICAgIG8CAAAAAAAAbwIAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACEAgAAAAAAAIQCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					879,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAG8CAAAAAAAAcAIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABvAgAAAAAAAG8CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					883,
+					5,
+					"left_delete",
+					null,
+					"BQAAAIoCAAAAAAAAigIAAAAAAAAEAAAAICAgIIYCAAAAAAAAhgIAAAAAAAAEAAAAICAgIIICAAAAAAAAggIAAAAAAAAEAAAAICAgIH4CAAAAAAAAfgIAAAAAAAAEAAAAICAgIH0CAAAAAAAAfQIAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACOAgAAAAAAAI4CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					884,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAH0CAAAAAAAAfgIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB9AgAAAAAAAH0CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					887,
+					1,
+					"cut",
+					null,
+					"AQAAAC4CAAAAAAAALgIAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAuAgAAAAAAAC4CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					890,
+					1,
+					"insert",
+					{
+						"characters": "\t\t\t\t\t"
+					},
+					"BQAAAAICAAAAAAAABgIAAAAAAAAAAAAABgIAAAAAAAAKAgAAAAAAAAAAAAAKAgAAAAAAAA4CAAAAAAAAAAAAAA4CAAAAAAAAEgIAAAAAAAAAAAAAEgIAAAAAAAAWAgAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAACAgAAAAAAAAICAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					899,
+					1,
+					"move_text_up",
+					null,
+					"AgAAAEICAAAAAAAAQgIAAAAAAABTAAAAICAgICAgICAgICAgICAgIGlmIGxpZ2h0LkludGVuc2l0eSA9PSAwIGFuZCBsaWdodC5HYWluID09IDAgdGhlbiBnb3RvIGNvbnRpbnVlIGVuZAraAQAAAAAAAC0CAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACUAgAAAAAAAJQCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					902,
+					1,
+					"cut",
+					null,
+					"AQAAAIACAAAAAAAAgAIAAAAAAAAUAAAALS0tIFJBUkUgR09UTyBQQUdNQU4",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACUAgAAAAAAAIACAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					907,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAANkBAAAAAAAA2gEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADZAQAAAAAAANkBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					908,
+					1,
+					"paste",
+					null,
+					"AQAAANoBAAAAAAAA7gEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADaAQAAAAAAANoBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					911,
+					1,
+					"insert",
+					{
+						"characters": "\t\t\t\t"
+					},
+					"BAAAANoBAAAAAAAA3gEAAAAAAAAAAAAA3gEAAAAAAADiAQAAAAAAAAAAAADiAQAAAAAAAOYBAAAAAAAAAAAAAOYBAAAAAAAA6gEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADaAQAAAAAAANoBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					914,
+					1,
+					"trim_trailing_white_space",
+					null,
+					"AQAAAKQCAAAAAAAApAIAAAAAAAABAAAAIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAD+AQAAAAAAAP4BAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					936,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"AgAAAOoAAAAAAAAA6wAAAAAAAAAAAAAA6wAAAAAAAADsAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADqAAAAAAAAAOoAAAAAAAAAAAAAAAAAVUA"
+				],
+				[
+					939,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"AgAAAF4AAAAAAAAAXwAAAAAAAAAAAAAAXwAAAAAAAABgAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABeAAAAAAAAAF4AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					947,
+					2,
+					"left_delete",
+					null,
+					"AgAAAKcAAAAAAAAApwAAAAAAAAAXAAAAYW5kIGxpZ2h0LlRlbXBsYXRlLk5hbWWmAAAAAAAAAKYAAAAAAAAAAQAAACA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAC+AAAAAAAAAKcAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					968,
+					1,
+					"cut",
+					null,
+					"AQAAABkDAAAAAAAAGQMAAAAAAAAqAAAAICAgICAgICAgICAgICAgICAgICBsaWdodEVudCAgPSBsaWdodEVudCwK",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABCAwAAAAAAAEIDAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					977,
+					1,
+					"paste",
+					null,
+					"AQAAANoDAAAAAAAACQQAAAAAAAALAAAAV29ybGRMaWdodHM",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADaAwAAAAAAAOUDAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					984,
+					1,
+					"insert",
+					{
+						"characters": "_"
+					},
+					"AQAAAMsDAAAAAAAAzAMAAAAAAAAFAAAAc2F2ZWQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADLAwAAAAAAANADAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					997,
+					1,
+					"paste",
+					null,
+					"AQAAANsAAAAAAAAAOgQAAAAAAABiBAAAbG9jYWwgZnVuY3Rpb24gVG9nZ2xlUHJlcGxhY2VkTGlnaHRzKGRpc2FibGUpCiAgICAgICAgaWYgZGlzYWJsZSB0aGVuCiAgICAgICAgICAgIFdvcmxkTGlnaHRzID0ge30KCiAgICAgICAgICAgIGZvciBfLCBsaWdodEVudCBpbiBwYWlycyhFeHQuRW50aXR5LkdldEFsbEVudGl0aWVzV2l0aENvbXBvbmVudCgnTGlnaHQnKSkgZG8KICAgICAgICAgICAgICAgIGxvY2FsIGxpZ2h0ID0gbGlnaHRFbnQuTGlnaHQKCiAgICAgICAgICAgICAgICAtLS0gUkFSRSBHT1RPIFBBR01BTgogICAgICAgICAgICAgICAgaWYgbGlnaHQuSW50ZW5zaXR5ID09IDAgYW5kIGxpZ2h0LkdhaW4gPT0gMCB0aGVuIGdvdG8gY29udGludWUgZW5kCiAgICAgICAgICAgICAgICBpZiBpc0xpZ2h0eUxpZ2h0KGxpZ2h0KSAgICAgICAgICAgICAgICAgICAgIHRoZW4gZ290byBjb250aW51ZSBlbmQKCiAgICAgICAgICAgICAgICBXb3JsZExpZ2h0c1tsaWdodEVudF0gPSB7CiAgICAgICAgICAgICAgICAgICAgSW50ZW5zaXR5ID0gbGlnaHQuSW50ZW5zaXR5LAogICAgICAgICAgICAgICAgICAgIEdhaW4gICAgICA9IGxpZ2h0LkdhaW4sCiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgbGlnaHQuSW50ZW5zaXR5ID0gMAogICAgICAgICAgICAgICAgbGlnaHQuR2FpbiAgICAgID0gMAoKICAgICAgICAgICAgICAgIDo6Y29udGludWU6OgogICAgICAgICAgICBlbmQKCiAgICAgICAgZWxzZQoKICAgICAgICAgICAgZm9yIGxpZ2h0RW50LCBfIGluIHBhaXJzKEV4dC5FbnRpdHkuR2V0QWxsRW50aXRpZXNXaXRoQ29tcG9uZW50KCdMaWdodCcpKSBkbwogICAgICAgICAgICAgICAgaWYgc2F2ZWQubGlnaHRFbnQgYW5kIHNhdmVkLmxpZ2h0RW50LkxpZ2h0IHRoZW4KICAgICAgICAgICAgICAgICAgICBsb2NhbCBsaWdodCA9IHNhdmVkLmxpZ2h0RW50LkxpZ2h0CiAgICAgICAgICAgICAgICAgICAgbGlnaHQuSW50ZW5zaXR5ID0gc2F2ZWQuSW50ZW5zaXR5CiAgICAgICAgICAgICAgICAgICAgbGlnaHQuR2FpbiAgICAgID0gc2F2ZWQuR2FpbgogICAgICAgICAgICAgICAgZW5kCiAgICAgICAgICAgIGVuZAoKICAgICAgICAgICAgV29ybGRMaWdodHMgPSB7fQogICAgICAgIGVuZAogICAgZW5k",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA9BQAAAAAAANsAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1000,
+					1,
+					"indent",
+					null,
+					"FwAAAPMAAAAAAAAA9wAAAAAAAAAAAAAAJQEAAAAAAAApAQAAAAAAAAAAAAA9AQAAAAAAAEEBAAAAAAAAAAAAAFsBAAAAAAAAXwEAAAAAAAAAAAAAtAEAAAAAAAC4AQAAAAAAAAAAAADiAQAAAAAAAOYBAAAAAAAAAAAAACICAAAAAAAAJgIAAAAAAAAAAAAAdgIAAAAAAAB6AgAAAAAAAAAAAACgAgAAAAAAAKQCAAAAAAAAAAAAANECAAAAAAAA1QIAAAAAAAAAAAAA/QIAAAAAAAABAwAAAAAAAAAAAAAQAwAAAAAAABQDAAAAAAAAAAAAADQDAAAAAAAAOAMAAAAAAAAAAAAAWQMAAAAAAABdAwAAAAAAAAAAAAB2AwAAAAAAAHoDAAAAAAAAAAAAAIcDAAAAAAAAiwMAAAAAAAAAAAAAlAMAAAAAAACYAwAAAAAAAAAAAADNAwAAAAAAANEDAAAAAAAAAAAAAPoDAAAAAAAA/gMAAAAAAAAAAAAALAQAAAAAAAAwBAAAAAAAAAAAAABZBAAAAAAAAF0EAAAAAAAAAAAAAGoEAAAAAAAAbgQAAAAAAAAAAAAAhwQAAAAAAACLBAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA2BAAAAAAAAPMAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1005,
+					1,
+					"insert",
+					{
+						"characters": "\t"
+					},
+					"AQAAAJMEAAAAAAAAlwQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACTBAAAAAAAAJMEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1029,
+					1,
+					"paste",
+					null,
+					"AQAAAPUBAAAAAAAAAgIAAAAAAAAOAAAAaXNMaWdodHlMaWdodHM",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAD1AQAAAAAAAAMCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1099,
+					1,
+					"insert",
+					{
+						"characters": "\t\t\t\t\t"
+					},
+					"BQAAAAoCAAAAAAAADgIAAAAAAAAAAAAADgIAAAAAAAASAgAAAAAAAAAAAAASAgAAAAAAABYCAAAAAAAAAAAAABYCAAAAAAAAGgIAAAAAAAAAAAAAGgIAAAAAAAAeAgAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAKAgAAAAAAAAoCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1112,
+					1,
+					"insert",
+					{
+						"characters": " --"
+					},
+					"AwAAADQCAAAAAAAANQIAAAAAAAAAAAAANQIAAAAAAAA2AgAAAAAAAAAAAAA2AgAAAAAAADcCAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA0AgAAAAAAADQCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1113,
+					3,
+					"left_delete",
+					null,
+					"AwAAADYCAAAAAAAANgIAAAAAAAABAAAALTUCAAAAAAAANQIAAAAAAAABAAAALTQCAAAAAAAANAIAAAAAAAABAAAAIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA3AgAAAAAAADcCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1118,
+					1,
+					"reindent",
+					null,
+					"AQAAAOEBAAAAAAAA8QEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADhAQAAAAAAAOEBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1119,
+					1,
+					"insert",
+					{
+						"characters": "\n---"
+					},
+					"BQAAAPEBAAAAAAAAAgIAAAAAAAAAAAAA4QEAAAAAAADhAQAAAAAAABAAAAAgICAgICAgICAgICAgICAg8gEAAAAAAADzAQAAAAAAAAAAAADzAQAAAAAAAPQBAAAAAAAAAAAAAPQBAAAAAAAA9QEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADxAQAAAAAAAPEBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1120,
+					1,
+					"insert",
+					{
+						"characters": " кфк"
+					},
+					"BAAAAPUBAAAAAAAA9gEAAAAAAAAAAAAA9gEAAAAAAAD3AQAAAAAAAAAAAAD3AQAAAAAAAPgBAAAAAAAAAAAAAPgBAAAAAAAA+QEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAD1AQAAAAAAAPUBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1121,
+					3,
+					"left_delete",
+					null,
+					"AwAAAPgBAAAAAAAA+AEAAAAAAAACAAAA0Lr3AQAAAAAAAPcBAAAAAAAAAgAAANGE9gEAAAAAAAD2AQAAAAAAAAIAAADQug",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAD5AQAAAAAAAPkBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1122,
+					1,
+					"insert",
+					{
+						"characters": "rare"
+					},
+					"BAAAAPYBAAAAAAAA9wEAAAAAAAAAAAAA9wEAAAAAAAD4AQAAAAAAAAAAAAD4AQAAAAAAAPkBAAAAAAAAAAAAAPkBAAAAAAAA+gEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAD2AQAAAAAAAPYBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1123,
+					1,
+					"insert",
+					{
+						"characters": " con"
+					},
+					"BAAAAPoBAAAAAAAA+wEAAAAAAAAAAAAA+wEAAAAAAAD8AQAAAAAAAAAAAAD8AQAAAAAAAP0BAAAAAAAAAAAAAP0BAAAAAAAA/gEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAD6AQAAAAAAAPoBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1124,
+					3,
+					"left_delete",
+					null,
+					"AwAAAP0BAAAAAAAA/QEAAAAAAAABAAAAbvwBAAAAAAAA/AEAAAAAAAABAAAAb/sBAAAAAAAA+wEAAAAAAAABAAAAYw",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAD+AQAAAAAAAP4BAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1125,
+					1,
+					"insert",
+					{
+						"characters": "goto"
+					},
+					"BAAAAPsBAAAAAAAA/AEAAAAAAAAAAAAA/AEAAAAAAAD9AQAAAAAAAAAAAAD9AQAAAAAAAP4BAAAAAAAAAAAAAP4BAAAAAAAA/wEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAD7AQAAAAAAAPsBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1126,
+					1,
+					"insert",
+					{
+						"characters": " PagMa"
+					},
+					"BgAAAP8BAAAAAAAAAAIAAAAAAAAAAAAAAAIAAAAAAAABAgAAAAAAAAAAAAABAgAAAAAAAAICAAAAAAAAAAAAAAICAAAAAAAAAwIAAAAAAAAAAAAAAwIAAAAAAAAEAgAAAAAAAAAAAAAEAgAAAAAAAAUCAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAD/AQAAAAAAAP8BAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1127,
+					1,
+					"insert",
+					{
+						"characters": "n"
+					},
+					"AQAAAAUCAAAAAAAABgIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAFAgAAAAAAAAUCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1137,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAANQEAAAAAAAA1QQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADUBAAAAAAAANQEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1148,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"AQAAAK4EAAAAAAAAsQQAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAC+BAAAAAAAAL4EAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1157,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"AQAAAEkBAAAAAAAATAEAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABZAQAAAAAAAFkBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1171,
+					1,
+					"left_delete",
+					null,
+					"AQAAADECAAAAAAAAMQIAAAAAAAAUAAAAICAgICAgICAgICAgICAgICAgICA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABFAgAAAAAAADECAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1172,
+					1,
+					"insert",
+					{
+						"characters": " or"
+					},
+					"AwAAADECAAAAAAAAMgIAAAAAAAAAAAAAMgIAAAAAAAAzAgAAAAAAAAAAAAAzAgAAAAAAADQCAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAxAgAAAAAAADECAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1173,
+					1,
+					"insert",
+					{
+						"characters": " )"
+					},
+					"AgAAADQCAAAAAAAANQIAAAAAAAAAAAAANQIAAAAAAAA2AgAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA0AgAAAAAAADQCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1174,
+					1,
+					"left_delete",
+					null,
+					"AQAAADUCAAAAAAAANQIAAAAAAAABAAAAKQ",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA2AgAAAAAAADYCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1175,
+					1,
+					"insert_snippet",
+					{
+						"contents": "($0)"
+					},
+					"AQAAADUCAAAAAAAANwIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA1AgAAAAAAADUCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1178,
+					1,
+					"paste",
+					null,
+					"AQAAADYCAAAAAAAAXgIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA2AgAAAAAAADYCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1181,
+					1,
+					"cut",
+					null,
+					"AQAAAHcCAAAAAAAAdwIAAAAAAABTAAAAICAgICAgICAgICAgICAgIGlmIGxpZ2h0LkludGVuc2l0eSA9PSAwIGFuZCBsaWdodC5HYWluID09IDAgdGhlbiBnb3RvIGNvbnRpbnVlIGVuZAo",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADJAgAAAAAAAMkCAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1192,
+					2,
+					"cut",
+					null,
+					"AgAAAD0BAAAAAAAAPQEAAAAAAAAgAAAAICAgICAgICAgICAgLS0gV29ybGRMaWdodHMgPSB7fQo9AQAAAAAAAD0BAAAAAAAAAQAAAAo",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABcAQAAAAAAAFwBAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1195,
+					1,
+					"cut",
+					null,
+					"AQAAAEsEAAAAAAAASwQAAAAAAAAgAAAAICAgICAgICAgICAgLS0gV29ybGRMaWdodHMgPSB7fQo",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABqBAAAAAAAAGoEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1198,
+					1,
+					"cut",
+					null,
+					"AQAAAEoEAAAAAAAASgQAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABKBAAAAAAAAEoEAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1224,
+					1,
+					"cut",
+					null,
+					"AQAAANUAAAAAAAAA1QAAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADVAAAAAAAAANUAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1232,
+					2,
+					"cut",
+					null,
+					"AgAAANUAAAAAAAAA1QAAAAAAAAABAAAACtUAAAAAAAAA1QAAAAAAAAAbAAAAICAgIGxvY2FsIFdvcmxkTGlnaHRzID0ge30K",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADVAAAAAAAAANUAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1235,
+					2,
+					"cut",
+					null,
+					"AgAAAF8AAAAAAAAAXwAAAAAAAAABAAAACl8AAAAAAAAAXwAAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABfAAAAAAAAAF8AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1238,
+					6,
+					"move_text_down",
+					null,
+					"DAAAAEMAAAAAAAAAQwAAAAAAAAAbAAAAICAgIGxvY2FsIFdvcmxkTGlnaHRzID0ge30KRAAAAAAAAABfAAAAAAAAAAAAAABEAAAAAAAAAEQAAAAAAAAAGwAAACAgICBsb2NhbCBXb3JsZExpZ2h0cyA9IHt9CmwAAAAAAAAAhwAAAAAAAAAAAAAAbAAAAAAAAABsAAAAAAAAABsAAAAgICAgbG9jYWwgV29ybGRMaWdodHMgPSB7fQqvAAAAAAAAAMoAAAAAAAAAAAAAAK8AAAAAAAAArwAAAAAAAAAbAAAAICAgIGxvY2FsIFdvcmxkTGlnaHRzID0ge30KtwAAAAAAAADSAAAAAAAAAAAAAAC3AAAAAAAAALcAAAAAAAAAGwAAACAgICBsb2NhbCBXb3JsZExpZ2h0cyA9IHt9CrgAAAAAAAAA0wAAAAAAAAAAAAAAuAAAAAAAAAC4AAAAAAAAABsAAAAgICAgbG9jYWwgV29ybGRMaWdodHMgPSB7fQq5AAAAAAAAANQAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABdAAAAAAAAAF0AAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1239,
+					1,
+					"move_text_up",
+					null,
+					"AgAAALkAAAAAAAAAuQAAAAAAAAAbAAAAICAgIGxvY2FsIFdvcmxkTGlnaHRzID0ge30KuAAAAAAAAADTAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAADTAAAAAAAAANMAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1244,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAALcAAAAAAAAAuAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAC3AAAAAAAAALcAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1249,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAALgAAAAAAAAAuQAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAC4AAAAAAAAALgAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1252,
+					1,
+					"cut",
+					null,
+					"AQAAAEMAAAAAAAAAQwAAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABDAAAAAAAAAEMAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1262,
+					1,
+					"cut",
+					null,
+					"AQAAAEIAAAAAAAAAQgAAAAAAAAABAAAACg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABCAAAAAAAAAEIAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1268,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"AwAAAEEAAAAAAAAARgAAAAAAAAAAAAAARgAAAAAAAABLAAAAAAAAAAAAAABCAAAAAAAAAEIAAAAAAAAABAAAACAgICA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABBAAAAAAAAAEEAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1269,
+					1,
+					"trim_trailing_white_space",
+					null,
+					"AQAAAEMAAAAAAAAAQwAAAAAAAAAEAAAAICAgIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABHAAAAAAAAAEcAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					1275,
+					1,
+					"cut",
+					null,
+					"AQAAAAAAAAAAAAAAAAAAAAAAAAAsAAAALS0tQGRpYWdub3N0aWMgZGlzYWJsZTogcGFyYW0tdHlwZS1taXNtYXRjaAo",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAArAAAAAAAAACsAAAAAAAAAAAAAAAAA8L8"
+				]
+			]
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"fold",
+				"Code Folding: Fold All"
+			],
+			[
+				"key",
+				"Preferences: Key Bindings"
+			],
+			[
+				"ke",
+				"Preferences: Key Bindings"
+			],
+			[
+				"lits",
+				"Package Control: List Packages"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"packa",
+				"View Package File"
+			],
+			[
+				"lis",
+				"Package Control: List Packages"
+			],
+			[
+				"pa",
+				"Package Control: List Packages"
+			],
+			[
+				"brow",
+				"Preferences: Browse Packages"
+			],
+			[
+				"pacak",
+				"Package Control: Create Package File"
+			],
+			[
+				"install",
+				"Package Control: Advanced Install Packages"
+			],
+			[
+				"ints",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: List Packages"
+			],
+			[
+				"fodl",
+				"Code Folding: Fold All"
+			],
+			[
+				"lsp",
+				"Preferences: LSP Settings"
+			],
+			[
+				"lua",
+				"Preferences: LSP-lua Settings"
+			],
+			[
+				"color",
+				"UI: Customize Color Scheme"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"pac",
+				"Package Control: List Packages"
+			],
+			[
+				"unfo",
+				"Code Folding: Unfold All"
+			],
+			[
+				"keyb",
+				"Preferences: Key Bindings"
+			],
+			[
+				"sett",
+				"Preferences: Settings"
+			],
+			[
+				"ui",
+				"UI: Customize Color Scheme"
+			],
+			[
+				"sche",
+				"UI: Customize Color Scheme"
+			],
+			[
+				"the",
+				"UI: Customize Theme"
+			],
+			[
+				"fld",
+				"Code Folding: Fold All"
+			],
+			[
+				"Settings",
+				"Preferences: Settings"
+			],
+			[
+				"packe",
+				"Package Control: List Packages"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"Snippet: ",
+				"Snippet: Lorem ipsum"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Install",
+				"Package Control: Install Package"
+			],
+			[
+				"LSP",
+				"Package Control: List Packages"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"package se",
+				"Preferences: Package Control Settings"
+			],
+			[
+				"setting",
+				"Preferences: Settings"
+			],
+			[
+				"color s",
+				"UI: Select Color Scheme"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 1031.0,
+		"history":
+		[
+			"sublime.log_input(True)",
+			"sublime.log_commands(True)",
+			"clear"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/LibLib"
+	],
+	"file_history":
+	[
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/BootstrapClient.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/LibLib/Style.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/SettingsUI.lua",
+		"/C/Users/winst/AppData/Local/Larian Studios/Baldur's Gate 3/Script Extender/LightyLights/settings.json",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/BoneZoneUI.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/MainUI.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/BoneZoneHandlers.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/Tables.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/UtilsTab.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/BoneZoneBones.lua",
+		"/C/Users/winst/AppData/Roaming/vesktop/themes/DarkMatter.theme.css",
+		"/C/Users/winst/AppData/Roaming/vesktop/themes/Dani.theme.css",
+		"/C/Users/winst/Desktop/z/lists/list-general.txt",
+		"/C/Users/winst/AppData/Roaming/vesktop/themes/GGO_Kirito.theme.css",
+		"/D/Downloads/midnight-background.theme.css",
+		"/C/TEMP/7zO06797CB8/HowToInstall.txt",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/ListenersClient.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/mod_manager_config.json",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/LibLib/MyUtilsTXT.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/PMUI.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/OriginUI.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/AnalHandlersClient.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/GoboUI.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/LibLib/Entity.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/AnalUI.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/Fun.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/LibLib/_init.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/LibLib/Math.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/MainHandlersClient.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/_init.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/LibLib/ImGui/HelpersGUI.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Server/Main/MainServer.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/LibLib/Helpers.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/MCM_blueprint.json",
+		"/D/Downloads/schema (1).json",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/ManualManual/ManualManual_Config.lua",
+		"/C/Users/winst/AppData/Local/Larian Studios/Baldur's Gate 3/Script Extender/CCEE/p8/CC_E2_2_Pink.json",
+		"/C/Users/winst/AppData/Local/Larian Studios/Baldur's Gate 3/Script Extender/CCEE/p8/CC_E2_2_Long.json",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/_fab/r_E2toShapeshift_f4bb45d6-b471-6d27-f370-f7363a1d6c8c/Content/[PAK]_r_E2toShapeshift/47234a8b-9430-365c-36d1-92a3fee18c35.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/unique_tav/Content/Assets/Characters/[PAK]_unique_body_textures/_merged.lsx",
+		"/C/Users/winst/AppData/Local/Larian Studios/Baldur's Gate 3/Script Extender/LightyLights/Poses/HUM_F_Embracing_E.json",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/LibLib/ImGui/Windows.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/SaverClient.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/DocsUI.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/unique_tav/Content/[PAK]_CharacterVisuals/_Elves.lsx",
+		"/I/_BG3/bg/__UnpackToDelete/ASTRLglowingeyesUTAV/Public/ASTRLglowingeyesUTAV/Content/[PAK]_CharacterVisuals/_Elves_Feminine.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/Head_Elen_6118bccd-ed0c-183a-ecc1-6632a7ba2f86/meta.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/Head_Elen_6118bccd-ed0c-183a-ecc1-6632a7ba2f86/Content/[PAK]_Head_Elen/79e2391d-3f76-9641-a5f7-891b6358a952.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/Head_Elen_6118bccd-ed0c-183a-ecc1-6632a7ba2f86/Content/[PAK]_Head_Elen/74addf7e-0635-4c33-d0e3-e4e9e1fe8a51.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/Head_Elen_6118bccd-ed0c-183a-ecc1-6632a7ba2f86/Content/[PAK]_Head_Elen/48cf96af-88ed-6309-4c2d-8aafc6f1c966.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/Head_Elen_6118bccd-ed0c-183a-ecc1-6632a7ba2f86/Content/[PAK]_Head_Elen/44fd709f-3d89-a737-e7e9-c36589004484.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/Head_Elen_6118bccd-ed0c-183a-ecc1-6632a7ba2f86/Content/[PAK]_Head_Elen/9fab82fa-0319-f187-85bc-8ea482f61537.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/Head_Elen_6118bccd-ed0c-183a-ecc1-6632a7ba2f86/Content/[PAK]_Head_Elen/8efc8231-bef6-cdf6-6aac-3647e6daf59e.lsx",
+		"/C/Users/winst/AppData/Local/Larian Studios/Baldur's Gate 3/Script Extender/LightyLights/Poses/blend.json",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/GizmoLib/meta.lsx",
+		"/I/_BG3/bg/__Anims/pose_export.json",
+		"/I/_BG3/bg/__UnpackToDelete/Hair Mash-ups/Public/Hair_Edits/Content/Assets/Characters/[PAK]_Hair/_merged.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/r_E2toShapeshift_f4bb45d6-b471-6d27-f370-f7363a1d6c8c/meta.lsx",
+		"/I/_BG3/bg/__UnpackToDelete/unique_tav/Mods/unique_tav/ScriptExtender/VirtualTextures.json",
+		"/I/_BG3/bg/__UnpackToDelete/unique_tav/Public/unique_tav/Content/Assets/Characters/[PAK]_unique_body_textures/_merged.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/r_E2toShapeshift_f4bb45d6-b471-6d27-f370-f7363a1d6c8c/Content/[PAK]_r_E2toShapeshift/9b5627cc-1e5b-f7bb-1d18-c13630b2438a.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/r_E2toShapeshift_f4bb45d6-b471-6d27-f370-f7363a1d6c8c/Content/[PAK]_r_E2toShapeshift/47234a8b-9430-365c-36d1-92a3fee18c35.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/r_E2toShapeshift_f4bb45d6-b471-6d27-f370-f7363a1d6c8c/Content/[PAK]_r_E2toShapeshift/72df3deb-ce98-76fa-f7cd-fdb3571c72e8.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/r_E2toShapeshift_f4bb45d6-b471-6d27-f370-f7363a1d6c8c/Content/[PAK]_r_E2toShapeshift/69c6d55e-2faa-16a0-f0bd-7e3dce4529cf.lsx",
+		"/I/_BG3/bg/__UnpackToDelete/unique_tav/Public/Shared/Assets/Materials/Characters/CHAR_Skin_Body.lsx",
+		"/C/Users/winst/AppData/Local/Larian Studios/Baldur's Gate 3/Script Extender/shape.json",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Server/Main/AnalServer.lua",
+		"/I/_BG3/bg/__UnpackToDelete/unique_tav/Public/unique_tav/Content/[PAK]_KAZSTRA_UniqueTav/_merged.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/unique_tav/Content/[PAK]_CharacterVisuals/_HalfElves.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/r_E2toShapeshift_f4bb45d6-b471-6d27-f370-f7363a1d6c8c/Content/[PAK]_r_E2toShapeshift/d1e9a899-1a60-479d-96d3-c5f3ee32a2a8.lsx",
+		"/I/_BG3/bg/__UnpackToDelete/unique_tav/Public/unique_tav/Content/[PAK]_CharacterVisuals/_Elves.lsx",
+		"/I/_BG3/bg/__UnpackToDelete/unique_tav/Public/unique_tav/Content/[PAK]_CharacterVisuals/_HalfElves.lsx",
+		"/I/_BG3/bg/__UnpackToDelete/unique_tav/Public/unique_tav/CharacterCreation/CharacterCreationAppearanceMaterials.lsx",
+		"/I/_BG3/bg/__UnpackToDelete/LordBatstarion - Albino/Public/LordBatstarion/Content/Assets/Characters/Creatures/Bat/[PAK]_Body/_Batstarion.lsx",
+		"/I/_BG3/bg/__UnpackToDelete/LordBatstarion - Albino/Mods/LordBatstarion/ScriptExtender/Lua/BootstrapServer.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/LibLib/Dummy.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/BootstrapServer.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/ATM_Templates.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/LibLib/Resource.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/PhotoMode/BlueprintOverrides.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/_init.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/LibLib/Classes.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Config.json",
+		"/I/_BG3/bg/__UnpackToDelete/FennelsFarm - UTAV/Public/FennelsFarm/Content/Assets/Characters/[PAK]_Meshes_and_Materials/FennelsFarm_meshes.lsx",
+		"/I/_BG3/bg/__UnpackToDelete/FennelsFarm/Public/FennelsFarm/Content/Assets/Characters/[PAK]_Meshes_and_Materials/FennelsFarm_meshes.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/OBSC_Fickle_Mistress/Content/Assets/Characters/[PAK]_Armor/materials.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/OBSC_Fickle_Mistress/Content/Assets/Characters/[PAK]_Armor/visuals.lsx",
+		"/I/_BG3/bg/ET/Tools/divine_ctx_remove.reg",
+		"/I/_BG3/bg/ET/Tools/divine_ctx_install.reg",
+		"/I/_BG3/bg/ET/Tools/divine_ctx.bat",
+		"/I/_BG3/bg/ET/Tools/RconClient.runtimeconfig.json",
+		"/I/_BG3/bg/ET/Tools/context_menu_remove.reg",
+		"/I/_BG3/bg/ET/Tools/context_menu_install.reg",
+		"/C/Users/winst/Desktop/xqcL/333новый 1.txt",
+		"/I/_BG3/bg/ET/AtHome.py",
+		"/I/_BG3/bg/ET/divine_ctx.bat",
+		"/I/_BG3/bg/ET/Tools/ctx.py",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/PhotoMode/PhotoMode/BlueprintOverrides.lsx",
+		"/I/_BG3/bg/SE_Helpers/ExtIdeHelpers.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/_Libs/AahzLib/Shared/Helpers/Math.lua",
+		"/C/Users/winst/AppData/Local/Sublime Text/Package Storage/LSP-lua/meta/Lua 5.4 en-US utf8/table.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/CameraOrbit.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/Realm_Builder/meta.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/LibLib/Camera.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/RootTemplates/uuid.txt",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/RootTemplates/delete.py",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/Channels.lua",
+		"/C/Users/winst/AppData/Local/Larian Studios/Baldur's Gate 3/Script Extender/LightyLights/Poses/_POSE_LIST.json",
+		"/C/Users/winst/AppData/Roaming/Sublime Text/Packages/User/LSP-lua.sublime-settings",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/.vscode/settings.json",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/_Libs/AahzLib/Client/Helpers/Imgui.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/_Libs/AahzLib/Shared/Classes/Color.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/_Libs/AahzLib/Shared/Helpers/Color.lua",
+		"/C/Users/winst/AppData/Local/Larian Studios/Baldur's Gate 3/Script Extender/LightyLights/Poses/DAE_TO_BZ.py",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/r_Animations_6ae3b1f6-37ad-5118-5921-a74090ea5d50/Data/Public/owo/rar3_HUM_F_A_owo_D_Hotloading.dae",
+		"/C/Users/winst/AppData/Local/Larian Studios/Baldur's Gate 3/Script Extender/LightyLights/Poses/Test1.json",
+		"/C/Users/winst/AppData/Local/Larian Studios/Baldur's Gate 3/Script Extender/CCEE/p8/Elen_G_8_LongHair.json",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/LTN_Triggers.lua",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/ATM_Triggers.lua",
+		"/I/_BG3/bg/__UnpackToDelete/p8/Gustav/Mods/Gustav/Levels/WLD_Main_A/LevelTemplates/_merged.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/axi_assets_643fb4fd-ae00-8c58-9ac4-cf0277d91d56/Stats/Generated/Data/Object.txt",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/axi_assets_643fb4fd-ae00-8c58-9ac4-cf0277d91d56/Content/[PAK]_r_iPhone/27dbe154-8e31-aac9-cede-cf96bc655c24.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/axi_assets_643fb4fd-ae00-8c58-9ac4-cf0277d91d56/Content/[PAK]_r_iPhone/26deb5e3-5fd8-ec66-3760-b89993be31e7.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/axi_assets_643fb4fd-ae00-8c58-9ac4-cf0277d91d56/Content/[PAK]_r_iPhone/5b56f449-73eb-1fc2-aa19-1bdf60dc43a3.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/axi_assets_643fb4fd-ae00-8c58-9ac4-cf0277d91d56/Content/[PAK]_r_iPhone/4d30f5e2-ae1f-c560-8049-eb6c3289c5c3.lsx",
+		"/I/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Public/axi_assets_643fb4fd-ae00-8c58-9ac4-cf0277d91d56/Content/[PAK]_r_iPhone/2e990cb9-be86-709d-8aed-24839e2b0cf5.lsx",
+		"/C/Users/winst/AppData/Local/Larian Studios/Baldur's Gate 3/Script Extender/Realm Builder/UIConfig.json",
+		"/C/Users/winst/AppData/Local/Larian Studios/Baldur's Gate 3/Script Extender/Realm Builder/Browsers/Item - Browser.json"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 167.0,
+		"where_history":
+		[
+			"",
+			"selectedDummyIndex",
+			"",
+			"-*.dds,-*.eot,-*.gif,-*.ico,-*.jar,-*.jpeg,-*.jpg,-*.log,-*.pdf,-*.png,-*.swf,-*.tga,-*.ttf,-*.zip",
+			"",
+			"-*.dds,-*.eot,-*.gif,-*.ico,-*.jar,-*.jpeg,-*.jpg,-*.log,-*.pdf,-*.png,-*.swf,-*.tga,-*.ttf,-*.zip",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"BoneZoneTabAgreed",
+			"BoneZ",
+			"BoneZoneTab",
+			"light",
+			"backup",
+			"entity",
+			"uuid",
+			"isLightyLights",
+			"PreplacedLightsBackup",
+			"lightSetupState",
+			"centerBones",
+			"rightBones",
+			"leftBones",
+			"gradHovered",
+			"grad",
+			"5",
+			"__sub",
+			"_L",
+			"L_",
+			"123456789012345678",
+			"USERNAME",
+			"АЙДИ_ПОЛЬЗОВАТЕЛЯ",
+			"https://refact0r.github.io/midnight-discord/assets/Font_Awesome_5_solid_moon.svg",
+			".com",
+			"jpeg",
+			"png",
+			"Utils.AntiSpam",
+			"Utils.SubUnsubToTick",
+			"Utils:",
+			"Utils:GetMouseoverCharacter",
+			"Utils:SubUnsubToTick",
+			"Utils:AntiSpam",
+			"Math:KelvinToRGB",
+			"Math:EulerToQuats",
+			"dummyName",
+			"Prev",
+			"gizmo",
+			"вAddText",
+			"bz:",
+			"manipulator",
+			"settings",
+			"horn",
+			"hotn",
+			"(p",
+			"p:",
+			"gr2",
+			".GR2",
+			"wing",
+			"цштп",
+			"'xd",
+			"'",
+			"\\",
+			"Scale",
+			"never",
+			"TBD:",
+			"selectedName",
+			"savedTransforms",
+			"'save",
+			"b5b4",
+			"799138c9-9c03-4fb0-b541-207600cf9dc2",
+			"virt",
+			"fcf",
+			"VirtualTexture",
+			"virt",
+			"f523e27f-d71f-49d4-b5b4-9259fbb192c8",
+			"Kaz",
+			"KazHRCF",
+			"Skin_Atlas_Body_UNI_Tattoo_A_MSK",
+			"UNIQUE_F_NKD_BODY_A_MSK",
+			"6cb6efac-f234-40f5-b8dc-0ccf62783ed4",
+			"tatt",
+			"799138c9-9c03-4fb0-b541-207600cf9dc2",
+			"VirtualTextureParameters",
+			"virtya",
+			"clea",
+			"virt",
+			"glow",
+			"1594b4da-6db1-471b-9a1a-c1ad4ecf721b",
+			"virtual",
+			"UNIQUE_F_NKD_BODY_A",
+			"65a0a33a-2dbc-8561-bd8b-f94bbd90ea7f",
+			"virtua",
+			"wood",
+			"47234a8b-9430-365c-36d1-92a3fee18c35",
+			"<!-- wood / body 1 -->",
+			"drow",
+			"53715306-dab4-4921-82e8-0c1a84171f79",
+			"UNIQUE_F_NKD_Body_A.GR2",
+			"NIQUE_F_NKD_Body_A.GR2",
+			"UNIQUE_F_NKD_Body_A",
+			"cfb3",
+			"cfb",
+			"cbf",
+			"Shape",
+			"Shapesh",
+			"Shape",
+			"skele",
+			"bluep",
+			"blue",
+			" and not ",
+			"\"",
+			"findLipSymmetry",
+			"getMirrorVarName",
+			"Dprin",
+			"\"",
+			"not ",
+			"or",
+			"and",
+			"or",
+			"ok2",
+			"AddSlider",
+			"<MapKey>",
+			"is2D",
+			"nega",
+			"Vec3",
+			"rootLockedRotTree",
+			"rootLockedTree",
+			"CreateContolsAndColorize",
+			"AxesNames",
+			"createBoneSlider",
+			"createStepButtons",
+			"onStep",
+			"onReset",
+			"onStep",
+			"createResetButton",
+			"createStepButtons",
+			"groupData",
+			"transform"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"BoneZoneTabAgreed",
+			"Utils:AntiSpam",
+			"Utils:SubUnsubToTick",
+			"Utils.GetMouseoverCharacter",
+			"Utils.SubUnsubToTick",
+			"Utils.AntiSpam",
+			"Math.KelvinToRGB",
+			"Math.EulerToQuats",
+			"bz:",
+			"selectedDummyIndex",
+			"",
+			"55bb"
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "ScriptExtender/Lua/Client/Main/MainUI.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 58420,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3203,
+								3203
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html, text.xml"
+								},
+								{
+									"rhs_empty": true,
+									"selector": "punctuation.accessor"
+								}
+							],
+							"lsp_active": true,
+							"lsp_uri": "file:///I:/SteamLibrary/steamapps/common/Baldurs%20Gate%203/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/MainUI.lua",
+							"show_definitions": false,
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5054.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "ScriptExtender/Lua/Client/Main/MainHandlersClient.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 42774,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								540,
+								169
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html, text.xml"
+								},
+								{
+									"rhs_empty": true,
+									"selector": "punctuation.accessor"
+								}
+							],
+							"lsp_active": true,
+							"lsp_uri": "file:///I:/SteamLibrary/steamapps/common/Baldurs%20Gate%203/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/MainHandlersClient.lua",
+							"show_definitions": false,
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 150.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "ScriptExtender/Lua/Client/Main/PMUI.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 31909,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8931,
+								8931
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html, text.xml"
+								},
+								{
+									"rhs_empty": true,
+									"selector": "punctuation.accessor"
+								}
+							],
+							"lsp_active": true,
+							"lsp_uri": "file:///I:/SteamLibrary/steamapps/common/Baldurs%20Gate%203/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/PMUI.lua",
+							"show_definitions": false,
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5970.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "ScriptExtender/Lua/Shared/Tables.lua",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16828,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5311,
+								5311
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html, text.xml"
+								},
+								{
+									"rhs_empty": true,
+									"selector": "punctuation.accessor"
+								}
+							],
+							"lsp_active": true,
+							"lsp_uri": "file:///I:/SteamLibrary/steamapps/common/Baldurs%20Gate%203/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared/Tables.lua",
+							"show_definitions": false,
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4140.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "ScriptExtender/Lua/Client/Main/BoneZoneUI.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10942,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1593,
+								1593
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html, text.xml"
+								},
+								{
+									"rhs_empty": true,
+									"selector": "punctuation.accessor"
+								}
+							],
+							"lsp_active": true,
+							"lsp_uri": "file:///I:/SteamLibrary/steamapps/common/Baldurs%20Gate%203/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/BoneZoneUI.lua",
+							"show_definitions": false,
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1800.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "ScriptExtender/Lua/Client/Main/UtilsTab.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3192,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								798,
+								798
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html, text.xml"
+								},
+								{
+									"rhs_empty": true,
+									"selector": "punctuation.accessor"
+								}
+							],
+							"lsp_active": true,
+							"lsp_uri": "file:///I:/SteamLibrary/steamapps/common/Baldurs%20Gate%203/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client/Main/UtilsTab.lua",
+							"show_definitions": false,
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"stack_multiselect": false,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 39.0
+	},
+	"input":
+	{
+		"height": 60.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.LSP Log Panel":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"output.diagnostics":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"output.find_results":
+	{
+		"height": 232.0,
+		"history":
+		[
+		]
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"pinned_build_system": "",
+	"project": "LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09.sublime-project",
+	"replace":
+	{
+		"height": 74.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"t",
+				"ScriptExtender\\Lua\\Shared\\Tables.lua"
+			],
+			[
+				"st",
+				"ScriptExtender\\Lua\\Shared\\LibLib\\Style.lua"
+			],
+			[
+				"pm",
+				"ScriptExtender\\Lua\\Client\\Main\\PMUI.lua"
+			],
+			[
+				"Dumm",
+				"ScriptExtender\\Lua\\Shared\\LibLib\\Dummy.lua"
+			],
+			[
+				"atm",
+				"ScriptExtender\\Lua\\Shared\\ATM_Templates.lua"
+			],
+			[
+				"tab",
+				"ScriptExtender\\Lua\\Shared\\Tables.lua"
+			],
+			[
+				"Ent",
+				"ScriptExtender\\Lua\\Shared\\LibLib\\Entity.lua"
+			],
+			[
+				"main",
+				"ScriptExtender\\Lua\\Client\\Main\\MainHandlersClient.lua"
+			],
+			[
+				"clie",
+				"ScriptExtender\\Lua\\Client\\Main\\ListenersClient.lua"
+			],
+			[
+				"Ta",
+				"ScriptExtender\\Lua\\Shared\\Tables.lua"
+			],
+			[
+				"Sett",
+				"ScriptExtender\\Lua\\Client\\Main\\SettingsUI.lua"
+			],
+			[
+				"Sty",
+				"ScriptExtender\\Lua\\Shared\\LibLib\\Style.lua"
+			],
+			[
+				"sett",
+				"ScriptExtender\\Lua\\Client\\Main\\SettingsUI.lua"
+			],
+			[
+				"ana",
+				"ScriptExtender\\Lua\\Server\\Main\\AnalServer.lua"
+			],
+			[
+				"ta",
+				"ScriptExtender\\Lua\\Shared\\Tables.lua"
+			],
+			[
+				"Se",
+				"ScriptExtender\\Lua\\Client\\Main\\SettingsUI.lua"
+			],
+			[
+				"ltn",
+				"ScriptExtender\\Lua\\Shared\\LTN_Triggers.lua"
+			],
+			[
+				"trig",
+				"ScriptExtender\\Lua\\Shared\\ATM_Triggers.lua"
+			],
+			[
+				"mainc",
+				"ScriptExtender\\Lua\\Client\\Main\\MainHandlersClient.lua"
+			],
+			[
+				"Help",
+				"ScriptExtender\\Lua\\Shared\\LibLib\\Helpers.lua"
+			],
+			[
+				"at",
+				"ScriptExtender\\Lua\\Shared\\ATM_Templates.lua"
+			],
+			[
+				"tem",
+				"ScriptExtender\\Lua\\Shared\\LTN_Templates.lua"
+			],
+			[
+				"mainui",
+				"ScriptExtender\\Lua\\Client\\Main\\MainUI.lua"
+			],
+			[
+				"util",
+				"ScriptExtender\\Lua\\Shared\\LibLib\\MyUtilsTXT.lua"
+			],
+			[
+				"cli",
+				"ScriptExtender\\Lua\\Client\\Main\\ListenersClient.lua"
+			],
+			[
+				"anal",
+				"ScriptExtender\\Lua\\Server\\Main\\AnalServer.lua"
+			],
+			[
+				"ttab",
+				"ScriptExtender\\Lua\\Shared\\Tables.lua"
+			],
+			[
+				"IMGU",
+				"ScriptExtender\\Lua\\Shared\\LibLib\\ImGui\\HelpersGUI.lua"
+			],
+			[
+				"client",
+				"ScriptExtender\\Lua\\Client\\Main\\ListenersClient.lua"
+			],
+			[
+				"Style",
+				"ScriptExtender\\Lua\\Shared\\LibLib\\Style.lua"
+			],
+			[
+				"liste",
+				"ScriptExtender\\Lua\\Client\\Main\\ListenersClient.lua"
+			],
+			[
+				"Tab",
+				"ScriptExtender\\Lua\\Shared\\Tables.lua"
+			],
+			[
+				"PMI",
+				"ScriptExtender\\Lua\\Client\\Main\\PMUI.lua"
+			],
+			[
+				"PM",
+				"ScriptExtender\\Lua\\Client\\Main\\PMUI.lua"
+			],
+			[
+				"MainU",
+				"ScriptExtender\\Lua\\Client\\Main\\MainUI.lua"
+			],
+			[
+				"Main",
+				"ScriptExtender\\Lua\\Client\\Main\\MainUI.lua"
+			],
+			[
+				"utl.",
+				"ScriptExtender\\Lua\\_Libs\\ReactiveX\\reactivex\\util.lua"
+			],
+			[
+				"pmh",
+				"ScriptExtender\\Lua\\Client\\Main\\MainHandlersClient.lua"
+			],
+			[
+				"hand",
+				"ScriptExtender\\Lua\\Client\\Main\\MainHandlersClient.lua"
+			],
+			[
+				"Server",
+				"ScriptExtender\\Lua\\Server\\Main\\SaverServer.lua"
+			],
+			[
+				"mainha",
+				"ScriptExtender\\Lua\\Client\\Main\\AnalHandlersClient.lua"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 499.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"I:\\SteamLibrary\\steamapps\\common\\Baldurs Gate 3\\Data\\Mods\\CCEE_de58d193-9a32-7db1-de7c-69e4e55b4002\\CCEE_de58d193-9a32-7db1-de7c-69e4e55b4002.sublime-project"
+			]
+		],
+		"width": 378.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+		"lsp_show_inlay_hints": false
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 328.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -1,7 +1,7 @@
 LLGlobals.States = LLGlobals.States or {}
-LLGlobals.DummyNameMap = {}
-LLGlobals.SaveLoad = {}
-LLGlobals.CameraPositions = {}
+LLGlobals.CameraPositions            = {}
+LLGlobals.DummyNameMap               = {}
+LLGlobals.SaveLoad                   = {}
 
 
 
@@ -147,6 +147,7 @@ function UpdateCreatedLightsCombo()
 end
 
 
+
 function RegisterNewLight(uuid, lightType)
     nameIndex = nameIndex + 1
     local name = '+' .. ' ' .. '#' .. nameIndex .. ' ' .. lightType
@@ -160,6 +161,7 @@ function RegisterNewLight(uuid, lightType)
     UpdateCreatedLightsCombo()
     E.comboIHateCombos.SelectedIndex = #E.comboIHateCombos.Options - 1
 end
+
 
 
 function UpdateTranformInfo(x, y, z, rx, ry, rz)
@@ -389,6 +391,9 @@ function UpdateElements(selectedUuid)
 
     LLGlobals.States.allowLightCreation = true
     E.btnCreate2.Disabled = false
+
+    ColorizeMarkers()
+
 end
 
 
@@ -409,10 +414,23 @@ end
 
 
 
+function ColorizeMarkers(Color)
+    if not colorfulMarkers then return end
+    local Color = Color or getSelectedLightEntity().Color
+    local marker = LLGlobals.markerEntity
+    if marker then
+        marker.Visual.Visual.ObjectDescs[1].Renderable.ActiveMaterial:SetVector3('GlowColor', Color)
+    end
+end
+
+
+
 Ch.MarkerHandler:SetHandler(function (Data)
     Helpers.Timer:OnTicks(15, function ()
         LLGlobals.markerEntity = Ext.Entity.Get(Data)
-        LLGlobals.markerEntity.Visual.Visual:SetWorldScale({markerScale, markerScale, markerScale})
+        if LLGlobals.markerEntity then
+            LLGlobals.markerEntity.Visual.Visual:SetWorldScale({markerScale, markerScale, markerScale})
+        end
     end)
 end)
 
@@ -448,6 +466,7 @@ function SetLightColor(value)
     if lightEntity and value then
         lightEntity.Color = value
         LLGlobals.LightParametersClient[LLGlobals.selectedUuid].Color = value
+        ColorizeMarkers()
     end
 end
 
@@ -559,11 +578,13 @@ end
 
 function MoveEntity(entity, axis, offset, step, mode, objectType)
     if entity then
+
         local Data = {
             axis = axis,
             step = step,
             offset = offset,
-            Translate = LLGlobals.SourceTranslate
+            Translate = LLGlobals.SourceTranslate,
+            lightUuid = entity.Uuid.EntityUuid,
         }
 
         if objectType == 'Light' then
@@ -588,7 +609,8 @@ function RotateEntity(entity, axis, offset, step, objectType)
             axis = axis,
             step = step,
             offset = offset,
-            Translate = LLGlobals.SourceTranslate
+            Translate = LLGlobals.SourceTranslate,
+            lightUuid = entity.Uuid.EntityUuid,
         }
         if objectType == 'Light' then
             Ch.EntityRotation:SendToServer(Data)
@@ -648,13 +670,12 @@ function SourcePoint(state)
     E.checkCutsceneSrc.Checked = false
 
     if state then
-
         Utils:SubUnsubToTick('sub', 'SourcePoint', function ()
 
         if not E.checkOriginSrc.Checked then return end
         if not entity.Transform then return end
 
-        local Transform = entity.stickToCameraCheckTransform.Transform
+        local Transform = entity.Transform.Transform
         LLGlobals.SourceTranslate = Transform.Translate
         Ch.CurrentEntityTransform:SendToServer(LLGlobals.SourceTranslate)
     end)
@@ -667,6 +688,8 @@ function SourcePoint(state)
     end
     return false
 end
+
+
 
 --- TBD: fix this garbo
 function SourcePhotoMode(state)
@@ -823,9 +846,10 @@ end)
 
 function UpdateCharacterInfo(index)
     Helpers.Timer:OnTicks(5, function ()
-    if index and LLGlobals.DummyNameMap and LLGlobals.DummyNameMap[E.visTemComob.Options[index]]  and
-        LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual                                 and
-        LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual                          then
+    if index and LLGlobals.DummyNameMap and LLGlobals.DummyNameMap[E.visTemComob.Options[index]]    and
+       LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual                                  and
+       LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual
+    then
         local transform = LLGlobals.DummyNameMap[E.visTemComob.Options[index]].Visual.Visual.WorldTransform
         E.posInput.Value = {transform.Translate[1], transform.Translate[2], transform.Translate[3], 0}
         E.scaleInput.Value = {transform.Scale[1], transform.Scale[2], transform.Scale[3], 0}
@@ -850,25 +874,26 @@ function MoveCharacter(axis, value, stepMod, index)
 
         if entity then
             local pos = entity.Visual.Visual.WorldTransform.Translate
-            local original_pos = entity.DummyOriginalTransform.Transform.Translate
+            local originalPos = entity.DummyOriginalTransform.Transform.Translate
             if axis == 'x' then
                 pos.x = value
                 pos[1] = pos[1] + (pos.x/stepMod)
-                original_pos[1] = original_pos[1] + (pos.x/stepMod)
+                originalPos[1] = originalPos[1] + (pos.x/stepMod)
             elseif axis == 'y' then
                 pos.y = value
                 pos[2] = pos[2] + (pos.y/stepMod)
-                original_pos[2] = original_pos[2] + (pos.y/stepMod)
+                originalPos[2] = originalPos[2] + (pos.y/stepMod)
             elseif axis == 'z' then
                 pos.z = value
                 pos[3] = pos[3] + (pos.z/stepMod)
-                original_pos[3] = original_pos[3] + (pos.z/stepMod)
+                originalPos[3] = originalPos[3] + (pos.z/stepMod)
             end
             entity.Visual.Visual.WorldTransform.Translate = {pos[1], pos[2], pos[3]}
-            entity.DummyOriginalTransform.Transform.Translate = {original_pos[1], original_pos[2], original_pos[3]}
+            entity.DummyOriginalTransform.Transform.Translate = {originalPos[1], originalPos[2], originalPos[3]}
             for q = 1, #entity.Visual.Visual.Attachments do
                 for i = 1, #entity.Visual.Visual.Attachments[q].Visual.ObjectDescs do
                     local objDesc = entity.Visual.Visual.Attachments[q].Visual.ObjectDescs[i]
+
                     if objDesc and objDesc.Renderable and objDesc.Renderable.WorldTransform then
                         objDesc.Renderable.WorldTransform.Translate = {pos[1], pos[2], pos[3]}
                     end
@@ -881,7 +906,6 @@ function MoveCharacter(axis, value, stepMod, index)
                     -- DDump(v.PhotoModeDummyTransform.Transform.Translate)
                 end
             end
-
             UpdateCharacterInfo(index)
         end
     end
@@ -907,6 +931,7 @@ function RotateCharacter(axis, value, rotMod, index)
             elseif axis == 'z' then
                 axisVec = {0, 0, 1}
             end
+
             local quat = Ext.Math.QuatRotateAxisAngle(currentQuat, axisVec, rotationAngle)
             local original_quat = Ext.Math.QuatRotateAxisAngle(original_rot, axisVec, rotationAngle)
             entity.Visual.Visual.WorldTransform.RotationQuat = quat
@@ -914,6 +939,7 @@ function RotateCharacter(axis, value, rotMod, index)
             for q = 1, #entity.Visual.Visual.Attachments do
                 for i = 1, #entity.Visual.Visual.Attachments[q].Visual.ObjectDescs do
                     local objDesc = entity.Visual.Visual.Attachments[q].Visual.ObjectDescs[i]
+
                     if objDesc and objDesc.Renderable and objDesc.Renderable.WorldTransform then
                         objDesc.Renderable.WorldTransform.RotationQuat = quat
                     end
@@ -929,9 +955,11 @@ end
 function ScaleCharacter(axis, value, scaleMod, index)
     if LLGlobals.DummyNameMap then
         local entity = LLGlobals.DummyNameMap[E.visTemComob.Options[index]]
+
         if entity then
             local scale = entity.Visual.Visual.WorldTransform.Scale
             local original_scale = entity.DummyOriginalTransform.Transform.Scale
+
             if axis == 'x' then
                 scale.x = value
                 scale[1] = scale[1] + (scale.x/scaleMod)
@@ -955,11 +983,14 @@ function ScaleCharacter(axis, value, scaleMod, index)
                 scale[3] = scale[3] + (scale.z/scaleMod)
                 original_scale[3] = original_scale[3] + (scale.z/scaleMod)
             end
+
             entity.Visual.Visual.WorldTransform.Scale = {scale[1], scale[2], scale[3]}
             entity.DummyOriginalTransform.Transform.Scale = {original_scale[1], original_scale[2], original_scale[3]}
+
             for q = 1, #entity.Visual.Visual.Attachments do
                 for i = 1, #entity.Visual.Visual.Attachments[q].Visual.ObjectDescs do
                     local objDesc = entity.Visual.Visual.Attachments[q].Visual.ObjectDescs[i]
+
                     if objDesc and objDesc.Renderable and objDesc.Renderable.WorldTransform then
                         objDesc.Renderable.WorldTransform.Scale = {scale[1], scale[2], scale[3]}
                     end
@@ -973,13 +1004,12 @@ end
 
 
 local size = 38
-local savedTransforms = {}
+LLGlobals.SavedTransforms = {}
 local buttons = {}
 local buttonCount = 0
 
 
-
---refactored by slop. too lazy xd
+--refactored by slop. too lazy and don't care xd
 function SaveVisTempCharacterPosition()
     local index = E.visTemComob.SelectedIndex + 1
     local selectedName = E.visTemComob.Options[index]
@@ -987,14 +1017,14 @@ function SaveVisTempCharacterPosition()
     if not selectedName or not LLGlobals.DummyNameMap[selectedName] then return end
 
     local worldTransform = LLGlobals.DummyNameMap[selectedName].Visual.Visual.WorldTransform
-    savedTransforms[selectedName] = {
+    LLGlobals.SavedTransforms[selectedName] = {
         pos = {worldTransform.Translate[1], worldTransform.Translate[2], worldTransform.Translate[3]},
         rot = {worldTransform.RotationQuat[1], worldTransform.RotationQuat[2], worldTransform.RotationQuat[3], worldTransform.RotationQuat[4]},
         scale = {worldTransform.Scale[1], worldTransform.Scale[2], worldTransform.Scale[3]},
         originalName = selectedName
     }
 
-    local saved = savedTransforms[selectedName]
+    local saved = LLGlobals.SavedTransforms[selectedName]
     local buttonLabel = string.format("%s; x = %.2f; y = %.2f; z = %.2f",
         string.gsub(selectedName, "##.*", ""),
         saved.pos[1], saved.pos[2], saved.pos[3])
@@ -1035,10 +1065,10 @@ function SaveVisTempCharacterPosition()
                 buttons[selectedName] = nil
             end
 
-            savedTransforms[selectedName] = nil
+            LLGlobals.SavedTransforms[selectedName] = nil
 
             if buttonCount == 0 then
-                savedTransforms = {}
+                LLGlobals.SavedTransforms = {}
                 buttons = {}
             end
 
@@ -1175,18 +1205,21 @@ end
 
 
 function StartFollowIGCS()
-    Utils:SubUnsubToTick('sub', 'look', function ()
-        local camera = Camera:GetActiveCamera()
-        local Transform = camera.Transform.Transform
-        Camera:GetPhotoModeCamera().PhotoModeCameraTransform.Transform = Transform
-    end)
+    -- Utils:SubUnsubToTick('sub', 'look', function ()
+    --     local camera = Camera:GetActiveCamera()
+    --     local Transform = camera.Transform.Transform
+    --     Camera:GetPhotoModeCamera().PhotoModeCameraTransform.Transform = Transform
+    -- end)
+    assert(false)
 end
 
 
 
 function StopFollowIGCS()
-    if Utils.subID and Utils.subID['look'] then
-        Utils:SubUnsubToTick('unsub', 'look', _)
-    end
-    E.checkFollowIGCS.Checked = false
+    -- if Utils.subID and Utils.subID['look'] then
+    --     Utils:SubUnsubToTick('unsub', 'look', _)
+    -- end
+    -- E.checkFollowIGCS.Checked = false
+    assert(false)
 end
+

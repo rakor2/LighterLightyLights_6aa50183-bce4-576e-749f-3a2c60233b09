@@ -2,6 +2,8 @@ local ClientState = {}
 local ServerState = {}
 local SceneState = {}
 
+
+
 Ch.SceneSave:SetHandler(function (Data)
     local ClientState = Data
 
@@ -27,6 +29,7 @@ Ch.SceneSave:SetHandler(function (Data)
     DDump(ServerState)
 
 end)
+
 
 
 Ch.SceneLoad:SetRequestHandler(function (Data)
