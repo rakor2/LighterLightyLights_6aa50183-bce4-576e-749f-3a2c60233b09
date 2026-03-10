@@ -358,6 +358,42 @@ MCM.SetKeybindingCallback('ll_hide_gobo', function()
 end)
 
 
+MCM.SetKeybindingCallback('ll_toggle_bz_symm', function()
+    local state = E.checkSymm.Checked
+    state = not state
+
+    LLGlobals.States.bzSymmetry = state
+    E.checkSymm.Checked = state
+end)
+
+
+
+MCM.SetKeybindingCallback('ll_save_pose', function()
+end)
+
+
+
+MCM.SetKeybindingCallback('ll_pm_prev_dummy', function()
+    UI:PrevOption(E.visTemComob)
+    UpdatePMDummyCombo(E.visTemComob)
+end)
+
+
+
+MCM.SetKeybindingCallback('ll_pm_next_dummy', function()
+    UI:NextOption(E.visTemComob)
+    UpdatePMDummyCombo(E.visTemComob)
+end)
+
+
+
+MCM.SetKeybindingCallback('ll_dummy_popup', function()
+    E.checkDummiesPop.Checked = not E.checkDummiesPop.Checked
+    for _, v in pairs(PM.DummyWidgets) do
+        v.Window.Visible = not v.Window.Visible
+    end
+end)
+
 
 
 function MainTab(p)
