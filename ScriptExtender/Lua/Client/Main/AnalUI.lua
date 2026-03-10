@@ -5,6 +5,18 @@ function Anal2Tab(p)
     LLGlobals.FilteredLTNOptions = LLGlobals.LtnComboOptions
     LLGlobals.FilteredATMOptions = LLGlobals.AtmComboOptions
 
+    p:AddText([[YOU CAN'T CHANGE ATMOSPHERE AND LIGHTING IN PHOTOMODE]])
+    p:AddSeparator()
+
+    local dddd = p:AddButton([[Get current atmosphere and lighting]])
+    dddd.OnClick = function(e)
+        Ch.CurrentResource:RequestToServer({}, function(Response)
+            SetCurrentAtmosphereAndLighting(Response)
+        end)
+    end
+    p:AddText([[    IT CAN GET ONLY PRESETS THAT I CHOSE,
+    IT CANNOT GET ALL OF THEM]])
+
     p:AddSeparatorText('Lighting')
 
     E.inpSearchLighting = p:AddInputText('')
