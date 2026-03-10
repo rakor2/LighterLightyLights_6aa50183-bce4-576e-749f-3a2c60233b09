@@ -9,93 +9,89 @@ currentCacheVersion = '1.7.Bober'
 
 
 --- TBD: unhardcode
+local DEFAULT_SETTINGS = {
+    {'openByDefaultPMCamera',   false},
+    {'openByDefaultPMInfo',     false},
+    {'openByDefaultPMPos',      false},
+    {'openByDefaultPMRot',      false},
+    {'openByDefaultPMScale',    false},
+    {'openByDefaultPMLook',     false},
+    {'openByDefaultPMSave',     false},
+    {'openByDefaultMainGen',    false},
+    {'openByDefaultMainPoint',  false},
+    {'openByDefaultMainSpot',   false},
+    {'openByDefaultMainDir',    false},
+    {'openByDefaultMainAdd',    false},
+    {'openByDefaultMainWorld',  false},
+    {'openByDefaultMainChar',   false},
+    {'openByDefaultMainRot',    false},
+    {'defaultLightType',        'Point'},
+    {'biggerPicker',            false},
+    {'markerScale',             0.699999988079071},
+    {'fadeTime',                0.150},
+    {'defaultCameraSpeed',      6},
+    {'lightSetupState',         true},
+    {'markerOff',               false},
+    {'stickToggleOff',          false},
+    {'RecentColors',            {}},
+    {'applyDelay',              {500,0,0,0}},
+    {'defaultGradient',         1},
+    {'lockCrystalToWhite',      false},
+    {'readTheRules',            false},
+    {'colorfulMarkers',         true},
+    {'style',                   1},
+}
 
-local function bool(v, default)
-    if v == nil then return default end
-    return v
-end
 
 
 
 function SettingsSave()
-    local settings = {
-        style = StyleSettings.selectedStyle or 1,
-        picker = bool(pickerSize, false),
+    local Xdd = {}
+    for _, setting in ipairs(DEFAULT_SETTINGS) do
 
-        openByDefaultPMCamera = bool(openByDefaultPMCamera, false),
-        openByDefaultPMInfo = bool(openByDefaultPMInfo, false),
-        openByDefaultPMPos = bool(openByDefaultPMPos, false),
-        openByDefaultPMRot = bool(openByDefaultPMRot, false),
-        openByDefaultPMScale = bool(openByDefaultPMScale, false),
-        openByDefaultPMLook = bool(openByDefaultPMLook, false),
-        openByDefaultPMSave = bool(openByDefaultPMSave, false),
+        local name, defaultValue = setting[1], setting[2]
+        local value = _G[name]
 
-        openByDefaultMainGen = bool(openByDefaultMainGen, false),
-        openByDefaultMainPoint = bool(openByDefaultMainPoint, false),
-        openByDefaultMainSpot = bool(openByDefaultMainSpot, false),
-        openByDefaultMainDir = bool(openByDefaultMainDir, false),
-        openByDefaultMainAdd = bool(openByDefaultMainAdd, false),
-        openByDefaultMainWorld = bool(openByDefaultMainWorld, false),
-        openByDefaultMainChar = bool(openByDefaultMainChar, false),
-        openByDefaultMainRot = bool(openByDefaultMainRot, false),
+        if name == 'style' then
+            value = StyleSettings and StyleSettings.selectedStyle
+        end
 
-        defaultLightType = defaultLightType or 'Point',
-        biggerPicker = bool(biggerPicker, false),
-        markerScale = markerScale or 0.699999988079071,
-        fadeTime = fadeTime or 0,
-        defaultCameraSpeed = defaultCameraSpeed or 6,
-        lightSetupState = bool(lightSetupState, true),
-        markerOff = bool(markerOff, false),
-        stickToggleOff = bool(stickToggleOff, false),
+        if value ~= nil then
+            Xdd[name] = value
+        else
+            Xdd[name] = defaultValue
+        end
 
-    }
+    end
 
-    local json = Ext.Json.Stringify(settings)
+    local json = Ext.Json.Stringify(Xdd)
     Ext.IO.SaveFile('LightyLights/settings.json', json)
 
-    return settings
+    return Xdd
 end
 
---TBD: Unslop the bool thing
+
+
 function SettingsLoad()
     local json = Ext.IO.LoadFile('LightyLights/settings.json')
     if not json then return end
+    local Xdd = Ext.Json.Parse(json)
+    if not Xdd then return end
+    for _, setting in ipairs(DEFAULT_SETTINGS) do
+        local key, defaultValue = setting[1], setting[2]
+        local value = Xdd[key]
 
-    local settings = Ext.Json.Parse(json)
-    if not settings then return end
+        if key == 'style' then
+            StyleSettings.selectedStyle = value ~= nil and value or defaultValue
+        else
+            if value ~= nil then
+                _G[key] = value
+            else
+                _G[key] = defaultValue
+            end
+        end
 
-    StyleSettings.selectedStyle = settings.style or 1
-    pickerSize = bool(settings.picker, false)
-
-    openByDefaultPMCamera = bool(settings.openByDefaultPMCamera, false)
-    openByDefaultPMInfo = bool(settings.openByDefaultPMInfo, false)
-    openByDefaultPMPos = bool(settings.openByDefaultPMPos, false)
-    openByDefaultPMRot = bool(settings.openByDefaultPMRot, false)
-    openByDefaultPMScale = bool(settings.openByDefaultPMScale, false)
-    openByDefaultPMLook = bool(settings.openByDefaultPMLook, false)
-    openByDefaultPMSave = bool(settings.openByDefaultPMSave, false)
-
-    openByDefaultMainGen = bool(settings.openByDefaultMainGen, false)
-    openByDefaultMainPoint = bool(settings.openByDefaultMainPoint, false)
-    openByDefaultMainSpot = bool(settings.openByDefaultMainSpot, false)
-    openByDefaultMainDir = bool(settings.openByDefaultMainDir, false)
-    openByDefaultMainAdd = bool(settings.openByDefaultMainAdd, false)
-    openByDefaultMainWorld = bool(settings.openByDefaultMainWorld, false)
-    openByDefaultMainChar = bool(settings.openByDefaultMainChar, false)
-    openByDefaultMainRot = bool(settings.openByDefaultMainRot, false)
-
-    defaultLightType = settings.defaultLightType or 'Point'
-    biggerPicker = bool(settings.biggerPicker, false)
-
-    markerScale = settings.markerScale or 0.699999988079071
-    fadeTime = settings.fadeTime or 1
-    defaultCameraSpeed = settings.defaultCameraSpeed or 6
-    lightSetupState = bool(settings.lightSetupState, true)
-
-    markerOff = bool(settings.markerOff, false)
-
-    stickToggleOff = bool(settings.stickToggleOff, false)
-
+    end
 end
 
 
