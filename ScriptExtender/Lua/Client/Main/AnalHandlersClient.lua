@@ -12,7 +12,6 @@ end
 PopulateLTNOptions()
 
 
-
 function PopulateATMOptions()
     for _, name in ipairs(Utils:MapToArray(atm_templates2)) do
         table.insert(LLGlobals.AtmComboOptions, name)
@@ -51,6 +50,7 @@ function CreateSelectable(parent, tbl, lable, hardcode, hardcode2)
     tbl[lable] = lable
     Ext.IO.SaveFile('LightyLights/' .. hardcode .. '.json', Ext.Json.Stringify(tbl))
 end
+
 
 
 function PopulateLTNFavorites(imguiWindow, tbl)
@@ -102,5 +102,59 @@ end
 function PopulatePresets(imguiWindow, tbl, type)
     for _, label in pairs(tbl) do
         CreatePresetSelectable(imguiWindow, tbl, label, type)
+    end
+end
+
+
+
+---Temporal slop (don't care, too dumb for now, don't want to learn) until Norb fixes LightingTriggers
+local function stringSimilarity(a, b)
+    local score = 0
+    local len = math.min(#a, #b)
+    for i = 1, len do
+        if a:sub(i, i) == b:sub(i, i) then
+            score = score + 1
+        end
+    end
+    score = score - math.abs(#a - #b) * 0.5
+    return score
+end
+
+local function findBestLtnKey(atmKey)
+    local atmStripped = atmKey:gsub("^ATM_", "")
+
+    local bestKey = nil
+    local bestScore = -math.huge
+
+    for k,_ in pairs(ltn_templates2) do
+        local ltnStripped = k:gsub("^LTN_", "")
+        local score = stringSimilarity(atmStripped, ltnStripped)
+        if score > bestScore then
+            bestScore = score
+            bestKey = k
+        end
+    end
+
+    return bestKey
+end
+
+
+
+function SetCurrentAtmosphereAndLighting(Response)
+    for k,v in pairs(atm_templates2) do
+        if Response and v == Response.uuidAtmosphere then
+            local atmIndex = table.find(E.comboAtmosphere.Options, k) - 1
+            E.comboAtmosphere.SelectedIndex = atmIndex
+            comboAtmosphereFunc()
+
+            ---Temporal slop until Norb maps ClientLightingTrigger
+            local ltnKey = findBestLtnKey(k)
+            if ltnKey and ltn_templates2[ltnKey] then
+                local ltnIndex = table.find(E.comboLighting.Options, ltnKey) - 1
+                E.comboLighting.SelectedIndex = ltnIndex
+                comboLightingFunc()
+            end
+            break
+        end
     end
 end
