@@ -220,8 +220,61 @@ function BetterPMTab(parent)
         -- gizmoSelectDummy()
     end
 
+
+
+    E.visTemComob = parent:AddCombo('')
+        UI:Config(E.visTemComob, {
+            IDContext    = 'E.visTemComob123',
+            SelectedIndex = 1,
+            Options      = {'Not in Photo Mode'},
+            HeightLargest = true,
+            SameLine     = false,
+            OnChange     = function(e)
+                if not LLGlobals.States.inPhotoMode then return end
+                UpdatePMDummyCombo(e)
+            end,
+            OnRightClick = function(e)
+                gizmoSelectDummy()
+            end
+        })
     selectedCharacter = E.visTemComob.SelectedIndex + 1
 
+
+
+    E.btnDumPrev = parent:AddButton('<')
+        UI:Config(E.btnDumPrev, {
+            SameLine = true,
+            OnClick  = function(e)
+                UI:PrevOption(E.visTemComob)
+                UpdatePMDummyCombo()
+            end
+        })
+
+
+
+    E.btnDumNext = parent:AddButton('>')
+        UI:Config(E.btnDumNext, {
+            SameLine = true,
+            OnClick  = function(e)
+                UI:NextOption(E.visTemComob)
+                UpdatePMDummyCombo()
+            end
+        })
+
+
+
+    local txtDum = parent:AddText('Dummies')
+        UI:Config(txtDum, { SameLine = true })
+
+    E.checkDummiesPop = parent:AddCheckbox('Dummies popup')
+        UI:Config(E.checkDummiesPop, {
+            OnChange = function(e)
+                if not LLGlobals.States.inPhotoMode then E.checkDummiesPop.Checked = false return end
+                for _, v in pairs(PM.DummyWidgets) do
+                    v.Window.Visible = E.checkDummiesPop.Checked
+                end
+            end
+        })
 
 
 
