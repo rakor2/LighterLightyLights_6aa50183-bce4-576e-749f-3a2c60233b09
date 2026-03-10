@@ -1,22 +1,50 @@
 function Utils2Tab(p)
 
-    E.btnPreplaced = p:AddButton('Disable pre-placed lights')
-    E.btnPreplaced.OnClick = function (e)
-        for _, lightEnt in pairs(Ext.Entity.GetAllEntitiesWithComponent('Light')) do
-            if lightEnt.Light.Template then
-                lightEnt.Light.Template.Enabled = false
-            end
-        end
-        textPreplace.Visible = true
 
-        Helpers.Timer:OnTicks(300, function ()
-            textPreplace.Visible = false
-        end)
+    local function isLightyLight(light)
+        return light.Template and light.Template.Name:find('LLL_')
     end
 
-    textPreplace = p:AddText([[Don't forget to save/load or load]])
-    textPreplace.SameLine = true
-    textPreplace.Visible = false
+
+
+    local WorldLights = {}
+
+    local function TogglePreplacedLights(disable)
+        if disable then
+            for _, lightEnt in pairs(Ext.Entity.GetAllEntitiesWithComponent('Light')) do
+                local light = lightEnt.Light
+
+                --- rare goto PagMan
+                if isLightyLight(light) or (light.Intensity == 0 and light.Gain == 0) then goto continue end
+
+                WorldLights[lightEnt] = {
+                    Intensity = light.Intensity,
+                    Gain      = light.Gain,
+                }
+
+                light.Intensity = 0
+                light.Gain      = 0
+
+                ::continue::
+            end
+
+        else
+            for lightEnt, saved in pairs(WorldLights) do
+                local light = lightEnt.Light
+                light.Intensity = saved.Intensity
+                light.Gain      = saved.Gain
+            end
+        end
+    end
+
+
+
+    E.btnPreplaced = p:AddCheckbox('Disable pre-placed lights')
+    E.btnPreplaced.Checked = false
+    E.btnPreplaced.OnChange = function(e)
+        TogglePreplacedLights(e.Checked)
+    end
+
 
 
     --- TBD: OnChange, System or something?
