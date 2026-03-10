@@ -371,8 +371,8 @@ function UpdateElements(selectedUuid)
 
     E.slLightDirSide.Value = {Light.DirectionLightAttenuationSide or 0, 0, 0, 0}
     E.slLightDirSide2.Value = {Light.DirectionLightAttenuationSide2 or 0, 0, 0, 0}
-    local Dim = Light and Light.DirectionLightDimensions
-    E.slLightDirDim.Value = Dim and {Dim[1], Dim[2],Dim[3], 0} or {0, 0, 0, 0}
+    local Dim = Light and Light.DirectionLightDimensionsz
+    E.slLightDirDim.Value = Dim and {Dim[1], Dim[2], Dim[3], 0} or {5, 5, 15, 0}
     E.slLightOuterAngle.Value = {Light.SpotLightOuterAngle or 45, 0, 0, 0}
     E.slLightInnerAngle.Value = {Light.SpotLightInnerAngle or 1, 0, 0, 0}
     E.checkLightFill.Checked = (Light.Flags or 184) == 184
