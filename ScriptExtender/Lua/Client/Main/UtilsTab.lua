@@ -47,43 +47,40 @@ function Utils2Tab(p)
 
 
 
-    --- TBD: OnChange, System or something?
-    E.btnDisableVFX = p:AddCheckbox('Disable VFX shake and blur [PERFORMANCE HEAVY]')
-    E.btnDisableVFX.OnChange = function (e)
-        Utils:SubUnsubToTick('sub', 'LL_VFX', function()
-            if not e.Checked then Utils:SubUnsubToTick('unsub', 'LL_VFX',_) return end
-            local effects = Ext.Entity.GetAllEntitiesWithComponent('Effect')
-            for _, entity in ipairs(effects) do
-                if entity.Effect and string.find(entity.Effect.EffectName, 'VFX_') then
-                    local components = entity.Effect.Timeline.Components
-                    if components then
-                        for _, component in ipairs(components) do
-                            for property, values in pairs(component.Properties) do
-                                if values.FullName == 'Radial Blur.Opacity' then
-                                    for _, keyFrame in ipairs(values.KeyFrames) do
-                                        if keyFrame.Frames then
-                                            for _, frame in ipairs(keyFrame.Frames) do
-                                                if frame then
-                                                    local success, value = pcall(function() return frame.Value end)
-                                                    if success then
-                                                        frame.Value = 0
-                                                    end
+    E.btnDisableVFX = p:AddCheckbox('Disable VFX shake and blur')
+
+    Ext.Entity.OnCreateDeferred('Effect', function (entity)
+        if E.btnDisableVFX.Checked then
+            if entity.Effect then
+                local components = entity.Effect.Timeline.Components
+                if components then
+                    for _, component in ipairs(components) do
+                        for _, values in pairs(component.Properties) do
+                            if values.FullName == 'Radial Blur.Opacity' then
+                                for _, keyFrame in ipairs(values.KeyFrames) do
+                                    if keyFrame.Frames then
+                                        for _, frame in ipairs(keyFrame.Frames) do
+                                            if frame then
+                                                local success, _ = pcall(function() return frame.Value end)
+                                                if success then
+                                                    frame.Value = 0
                                                 end
                                             end
                                         end
                                     end
                                 end
-                                if values.FullName == 'Falloff Start-End' then
-                                    values.Min = 0
-                                    values.Max = 0
-                                end
+                            end
+                            if values.FullName == 'Falloff Start-End' then
+                                values.Min = 0
+                                values.Max = 0
                             end
                         end
                     end
                 end
             end
-        end)
-    end
+        end
+    end)
+
 
 
     E.checkLightSetup = p:AddCheckbox('Disable CharacterLight')
