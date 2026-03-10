@@ -209,6 +209,19 @@ end
 
 
 
+function UpdateAllMarkersPosition()
+    if not LLGlobals.States.allMarkersExisting then return end
+    local R_OFFSET = 90
+    for uuid, _ in pairs(LLGlobals.CreatedLightsServer) do
+        local x, y, z = table.unpack(LLGlobals.LightParametersServer[uuid].Translate)
+        local rx, ry, rz = table.unpack(LLGlobals.LightParametersServer[uuid].HumanRotation)
+        local markerUuid = LLGlobals.CreatedAllMarkers[uuid]
+        Osi.ToTransform(markerUuid, x, y, z, rx - R_OFFSET, ry, rz)
+    end
+end
+
+
+
 function UpdateBeamPosition()
     if not LLGlobals.beamUuid then return end
 
