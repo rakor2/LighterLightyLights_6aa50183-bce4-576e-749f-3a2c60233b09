@@ -769,6 +769,17 @@ end
 Ch.PlayAnimation:SetHandler(function(Data)
     DPrint(Data)
     PlayLoopingAnimation(Data, '', '555f55c9-860d-4e5d-85ac-ceae8b1dde6e', '', '','','', '')
+end)
+
+
+
+-- Ext.RegisterConsoleCommand('dagger', function()
+--     local x,y,z = table.unpack(_C().Transform.Transform.Translate)
+--     Osi.CreateAt('bfadc906-02cd-442f-beff-04d5a40543fe', x, y, z, 0, 0, '')
+-- end)
+
+
+
 Ch.GetDaggers:SetHandler(function(Data)
     local character = _C().Uuid.EntityUuid
     Osi.TemplateAddTo('bfadc906-02cd-442f-beff-04d5a40543fe', character, 1)

@@ -256,7 +256,7 @@ function Settings2Tab(p)
 
     E.comboGradients = p:AddCombo('Bone zone gradient')
         UI:Config(E.comboGradients, {
-            Options = {'Rainbow','Fire','Ice','Forest','Daniela','Gold','Void','Mono'},
+            Options = {'Rainbow','Ice','Forest','Daniela','Gold','Void','Mono'},
             SelectedIndex = defaultGradient - 1 or 0,
             OnChange = function(e)
                 defaultGradient = e.SelectedIndex + 1
@@ -267,6 +267,7 @@ function Settings2Tab(p)
 
     p:AddText([[    Gradients are for readability, choose the one that is most readable,
     not fashionable]])
+
 
 
     p:AddSeparatorText('Mod')

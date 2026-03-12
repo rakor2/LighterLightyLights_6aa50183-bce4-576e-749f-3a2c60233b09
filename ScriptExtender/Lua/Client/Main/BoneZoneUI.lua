@@ -184,7 +184,7 @@ function BZAgreed()
 
     E.btnTposeQSAT = bz:AddButton('TPose [QSAT SLOT 10]')
         UI:Config(E.btnTposeQSAT, {
-            SameLine = true,
+            SameLine = false,
             OnClick = function(e)
                 if not Mods.QSAT then return end
 
@@ -198,7 +198,6 @@ function BZAgreed()
                 end
             end
         })
-
 
 
 
@@ -224,6 +223,11 @@ function BZAgreed()
     bz:AddText([[    You can change gradient color in the settings.]])
 
 
+
+    bz:AddSeparatorText('Garbo 2')
+
+
+
     E.btnResetBpnes = bz:AddButton('Reset all')
     local resetId = UI:CreateConfirmButton(bz, E.btnResetBpnes, 'Reset all', function()
         ResetAllBones()
@@ -234,7 +238,6 @@ function BZAgreed()
                 UI:Confirm(E.btnResetBpnes, resetId, 1000)
             end
         })
-
 
 
 

@@ -675,6 +675,36 @@ end
 
 
 
+function ResetBoneZoneColors()
+    Imgui.ClearChildren(E.boneZone)
+
+    ---TBD: Should have put all elements to a sub table smhing my head
+    E.btnPose          = nil
+    E.btnX2            = nil
+    E.btnUpd           = nil
+    E.slBZ             = nil
+    E.collapseGroup    = nil
+    E.treeCategory     = nil
+    E.collapseBone     = nil
+
+    E.treeTrans        = nil
+    E.treeRot          = nil
+    E.treeScale        = nil
+
+    E.btnX             = nil
+    E.catTree          = nil
+
+    Helpers.Timer:OnTicks(10, function ()
+        BoneZoneTab(E.boneZone)
+    end)
+
+    Helpers.Timer:OnTicks(20, function()
+        ActiveGradient = Style.Gradients[E.comboGradients.SelectedIndex + 1]
+    end)
+end
+
+
+
 function CreateContolsForEachBoneGroupAndColorize()
     BoneState = {}
     BoneTreeColors = {}
@@ -828,7 +858,6 @@ end
 
 
 function CreatePoseButton(catName, poseName)
-
     if E.btnPose[poseName] then return false end
     if not E.catTree and not E.catTree[catName] then return fasle end
 
@@ -924,7 +953,6 @@ function FilterPoses(searchText)
         end
     end
 end
-
 
 
 
