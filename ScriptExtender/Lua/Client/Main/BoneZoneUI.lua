@@ -78,6 +78,109 @@ function BZAgreed()
     E.checkAutoTail = bz:AddCheckbox('Disable tail physics')
 
 
+    bz:AddSeparatorText('Attachies')
+
+
+    E.btnGetDaggers = bz:AddButton([[Get Daniela's daggers]])
+        UI:Config(E.btnGetDaggers, {
+            OnClick = function(e)
+                Ch.GetDaggers:SendToServer({})
+            end
+        })
+
+
+
+    --- Temporal garbo
+    --- 2e8cc79e-ca32-e196-0bb1-a6084c1328bb
+
+
+
+    local function scaleAttachment(hand, value)
+        local character = getSelectedDummy()
+        local entity = LLGlobals.AttachedEntities[character] and LLGlobals.AttachedEntities[character][hand]
+        if entity and entity.Visual then
+            entity.Visual.Visual:SetWorldScale({value, value, value})
+        end
+    end
+
+
+
+    local function tickAttach(e, hand)
+        local character = getSelectedDummy()
+        local uuid = (hand == 'Main') and E.inputAttachItem.Text or E.inputAttachItemOff.Text
+        local key  = 'LL_Attachies_' .. hand .. '_' .. tostring(character)
+
+        if e.Checked then
+            if not LLGlobals.States.inPhotoMode then e.Checked = false return end
+
+            Utils:SubUnsubToTick(1, key, function()
+                if LLGlobals.States.inPhotoMode then
+                    AttachObjectToHand(hand, uuid, character)
+                else
+                    Utils:SubUnsubToTick(0, key, _)
+                    if getSelectedDummy() == character then
+                        e.Checked = false
+                    end
+                end
+            end)
+        else
+            Utils:SubUnsubToTick(0, key, _)
+        end
+    end
+
+
+
+    E.checkAttachies = bz:AddCheckbox('Attach item main')
+        UI:Config(E.checkAttachies, {
+            OnChange = function(e)
+                if not LLGlobals.States.inPhotoMode then e.Checked = false return end
+                tickAttach(e, 'Main')
+            end
+        })
+
+
+
+    E.inputAttachItem = bz:AddInputText('Item UUID main')
+    E.inputAttachItem.SameLine = false
+
+
+
+    E.slAttachScale = bz:AddSlider('Scale main', 1, 0.1, 2, 1)
+        UI:Config(E.slAttachScale, {
+            OnChange = function(e)
+                scaleAttachment('Main', e.Value[1])
+            end
+        })
+
+
+
+    E.checkAttachiesOff = bz:AddCheckbox('Attach item off')
+    UI:Config(E.checkAttachiesOff, {
+        OnChange = function(e)
+            if not LLGlobals.States.inPhotoMode then e.Checked = false return end
+            tickAttach(e, 'Off')
+        end
+    })
+
+
+
+    E.inputAttachItemOff = bz:AddInputText('Item UUID off')
+    E.inputAttachItemOff.SameLine = false
+
+
+
+    E.slAttachScaleOff = bz:AddSlider('Scale off', 1, 0.1, 2, 1)
+        UI:Config(E.slAttachScaleOff, {
+            OnChange = function(e)
+                scaleAttachment('Main', e.Value[1])
+            end
+        })
+
+
+
+    bz:AddSeparatorText('Garbo')
+
+
 
     E.btnTposeQSAT = bz:AddButton('TPose [QSAT SLOT 10]')
         UI:Config(E.btnTposeQSAT, {

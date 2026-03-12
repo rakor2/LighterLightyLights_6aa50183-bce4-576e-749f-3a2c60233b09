@@ -1063,3 +1063,37 @@ function CreateIKControls(parent, IKChain)
         CreateIKSliders(label, IKChain.bones, 3, 'RZ', Value)
     end
 end
+
+
+
+LLGlobals.AttachEntity = {}
+
+
+
+function AttachObjectToHand(hand, uuid, character)
+    LLGlobals.AttachEntity[character] = LLGlobals.AttachEntity[character] or {}
+
+    local s, err = pcall(function()
+        LLGlobals.AttachEntity[character][hand] = Ext.Entity.Get(uuid)
+    end)
+
+    if err then DPrint('No UUID or UUID is invalid') end
+
+    if s then
+        local eq = character.ClientEquipmentVisuals.Equipment
+        if eq.MeleeMainHand and eq.MeleeMainHand.SubVisuals[1] then
+            local DummyTransform
+            if hand == 'Main' then
+                DummyTransform = eq.MeleeMainHand.SubVisuals[1].Visual.Visual.WorldTransform
+            elseif hand == 'Off' then
+                DummyTransform = eq.MeleeOffHand.SubVisuals[1].Visual.Visual.WorldTransform
+            end
+            LLGlobals.AttachEntity[character][hand].Visual.Visual:SetWorldTranslate(DummyTransform.Translate)
+            LLGlobals.AttachEntity[character][hand].Visual.Visual:SetWorldRotate(DummyTransform.RotationQuat)
+        end
+    end
+end
+
+
+
+--- 2e8cc79e-ca32-e196-0bb1-a6084c1328bb

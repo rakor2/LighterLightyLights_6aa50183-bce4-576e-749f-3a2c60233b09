@@ -42,6 +42,7 @@ local Channels = {
 	'CurrentResource',
 
 	'PlayAnimation',
+	'GetDaggers',
 }
 
 for _, channel in pairs(Channels) do
