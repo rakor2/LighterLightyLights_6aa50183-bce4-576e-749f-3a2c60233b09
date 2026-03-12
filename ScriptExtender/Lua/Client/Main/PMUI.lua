@@ -262,7 +262,7 @@ function BetterPMTab(parent)
     E.visTemComob = parent:AddCombo('')
         UI:Config(E.visTemComob, {
             IDContext    = 'E.visTemComob123',
-            SelectedIndex = 1,
+            SelectedIndex = 0,
             Options      = {'Not in Photo Mode'},
             HeightLargest = true,
             SameLine     = false,
@@ -950,118 +950,6 @@ function BetterPMTab(parent)
         })
 
     E.hornsRotCollapse:AddSeparator()
-
-
-
-    --LookAt
-
-
-    -- E.collapseLookAt = parent:AddCollapsingHeader('Look at')
-    -- E.collapseLookAt.IDContext = 'wwwswdawdwdwd'
-    -- E.collapseLookAt.DefaultOpen = openByDefaultPMLook
-
-
-
-    -- local targetPos
-
-    -- E.btnMoveToCamLookAt = E.collapseLookAt:AddButton('Move to cam')
-    -- E.btnMoveToCamLookAt.SameLine = false
-    -- E.btnMoveToCamLookAt.OnClick = function ()
-    --     targetPos = Camera:GetActiveCamera().Transform.Transform.Translate
-    --     Ext.Net.PostMessageToServer('LL_MoveLookAtTargetToCam', Ext.Json.Stringify(targetPos))
-    -- end
-
-
-
-    -- E.btnCreateLookAt = E.collapseLookAt:AddButton('Marker')
-    -- E.btnCreateLookAt.SameLine = true
-    -- E.btnCreateLookAt.OnClick = function ()
-    --     Ext.Net.PostMessageToServer('LL_CreateLookAtTarget', '')
-    -- end
-
-
-    -- E.btnDeleteLookAt = E.collapseLookAt:AddButton('Delete')
-    -- E.btnDeleteLookAt.SameLine = true
-    -- E.btnDeleteLookAt.OnClick = function ()
-    --     Ext.Net.PostMessageToServer('LL_DeleteLookAtTarget', '')
-    -- end
-
-
-
-    -- local lookAtSlDefault = 0.1
-
-
-
-    -- E.slLookAt = E.collapseLookAt:AddSlider('X Y Z', 0, -lookAtSlDefault, lookAtSlDefault, 1)
-    -- E.slLookAt.IDContext = '1312sss31asdad'
-    -- E.slLookAt.SameLine = false
-    -- E.slLookAt.Components = 3
-    -- E.slLookAt.Value = {0, 0, 0, 0}
-    -- E.slLookAt.OnChange = function()
-    --     targetPos = targetPos or _C().Transform.Transform.Translate
-    --     targetPos[1] = targetPos[1] + E.slLookAt.Value[1]
-    --     targetPos[2] = targetPos[2] + E.slLookAt.Value[2]
-    --     targetPos[3] = targetPos[3] + E.slLookAt.Value[3]
-    --     Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1].PhotoModeCameraTransform.Transform.Translate = {targetPos[1],targetPos[2],targetPos[3]}
-    --     local data = {
-    --         x = targetPos[1],
-    --         y = targetPos[2],
-    --         z = targetPos[3],
-    --     }
-    --     Ext.Net.PostMessageToServer('LL_MoveLookAtTarget', Ext.Json.Stringify(data))
-    --     E.slLookAt.Value = {0, 0, 0, 0}
-    -- end
-
-
-
-    -- E.btnUpdateCamPos = E.collapseLookAt:AddCheckbox([[Head doesn't follow the camera]])
-    -- E.btnUpdateCamPos.SameLine = false
-    -- E.btnUpdateCamPos.OnChange = function (e)
-
-    --     if not Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1] then e.Checked = false return end
-
-    --     if e.Checked then
-    --         Utils:SubUnsubToTick('sub', 'LL_LookAt', function ()
-    --             if not Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1] then
-    --                 Utils:SubUnsubToTick('unsub','LL_LookAt', _)
-    --                 e.Checked = false
-    --                 return
-    --             end
-    --             targetPos = targetPos or _C().Transform.Transform.Translate
-    --             Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1].PhotoModeCameraTransform.Transform.Translate = {targetPos[1],targetPos[2],targetPos[3]}
-    --         end)
-    --     else
-    --         if not Utils.subID and Utils.subID['LL_LookAt'] then
-    --             e.Checked = false
-    --             return
-    --         end
-    --         Utils:SubUnsubToTick('unsub','LL_LookAt', _)
-    --         e.Checked = false
-    --     end
-
-    -- end
-
-
-
-    -- E.checkFollowIGCS = E.collapseLookAt:AddCheckbox('Head does follow IGCS')
-    -- E.checkFollowIGCS.OnChange = function (e)
-    --     if e.Checked then
-
-    --         if not Ext.Entity.GetAllEntitiesWithComponent('PhotoModeCameraTransform')[1] then
-    --             e.Checked = false
-    --             return
-    --         end
-
-    --         StartFollowIGCS()
-    --     else
-    --         StopFollowIGCS()
-    --     end
-    -- end
-
-
-
-    -- E.collapseLookAt:AddSeparator()
-
 
 
     E.saveLoadCollapse = parent:AddCollapsingHeader('Save/Load postition')
