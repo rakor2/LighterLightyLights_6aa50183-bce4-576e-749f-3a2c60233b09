@@ -40,16 +40,18 @@ function Utils2Tab(p)
 
 
     E.btnPreplaced = p:AddCheckbox('Disable pre-placed lights')
-    E.btnPreplaced.Checked = false
-    E.btnPreplaced.OnChange = function(e)
-        TogglePreplacedLights(e.Checked)
-    end
+        UI:Config(E.btnPreplaced, {
+            Checked  = false,
+            OnChange = function(e)
+                TogglePreplacedLights(e.Checked)
+            end
+        })
 
 
 
     E.btnDisableVFX = p:AddCheckbox('Disable VFX shake and blur')
 
-    Ext.Entity.OnCreateDeferred('Effect', function (entity)
+    Ext.Entity.OnCreateDeferred('Effect', function(entity)
         if E.btnDisableVFX.Checked then
             if entity.Effect then
                 local components = entity.Effect.Timeline.Components
@@ -84,9 +86,11 @@ function Utils2Tab(p)
 
 
     E.checkLightSetup = p:AddCheckbox('Disable CharacterLight')
-    E.checkLightSetup.Checked = lightSetupState
-    E.checkLightSetup.OnChange = function (e)
-        CharacterLightSetupState(e.Checked)
-    end
+        UI:Config(E.checkLightSetup, {
+            Checked  = lightSetupState,
+            OnChange = function(e)
+                CharacterLightSetupState(e.Checked)
+            end
+        })
 
 end
