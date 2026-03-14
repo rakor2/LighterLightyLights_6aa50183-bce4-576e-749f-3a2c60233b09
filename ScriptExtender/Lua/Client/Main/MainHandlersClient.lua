@@ -173,73 +173,69 @@ end
 
 lightType = defaultLightType
 
-function CreateLight()
-    if LLGlobals.States.allowLightCreation then
-        LLGlobals.States.allowLightCreation = false
-        E.btnCreate2.Disabled = true
-        local Position = LLGlobals.SourceTranslate
-        local Data = {
-            lightType = lightType or 'Point',
-            Position = Position
-        }
+function CreateLight(uuid, Position)
+    if not _GLL.States.allowLightCreation then return end
 
-        Ch.CreateLight:RequestToServer(Data, function (Response)
-            if Response then
-                LLGlobals.CreatedLightsServer = Response[1]
-                LLGlobals.selectedUuid = Response[2]
-                LLGlobals.markerUuid = Response[3]
+    _GLL.States.allowLightCreation = false
+    E.btnCreate2.Disabled = true
 
-                Helpers.Timer:OnTicks(10, function ()
-                    LLGlobals.LightParametersClient[LLGlobals.selectedUuid] =  {}
-                    LLGlobals.selectedEntity = Ext.Entity.Get(LLGlobals.selectedUuid)
+    local Position = Position or _GLL.SourceTranslate
+    local Data = {
+        uuid = uuid or nil,
+        lightType = lightType or 'Point',
+        Position  = Position,
+    }
 
-                    Helpers.Timer:OnTicks(8, function ()
-                        if lightType == 'Spotlight' then
-                            SetLightType(1)
-                        elseif lightType == 'Directional' then
-                            SetLightType(2)
-                        else
-                            SetLightType(0)
-                        end
-                        LLGlobals.selectedLightType = lightType --TBD
-                    end)
+    Ch.CreateLight:RequestToServer(Data, function(Response)
+        if not Response then
+            _GLL.States.allowLightCreation = true
+            E.btnCreate2.Disabled = false
+            return
+        end
 
-                    RegisterNewLight(LLGlobals.selectedUuid, lightType)
+        _GLL.CreatedLightsServer = Response[1]
+        _GLL.selectedUuid        = Response[2]
+        _GLL.markerUuid          = Response[3]
 
-                    if stickToggleOff and Utils.subID and Utils.subID['Stick'] then
-                        E.checkStick.Checked = false
-                        StickToCamera()
-                    end
+        Helpers.Timer:OnTicks(10, function()
+            _GLL.LightParametersClient[_GLL.selectedUuid] = {}
+            _GLL.selectedEntity = Ext.Entity.Get(_GLL.selectedUuid)
 
-                    Helpers.Timer:OnTicks(10, function ()
-                        local x,y,z = table.unpack(Position)
-                        UpdateElements(LLGlobals.selectedUuid)
-                        UpdateTranformInfo(x, y, z, 90, 0, 0)
-                        if markerOff then
-                            ToggleMarker(LLGlobals.markerUuid)
-                        end
-                    end)
-                end)
-            else
-                LLGlobals.States.allowLightCreation = true
-                E.btnCreate2.Disabled = false
+            Helpers.Timer:OnTicks(8, function()
+                local typeMap = { Spotlight = 1, Directional = 2 }
+                SetLightType(typeMap[lightType] or 0)
+                _GLL.selectedLightType = lightType
+            end)
+
+            RegisterNewLight(_GLL.selectedUuid, lightType)
+
+            if stickToggleOff and Utils.subID and Utils.subID['Stick'] then
+                E.checkStick.Checked = false
+                StickToCamera()
             end
+
+            Helpers.Timer:OnTicks(10, function()
+                local x, y, z = table.unpack(Position)
+                UpdateElements(_GLL.selectedUuid)
+                UpdateTranformInfo(x, y, z, 90, 0, 0)
+                if markerOff then ToggleMarker(_GLL.markerUuid) end
+            end)
         end)
-    end
+    end)
 end
 
 
 
 --- TBD: remove some DUPLICATIONS HAHAHAHAH GET IT????? LMAOOOOOOOOOOOOOOOOOO
 function DuplicateLight()
-    local prevoiusUuid = LLGlobals.selectedUuid
-    local OriginalLight = LLGlobals.LightParametersClient[prevoiusUuid]
+    local prevoiusUuid = _GLL.selectedUuid
+    local OriginalLight = _GLL.LightParametersClient[prevoiusUuid]
 
     Ch.DuplicateLight:RequestToServer(Data, function (Response)
         if Response then
-            LLGlobals.CreatedLightsServer = Response[1]
-            LLGlobals.selectedUuid = Response[2]
-            LLGlobals.LightParametersClient[LLGlobals.selectedUuid] = LLGlobals.LightParametersClient[LLGlobals.selectedUuid] or {}
+            _GLL.CreatedLightsServer = Response[1]
+            _GLL.selectedUuid = Response[2]
+            _GLL.LightParametersClient[_GLL.selectedUuid] = _GLL.LightParametersClient[_GLL.selectedUuid] or {}
             local lightTypeOld = OriginalLight.LightType
 
             if lightTypeOld == 1 then
@@ -250,10 +246,10 @@ function DuplicateLight()
                 lightTypeOld = 'Point'
             end
 
-            RegisterNewLight(LLGlobals.selectedUuid, lightTypeOld)
+            RegisterNewLight(_GLL.selectedUuid, lightTypeOld)
 
             Helpers.Timer:OnTicks(15, function ()
-                LLGlobals.selectedEntity = Ext.Entity.Get(LLGlobals.selectedUuid)
+                _GLL.selectedEntity = Ext.Entity.Get(_GLL.selectedUuid)
 
                 --- TBD: perhaps as a separate function? But what's the point?
 
@@ -286,7 +282,7 @@ function DuplicateLight()
             Helpers.Timer:OnTicks(16, function ()
                 local x,y,z = table.unpack(Response[3].Translate)
                 local rx,ry,rz = table.unpack(Response[3].HumanRotation)
-                UpdateElements(LLGlobals.selectedUuid)
+                UpdateElements(_GLL.selectedUuid)
                 UpdateTranformInfo(x, y, z, rx, ry, rz)
             end)
         end
