@@ -1,51 +1,55 @@
-local ClientState = {}
-local ServerState = {}
-local SceneState = {}
+_GLL.Scene = {}
+_GLL.Scene.Client = {}
+_GLL.Scene.Server = {}
 
 
 
-Ch.SceneSave:SetHandler(function (Data)
-    local ClientState = Data
-
-    ServerState = {
-        SV_CreatedLightsServer = LLGlobals.CreatedLightsServer,
-        SV_LightParametersServer = LLGlobals.LightParametersServer,
-        SV_markerUuid = LLGlobals.markerUuid,
-        SV_selectedUuid = LLGlobals.selectedUuid,
-        SV_GoboLightMap = LLGlobals.GoboLightMap,
-        SV_GoboDistances = LLGlobals.GoboDistances,
+Ch.SceneSave:SetHandler(function(Data)
+    _GLL.Scene.Client = Data
+    _GLL.Scene.Server = {
+        CreatedLightsServer   = _GLL.CreatedLightsServer,
+        LightParametersServer = _GLL.LightParametersServer,
+        OrbitParams           = _GLL.OrbitParams,
+        markerUuid            = _GLL.markerUuid,
+        selectedUuid          = _GLL.selectedUuid,
+        GoboLightMap          = _GLL.GoboLightMap,
+        GoboDistances         = _GLL.GoboDistances,
     }
-
-    SceneState = {
-        ClientState = ClientState,
-        ServerState = ServerState
-    }
-
-
-    local json = Ext.Json.Stringify(SceneState)
+    local json = Ext.Json.Stringify(_GLL.Scene)
     Ext.IO.SaveFile("LightyLights/SceneState.json", json)
-
-    DDump(ClientState)
-    DDump(ServerState)
-
 end)
 
 
 
-Ch.SceneLoad:SetRequestHandler(function (Data)
-
+Ch.SceneLoad:SetRequestHandler(function(Data)
     local json = Ext.IO.LoadFile("LightyLights/SceneState.json")
-    SceneState = Ext.Json.Parse(json)
-    ServerState = SceneState.ServerState
+    _GLL.Scene = Ext.Json.Parse(json)
+    local gsc = _GLL.Scene.Client
+    local gss = _GLL.Scene.Server
 
-    -- DDump(SceneState.ServerState)
+    Helpers.Timer:OnTicks(1, function()
+        for i, savedEntry in ipairs(gsc.LightsUuidNameMap) do
+            local oldUuid  = savedEntry.uuid
+            local newLight = Data[i]
 
-    LLGlobals.CreatedLightsServer = ServerState.SV_CreatedLightsServer
-    LLGlobals.LightParametersServer = ServerState.SV_LightParametersServer
-    LLGlobals.markerUuid = ServerState.SV_markerUuid
-    LLGlobals.selectedUuid = ServerState.SV_selectedUuid
-    LLGlobals.GoboLightMap = ServerState.SV_GoboLightMap
-    LLGlobals.GoboDistances = ServerState.SV_GoboDistances
+            local newUuid = newLight.uuid
+            local lps = gss.LightParametersServer[oldUuid]
 
-    return SceneState.ClientState
+            local x, y, z    = table.unpack(lps.Translate)
+            local rx, ry, rz = table.unpack(lps.HumanRotation)
+
+            _GLL.LightParametersServer[newUuid]               = _GLL.LightParametersServer[newUuid] or {}
+            _GLL.LightParametersServer[newUuid].Translate     = lps.Translate
+            _GLL.LightParametersServer[newUuid].RotationQuat  = lps.RotationQuat
+            _GLL.LightParametersServer[newUuid].HumanRotation = lps.HumanRotation
+            _GLL.OrbitParams[newUuid]                         = gss.OrbitParams[oldUuid]
+
+            Osi.ToTransform(newUuid, x, y, z, rx, ry, rz)
+
+            _GLL.selectedUuid = newUuid
+            UpdateMarkerPosition()
+        end
+    end)
+
+    return _GLL.Scene.Client
 end)
