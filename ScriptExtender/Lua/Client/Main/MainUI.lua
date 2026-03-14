@@ -1,33 +1,33 @@
 --[[
 Light Setup on level change
 ]]
-LLGlobals.CreatedLightsClient = {} --UNUSED
+_GLL.CreatedLightsClient = {} --UNUSED
 
-LLGlobals.LightsUuidNameMap = {}
-LLGlobals.LightsNames = {}
-LLGlobals.LightParametersClient = {}
+_GLL.LightsUuidNameMap = {}
+_GLL.LightsNames = {}
+_GLL.LightParametersClient = {}
 
-LLGlobals.States = LLGlobals.States or {}
-LLGlobals.States.allowLightCreation = {}
+_GLL.States = _GLL.States or {}
+_GLL.States.allowLightCreation = {}
 
 ---@class Settings
 Settings = Settings or {}
 
 ---@type string EntityUuid
-LLGlobals.selectedUuid = nil
+_GLL.selectedUuid = nil
 
 ---@type EntityHandle
-LLGlobals.selectedEntity = nil
+_GLL.selectedEntity = nil
 
 ---@type LightComponent
-LLGlobals.selectedLightEntity = nil
+_GLL.selectedLightEntity = nil
 
 
 DEFAULT_MARKER_SCALE = 0.699999988079071
 
 nameIndex = 0
 
-LLGlobals.syncedSelectedIndex = 0
+_GLL.syncedSelectedIndex = 0
 
 ---@class Elements
 E = {
@@ -62,21 +62,21 @@ IMGUI:AntiStupiditySystem()
 
 
 
-if Mods.GizmoLib then
-    function initGizmoLibColors()
-        local tb = GL_GLOBALS.TransformToolbar
-        tb.TopToolBar:SetColor("WindowBg", Style.Colors.windowBg)
-        tb.TopToolBar:SetColor("Text", Style.Colors.textColor)
-        tb.TopToolBar:SetColor("FrameBg", Style.Colors.frameBg)
-        tb.TopToolBar:SetColor("TextDisabled", Style.Colors.textDisabled)
-        tb.TopToolBar:SetColor("Button", Style.Colors.button)
+-- if Mods.GizmoLib then
+--     function initGizmoLibColors()
+--         local tb = GL_GLOBALS.TransformToolbar
+--         tb.TopToolBar:SetColor("WindowBg", Style.Colors.windowBg)
+--         tb.TopToolBar:SetColor("Text", Style.Colors.textColor)
+--         tb.TopToolBar:SetColor("FrameBg", Style.Colors.frameBg)
+--         tb.TopToolBar:SetColor("TextDisabled", Style.Colors.textDisabled)
+--         tb.TopToolBar:SetColor("Button", Style.Colors.button)
 
-        tb.CloseButton:SetColor("Button", Style.Colors.special)
-        tb.CloseButton:SetColor("ButtonActive", Style.Colors.buttonActive)
-        tb.CloseButton:SetColor("ButtonHovered", Style.Colors.buttonHovered)
-        Mods.GizmoLib.MCM.Set("boxsel_border_color", Style.Colors.special)
-    end
-end
+--         tb.CloseButton:SetColor("Button", Style.Colors.special)
+--         tb.CloseButton:SetColor("ButtonActive", Style.Colors.buttonActive)
+--         tb.CloseButton:SetColor("ButtonHovered", Style.Colors.buttonHovered)
+--         Mods.GizmoLib.MCM.Set("boxsel_border_color", Style.Colors.special)
+--     end
+-- end
 
 
 
@@ -124,18 +124,18 @@ function LLMCM(mt2)
                     API.Rebuild('LL2', 'Lighty Lights Elucidator')
                 end
 
-                if Mods.GizmoLib then
-                    initGizmoLibColors()
-                end
+                -- if Mods.GizmoLib then
+                --     initGizmoLibColors()
+                -- end
 
                 SettingsSave()
             end
         })
 
 
-    if Mods.GizmoLib then
-        initGizmoLibColors()
-    end
+    -- if Mods.GizmoLib then
+    --     initGizmoLibColors()
+    -- end
 
 
     ApplyStyle(mw, StyleSettings.selectedStyle)
@@ -181,8 +181,8 @@ function MainWindow(mw)
     E.utilsTab = mainTabBar:AddTabItem('Useful')
     Utils2Tab(E.utilsTab)
 
-    -- saverTab = mainTabBar:AddTabItem('Saver')
-    -- Saver2Tab(saverTab)
+    saverTab = mainTabBar:AddTabItem('Saver')
+    Saver2Tab(saverTab)
 
     E.settingsTab = mainTabBar:AddTabItem('Settings')
     Settings2Tab(E.settingsTab)
@@ -322,7 +322,7 @@ end)
 
 
 MCM.SetKeybindingCallback('ll_toggle_marker', function()
-    ToggleMarker(LLGlobals.markerUuid)
+    ToggleMarker(_GLL.markerUuid)
 end)
 
 
@@ -381,7 +381,7 @@ MCM.SetKeybindingCallback('ll_toggle_bz_symm', function()
     local state = E.checkSymm.Checked
     state = not state
 
-    LLGlobals.States.bzSymmetry = state
+    _GLL.States.bzSymmetry = state
     E.checkSymm.Checked = state
 end)
 
@@ -470,12 +470,12 @@ function MainTab(p)
 
     E.comboIHateCombos = p:AddCombo('')
         UI:Config(E.comboIHateCombos, {
-            Options       = LLGlobals.LightsNames,
-            SelectedIndex = LLGlobals.syncedSelectedIndex,
+            Options       = _GLL.LightsNames,
+            SelectedIndex = _GLL.syncedSelectedIndex,
             OnChange      = function(e)
-                LLGlobals.syncedSelectedIndex = E.comboIHateCombos.SelectedIndex
-                E.comboIHateCombos2.SelectedIndex = LLGlobals.syncedSelectedIndex
-                E.checkGroup.Checked = LLGlobals.LightsToInclude[getSelectedUuid()] or false
+                _GLL.syncedSelectedIndex = E.comboIHateCombos.SelectedIndex
+                E.comboIHateCombos2.SelectedIndex = _GLL.syncedSelectedIndex
+                E.checkGroup.Checked = _GLL.LightsToInclude[getSelectedUuid()] or false
                 SelectLight()
             end
         })
@@ -490,9 +490,9 @@ function MainTab(p)
         else
             element.SelectedIndex = element.SelectedIndex - 1
         end
-        LLGlobals.syncedSelectedIndex = element.SelectedIndex
-        E.comboIHateCombos2.SelectedIndex = LLGlobals.syncedSelectedIndex
-        E.checkGroup.Checked = LLGlobals.LightsToInclude[getSelectedUuid()] or false
+        _GLL.syncedSelectedIndex = element.SelectedIndex
+        E.comboIHateCombos2.SelectedIndex = _GLL.syncedSelectedIndex
+        E.checkGroup.Checked = _GLL.LightsToInclude[getSelectedUuid()] or false
         SelectLight()
     end
 
@@ -503,7 +503,7 @@ function MainTab(p)
             IDContext = 'adawd',
             SameLine  = true,
             OnClick   = function(e)
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
                 prevOptionBtn()
             end
         })
@@ -518,9 +518,9 @@ function MainTab(p)
         else
             element.SelectedIndex = element.SelectedIndex + 1
         end
-        LLGlobals.syncedSelectedIndex = element.SelectedIndex
-        E.comboIHateCombos2.SelectedIndex = LLGlobals.syncedSelectedIndex
-        E.checkGroup.Checked = LLGlobals.LightsToInclude[getSelectedUuid()] or false
+        _GLL.syncedSelectedIndex = element.SelectedIndex
+        E.comboIHateCombos2.SelectedIndex = _GLL.syncedSelectedIndex
+        E.checkGroup.Checked = _GLL.LightsToInclude[getSelectedUuid()] or false
         SelectLight()
     end
 
@@ -531,7 +531,7 @@ function MainTab(p)
             IDContext = 'adadwwd',
             SameLine  = true,
             OnClick   = function(e)
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
                 nextOptionBtn()
             end
         })
@@ -556,11 +556,11 @@ function MainTab(p)
             SameLine = true,
             Disabled = false,
             OnClick  = function()
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
 
                 local lightEntity = getSelectedLightEntity()
 
-                for k, light in pairs(LLGlobals.LightsUuidNameMap) do
+                for k, light in pairs(_GLL.LightsUuidNameMap) do
                     if light.name == E.comboIHateCombos.Options[E.comboIHateCombos.SelectedIndex + 1] then
                         local index = light.nameIndex
                         --- TBD: temporary
@@ -583,24 +583,24 @@ function MainTab(p)
     ER.btnDelete = p:AddButton('Delete')
         UI:Config(ER.btnDelete, {
             OnClick = function()
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
 
-                local uuidToDelete = LLGlobals.selectedUuid
+                local uuidToDelete = _GLL.selectedUuid
                 local selectedName = getSelectedLightName()
 
                 Ch.DeleteGobo:SendToServer('Single')
-                LLGlobals.CreatedLightsServer[uuidToDelete]    = nil
-                LLGlobals.LightParametersClient[uuidToDelete]  = nil
+                _GLL.CreatedLightsServer[uuidToDelete]    = nil
+                _GLL.LightParametersClient[uuidToDelete]  = nil
 
-                for k, light in pairs(LLGlobals.LightsUuidNameMap) do
+                for k, light in pairs(_GLL.LightsUuidNameMap) do
                     if light.name == selectedName then
-                        table.remove(LLGlobals.LightsUuidNameMap, k)
+                        table.remove(_GLL.LightsUuidNameMap, k)
                     end
                 end
 
-                for k, light in pairs(LLGlobals.LightsNames) do
+                for k, light in pairs(_GLL.LightsNames) do
                     if light == selectedName then
-                        LLGlobals.LightsNames[k] = nil
+                        _GLL.LightsNames[k] = nil
                     end
                 end
 
@@ -616,22 +616,22 @@ function MainTab(p)
                     if uuid then
                         SelectLight()
                     else
-                        LLGlobals.selectedUuid   = nil
-                        LLGlobals.selectedEntity = nil
-                        LLGlobals.markerUuid     = nil
-                        LLGlobals.markerEntity   = nil
+                        _GLL.selectedUuid   = nil
+                        _GLL.selectedEntity = nil
+                        _GLL.markerUuid     = nil
+                        _GLL.markerEntity   = nil
                     end
                 else
-                    LLGlobals.selectedUuid   = nil
-                    LLGlobals.selectedEntity = nil
-                    LLGlobals.markerUuid     = nil
-                    LLGlobals.markerEntity   = nil
+                    _GLL.selectedUuid   = nil
+                    _GLL.selectedEntity = nil
+                    _GLL.markerUuid     = nil
+                    _GLL.markerEntity   = nil
                     nameIndex = 0
                     UpdateTranformInfo(0, 0, 0, 0, 0, 0)
                 end
 
                 Ch.DeleteLight:SendToServer(uuidToDelete)
-                Ch.SelectedLight:SendToServer(LLGlobals.selectedUuid)
+                Ch.SelectedLight:SendToServer(_GLL.selectedUuid)
             end
         })
 
@@ -662,14 +662,14 @@ function MainTab(p)
                 Ch.DeleteGobo:SendToServer('All')
                 Ch.DeleteLight:SendToServer('All')
 
-                LLGlobals.CreatedLightsServer  = {}
-                LLGlobals.LightsUuidNameMap    = {}
-                LLGlobals.LightsNames          = {}
-                LLGlobals.LightParametersClient = {}
-                LLGlobals.selectedUuid         = nil
-                LLGlobals.selectedEntity       = nil
-                LLGlobals.markerUuid           = {}
-                LLGlobals.markerEntity         = nil
+                _GLL.CreatedLightsServer  = {}
+                _GLL.LightsUuidNameMap    = {}
+                _GLL.LightsNames          = {}
+                _GLL.LightParametersClient = {}
+                _GLL.selectedUuid         = nil
+                _GLL.selectedEntity       = nil
+                _GLL.markerUuid           = {}
+                _GLL.markerEntity         = nil
                 nameIndex = 0
 
                 Ch.CurrentEntityTransform:SendToServer(nil)
@@ -695,7 +695,7 @@ function MainTab(p)
             SameLine = true,
             Disabled = false,
             OnClick  = function()
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
                 DuplicateLight()
                 E.checkGroup.Checked = false
             end
@@ -724,14 +724,14 @@ function MainTab(p)
             local scattering2 = not scattering
 
             if flag2 then
-                local savedFlag = LLGlobals.LightParametersClient[selectedUuid].LightChannelFlag
+                local savedFlag = _GLL.LightParametersClient[selectedUuid].LightChannelFlag
                 lightEntity.LightChannelFlag = (savedFlag ~= nil) and savedFlag or 255
             else
                 lightEntity.LightChannelFlag = 0
             end
 
-            if scattering2 and LLGlobals.LightParametersClient[selectedUuid].ScatteringIntensityScale then
-                local value = LLGlobals.LightParametersClient[selectedUuid].ScatteringIntensityScale
+            if scattering2 and _GLL.LightParametersClient[selectedUuid].ScatteringIntensityScale then
+                local value = _GLL.LightParametersClient[selectedUuid].ScatteringIntensityScale
                 lightEntity.ScatteringIntensityScale = value
             else
                 lightEntity.ScatteringIntensityScale = 0
@@ -747,7 +747,7 @@ function MainTab(p)
         UI:Config(E.toggleLightButton, {
             IDContext = 'awdaw',
             OnClick   = function()
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
                 toggleLightBtn()
             end
         })
@@ -755,26 +755,26 @@ function MainTab(p)
 
     local all = false
     function toggleAllLightsBtn()
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+        if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
             all = not all
 
-            for _, uuid in pairs(LLGlobals.CreatedLightsServer) do
+            for uuid, _ in pairs(_GLL.CreatedLightsServer) do
                 local lightEntity = getLightEntity(uuid)
 
                 if all then
                     lightEntity.LightChannelFlag         = 0
                     lightEntity.ScatteringIntensityScale = 0
                 else
-                    local savedFlag = LLGlobals.LightParametersClient[uuid].LightChannelFlag
+                    local savedFlag = _GLL.LightParametersClient[uuid].LightChannelFlag
                     lightEntity.LightChannelFlag = (savedFlag ~= nil) and savedFlag or 255
 
-                    if LLGlobals.LightParametersClient[uuid].ScatteringIntensityScale then
-                        local value = LLGlobals.LightParametersClient[uuid].ScatteringIntensityScale
+                    if _GLL.LightParametersClient[uuid].ScatteringIntensityScale then
+                        local value = _GLL.LightParametersClient[uuid].ScatteringIntensityScale
                         lightEntity.ScatteringIntensityScale = value
                     end
                 end
 
-                for _, name in pairs(LLGlobals.LightsNames) do
+                for _, name in pairs(_GLL.LightsNames) do
                     UpdateVisibilityStateToNames(name, not all)
                 end
             end
@@ -789,7 +789,7 @@ function MainTab(p)
             IDContext = 'awdfdgdfg',
             SameLine  = true,
             OnClick   = function()
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
                 toggleAllLightsBtn()
             end
         })
@@ -801,7 +801,7 @@ function MainTab(p)
             SameLine  = true,
             IDContext = 'jhjkgyyutr',
             OnClick   = function()
-                ToggleMarker(LLGlobals.markerUuid)
+                ToggleMarker(_GLL.markerUuid)
             end
         })
 
@@ -823,7 +823,7 @@ function MainTab(p)
         UI:Config(E.btnMazzleBeam, {
             SameLine = true,
             OnClick  = function()
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
                 Ch.MazzleBeam:SendToServer({})
             end
         })
@@ -850,7 +850,7 @@ function MainTab(p)
         UI:Config(E.slIntLightType, {
             IDContext = 'aojwdnakwol;n',
             OnChange  = function(e)
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     SetLightType(e.Value[1])
 
                     -- TBD: temporary
@@ -873,14 +873,14 @@ function MainTab(p)
                         if not lightEntity then return end
 
                         if lightEntity.LightChannelFlag == 255 then
-                            local newName = LLGlobals.LightsUuidNameMap[E.comboIHateCombos.SelectedIndex + 1].name
+                            local newName = _GLL.LightsUuidNameMap[E.comboIHateCombos.SelectedIndex + 1].name
                             newName = newName:gsub('Point', localLightType):gsub('Spotlight', localLightType):gsub('Directional', localLightType)
-                            LLGlobals.LightsUuidNameMap[E.comboIHateCombos.SelectedIndex + 1].name = newName
+                            _GLL.LightsUuidNameMap[E.comboIHateCombos.SelectedIndex + 1].name = newName
                         else
                             lightEntity.LightChannelFlag = 0
-                            local newName = LLGlobals.LightsUuidNameMap[E.comboIHateCombos.SelectedIndex + 1].name
+                            local newName = _GLL.LightsUuidNameMap[E.comboIHateCombos.SelectedIndex + 1].name
                             newName = newName:gsub('Point', localLightType):gsub('Spotlight', localLightType):gsub('Directional', localLightType)
-                            LLGlobals.LightsUuidNameMap[E.comboIHateCombos.SelectedIndex + 1].name = newName
+                            _GLL.LightsUuidNameMap[E.comboIHateCombos.SelectedIndex + 1].name = newName
                         end
                         UpdateCreatedLightsCombo()
                     end
@@ -938,7 +938,7 @@ function MainTab(p)
     E.pickerLightColor.InputRGB    = true
     E.pickerLightColor.DisplayHex  = true
     E.pickerLightColor.OnChange    = function(e)
-        if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+        if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
             SetLightColor({e.Color[1], e.Color[2], e.Color[3]})
         end
     end
@@ -950,7 +950,7 @@ function MainTab(p)
             IDContext   = 'lkjanerfliuaern',
             Logarithmic = true,
             OnChange    = function(e)
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     SetLightIntensity(e.Value[1])
                 end
             end
@@ -962,7 +962,7 @@ function MainTab(p)
         UI:Config(ER.btnLightIntensityReset, {
             SameLine = true,
             OnClick  = function()
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     E.slLightIntensity.Value = {1, 0, 0, 0}
                     SetLightIntensity(E.slLightIntensity.Value[1])
                 end
@@ -976,11 +976,11 @@ function MainTab(p)
             IDContext   = 'wlekjfnlkm',
             Logarithmic = true,
             OnChange    = function(e)
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     local Color = Math.KelvinToRGB(e.Value[1])
                     SetLightColor({Color[1], Color[2], Color[3]})
                     E.pickerLightColor.Color = {Color[1], Color[2], Color[3], 0}
-                    LLGlobals.LightParametersClient[LLGlobals.selectedUuid].Temperature = e.Value[1] --This is just for the slider
+                    _GLL.LightParametersClient[_GLL.selectedUuid].Temperature = e.Value[1] --This is just for the slider
                 end
             end
         })
@@ -991,9 +991,9 @@ function MainTab(p)
         UI:Config(ER.btnLightTempReset, {
             SameLine = true,
             OnClick  = function()
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     E.slLightTemp.Value = {5600, 0, 0, 0}
-                    LLGlobals.LightParametersClient[LLGlobals.selectedUuid].Temperature = 5600
+                    _GLL.LightParametersClient[_GLL.selectedUuid].Temperature = 5600
                     SetLightColor({1, 0.93, 0.88})
                 end
             end
@@ -1006,7 +1006,7 @@ function MainTab(p)
             IDContext   = 'adwadqw3d',
             Logarithmic = true,
             OnChange    = function(e)
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     SetLightRadius(e.Value[1])
                 end
             end
@@ -1018,7 +1018,7 @@ function MainTab(p)
         UI:Config(ER.btnLightRadiusReset, {
             SameLine = true,
             OnClick  = function()
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     E.slLightRadius.Value = {1, 0, 0, 0}
                     SetLightRadius(E.slLightRadius.Value[1])
                 end
@@ -1047,7 +1047,7 @@ function MainTab(p)
             IDContext   = 'esrgsrengsrg',
             Logarithmic = true,
             OnChange    = function(e)
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     SetLightScattering(e.Value[1])
                 end
             end
@@ -1059,7 +1059,7 @@ function MainTab(p)
         UI:Config(ER.btnLightScatterReset, {
             SameLine = true,
             OnClick  = function()
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     E.slLightScattering.Value = {0, 0, 0, 0}
                     SetLightScattering(E.slLightScattering.Value[1])
                 end
@@ -1072,7 +1072,7 @@ function MainTab(p)
         UI:Config(E.checkLightFill, {
             Checked  = true,
             OnChange = function()
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     SetLightFill(E.checkLightFill.Checked and 184 or 56)
                 end
             end
@@ -1096,7 +1096,7 @@ function MainTab(p)
         local lightEntity = getSelectedLightEntity()
         if lightEntity and value then
             lightEntity.EdgeSharpening = value
-            LLGlobals.LightParametersClient[LLGlobals.selectedUuid].EdgeSharpening = value
+            _GLL.LightParametersClient[_GLL.selectedUuid].EdgeSharpening = value
         end
     end
 
@@ -1107,7 +1107,7 @@ function MainTab(p)
             IDContext   = 'sdfwerw34',
             Logarithmic = false,
             OnChange    = function(e)
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     SetLightEdgeSharp(e.Value[1])
                 end
             end
@@ -1119,7 +1119,7 @@ function MainTab(p)
         UI:Config(ER.btnLightSharpReset, {
             SameLine = true,
             OnClick  = function()
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     E.slLightEdgeSharp.Value = {0, 0, 0, 0}
                     SetLightEdgeSharp(E.slLightEdgeSharp.Value[1])
                 end
@@ -1140,7 +1140,7 @@ function MainTab(p)
         UI:Config(E.slLightOuterAngle, {
             IDContext = '123dwfsefa',
             OnChange  = function(e)
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     SetLightOuterAngle(e.Value[1])
                 end
             end
@@ -1152,7 +1152,7 @@ function MainTab(p)
         UI:Config(ER.btnLightOuterReset, {
             SameLine = true,
             OnClick  = function()
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     E.slLightOuterAngle.Value = {45, 0, 0, 0}
                     SetLightOuterAngle(E.slLightOuterAngle.Value[1])
                 end
@@ -1165,7 +1165,7 @@ function MainTab(p)
         UI:Config(E.slLightInnerAngle, {
             IDContext = 'rfgrtynj5r6',
             OnChange  = function(e)
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     SetLightInnerAngle(e.Value[1])
                 end
             end
@@ -1177,7 +1177,7 @@ function MainTab(p)
         UI:Config(ER.btnLightInnerReset, {
             SameLine = true,
             OnClick  = function()
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     E.slLightInnerAngle.Value = {1, 0, 0, 0}
                     SetLightInnerAngle(E.slLightInnerAngle.Value[1])
                 end
@@ -1202,7 +1202,7 @@ function MainTab(p)
         UI:Config(E.slLightDirEnd, {
             IDContext = 'olkjsdeafoiuzsrenbf',
             OnChange  = function(e)
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     SetLightDirectionalParameters('DirectionLightAttenuationEnd', e.Value[1])
                 end
             end
@@ -1214,7 +1214,7 @@ function MainTab(p)
         UI:Config(E.slLightDirSide, {
             IDContext = 'o12312',
             OnChange  = function(e)
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     SetLightDirectionalParameters('DirectionLightAttenuationSide', e.Value[1])
                 end
             end
@@ -1226,7 +1226,7 @@ function MainTab(p)
         UI:Config(E.slLightDirSide2, {
             IDContext = 'asdaw',
             OnChange  = function(e)
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     SetLightDirectionalParameters('DirectionLightAttenuationSide2', e.Value[1])
                 end
             end
@@ -1238,7 +1238,7 @@ function MainTab(p)
         UI:Config(E.slIntLightDirFunc, {
             IDContext = 'olkjsdsseafoiuzsrenbf',
             OnChange  = function(e)
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     SetLightDirectionalParameters('DirectionLightAttenuationFunction', e.Value[1])
                 end
             end
@@ -1258,7 +1258,7 @@ function MainTab(p)
             Value       = {5, 5, 15, 0},
             Logarithmic = true,
             OnChange    = function(e)
-                if LLGlobals.selectedUuid and LLGlobals.LightParametersClient[LLGlobals.selectedUuid] then
+                if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     SetLightDirectionalParameters('DirectionLightDimensions', {e.Value[1], e.Value[2], e.Value[3]})
                 end
             end
@@ -1275,7 +1275,7 @@ function MainTab(p)
     ER.btnSavePos = p:AddButton('Save')
         UI:Config(ER.btnSavePos, {
             OnClick = function(e)
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
                 Ch.SaveLoadLightPos:SendToServer('Save')
             end
         })
@@ -1286,7 +1286,7 @@ function MainTab(p)
         UI:Config(ER.btnLoadPos, {
             SameLine = true,
             OnClick  = function(e)
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
                 Ch.SaveLoadLightPos:SendToServer('Load')
             end
         })
@@ -1298,7 +1298,7 @@ function MainTab(p)
             IDContext = 'resetPos',
             SameLine  = true,
             OnClick   = function()
-                MoveEntity(LLGlobals.selectedEntity, nil, 0, 0, 'World', 'Light')
+                MoveEntity(_GLL.selectedEntity, nil, 0, 0, 'World', 'Light')
             end
         })
 
@@ -1309,7 +1309,7 @@ function MainTab(p)
             IDContext = 'resetRos',
             SameLine  = true,
             OnClick   = function()
-                RotateEntity(LLGlobals.selectedEntity, nil, 0, 0, 'Light')
+                RotateEntity(_GLL.selectedEntity, nil, 0, 0, 'Light')
             end
         })
 
@@ -1318,7 +1318,7 @@ function MainTab(p)
     E.checkStick = p:AddCheckbox('Stick to camera')
         UI:Config(E.checkStick, {
             OnChange = function(e)
-                if not LLGlobals.selectedUuid then e.Checked = false return end
+                if not _GLL.selectedUuid then e.Checked = false return end
                 StickToCamera()
             end
         })
@@ -1335,7 +1335,7 @@ function MainTab(p)
             IDContext = 'NS',
             Value     = {0, 0, 0, 0},
             OnChange  = function()
-                MoveEntity(LLGlobals.selectedEntity, 'z', E.slPosZSlider.Value[1], E.modPosSlider.Value[1], 'World', 'Light')
+                MoveEntity(_GLL.selectedEntity, 'z', E.slPosZSlider.Value[1], E.modPosSlider.Value[1], 'World', 'Light')
                 E.slPosZSlider.Value = {0, 0, 0, 0}
             end
         })
@@ -1347,7 +1347,7 @@ function MainTab(p)
             IDContext = ' safj;woeifmn',
             SameLine  = true,
             OnClick   = function(e)
-                MoveEntity(LLGlobals.selectedEntity, 'z', -100, E.modPosSlider.Value[1], 'World', 'Light')
+                MoveEntity(_GLL.selectedEntity, 'z', -100, E.modPosSlider.Value[1], 'World', 'Light')
             end
         })
 
@@ -1358,13 +1358,13 @@ function MainTab(p)
             IDContext = ' safj;awdawdwoeifmn',
             SameLine  = true,
             OnClick   = function(e)
-                MoveEntity(LLGlobals.selectedEntity, 'z', 100, E.modPosSlider.Value[1], 'World', 'Light')
+                MoveEntity(_GLL.selectedEntity, 'z', 100, E.modPosSlider.Value[1], 'World', 'Light')
             end
         })
 
 
 
-    textZ = E.worldTree:AddText('South/North')
+    local textZ = E.worldTree:AddText('South/North')
         UI:Config(textZ, {
             IDContext = 'awdadwdawdawdawda',
             SameLine  = true
@@ -1377,7 +1377,7 @@ function MainTab(p)
             IDContext = 'DU',
             Value     = {0, 0, 0, 0},
             OnChange  = function()
-                MoveEntity(LLGlobals.selectedEntity, 'y', E.slPosYSlider.Value[1], E.modPosSlider.Value[1], 'World', 'Light')
+                MoveEntity(_GLL.selectedEntity, 'y', E.slPosYSlider.Value[1], E.modPosSlider.Value[1], 'World', 'Light')
                 E.slPosYSlider.Value = {0, 0, 0, 0}
             end
         })
@@ -1389,7 +1389,7 @@ function MainTab(p)
             IDContext = ' safj;awffdawoeifmn',
             SameLine  = true,
             OnClick   = function(e)
-                MoveEntity(LLGlobals.selectedEntity, 'y', -100, E.modPosSlider.Value[1], 'World', 'Light')
+                MoveEntity(_GLL.selectedEntity, 'y', -100, E.modPosSlider.Value[1], 'World', 'Light')
             end
         })
 
@@ -1400,13 +1400,13 @@ function MainTab(p)
             IDContext = ' safj;awdffaawdawwdwoeifmn',
             SameLine  = true,
             OnClick   = function(e)
-                MoveEntity(LLGlobals.selectedEntity, 'y', 100, E.modPosSlider.Value[1], 'World', 'Light')
+                MoveEntity(_GLL.selectedEntity, 'y', 100, E.modPosSlider.Value[1], 'World', 'Light')
             end
         })
 
 
 
-    textY = E.worldTree:AddText('Down/Up')
+    local textY = E.worldTree:AddText('Down/Up')
         UI:Config(textY, {
             IDContext = 'awdadwdawdawdawda',
             SameLine  = true
@@ -1414,12 +1414,12 @@ function MainTab(p)
 
 
 
-    E.slPosXSlider = E.worldTree:AddSlider('', 0, -1000, 1000, 0)
+    E.slPosXSlider = E.worldTree:AddSlider('', 0, -1000, 1000)
         UI:Config(E.slPosXSlider, {
             IDContext = 'WE',
             Value     = {0, 0, 0, 0},
             OnChange  = function()
-                MoveEntity(LLGlobals.selectedEntity, 'x', E.slPosXSlider.Value[1], E.modPosSlider.Value[1], 'World', 'Light')
+                MoveEntity(_GLL.selectedEntity, 'x', E.slPosXSlider.Value[1], E.modPosSlider.Value[1], 'World', 'Light')
                 E.slPosXSlider.Value = {0, 0, 0, 0}
             end
         })
@@ -1431,7 +1431,7 @@ function MainTab(p)
             IDContext = ' safj;awdawoeifmn',
             SameLine  = true,
             OnClick   = function(e)
-                MoveEntity(LLGlobals.selectedEntity, 'x', -100, E.modPosSlider.Value[1], 'World', 'Light')
+                MoveEntity(_GLL.selectedEntity, 'x', -100, E.modPosSlider.Value[1], 'World', 'Light')
             end
         })
 
@@ -1442,13 +1442,13 @@ function MainTab(p)
             IDContext = ' safj;awdaawdawwdwoeifmn',
             SameLine  = true,
             OnClick   = function(e)
-                MoveEntity(LLGlobals.selectedEntity, 'x', 100, E.modPosSlider.Value[1], 'World', 'Light')
+                MoveEntity(_GLL.selectedEntity, 'x', 100, E.modPosSlider.Value[1], 'World', 'Light')
             end
         })
 
 
 
-    textX = E.worldTree:AddText('West/East')
+    local textX = E.worldTree:AddText('West/East')
         UI:Config(textX, {
             IDContext = 'awdawdawda',
             SameLine  = true
@@ -1465,146 +1465,78 @@ function MainTab(p)
 
 
 
-    E.slPosOrbX = E.orbitTree:AddSlider('', 0, -1000, 1000, 0.1)
+
+    E.slPosOrbX = E.orbitTree:AddDrag('', 0, 0, 360)
         UI:Config(E.slPosOrbX, {
-            IDContext = 'NawdawwwdS',
+            WrapAround = true,
             Value     = {0, 0, 0, 0},
-            OnChange  = function()
-                MoveEntity(LLGlobals.selectedEntity, 'x', E.slPosOrbX.Value[1], E.modPosSlider.Value[1], 'Orbit', 'Light')
-                E.slPosOrbX.Value = {0, 0, 0, 0}
+            OnChange  = function(e)
+                MoveEntity(_GLL.selectedEntity, 'x', e.Value[1], E.modPosSlider.Value[1], 'Orbit', 'Light')
+                _GLL.OrbitDragValues[getSelectedUuid()] = {E.slPosOrbX.Value[1], E.slPosOrbY.Value[1], E.slPosOrbZ.Value[1]}
             end
         })
 
 
 
-    E.btnPosX_CW = E.orbitTree:AddButton('<')
-        UI:Config(E.btnPosX_CW, {
-            IDContext = ' safj;awffdahwoeifmn',
-            SameLine  = true,
-            OnClick   = function(e)
-                for k, v in pairs(LLGlobals.LightParametersClient) do
-                    local entity = Ext.Entity.Get(k)
-                    MoveEntity(entity, 'x', -100, E.modPosSlider.Value[1], 'Orbit', 'Light')
-                end
-            end
-        })
-
-
-
-    E.btnPosX_CCW = E.orbitTree:AddButton('>')
-        UI:Config(E.btnPosX_CCW, {
-            IDContext = ' safj;awdffaawdqawwdwoeifmn',
-            SameLine  = true,
-            OnClick   = function(e)
-                MoveEntity(LLGlobals.selectedEntity, 'x', 100, E.modPosSlider.Value[1], 'Orbit', 'Light')
-            end
-        })
-
-
-
-    textCCW = E.orbitTree:AddText('Cw/Ccw')
+    local textCCW = E.orbitTree:AddText('Ccw/Cw')
         UI:Config(textCCW, { SameLine = true })
 
 
 
-    E.slPosOrbY = E.orbitTree:AddSlider('', 0, -1000, 1000, 0.1)
+    E.slPosOrbY = E.orbitTree:AddDrag('', 0, -30000, 30000)
         UI:Config(E.slPosOrbY, {
-            IDContext = 'NawawdwdawdS',
-            Value     = {0, 0, 0, 0},
-            OnChange  = function()
-                MoveEntity(LLGlobals.selectedEntity, 'y', E.slPosOrbY.Value[1], E.modPosSlider.Value[1], 'Orbit', 'Light')
-                E.slPosOrbY.Value = {0, 0, 0, 0}
+            Value     = {200, 0, 0, 0},
+            OnChange  = function(e)
+                MoveEntity(_GLL.selectedEntity, 'y', e.Value[1], E.modPosSlider.Value[1], 'Orbit', 'Light')
+                _GLL.OrbitDragValues[getSelectedUuid()] = {E.slPosOrbX.Value[1], E.slPosOrbY.Value[1], E.slPosOrbZ.Value[1]}
             end
         })
 
 
 
-    E.btnPosY_D2 = E.orbitTree:AddButton('<')
-        UI:Config(E.btnPosY_D2, {
-            IDContext = ' safj;awffdqeawwoeifmn',
-            SameLine  = true,
-            OnClick   = function(e)
-                MoveEntity(LLGlobals.selectedEntity, 'y', -100, E.modPosSlider.Value[1], 'Orbit', 'Light')
-            end
-        })
-
-
-
-    E.btnPosY_U2 = E.orbitTree:AddButton('>')
-        UI:Config(E.btnPosY_U2, {
-            IDContext = ' safj;awdfefawqawdawwdwoeifmn',
-            SameLine  = true,
-            OnClick   = function(e)
-                MoveEntity(LLGlobals.selectedEntity, 'y', 100, E.modPosSlider.Value[1], 'Orbit', 'Light')
-            end
-        })
-
-
-
-    textDU = E.orbitTree:AddText('Down/Up')
+    local textDU = E.orbitTree:AddText('Down/Up')
         UI:Config(textDU, { SameLine = true })
 
 
 
-    E.slPosOrbZ = E.orbitTree:AddSlider('', 0, -1000, 1000, 0.1)
+    E.slPosOrbZ = E.orbitTree:AddDrag('', 0, -30000, 30000)
         UI:Config(E.slPosOrbZ, {
             IDContext = 'NawdasdawdS',
-            Value     = {0, 0, 0, 0},
-            OnChange  = function()
-                MoveEntity(LLGlobals.selectedEntity, 'z', E.slPosOrbZ.Value[1], E.modPosSlider.Value[1], 'Orbit', 'Light')
-                E.slPosOrbZ.Value = {0, 0, 0, 0}
+            Value     = {200, 0, 0, 0},
+            OnChange  = function(e)
+                MoveEntity(_GLL.selectedEntity, 'z', e.Value[1], E.modPosSlider.Value[1], 'Orbit', 'Light')
+                _GLL.OrbitDragValues[getSelectedUuid()] = {E.slPosOrbX.Value[1], E.slPosOrbY.Value[1], E.slPosOrbZ.Value[1]}
             end
         })
 
 
 
-    E.btnPosZ_C = E.orbitTree:AddButton('<')
-        UI:Config(E.btnPosZ_C, {
-            IDContext = ' safj;awffdawwoeifmn',
-            SameLine  = true,
-            OnClick   = function(e)
-                MoveEntity(LLGlobals.selectedEntity, 'z', -100, E.modPosSlider.Value[1], 'Orbit', 'Light')
-            end
-        })
-
-
-
-    E.btnPosZ_F = E.orbitTree:AddButton('>')
-        UI:Config(E.btnPosZ_F, {
-            IDContext = ' safj;awdfefaawdawwdwoeifmn',
-            SameLine  = true,
-            OnClick   = function(e)
-                MoveEntity(LLGlobals.selectedEntity, 'z', 100, E.modPosSlider.Value[1], 'Orbit', 'Light')
-            end
-        })
-
-
-
-    textCF = E.orbitTree:AddText('Close/Far')
+    local textCF = E.orbitTree:AddText('Close/Far')
         UI:Config(textCF, { SameLine = true })
+
 
 
     local treexD = E.orbitTree:AddTree('Grouped')
 
 
 
-    LLGlobals.LightsToInclude = {}
+    _GLL.LightsToInclude = {}
 
 
 
     E.checkGroup = treexD:AddCheckbox('Include selected light to the group')
         UI:Config(E.checkGroup, {
             OnChange = function(e)
-                if not LLGlobals.selectedUuid then return end
-                LLGlobals.LightsToInclude[getSelectedUuid()] = e.Checked
+                if not _GLL.selectedUuid then return end
+                _GLL.LightsToInclude[getSelectedUuid()] = e.Checked
             end
         })
 
 
 
     local function MoveGrouped(axis, value)
-        for lightUuid, _ in pairs(LLGlobals.CreatedLightsServer) do
-            if LLGlobals.LightsToInclude[lightUuid] then
+        for lightUuid, _ in pairs(_GLL.CreatedLightsServer) do
+            if _GLL.LightsToInclude[lightUuid] then
                 local lightEntity = Ext.Entity.Get(lightUuid)
                 MoveEntity(lightEntity, axis, value, E.modPosSlider.Value[1], 'Orbit', 'Light')
             end
@@ -1613,10 +1545,10 @@ function MainTab(p)
 
 
 
-    E.slGroupX = treexD:AddSlider('', 0, -1000, 1000, 0.1)
+    E.slGroupX = treexD:AddSlider('', 0, -1000, 1000)
         UI:Config(E.slGroupX, {
             OnChange = function(e)
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
                 MoveGrouped('x', e.Value[1])
                 e.Value = {0, 0, 0, 0}
             end
@@ -1649,7 +1581,7 @@ function MainTab(p)
 
 
 
-    E.slGroupZ = treexD:AddSlider('', 0, -1000, 1000, 0.1)
+    E.slGroupZ = treexD:AddSlider('', 0, -1000, 1000)
         UI:Config(E.slGroupZ, {
             OnChange = function(e)
                 MoveGrouped('z', e.Value[1])
@@ -1731,11 +1663,11 @@ function MainTab(p)
             IDContext    = 'Pitch',
             Value        = {0, 0, 0, 0},
             OnChange     = function(e)
-                RotateEntity(LLGlobals.selectedEntity, 'x', e.Value[1], E.modRotSlider.Value[1], 'Light')
+                RotateEntity(_GLL.selectedEntity, 'x', e.Value[1], E.modRotSlider.Value[1], 'Light')
                 E.slRotTiltSlider.Value = {0, 0, 0, 0}
             end,
             OnRightClick = function(e)
-                RotateEntity(LLGlobals.selectedEntity, 'x', 90, 1, 'Light')
+                RotateEntity(_GLL.selectedEntity, 'x', 90, 1, 'Light')
             end
         })
 
@@ -1746,7 +1678,7 @@ function MainTab(p)
             IDContext = 'adawdawd',
             SameLine  = true,
             OnClick   = function(e)
-                RotateEntity(LLGlobals.selectedEntity, 'x', -100, E.modRotSlider.Value[1], 'Light')
+                RotateEntity(_GLL.selectedEntity, 'x', -100, E.modRotSlider.Value[1], 'Light')
             end
         })
 
@@ -1757,7 +1689,7 @@ function MainTab(p)
             IDContext = 'awdawdawd',
             SameLine  = true,
             OnClick   = function(e)
-                RotateEntity(LLGlobals.selectedEntity, 'x', 100, E.modRotSlider.Value[1], 'Light')
+                RotateEntity(_GLL.selectedEntity, 'x', 100, E.modRotSlider.Value[1], 'Light')
             end
         })
 
@@ -1777,11 +1709,11 @@ function MainTab(p)
             Disabled     = true,
             Value        = {0, 0, 0, 0},
             OnChange     = function(e)
-                RotateEntity(LLGlobals.selectedEntity, 'z', e.Value[1], E.modRotSlider.Value[1], 'Light')
+                RotateEntity(_GLL.selectedEntity, 'z', e.Value[1], E.modRotSlider.Value[1], 'Light')
                 E.slRotRollSlider.Value = {0, 0, 0, 0}
             end,
             OnRightClick = function(e)
-                RotateEntity(LLGlobals.selectedEntity, 'z', 90, 1, 'Light')
+                RotateEntity(_GLL.selectedEntity, 'z', 90, 1, 'Light')
             end
         })
 
@@ -1793,7 +1725,7 @@ function MainTab(p)
             Disabled  = true,
             SameLine  = true,
             OnClick   = function(e)
-                RotateEntity(LLGlobals.selectedEntity, 'z', -100, E.modRotSlider.Value[1], 'Light')
+                RotateEntity(_GLL.selectedEntity, 'z', -100, E.modRotSlider.Value[1], 'Light')
             end
         })
 
@@ -1805,7 +1737,7 @@ function MainTab(p)
             Disabled  = true,
             SameLine  = true,
             OnClick   = function(e)
-                RotateEntity(LLGlobals.selectedEntity, 'z', 100, E.modRotSlider.Value[1], 'Light')
+                RotateEntity(_GLL.selectedEntity, 'z', 100, E.modRotSlider.Value[1], 'Light')
             end
         })
 
@@ -1824,11 +1756,11 @@ function MainTab(p)
             IDContext    = 'yaw',
             Value        = {0, 0, 0, 0},
             OnChange     = function(e)
-                RotateEntity(LLGlobals.selectedEntity, 'y', e.Value[1], E.modRotSlider.Value[1], 'Light')
+                RotateEntity(_GLL.selectedEntity, 'y', e.Value[1], E.modRotSlider.Value[1], 'Light')
                 E.slRotYawSlider.Value = {0, 0, 0, 0}
             end,
             OnRightClick = function(e)
-                RotateEntity(LLGlobals.selectedEntity, 'y', 90, 1, 'Light')
+                RotateEntity(_GLL.selectedEntity, 'y', 90, 1, 'Light')
             end
         })
 
@@ -1839,7 +1771,7 @@ function MainTab(p)
             IDContext = 'adwdawddddawdawd',
             SameLine  = true,
             OnClick   = function(e)
-                RotateEntity(LLGlobals.selectedEntity, 'y', -100, E.modRotSlider.Value[1], 'Light')
+                RotateEntity(_GLL.selectedEntity, 'y', -100, E.modRotSlider.Value[1], 'Light')
             end
         })
 
@@ -1850,7 +1782,7 @@ function MainTab(p)
             IDContext = 'awdddddddddawdawd',
             SameLine  = true,
             OnClick   = function(e)
-                RotateEntity(LLGlobals.selectedEntity, 'y', 100, E.modRotSlider.Value[1], 'Light')
+                RotateEntity(_GLL.selectedEntity, 'y', 100, E.modRotSlider.Value[1], 'Light')
             end
         })
 
@@ -1981,7 +1913,7 @@ MCM.InsertModMenuTab('Lighty Lights', LLMCM, ModuleUUID)
 
 Ext.RegisterConsoleCommand('lld', function (cmd, ...)
     DPrint('LightParametersClient-----------------------------')
-    DDump(LLGlobals.LightParametersClient)
+    DDump(_GLL.LightParametersClient)
 end)
 
 
@@ -1995,19 +1927,19 @@ end)
 
 Ext.RegisterConsoleCommand('lldumpall', function (cmd, ...)
     DPrint('CreatedLightsServer ------------------------------')
-    DDump(LLGlobals.CreatedLightsServer)
+    DDump(_GLL.CreatedLightsServer)
     DPrint('LightsUuidNameMap --------------------------------')
-    DDump(LLGlobals.LightsUuidNameMap)
+    DDump(_GLL.LightsUuidNameMap)
     DPrint('LightsNames --------------------------------------')
-    DDump(LLGlobals.LightsNames)
+    DDump(_GLL.LightsNames)
     DPrint('LightParametersClient ----------------------------')
-    DDump(LLGlobals.LightParametersClient)
+    DDump(_GLL.LightParametersClient)
     DPrint('selectedUuid -------------------------------------')
-    DDump(LLGlobals.selectedUuid)
+    DDump(_GLL.selectedUuid)
     DPrint('selectedEntity -----------------------------------')
-    DDump(LLGlobals.selectedEntity)
+    DDump(_GLL.selectedEntity)
     DPrint('markerUuid ---------------------------------------')
-    DDump(LLGlobals.markerUuid)
+    DDump(_GLL.markerUuid)
     DPrint('nameIndex ----------------------------------------')
     DDump(nameIndex)
 end)
@@ -2071,3 +2003,4 @@ for _, ent in pairs(Ext.Entity.GetAllEntitiesWithComponent('GameObjectVisual')) 
     end
 end
 ]]--
+

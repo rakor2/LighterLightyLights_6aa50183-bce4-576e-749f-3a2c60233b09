@@ -212,7 +212,7 @@ function Settings2Tab(p)
         UI:Config(E.checkPickerSize, {
             Checked = biggerPicker,
             OnChange = function (e)
-                if LLGlobals.selectedUuid then
+                if _GLL.selectedUuid then
                     e.Checked = not e.Checked
                     c = c + 1
                     if c < 3 then
@@ -292,8 +292,8 @@ function Settings2Tab(p)
             OnChange = function (e)
                 markerScale = e.Value[1]
                 SettingsSave()
-                if not LLGlobals.markerEntity then return end
-                LLGlobals.markerEntity.Visual.Visual:SetWorldScale({markerScale, markerScale, markerScale})
+                if not _GLL.markerEntity then return end
+                _GLL.markerEntity.Visual.Visual:SetWorldScale({markerScale, markerScale, markerScale})
             end
         })
 

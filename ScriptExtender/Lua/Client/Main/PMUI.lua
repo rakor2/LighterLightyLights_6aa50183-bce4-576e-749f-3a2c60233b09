@@ -1,6 +1,6 @@
 function BetterPMTab(parent)
     local function getSelectedDummyOwnerUuid()
-        local entity = LLGlobals.DummyNameMap[E.cmbBoneDummies.Options[selectedCharacter]]
+        local entity = _GLL.DummyNameMap[E.cmbBoneDummies.Options[selectedCharacter]]
         if entity then
             local characterUuid = entity.Dummy.Entity.Uuid.EntityUuid
             if characterUuid then
@@ -21,7 +21,6 @@ function BetterPMTab(parent)
 
     E.camSpeed = E.camCollapse:AddSlider('Speed', 0, 0.01, 100, 0.1)
         UI:Config(E.camSpeed, {
-            IDContext  = 'slider_UniqueSliderID',
             SameLine   = false,
             Logarithmic = true,
             Components = 1,
@@ -60,7 +59,6 @@ function BetterPMTab(parent)
 
     E.dofStrength = E.dofCollapse:AddSlider("Strength", 0, 22, 1, 0.001)
         UI:Config(E.dofStrength, {
-            IDContext   = "DofStr",
             SameLine    = false,
             Logarithmic = true,
             Components  = 1,
@@ -104,7 +102,6 @@ function BetterPMTab(parent)
 
     E.dofDistance = E.dofCollapse:AddSlider("", 0, 0, 30, 0.001)
         UI:Config(E.dofDistance, {
-            IDContext   = "DofDist",
             SameLine    = false,
             Logarithmic = true,
             Components  = 1,
@@ -150,9 +147,8 @@ function BetterPMTab(parent)
 
     E.btnSavePos = E.collapseSavePos:AddButton('Save')
         UI:Config(E.btnSavePos, {
-            IDContext = '238492kjndflkjsdnf',
             OnClick   = function()
-                if not LLGlobals.States.inPhotoMode then return end
+                if not _GLL.States.inPhotoMode then return end
 
                 btnCounter = btnCounter + 1
                 local currentIndex = btnCounter
@@ -185,7 +181,7 @@ function BetterPMTab(parent)
                         savedButtons[currentIndex].load:Destroy()
                         savedButtons[currentIndex].delete:Destroy()
                         savedButtons[currentIndex] = nil
-                        LLGlobals.CameraPositions[tostring(currentIndex)] = nil
+                        _GLL.CameraPositions[tostring(currentIndex)] = nil
 
                         E.windowLoadPos.Size = {
                             E.windowLoadPos.Size[1],
@@ -196,11 +192,11 @@ function BetterPMTab(parent)
 
                 btnLoad.OnClick = function()
                     local index = tostring(currentIndex)
-                    if LLGlobals.CameraPositions[index] then
+                    if _GLL.CameraPositions[index] then
                         local camera = Camera:GetActiveCamera()
-                        camera.PhotoModeCameraSavedTransform.Transform.Translate     = LLGlobals.CameraPositions[index].activeTranslate
-                        camera.PhotoModeCameraSavedTransform.Transform.RotationQuat  = LLGlobals.CameraPositions[index].activeRotationQuat
-                        camera.PhotoModeCameraSavedTransform.Transform.Scale         = LLGlobals.CameraPositions[index].activeScale
+                        camera.PhotoModeCameraSavedTransform.Transform.Translate     = _GLL.CameraPositions[index].activeTranslate
+                        camera.PhotoModeCameraSavedTransform.Transform.RotationQuat  = _GLL.CameraPositions[index].activeRotationQuat
+                        camera.PhotoModeCameraSavedTransform.Transform.Scale         = _GLL.CameraPositions[index].activeScale
 
                         Helpers.Timer:OnTicks(5, function()
                             Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.RecallCameraTransform:Execute()
@@ -217,15 +213,15 @@ function BetterPMTab(parent)
     local sepa2 = parent:AddSeparatorText('Dummy controls')
 
 
-    -- LLGlobals.gizmo = API.CreateManipulator()
-    -- LLGlobals.gizmo.Config.IsSelectableEntity = function(info)
+    -- _GLL.gizmo = API.CreateManipulator()
+    -- _GLL.gizmo.Config.IsSelectableEntity = function(info)
     --     return info.Type == "Unknown"
     -- end
 
 
 
     -- API.Events.OnTransformEnd:Subscribe(function(data)
-    --     local dummy =  LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]]
+    --     local dummy =  _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]]
     --     local Ser = Ext.Types.Serialize(dummy.Visual.Visual.WorldTransform)
     --     Ext.Types.Unserialize(dummy.DummyOriginalTransform.Transform, Ser)
     --     -- DDump(dummy.Visual.Visual.WorldTransform)
@@ -234,41 +230,40 @@ function BetterPMTab(parent)
 
 
     local function gizmoSelectDummy()
-        local ent = LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]]
-        LLGlobals.gizmo:Select({ent.Dummy.Entity})
+        -- local ent = _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]]
+        -- _GLL.gizmo:Select({ent.Dummy.Entity})
+        return
     end
 
 
 
-    function UpdatePMDummyCombo(e)
-        local e = e or E.visTemComob
-        PM.DummyWidgets[LLGlobals.DummyNames[selectedCharacter]].Window:SetColor('WindowBg', Style.Colors.windowBg)
-        PM.DummyWidgets[LLGlobals.DummyNames[selectedCharacter]].Window:SetColor('Text', Style.Colors.textColor)
+    function UpdateDummyCombo(e)
+        PM.DummyWidgets[_GLL.DummyNames[selectedCharacter]].Window:SetColor('WindowBg', Style.Colors.windowBg)
+        PM.DummyWidgets[_GLL.DummyNames[selectedCharacter]].Window:SetColor('Text', Style.Colors.textColor)
 
         selectedCharacter = e.SelectedIndex + 1
+        E.visTemComob.SelectedIndex    = e.SelectedIndex
         E.cmbBoneDummies.SelectedIndex = e.SelectedIndex
+
         UpdateCharacterInfo(selectedCharacter)
         SetVarValuesToSliders()
+        LoadAttachState(getSelectedDummy())
 
-        PM.DummyWidgets[LLGlobals.DummyNames[selectedCharacter]].Window:SetColor('WindowBg', Style.Colors.special)
-        SetHighlightColor(PM.DummyWidgets[LLGlobals.DummyNames[selectedCharacter]].Window)
-
-        -- DPrint('Selected dummy: %s', LLGlobals.DummyNames[selectedCharacter])
-        -- gizmoSelectDummy()
+        PM.DummyWidgets[_GLL.DummyNames[selectedCharacter]].Window:SetColor('WindowBg', Style.Colors.special)
+        SetHighlightColor(PM.DummyWidgets[_GLL.DummyNames[selectedCharacter]].Window)
     end
 
 
 
     E.visTemComob = parent:AddCombo('')
         UI:Config(E.visTemComob, {
-            IDContext    = 'E.visTemComob123',
             SelectedIndex = 0,
             Options      = {'Not in Photo Mode'},
             HeightLargest = true,
             SameLine     = false,
             OnChange     = function(e)
-                if not LLGlobals.States.inPhotoMode then return end
-                UpdatePMDummyCombo(e)
+                if not _GLL.States.inPhotoMode then return end
+                UpdateDummyCombo(e)
             end,
             OnRightClick = function(e)
                 gizmoSelectDummy()
@@ -283,7 +278,7 @@ function BetterPMTab(parent)
             SameLine = true,
             OnClick  = function(e)
                 UI:PrevOption(E.visTemComob)
-                UpdatePMDummyCombo()
+                UpdateDummyCombo(E.visTemComob)
             end
         })
 
@@ -294,7 +289,7 @@ function BetterPMTab(parent)
             SameLine = true,
             OnClick  = function(e)
                 UI:NextOption(E.visTemComob)
-                UpdatePMDummyCombo()
+                UpdateDummyCombo(E.visTemComob)
             end
         })
 
@@ -306,7 +301,7 @@ function BetterPMTab(parent)
     E.checkDummiesPop = parent:AddCheckbox('Dummies popup')
         UI:Config(E.checkDummiesPop, {
             OnChange = function(e)
-                if not LLGlobals.States.inPhotoMode then E.checkDummiesPop.Checked = false return end
+                if not _GLL.States.inPhotoMode then E.checkDummiesPop.Checked = false return end
                 for _, v in pairs(PM.DummyWidgets) do
                     v.Window.Visible = E.checkDummiesPop.Checked
                 end
@@ -346,13 +341,12 @@ function BetterPMTab(parent)
 
     E.applyButton = E.infoCollapse:AddButton('Apply')
         UI:Config(E.applyButton, {
-            IDContext = "loadApply",
             SameLine  = false,
             OnClick   = function()
-                if LLGlobals.DummyNameMap and LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]] then
+                if _GLL.DummyNameMap and _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]] then
 
-                    local transform  = LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform
-                    local transform2 = LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].DummyOriginalTransform.Transform
+                    local transform  = _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform
+                    local transform2 = _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].DummyOriginalTransform.Transform
 
                     local deg  = {E.rotInput.Value[1], E.rotInput.Value[2], E.rotInput.Value[3]}
                     local quats = Math.EulerToQuats(deg)
@@ -380,7 +374,6 @@ function BetterPMTab(parent)
 
     E.stemModSlider = E.charPosCollapse:AddSliderInt("", 0, 1, 10000, 1)
         UI:Config(E.stemModSlider, {
-            IDContext   = "modSlider",
             SameLine    = false,
             Components  = 1,
             Logarithmic = true,
@@ -394,7 +387,6 @@ function BetterPMTab(parent)
 
     E.resetStemMod = E.charPosCollapse:AddButton('How fast are the sliders')
         UI:Config(E.resetStemMod, {
-            IDContext = "modSl1231232323131ider",
             SameLine  = true,
             OnClick   = function()
                 E.stemModSlider.Value = {1500, 0, 0, 0}
@@ -405,7 +397,6 @@ function BetterPMTab(parent)
 
     E.posX = E.charPosCollapse:AddSlider("W/E", 0, -100, 100, 1)
         UI:Config(E.posX, {
-            IDContext  = "sliderX",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -419,7 +410,6 @@ function BetterPMTab(parent)
 
     E.posY = E.charPosCollapse:AddSlider("D/U", 0, -100, 100, 1)
         UI:Config(E.posY, {
-            IDContext  = "sliderY",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -433,7 +423,6 @@ function BetterPMTab(parent)
 
     E.posZ = E.charPosCollapse:AddSlider("S/N", 0, -100, 100, 1)
         UI:Config(E.posZ, {
-            IDContext  = "sliderZ",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -448,8 +437,8 @@ function BetterPMTab(parent)
     E.posReset = E.charPosCollapse:AddButton('Reset')
         UI:Config(E.posReset, {
             OnClick = function(e)
-                local x, y, z = table.unpack(LLGlobals.DummyVeryOriginalTransforms[getSelectedDummyOwnerUuid()].Translate)
-                LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate = {x, y, z}
+                local x, y, z = table.unpack(_GLL.DummyVeryOriginalTransforms[getSelectedDummyOwnerUuid()].Translate)
+                _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate = {x, y, z}
                 UpdateCharacterInfo(selectedCharacter)
             end
         })
@@ -466,7 +455,6 @@ function BetterPMTab(parent)
 
     E.rotationModSlider = E.charRotCollapse:AddSliderInt("", 0, 1, 10000, 1)
         UI:Config(E.rotationModSlider, {
-            IDContext   = "rotModSlider",
             Logarithmic = true,
             SameLine    = false,
             Components  = 1,
@@ -480,7 +468,6 @@ function BetterPMTab(parent)
 
     E.resetRotMod = E.charRotCollapse:AddButton('How fast are the sliders')
         UI:Config(E.resetRotMod, {
-            IDContext = "modSl1231111123131ider",
             SameLine  = true,
             OnClick   = function()
                 E.rotationModSlider.Value = {1500, 0, 0, 0}
@@ -491,7 +478,6 @@ function BetterPMTab(parent)
 
     E.rotX = E.charRotCollapse:AddSlider("Pitch", 0, -100, 100, 1)
         UI:Config(E.rotX, {
-            IDContext  = "E.rotX",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -506,7 +492,6 @@ function BetterPMTab(parent)
 
     E.rotY = E.charRotCollapse:AddSlider("Yaw", 0, -100, 100, 1)
         UI:Config(E.rotY, {
-            IDContext  = "E.rotY",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -521,7 +506,6 @@ function BetterPMTab(parent)
 
     E.rotZ = E.charRotCollapse:AddSlider("Roll", 0, -100, 100, 1)
         UI:Config(E.rotZ, {
-            IDContext  = "E.rotZ",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -536,11 +520,10 @@ function BetterPMTab(parent)
 
     E.resetRot = E.charRotCollapse:AddButton("Reset")
         UI:Config(E.resetRot, {
-            IDContext = "E.resetRot",
             SameLine  = false,
             OnClick   = function()
-                local x, y, z, w = table.unpack(LLGlobals.DummyVeryOriginalTransforms[getSelectedDummyOwnerUuid()].RotationQuat)
-                LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat = {x, y, z, w}
+                local x, y, z, w = table.unpack(_GLL.DummyVeryOriginalTransforms[getSelectedDummyOwnerUuid()].RotationQuat)
+                _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat = {x, y, z, w}
                 UpdateCharacterInfo(selectedCharacter)
             end
         })
@@ -556,7 +539,6 @@ function BetterPMTab(parent)
 
     E.scaleModSlider = E.charScaleCollapse:AddSliderInt("", 0, 1, 10000, 1)
         UI:Config(E.scaleModSlider, {
-            IDContext   = "sacleModSlider",
             Logarithmic = true,
             SameLine    = false,
             Components  = 1,
@@ -570,7 +552,6 @@ function BetterPMTab(parent)
 
     E.resetScaMod = E.charScaleCollapse:AddButton('How fast are the sliders')
         UI:Config(E.resetScaMod, {
-            IDContext = "modSl123123131ider",
             SameLine  = true,
             OnClick   = function()
                 E.scaleModSlider.Value = {1500, 0, 0, 0}
@@ -581,7 +562,6 @@ function BetterPMTab(parent)
 
     E.scaleLenght = E.charScaleCollapse:AddSlider("Length", 0, -100, 100, 1)
         UI:Config(E.scaleLenght, {
-            IDContext  = "scaleLenght123",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -596,7 +576,6 @@ function BetterPMTab(parent)
 
     E.scaleWidth = E.charScaleCollapse:AddSlider("Height", 0, -100, 100, 1)
         UI:Config(E.scaleWidth, {
-            IDContext  = "scaleWidth232",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -611,7 +590,6 @@ function BetterPMTab(parent)
 
     E.scaleHeight = E.charScaleCollapse:AddSlider("Width", 0, -100, 100, 1)
         UI:Config(E.scaleHeight, {
-            IDContext  = "scaleHeight323",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -626,7 +604,6 @@ function BetterPMTab(parent)
 
     E.scaleAll = E.charScaleCollapse:AddSlider("All", 0, -100, 100, 1)
         UI:Config(E.scaleAll, {
-            IDContext  = "scalescaleAll323",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -641,11 +618,10 @@ function BetterPMTab(parent)
 
     E.resetScale = E.charScaleCollapse:AddButton("Reset")
         UI:Config(E.resetScale, {
-            IDContext = "E.resetScale",
             SameLine  = false,
             OnClick   = function()
-                local x, y, z = table.unpack(LLGlobals.DummyVeryOriginalTransforms[getSelectedDummyOwnerUuid()].Scale)
-                LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Scale = {x, y, z}
+                local x, y, z = table.unpack(_GLL.DummyVeryOriginalTransforms[getSelectedDummyOwnerUuid()].Scale)
+                _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Scale = {x, y, z}
                 UpdateCharacterInfo(selectedCharacter)
                 -- E.scaleInput.Label = string.format('L: %.2f  H: %.2f  W: %.2f', 1, 1, 1)
             end
@@ -662,7 +638,6 @@ function BetterPMTab(parent)
 
     E.tailPosCollapse = E.treeTail:AddTree("Position")
         UI:Config(E.tailPosCollapse, {
-            IDContext    = 'wwwwdwd',
             DefaultOpen  = false
         })
 
@@ -670,7 +645,6 @@ function BetterPMTab(parent)
 
     E.tposX = E.tailPosCollapse:AddSlider("W/E", 0, -100, 100, 1)
         UI:Config(E.tposX, {
-            IDContext  = "slide123rX",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -685,7 +659,6 @@ function BetterPMTab(parent)
 
     E.tposY = E.tailPosCollapse:AddSlider("D/U", 0, -100, 100, 1)
         UI:Config(E.tposY, {
-            IDContext  = "slid123erY",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -700,7 +673,6 @@ function BetterPMTab(parent)
 
     E.tposZ = E.tailPosCollapse:AddSlider("S/N", 0, -100, 100, 1)
         UI:Config(E.tposZ, {
-            IDContext  = "slid123123erZ",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -715,13 +687,12 @@ function BetterPMTab(parent)
 
     E.resettPos = E.tailPosCollapse:AddButton("Reset")
         UI:Config(E.resettPos, {
-            IDContext = "resetttrot",
             SameLine  = false,
             OnClick   = function()
-                for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
-                    if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
-                        LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(
-                            LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate)
+                for i = 1, #_GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
+                    if _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
+                        _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(
+                            _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate)
                         break
                     end
                 end
@@ -736,7 +707,6 @@ function BetterPMTab(parent)
 
     E.tailRotCollapse = E.treeTail:AddTree("Rotation")
         UI:Config(E.tailRotCollapse, {
-            IDContext   = 'asdasdasdasdasds',
             DefaultOpen = false
         })
 
@@ -744,7 +714,6 @@ function BetterPMTab(parent)
 
     E.trotX = E.tailRotCollapse:AddSlider("Pitch", 0, -100, 100, 1)
         UI:Config(E.trotX, {
-            IDContext  = "ro123tX",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -759,7 +728,6 @@ function BetterPMTab(parent)
 
     E.trotY = E.tailRotCollapse:AddSlider("Yaw", 0, -100, 100, 1)
         UI:Config(E.trotY, {
-            IDContext  = "r123otY",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -774,7 +742,6 @@ function BetterPMTab(parent)
 
     E.trotZ = E.tailRotCollapse:AddSlider("Roll", 0, -100, 100, 1)
         UI:Config(E.trotZ, {
-            IDContext  = "ro12312tZ",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -789,13 +756,12 @@ function BetterPMTab(parent)
 
     E.resettRot = E.tailRotCollapse:AddButton("Reset")
         UI:Config(E.resettRot, {
-            IDContext = "resetttrot",
             SameLine  = false,
             OnClick   = function()
-                for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
-                    if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
-                        LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldRotate(
-                            LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat)
+                for i = 1, #_GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
+                    if _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
+                        _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldRotate(
+                            _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat)
                         break
                     end
                 end
@@ -811,7 +777,6 @@ function BetterPMTab(parent)
 
     E.hornsPosCollapse = E.treeHorns:AddTree("Position")
         UI:Config(E.hornsPosCollapse, {
-            IDContext   = 'as123123da323sdds',
             DefaultOpen = false
         })
 
@@ -819,7 +784,6 @@ function BetterPMTab(parent)
 
     E.hposX = E.hornsPosCollapse:AddSlider("W/E", 0, -100, 100, 1)
         UI:Config(E.hposX, {
-            IDContext  = "slid123e123rX",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -834,7 +798,6 @@ function BetterPMTab(parent)
 
     E.hposY = E.hornsPosCollapse:AddSlider("D/U", 0, -100, 100, 1)
         UI:Config(E.hposY, {
-            IDContext  = "slid13123erY",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -849,7 +812,6 @@ function BetterPMTab(parent)
 
     E.hposZ = E.hornsPosCollapse:AddSlider("S/N", 0, -100, 100, 1)
         UI:Config(E.hposZ, {
-            IDContext  = "sli23d123123erZ",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -864,13 +826,12 @@ function BetterPMTab(parent)
 
     E.resethPos = E.hornsPosCollapse:AddButton("Reset")
         UI:Config(E.resethPos, {
-            IDContext = "re11sehhhhpos",
             SameLine  = false,
             OnClick   = function()
-                for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
-                    if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
-                        LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(
-                            LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate)
+                for i = 1, #_GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
+                    if _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
+                        _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(
+                            _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate)
                         break
                     end
                 end
@@ -883,7 +844,6 @@ function BetterPMTab(parent)
 
     E.hornsRotCollapse = E.treeHorns:AddTree("Rotation")
         UI:Config(E.hornsRotCollapse, {
-            IDContext   = 'asdas123123dasdasdasds',
             DefaultOpen = false
         })
 
@@ -891,7 +851,6 @@ function BetterPMTab(parent)
 
     E.hrotX = E.hornsRotCollapse:AddSlider("Pitch", 0, -100, 100, 1)
         UI:Config(E.hrotX, {
-            IDContext  = "ro1312323tX",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -906,7 +865,6 @@ function BetterPMTab(parent)
 
     E.hrotY = E.hornsRotCollapse:AddSlider("Yaw", 0, -100, 100, 1)
         UI:Config(E.hrotY, {
-            IDContext  = "r1213otY",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -921,7 +879,6 @@ function BetterPMTab(parent)
 
     E.hrotZ = E.hornsRotCollapse:AddSlider("Roll", 0, -100, 100, 1)
         UI:Config(E.hrotZ, {
-            IDContext  = "ro1233312tZ",
             SameLine   = false,
             Components = 1,
             Value      = {0, 0, 0, 0},
@@ -936,13 +893,12 @@ function BetterPMTab(parent)
 
     E.resethRot = E.hornsRotCollapse:AddButton("Reset")
         UI:Config(E.resethRot, {
-            IDContext = "rese123hhhrot",
             SameLine  = false,
             OnClick   = function()
-                for i = 1, #LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
-                    if LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
-                        LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldRotate(
-                            LLGlobals.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat)
+                for i = 1, #_GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
+                    if _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find("horns") then
+                        _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldRotate(
+                            _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat)
                         break
                     end
                 end
@@ -964,10 +920,9 @@ function BetterPMTab(parent)
 
     E.saveButton = E.saveLoadCollapse:AddButton("Save")
         UI:Config(E.saveButton, {
-            IDContext = "saveIdddasdasda",
             SameLine  = false,
             OnClick   = function()
-                if LLGlobals.DummyNameMap then
+                if _GLL.DummyNameMap then
                     SaveVisTempCharacterPosition()
                 end
             end

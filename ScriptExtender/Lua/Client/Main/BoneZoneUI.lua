@@ -33,11 +33,10 @@ function BoneZoneTab(p)
 end
 
 
-
 function BZAgreed()
 
     local txtBone = bz:AddSeparatorText('BoneZone')
-    Globals.States.bonesUnlocked = false
+    _GLL.States.bonesUnlocked = false
 
 
 
@@ -45,6 +44,7 @@ function BZAgreed()
         selectedCharacter = E.cmbBoneDummies.SelectedIndex + 1
         SetVarValuesToSliders()
         E.visTemComob.SelectedIndex = e.SelectedIndex
+        LoadAttachState(getSelectedDummy())
     end
 
 
@@ -56,8 +56,8 @@ function BZAgreed()
             HeightLargest = true,
             SameLine = false,
             OnChange = function(e)
-                if not LLGlobals.States.inPhotoMode then return end
-                UpdateBZDummyCombo(e)
+                if not _GLL.States.inPhotoMode then return end
+                UpdateDummyCombo(e)
             end
         })
     selectedCharacter = E.cmbBoneDummies.SelectedIndex + 1
@@ -67,7 +67,7 @@ function BZAgreed()
     -- E.btnMap = bz:AddButton('Dump Variables')
     --     UI:Config(E.btnMap, {
     --         OnClick = function()
-    --             if not LLGlobals.States.inPhotoMode then return end
+    --             if not _GLL.States.inPhotoMode then return end
     --             local entity = getSelectedDummy()
     --             DDump(GetGenomeVariablesIndicies(entity))
     --         end
@@ -78,7 +78,9 @@ function BZAgreed()
     E.checkAutoTail = bz:AddCheckbox('Disable tail physics')
 
 
+
     bz:AddSeparatorText('Attachies')
+
 
 
     E.btnGetDaggers = bz:AddButton([[Get Daniela's daggers]])
@@ -92,89 +94,78 @@ function BZAgreed()
 
     --- Temporal garbo
     --- 2e8cc79e-ca32-e196-0bb1-a6084c1328bb
+    --- d367a2d6-fcb8-5de9-d3d8-e070be782c31 star
+    --- 9b7b882e-eb44-e3c6-42ac-14f37070f9d0 book
+    --- c6cd7103-f493-0cdc-3f18-7f34bfeaea4a ring
 
 
 
-    local function scaleAttachment(hand, value)
-        local character = getSelectedDummy()
-        local entity = LLGlobals.AttachedEntities[character] and LLGlobals.AttachedEntities[character][hand]
-        if entity and entity.Visual then
-            entity.Visual.Visual:SetWorldScale({value, value, value})
-        end
-    end
-
-
-
-    local function tickAttach(e, hand)
-        local character = getSelectedDummy()
-        local uuid = (hand == 'Main') and E.inputAttachItem.Text or E.inputAttachItemOff.Text
-        local key  = 'LL_Attachies_' .. hand .. '_' .. tostring(character)
-
-        if e.Checked then
-            if not LLGlobals.States.inPhotoMode then e.Checked = false return end
-
-            Utils:SubUnsubToTick(1, key, function()
-                if LLGlobals.States.inPhotoMode then
-                    AttachObjectToHand(hand, uuid, character)
-                else
-                    Utils:SubUnsubToTick(0, key, _)
-                    if getSelectedDummy() == character then
-                        e.Checked = false
-                    end
-                end
-            end)
-        else
-            Utils:SubUnsubToTick(0, key, _)
-        end
-    end
-
-
-
-    E.checkAttachies = bz:AddCheckbox('Attach item main')
-        UI:Config(E.checkAttachies, {
-            OnChange = function(e)
-                if not LLGlobals.States.inPhotoMode then e.Checked = false return end
-                tickAttach(e, 'Main')
-            end
-        })
-
-
-
-    E.inputAttachItem = bz:AddInputText('Item UUID main')
+    E.inputAttachItem = bz:AddInputText('')
     E.inputAttachItem.SameLine = false
 
 
 
-    E.slAttachScale = bz:AddSlider('Scale main', 1, 0.1, 2, 1)
-        UI:Config(E.slAttachScale, {
+    E.checkAttachies = bz:AddCheckbox('')
+        UI:Config(E.checkAttachies, {
+            SameLine = true,
             OnChange = function(e)
-                scaleAttachment('Main', e.Value[1])
+                if not _GLL.States.inPhotoMode then e.Checked = false return end
+                tickAttach(e, 'Main')
+                SaveAttachState(getSelectedDummy())
             end
         })
 
 
 
-    E.checkAttachiesOff = bz:AddCheckbox('Attach item off')
+    bz:AddText('Main hand').SameLine = true
+
+
+    E.slAttachScale = bz:AddSlider('', 1, 0.1, 2, 1)
+        UI:Config(E.slAttachScale, {
+            OnChange = function(e)
+                ScaleAttachment('Main', e.Value[1])
+                SaveAttachState(getSelectedDummy())
+            end
+        })
+
+
+
+    bz:AddDummy(40,0).SameLine = true
+    bz:AddText('Main scale').SameLine = true
+
+
+
+    E.inputAttachItemOff = bz:AddInputText('')
+    E.inputAttachItemOff.SameLine = false
+
+
+
+    E.checkAttachiesOff = bz:AddCheckbox('')
     UI:Config(E.checkAttachiesOff, {
+        SameLine = true,
         OnChange = function(e)
-            if not LLGlobals.States.inPhotoMode then e.Checked = false return end
+            if not _GLL.States.inPhotoMode then e.Checked = false return end
             tickAttach(e, 'Off')
+            SaveAttachState(getSelectedDummy())
         end
     })
 
 
 
-    E.inputAttachItemOff = bz:AddInputText('Item UUID off')
-    E.inputAttachItemOff.SameLine = false
+    bz:AddText('Off hand').SameLine = true
 
 
 
-    E.slAttachScaleOff = bz:AddSlider('Scale off', 1, 0.1, 2, 1)
+    E.slAttachScaleOff = bz:AddSlider('', 1, 0.1, 2, 1)
         UI:Config(E.slAttachScaleOff, {
             OnChange = function(e)
-                scaleAttachment('Main', e.Value[1])
+                ScaleAttachment('Main', e.Value[1])
+                SaveAttachState(getSelectedDummy())
             end
         })
+
+    bz:AddDummy(40,0).SameLine = true
+    bz:AddText('Off scale').SameLine = true
 
 
 
@@ -234,20 +225,20 @@ function BZAgreed()
     end)
         UI:Config(E.btnResetBpnes, {
             OnClick = function()
-                if not LLGlobals.States.inPhotoMode then return end
+                if not _GLL.States.inPhotoMode then return end
                 UI:Confirm(E.btnResetBpnes, resetId, 1000)
             end
         })
 
 
 
-    LLGlobals.States.bzSymmetry = false
+    _GLL.States.bzSymmetry = false
 
     E.checkSymm = bz:AddCheckbox('Symmetry|Alt+F')
         UI:Config(E.checkSymm, {
             SameLine = true,
             OnChange = function(e)
-                LLGlobals.States.bzSymmetry = e.Checked
+                _GLL.States.bzSymmetry = e.Checked
             end
         })
 
@@ -335,7 +326,7 @@ function BZAgreed()
 
 
 
-    LLGlobals.SavedPoses = LLGlobals.SavedPoses or {}
+    _GLL.SavedPoses = _GLL.SavedPoses or {}
 
 
 
@@ -343,7 +334,7 @@ function BZAgreed()
         UI:Config(E.btnSavePose, {
             SameLine = true,
             OnClick = function(e)
-                if not LLGlobals.States.inPhotoMode then return end
+                if not _GLL.States.inPhotoMode then return end
 
                 local catName = UI:SelectedOpt(E.comboCats)
                 local poseName = E.inputPoseName.Text
@@ -353,24 +344,23 @@ function BZAgreed()
                 if poseDoesntExist then
                     TableBoneValues()
                     Ext.IO.SaveFile('LightyLights/Poses/' .. poseName .. '.json',
-                        Ext.Json.Stringify(Globals.PoseValues[getSelectedDummyOwnerUuid()]))
+                        Ext.Json.Stringify(_GLL.PoseValues[getSelectedDummyOwnerUuid()]))
 
-                    LLGlobals.SavedPoses[catName] = LLGlobals.SavedPoses[catName] or {}
+                    _GLL.SavedPoses[catName] = _GLL.SavedPoses[catName] or {}
 
-                    if not table.find(LLGlobals.SavedPoses[catName], poseName) then
-                        table.insert(LLGlobals.SavedPoses[catName], poseName)
+                    if not table.find(_GLL.SavedPoses[catName], poseName) then
+                        table.insert(_GLL.SavedPoses[catName], poseName)
                     else
                         return DPrint('Pose already added')
                     end
 
-                    Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(LLGlobals.SavedPoses))
+                    Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(_GLL.SavedPoses))
                 else
                     return DPrint('Pose already added')
                 end
 
             end
         })
-
 
 
 
@@ -406,9 +396,9 @@ function BZAgreed()
                 E.comboCats.SelectedIndex = table.find(SaveCategories, catName) - 1
                 E.inputCatName.Text = ''
 
-                LLGlobals.SavedPoses[catName] = LLGlobals.SavedPoses[catName] or {}
+                _GLL.SavedPoses[catName] = _GLL.SavedPoses[catName] or {}
 
-                Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(LLGlobals.SavedPoses))
+                Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(_GLL.SavedPoses))
             end
         })
 
@@ -430,7 +420,7 @@ function BZAgreed()
                             local file = Ext.IO.LoadFile('LightyLights/Poses/' .. poseName .. '.json')
                             if file then
                                 local SavedPose = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/Poses/' .. poseName .. '.json'))
-                                Globals.PoseValues[uuid] = SavedPose
+                                _GLL.PoseValues[uuid] = SavedPose
 
                                 SetVarValuesToSliders()
                                 SetValuesToVars()
@@ -452,7 +442,7 @@ function BZAgreed()
 
 
     function CreateCategoriesAndButtons()
-        for catName, Poses in pairs(LLGlobals.SavedPoses) do
+        for catName, Poses in pairs(_GLL.SavedPoses) do
             CreateCategoryTree(catName)
             for _, poseName in pairs(Poses) do
                 CreatePoseButton(catName, poseName)

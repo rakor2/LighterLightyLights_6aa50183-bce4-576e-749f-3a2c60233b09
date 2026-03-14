@@ -1,22 +1,22 @@
-LLGlobals.GoboLightMap = {}
+_GLL.GoboLightMap = {}
 
 
 
 Ch.CreateGobo:SetRequestHandler(function (Data)
-    if not LLGlobals.selectedUuid then return end
-    if LLGlobals.GoboLightMap[LLGlobals.selectedUuid] then return end
+    if not _GLL.selectedUuid then return end
+    if _GLL.GoboLightMap[_GLL.selectedUuid] then return end
     if not Data.goboGuid then return end
 
-    local x, y, z = Osi.GetPosition(LLGlobals.selectedUuid)
-    local rx, ry, rz = Osi.GetRotation(LLGlobals.selectedUuid)
+    local x, y, z = Osi.GetPosition(_GLL.selectedUuid)
+    local rx, ry, rz = Osi.GetRotation(_GLL.selectedUuid)
     local uuid = tostring(Data.goboGuid)
 
     local goboUuid = Osi.CreateAt(uuid, x, y, z, 0, 0,'')
     Osi.ToTransform(goboUuid, x, y, z, rx, ry, rz)
 
-    LLGlobals.GoboLightMap[LLGlobals.selectedUuid] = goboUuid
-    LLGlobals.GoboDistances = LLGlobals.GoboDistances or {}
-    LLGlobals.GoboDistances[goboUuid] = 0.1
+    _GLL.GoboLightMap[_GLL.selectedUuid] = goboUuid
+    _GLL.GoboDistances = _GLL.GoboDistances or {}
+    _GLL.GoboDistances[goboUuid] = 0.1
 
     UpdateGoboPosition()
 
@@ -58,17 +58,17 @@ Ch.DeleteGobo:SetHandler(function (Data)
                 end
             end
         end
-        LLGlobals.GoboLightMap = {}
+        _GLL.GoboLightMap = {}
     else
-        if not LLGlobals.GoboLightMap[LLGlobals.selectedUuid] then return end
+        if not _GLL.GoboLightMap[_GLL.selectedUuid] then return end
 
-        for light, gobo in pairs(LLGlobals.GoboLightMap) do
-            if light == LLGlobals.selectedUuid then
+        for light, gobo in pairs(_GLL.GoboLightMap) do
+            if light == _GLL.selectedUuid then
                 goboToDelete = gobo
             end
         end
 
-        LLGlobals.GoboLightMap[LLGlobals.selectedUuid] = nil
+        _GLL.GoboLightMap[_GLL.selectedUuid] = nil
         Osi.RequestDelete(goboToDelete)
     end
 end)
@@ -85,18 +85,18 @@ end)
 -- sloppy toppy
 
 Ch.GoboTranslate:SetHandler(function (Data)
-    if not LLGlobals.selectedUuid then return end
-    if not LLGlobals.GoboLightMap[LLGlobals.selectedUuid] then return end
+    if not _GLL.selectedUuid then return end
+    if not _GLL.GoboLightMap[_GLL.selectedUuid] then return end
 
-    local goboUuid = LLGlobals.GoboLightMap[LLGlobals.selectedUuid]
+    local goboUuid = _GLL.GoboLightMap[_GLL.selectedUuid]
     if not goboUuid then return end
 
     local offset = Data.offset
     local step = Data.step
     local distance = offset / step
 
-    LLGlobals.GoboDistances = LLGlobals.GoboDistances or {}
-    LLGlobals.GoboDistances[goboUuid] = distance
+    _GLL.GoboDistances = _GLL.GoboDistances or {}
+    _GLL.GoboDistances[goboUuid] = distance
 
     UpdateGoboPosition()
 end)
@@ -104,16 +104,16 @@ end)
 
 
 function UpdateGoboPosition()
-    if not LLGlobals.selectedUuid then return end
-    if not LLGlobals.GoboLightMap[LLGlobals.selectedUuid] then return end
+    if not _GLL.selectedUuid then return end
+    if not _GLL.GoboLightMap[_GLL.selectedUuid] then return end
 
-    local goboUuid = LLGlobals.GoboLightMap[LLGlobals.selectedUuid]
+    local goboUuid = _GLL.GoboLightMap[_GLL.selectedUuid]
     if not goboUuid then return end
 
-    LLGlobals.GoboDistances = LLGlobals.GoboDistances or {}
-    local distance = LLGlobals.GoboDistances[goboUuid] or 1.0
-    local lx, ly, lz = Osi.GetPosition(LLGlobals.selectedUuid)
-    local lrx, lry, lrz = Osi.GetRotation(LLGlobals.selectedUuid)
+    _GLL.GoboDistances = _GLL.GoboDistances or {}
+    local distance = _GLL.GoboDistances[goboUuid] or 1.0
+    local lx, ly, lz = Osi.GetPosition(_GLL.selectedUuid)
+    local lrx, lry, lrz = Osi.GetRotation(_GLL.selectedUuid)
     local angleX = math.rad(lrx)
     local angleY = math.rad(lry)
     local dirX = math.sin(angleY) * math.cos(angleX)

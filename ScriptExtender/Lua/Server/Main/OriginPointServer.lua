@@ -1,11 +1,11 @@
 Ch.CreateOriginPoint:SetRequestHandler(function (Data)
-    if LLGlobals.States.pointIsExisting then return end
+    if _GLL.States.pointIsExisting then return end
     local x, y, z = table.unpack(getSourcePosition())
-    LLGlobals.pointUuid = Osi.CreateAt(lightMarkerGUID, x, y, z, 0, 0, '')
-    LLGlobals.pointEntity = Ext.Entity.Get(LLGlobals.pointUuid)
-    LLGlobals.States.pointIsExisting = true
+    _GLL.pointUuid = Osi.CreateAt(lightMarkerGUID, x, y, z, 0, 0, '')
+    _GLL.pointEntity = Ext.Entity.Get(_GLL.pointUuid)
+    _GLL.States.pointIsExisting = true
     local Response = {
-        LLGlobals.pointUuid
+        _GLL.pointUuid
     }
     return Response
 end)
@@ -13,9 +13,9 @@ end)
 
 
 Ch.DeleteOriginPoint:SetHandler(function (Data)
-    if LLGlobals.pointUuid then
-        Osi.RequestDelete(LLGlobals.pointUuid)
-        LLGlobals.States.pointIsExisting = false
+    if _GLL.pointUuid then
+        Osi.RequestDelete(_GLL.pointUuid)
+        _GLL.States.pointIsExisting = false
     end
 end)
 
@@ -26,7 +26,7 @@ Ch.MoveOriginPoint:SetHandler(function (Data)
     local axis = Data.axis
     local step = Data.step
     local offset = Data.offset
-    local uuid = LLGlobals.pointUuid
+    local uuid = _GLL.pointUuid
     local rx, ry, rz = Osi.GetRotation(uuid)
     local x, y, z = Osi.GetPosition(uuid)
 
@@ -54,7 +54,7 @@ end)
 
 
 Ch.ToCamOriginPoint:SetHandler(function (Data)
-    local uuid = LLGlobals.pointUuid
+    local uuid = _GLL.pointUuid
     local x,y,z = table.unpack(Data.Translate)
     Osi.ToTransform(uuid, x, y, z, 0, 0, 0)
 end)

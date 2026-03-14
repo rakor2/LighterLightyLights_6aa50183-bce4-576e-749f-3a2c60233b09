@@ -63,7 +63,7 @@ end)
 
 
 Utils:SubUnsubToTick(1, 'FUN', function()
-    if not LLGlobals.States.inPhotoMode then return end
+    if not _GLL.States.inPhotoMode then return end
     local Dummies = Ext.Entity.GetAllEntitiesWithComponent('Dummy')
 
     for k, _ in ipairs(Dummies) do

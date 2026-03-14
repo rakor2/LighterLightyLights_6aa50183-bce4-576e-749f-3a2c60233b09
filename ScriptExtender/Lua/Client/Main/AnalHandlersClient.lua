@@ -1,12 +1,12 @@
-LLGlobals.LtnComboOptions = {}
-LLGlobals.AtmComboOptions = {}
-LLGlobals.LightingPresets = {}
-LLGlobals.AtmospherePresets = {}
+_GLL.LtnComboOptions = {}
+_GLL.AtmComboOptions = {}
+_GLL.LightingPresets = {}
+_GLL.AtmospherePresets = {}
 
 
 function PopulateLTNOptions()
     for _, name in ipairs(Utils:MapToArray(ltn_templates2)) do
-        table.insert(LLGlobals.LtnComboOptions, name)
+        table.insert(_GLL.LtnComboOptions, name)
     end
 end
 PopulateLTNOptions()
@@ -14,7 +14,7 @@ PopulateLTNOptions()
 
 function PopulateATMOptions()
     for _, name in ipairs(Utils:MapToArray(atm_templates2)) do
-        table.insert(LLGlobals.AtmComboOptions, name)
+        table.insert(_GLL.AtmComboOptions, name)
     end
 end
 PopulateATMOptions()
@@ -42,9 +42,9 @@ function CreateSelectable(parent, tbl, lable, hardcode, hardcode2)
         Ext.Net.PostMessageToServer(hardcode2, selectable.Label)
 
         if hardcode2 == 'LL_LightingApply' then
-            E.comboLighting.SelectedIndex = table.find(LLGlobals.LtnComboOptions, selectable.Label) - 1
+            E.comboLighting.SelectedIndex = table.find(_GLL.LtnComboOptions, selectable.Label) - 1
         else
-            E.comboAtmosphere.SelectedIndex = table.find(LLGlobals.AtmComboOptions, selectable.Label) - 1
+            E.comboAtmosphere.SelectedIndex = table.find(_GLL.AtmComboOptions, selectable.Label) - 1
         end
     end
     tbl[lable] = lable

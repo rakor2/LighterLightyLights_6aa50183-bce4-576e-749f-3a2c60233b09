@@ -1,6 +1,6 @@
 local boneZoneInit = false
 
-LLGlobals.DummyVeryOriginalTransforms = {}
+_GLL.DummyVeryOriginalTransforms = {}
 
 local HEIGHT_OFFSET = 2
 local MAX_DISTANCE = 11
@@ -34,22 +34,23 @@ local function OnPhotoModeCreate()
     end
 
     Helpers.Timer:OnTicks(30, function ()
-        LLGlobals.States.inPhotoMode = true
-        LLGlobals.DummyNameMap = {}
+        _GLL.States.inPhotoMode = true
+        _GLL.DummyNameMap = {}
 
         local Dummies = Ext.Entity.GetAllEntitiesWithComponent('Dummy')
 
         for index, dummy in pairs(Dummies) do
-            LLGlobals.DummyVeryOriginalTransforms[dummy.Dummy.Entity.Uuid.EntityUuid] = Ext.Types.Serialize(dummy.Transform.Transform)
+            _GLL.DummyVeryOriginalTransforms[dummy.Dummy.Entity.Uuid.EntityUuid] = Ext.Types.Serialize(dummy.Transform.Transform)
 
             --- Dummy name and map mhm
             local dummyName = Dummy:Name(dummy)
-            local dummyId = dummyName .. '##' .. index
-            LLGlobals.DummyNameMap[dummyId] = dummy
-            LLGlobals.DummyNames = Utils:MapToArray(LLGlobals.DummyNameMap)
+            local dummyId = dummyName .. '##' .. dummy.Dummy.Entity.Uuid.EntityUuid
+            _GLL.DummyNameMap[dummyId] = dummy
+            _GLL.DummyNames = Utils:MapToArray(_GLL.DummyNameMap)
 
-            E.visTemComob.Options = LLGlobals.DummyNames
-            E.cmbBoneDummies.Options = LLGlobals.DummyNames
+
+            E.visTemComob.Options = _GLL.DummyNames
+            E.cmbBoneDummies.Options = _GLL.DummyNames
 
 
             GetGenomeVariablesIndicies(dummy)
@@ -75,9 +76,9 @@ local function OnPhotoModeCreate()
 
             --- Reaplying saved transforms on photomode enter
             --- TBD: refactor temp garbo
-            if LLGlobals.SavedTransforms and LLGlobals.SavedTransforms[dummyId] then
-                -- DDump(LLGlobals.SavedTransforms[dummyId])
-                local saved = LLGlobals.SavedTransforms[dummyId]
+            if _GLL.SavedTransforms and _GLL.SavedTransforms[dummyId] then
+                -- DDump(_GLL.SavedTransforms[dummyId])
+                local saved = _GLL.SavedTransforms[dummyId]
                 dummy.Visual.Visual.WorldTransform.Translate = {saved.pos[1], saved.pos[2], saved.pos[3]}
                 dummy.Visual.Visual.WorldTransform.RotationQuat = {saved.rot[1], saved.rot[2], saved.rot[3], saved.rot[4]}
                 dummy.Visual.Visual.WorldTransform.Scale = {saved.scale[1], saved.scale[2], saved.scale[3]}
@@ -134,7 +135,7 @@ local function OnPhotoModeCreate()
 
 
         --- Gitzmo
-        -- LLGlobals.gizmo:SetActive(true)
+        -- _GLL.gizmo:SetActive(true)
     end)
 end
 
@@ -146,10 +147,10 @@ local function OnPhotoModeDestroy()
         EnableTailPhysics()
     end
 
-    LLGlobals.States.inPhotoMode = false
+    _GLL.States.inPhotoMode = false
 
-    LLGlobals.DummyNameMap = nil
-    LLGlobals.DummyNames = nil
+    _GLL.DummyNameMap = nil
+    _GLL.DummyNames = nil
 
     E.visTemComob.Options = {'Not in Photo Mode'}
     E.cmbBoneDummies.Options = {'Not in Photo Mode'}
@@ -174,7 +175,7 @@ local function OnPhotoModeDestroy()
         v.Window:Destroy()
     end
 
-    -- LLGlobals.gizmo:SetActive(false)
+    -- _GLL.gizmo:SetActive(false)
 end
 
 
@@ -200,9 +201,9 @@ end)
 
 
 Ext.RegisterNetListener('LL_SendLookAtTargetUuid', function(channel, payload)
-    LLGlobals.tragetUuid = payload
+    _GLL.tragetUuid = payload
     Helpers.Timer:OnTicks(3, function ()
-        LLGlobals.tragetEntity = Ext.Entity.Get(LLGlobals.tragetUuid)
+        _GLL.tragetEntity = Ext.Entity.Get(_GLL.tragetUuid)
     end)
     CharacterLightSetupState(E.checkLightSetupState.Checked)
 end)

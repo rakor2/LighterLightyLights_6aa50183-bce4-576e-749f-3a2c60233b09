@@ -14,14 +14,15 @@ end
 
 
 function getSelectedDummy()
-    local entity = LLGlobals.DummyNameMap[E.cmbBoneDummies.Options[selectedCharacter]]
+    if not _GLL.DummyNameMap then return end
+    local entity = _GLL.DummyNameMap[E.cmbBoneDummies.Options[selectedCharacter]]
     return entity
 end
 
 
 
 function getSelectedDummyOwnerUuid()
-    local entity = LLGlobals.DummyNameMap[E.cmbBoneDummies.Options[selectedCharacter]]
+    local entity = _GLL.DummyNameMap[E.cmbBoneDummies.Options[selectedCharacter]]
     if entity then
         local characterUuid = entity.Dummy.Entity.Uuid.EntityUuid
         if characterUuid then
@@ -69,7 +70,7 @@ end
 
 function LoadPoseList()
     if Ext.IO.LoadFile('LightyLights/Poses/_POSE_LIST.json') then
-        LLGlobals.SavedPoses = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/Poses/_POSE_LIST.json'))
+        _GLL.SavedPoses = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/Poses/_POSE_LIST.json'))
     end
 end
 LoadPoseList()
@@ -121,7 +122,7 @@ end
 
 
 
-Globals.PoseValues = {}
+_GLL.PoseValues = {}
 
 function SetValueToVarAndTableIt(varName, value)
     local X = 1
@@ -129,35 +130,35 @@ function SetValueToVarAndTableIt(varName, value)
     local newValue
     local characterUuid = getSelectedDummyOwnerUuid()
     local entity = getSelectedDummy()
-    Utils:EnsureTable(Globals.PoseValues, characterUuid, varName)
+    Utils:EnsureTable(_GLL.PoseValues, characterUuid, varName)
 
 
     if varName:find('_Trans') or varName:find('_Scale') then
         newValue = {value[1]/X,value[2]/X,value[3]/X}
     else
         local Quats = Math.EulerToQuats({value[1]/X,value[2]/X,value[3]/X})
-        Globals.PoseValues[characterUuid][varName]['Quats'] = Quats
+        _GLL.PoseValues[characterUuid][varName]['Quats'] = Quats
         newValue = Quats
     end
 
-    Globals.PoseValues[characterUuid][varName]['HumanValue'] = value
+    _GLL.PoseValues[characterUuid][varName]['HumanValue'] = value
     SetValueToGenomeVariable(entity, varName, newValue)
 
-    LLGlobals.States.bzLastModifiedVar = varName
+    _GLL.States.bzLastModifiedVar = varName
 end
 
 
 
 function SetVarValuesToSliders()
     local characterUuid = getSelectedDummyOwnerUuid()
-    if not Globals.PoseValues[characterUuid] then return end
+    if not _GLL.PoseValues[characterUuid] then return end
 
     local function restoreGroup(slTable, postfix, defaultValue)
         for boneGroupName, BoneCategories in pairs(AllBones) do
             for boneCategory, Bones in pairs(BoneCategories) do
                 for _, boneName in pairs(Bones) do
                     local varName = boneName .. postfix
-                    local poseData = Globals.PoseValues[characterUuid][varName]
+                    local poseData = _GLL.PoseValues[characterUuid][varName]
                     for i = 1, 3 do
                         local sl = slTable[varName .. '_' .. i]
                         if sl then
@@ -207,8 +208,8 @@ function SetValuesToVars(entity)
     local entity = entity or getSelectedDummy()
     local characterUuid = entity.Dummy.Entity.Uuid.EntityUuid or getSelectedDummyOwnerUuid()
 
-    if Globals.PoseValues[characterUuid] then
-        for varName, value in pairs(Globals.PoseValues[characterUuid]) do
+    if _GLL.PoseValues[characterUuid] then
+        for varName, value in pairs(_GLL.PoseValues[characterUuid]) do
             if varName and value then
                 if varName:find('_Scale') or varName:find('_Trans') then
                     newValue = {value.HumanValue[1], value.HumanValue[2], value.HumanValue[3]}
@@ -225,14 +226,14 @@ end
 
 
 function PopulateWithDefaultValues(characterUuid, varName)
-    if Globals.PoseValues[characterUuid][varName] then return end
+    if _GLL.PoseValues[characterUuid][varName] then return end
 
-    Utils:EnsureTable(Globals.PoseValues, characterUuid, varName)
-    if not Globals.PoseValues[characterUuid][varName]['HumanValue'] then
+    Utils:EnsureTable(_GLL.PoseValues, characterUuid, varName)
+    if not _GLL.PoseValues[characterUuid][varName]['HumanValue'] then
         if varName:find('_Scale') then
-            Globals.PoseValues[characterUuid][varName]['HumanValue'] = {1, 1, 1}
+            _GLL.PoseValues[characterUuid][varName]['HumanValue'] = {1, 1, 1}
         else
-            Globals.PoseValues[characterUuid][varName]['HumanValue'] = {0, 0, 0}
+            _GLL.PoseValues[characterUuid][varName]['HumanValue'] = {0, 0, 0}
         end
     end
 end
@@ -260,7 +261,7 @@ end
 
 
 function ResetBonesForCategory(boneGroupName, boneCategory)
-    if not LLGlobals.States.inPhotoMode then return end
+    if not _GLL.States.inPhotoMode then return end
     local BoneCategories = AllBones[boneGroupName]
     local Bones = BoneCategories[boneCategory]
 
@@ -277,7 +278,7 @@ end
 
 
 function ResetBonesForGroup(boneGroupName)
-    if not LLGlobals.States.inPhotoMode then return end
+    if not _GLL.States.inPhotoMode then return end
     local BoneCategories = AllBones[boneGroupName]
 
     for _, postfix in pairs(Postfixes) do
@@ -306,21 +307,21 @@ function TableBoneValues(entity)
                     varName = boneName .. postfix
                     local value = GetValueFromGenomeVariable(entity, varName)
                     if value then
-                        Utils:EnsureTable(Globals.PoseValues, characterUuid, varName)
+                        Utils:EnsureTable(_GLL.PoseValues, characterUuid, varName)
 
                         if value.Type == 'Rotator3' then
                             local HumanValue = Helpers.Math.QuatToEuler(value.Value)
-                            Globals.PoseValues[characterUuid][varName]['Quats'] = value.Value
-                            Globals.PoseValues[characterUuid][varName]['HumanValue'] = HumanValue
+                            _GLL.PoseValues[characterUuid][varName]['Quats'] = value.Value
+                            _GLL.PoseValues[characterUuid][varName]['HumanValue'] = HumanValue
                         else
-                            Globals.PoseValues[characterUuid][varName]['HumanValue'] = value.Value
+                            _GLL.PoseValues[characterUuid][varName]['HumanValue'] = value.Value
                         end
                     end
                 end
             end
         end
     end
-    return Globals.PoseValues
+    return _GLL.PoseValues
 end
 
 
@@ -345,7 +346,7 @@ function createStepButtons(parent, slider, fn)
         UI:Config(btnMinus, {
             SameLine = true,
             OnClick = function()
-                if not LLGlobals.States.inPhotoMode then return end
+                if not _GLL.States.inPhotoMode then return end
                 fn(-1)
             end
         })
@@ -354,7 +355,7 @@ function createStepButtons(parent, slider, fn)
         UI:Config(btnPlus, {
             SameLine = true,
             OnClick = function()
-                if not LLGlobals.States.inPhotoMode then return end
+                if not _GLL.States.inPhotoMode then return end
                 fn(1)
             end
         })
@@ -367,7 +368,7 @@ function createResetButton(parent, slider, fn)
         UI:Config(btnReset, {
             SameLine = true,
             OnClick = function()
-                if not LLGlobals.States.inPhotoMode then return end
+                if not _GLL.States.inPhotoMode then return end
                 fn()
             end
         })
@@ -465,8 +466,8 @@ function SetSymmetry(characterUuid, varName, axisIndex, value)
 
     -- DPrint('isFacial: %s, isEye: %s, invert: %s', isFacial, isEye, invert)
 
-    Globals.PoseValues[characterUuid][mirrorVar]['HumanValue'][axisIndex] = value
-    SetValueToVarAndTableIt(mirrorVar, Globals.PoseValues[characterUuid][mirrorVar]['HumanValue'])
+    _GLL.PoseValues[characterUuid][mirrorVar]['HumanValue'][axisIndex] = value
+    SetValueToVarAndTableIt(mirrorVar, _GLL.PoseValues[characterUuid][mirrorVar]['HumanValue'])
 
 
     E.slBZ[mirrorVar .. '_' .. axisIndex].Value = {value, 0,0,0}
@@ -492,20 +493,20 @@ local SliderConfigs = {
 
 function createBoneSlider(parent, boneName, axis)
     local Config = SliderConfigs[axis]
-    local slider = parent:AddSlider('', Config.default, Config.min, Config.max, 1)
+    local slider = parent:AddDrag('', Config.default, Config.min, Config.max)
     local varName = boneName .. Config.postfix
 
     E.slBZ[boneName .. Config.postfix .. '_' .. Config.index] = slider
         UI:Config(slider, {
             OnChange = function(e)
-                if not LLGlobals.States.inPhotoMode then slider.Value = {0,0,0,0} return end
+                if not _GLL.States.inPhotoMode then slider.Value = {0,0,0,0} return end
 
                 local characterUuid = getSelectedDummyOwnerUuid()
                 PopulateWithDefaultValues(characterUuid, varName)
-                Globals.PoseValues[characterUuid][varName]['HumanValue'][Config.index] = e.Value[1]
-                SetValueToVarAndTableIt(varName, Globals.PoseValues[characterUuid][varName]['HumanValue'])
+                _GLL.PoseValues[characterUuid][varName]['HumanValue'][Config.index] = e.Value[1]
+                SetValueToVarAndTableIt(varName, _GLL.PoseValues[characterUuid][varName]['HumanValue'])
 
-                if LLGlobals.States.bzSymmetry then
+                if _GLL.States.bzSymmetry then
                     SetSymmetry(characterUuid, varName, Config.index, e.Value[1])
                 end
             end
@@ -548,31 +549,31 @@ function CreateControls2(boneGroupName, boneCategory, boneName)
             local step = varName:find('_Rot') and PRECISE_ROT or PRECOSE_TRANS_SCALE
             local defaultValue = varName:find('_Scale') and 1 or 0
 
-            createStepButtons(tree, slider, function(direction)
-                local characterUuid = getSelectedDummyOwnerUuid()
-                local Value = Globals.PoseValues[characterUuid][varName]['HumanValue']
+            -- createStepButtons(tree, slider, function(direction)
+            --     local characterUuid = getSelectedDummyOwnerUuid()
+            --     local Value = _GLL.PoseValues[characterUuid][varName]['HumanValue']
 
-                Value[axisIndex] = Value[axisIndex] + step * direction
-                slider.Value = {Value[axisIndex], 0, 0, 0}
+            --     Value[axisIndex] = Value[axisIndex] + step * direction
+            --     slider.Value = {Value[axisIndex], 0, 0, 0}
 
 
-                SetValueToVarAndTableIt(varName, {Value[1], Value[2], Value[3]})
+            --     SetValueToVarAndTableIt(varName, {Value[1], Value[2], Value[3]})
 
-                if LLGlobals.States.bzSymmetry then
-                    SetSymmetry(characterUuid, varName, axisIndex, Value[axisIndex])
-                end
-            end)
+            --     if _GLL.States.bzSymmetry then
+            --         SetSymmetry(characterUuid, varName, axisIndex, Value[axisIndex])
+            --     end
+            -- end)
 
             createResetButton(tree, slider, function()
                 local characterUuid = getSelectedDummyOwnerUuid()
-                local Value = Globals.PoseValues[characterUuid][varName]['HumanValue']
+                local Value = _GLL.PoseValues[characterUuid][varName]['HumanValue']
 
                 Value[axisIndex] = defaultValue
                 slider.Value = {defaultValue, 0, 0, 0}
 
                 SetValueToVarAndTableIt(varName, {Value[1], Value[2], Value[3]})
 
-                if LLGlobals.States.bzSymmetry then
+                if _GLL.States.bzSymmetry then
                     SetSymmetry(characterUuid, varName, axisIndex, defaultValue)
                 end
             end)
@@ -581,6 +582,7 @@ function CreateControls2(boneGroupName, boneCategory, boneName)
         end
     end
 end
+
 
 
 function ApplySplitColor(boneName, color, colorHovered)
@@ -601,6 +603,7 @@ function ApplySplitColor(boneName, color, colorHovered)
         end
     end
 end
+
 
 
 local function SplitColor(Bones)
@@ -774,7 +777,7 @@ end
 
 
 function AddPoseToList(catName, poseName)
-    for savedCatName, SavedPoseNames in pairs(LLGlobals.SavedPoses) do
+    for savedCatName, SavedPoseNames in pairs(_GLL.SavedPoses) do
         for _, savedPoseName in pairs(SavedPoseNames) do
             if poseName == savedPoseName then
                 DPrint('Pose already added')
@@ -783,8 +786,8 @@ function AddPoseToList(catName, poseName)
         end
     end
 
-    table.insert(LLGlobals.SavedPoses[catName], poseName)
-    Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(LLGlobals.SavedPoses))
+    table.insert(_GLL.SavedPoses[catName], poseName)
+    Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(_GLL.SavedPoses))
     return true
 end
 
@@ -792,12 +795,12 @@ end
 
 local function DeleteCategoryOrPose(typeThing, catName, poseName)
     if typeThing == 'Category' then
-        LLGlobals.SavedPoses[catName] = nil
+        _GLL.SavedPoses[catName] = nil
     else
-        local index = table.find(LLGlobals.SavedPoses[catName], poseName)
-        table.remove(LLGlobals.SavedPoses[catName], index)
+        local index = table.find(_GLL.SavedPoses[catName], poseName)
+        table.remove(_GLL.SavedPoses[catName], index)
     end
-    Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(LLGlobals.SavedPoses))
+    Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(_GLL.SavedPoses))
 end
 
 
@@ -892,7 +895,7 @@ function CreatePoseButton(catName, poseName)
             SameLine = true,
             OnClick = function(e)
                 Ext.IO.SaveFile('LightyLights/Poses/' .. poseName .. '.json',
-                    Ext.Json.Stringify(Globals.PoseValues[getSelectedDummyOwnerUuid()]))
+                    Ext.Json.Stringify(_GLL.PoseValues[getSelectedDummyOwnerUuid()]))
             end
         })
 
@@ -902,12 +905,12 @@ function CreatePoseButton(catName, poseName)
             SameLine = true,
             Size = {-1, 39},
             OnClick = function(e)
-                if not LLGlobals.States.inPhotoMode then return end
+                if not _GLL.States.inPhotoMode then return end
 
                 ResetAllBones()
 
                 local SavedPose = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/Poses/' .. poseName .. '.json'))
-                Globals.PoseValues[getSelectedDummyOwnerUuid()] = SavedPose
+                _GLL.PoseValues[getSelectedDummyOwnerUuid()] = SavedPose
 
                 SetVarValuesToSliders()
                 SetValuesToVars()
@@ -1011,16 +1014,16 @@ function ApplyProportionalIK(chain, axisDelta, axisIndex)
         local influence = falloff ^ (n - i) --- Thx Mr.Clanker, I'm still too uneducated Gladge
         local varName = bone .. '_Rot'
 
-        Utils:EnsureTable(Globals.PoseValues, characterUuid, varName)
+        Utils:EnsureTable(_GLL.PoseValues, characterUuid, varName)
 
-        local CurrentValue = Globals.PoseValues[characterUuid][varName]
+        local CurrentValue = _GLL.PoseValues[characterUuid][varName]
         local Value = (CurrentValue and CurrentValue.HumanValue) and
                     {CurrentValue.HumanValue[1], CurrentValue.HumanValue[2], CurrentValue.HumanValue[3]} or {0, 0, 0}
 
         Value[axisIndex] = Value[axisIndex] + axisDelta * influence
         SetValueToVarAndTableIt(varName, Value)
 
-        if LLGlobals.States.bzSymmetry then
+        if _GLL.States.bzSymmetry then
             SetSymmetry(characterUuid, varName, axisIndex, Value[axisIndex])
         end
     end
@@ -1033,7 +1036,7 @@ local function createIKSliders(parent, axisIndex, axisLabel, Value, fn)
     local slider = parent:AddSlider('', 0, MIN_ROT, MAX_ROT, 1)
     UI:Config(slider, {
         OnChange = function(e)
-            if not LLGlobals.States.inPhotoMode then slider.Value = {0, 0, 0, 0} return end
+            if not _GLL.States.inPhotoMode then slider.Value = {0, 0, 0, 0} return end
             local newVal = e.Value[1]
             local delta  = newVal - Value[axisIndex]
             Value[axisIndex] = newVal
@@ -1094,15 +1097,15 @@ end
 
 
 
-LLGlobals.AttachEntity = {}
-
+_GLL.AttachedEntities = {}
+_GLL.AttachState = {}
 
 
 function AttachObjectToHand(hand, uuid, character)
-    LLGlobals.AttachEntity[character] = LLGlobals.AttachEntity[character] or {}
+    _GLL.AttachedEntities[character] = _GLL.AttachedEntities[character] or {}
 
     local s, err = pcall(function()
-        LLGlobals.AttachEntity[character][hand] = Ext.Entity.Get(uuid)
+        _GLL.AttachedEntities[character][hand] = Ext.Entity.Get(uuid)
     end)
 
     if err then DPrint('No UUID or UUID is invalid') end
@@ -1116,12 +1119,86 @@ function AttachObjectToHand(hand, uuid, character)
             elseif hand == 'Off' then
                 DummyTransform = eq.MeleeOffHand.SubVisuals[1].Visual.Visual.WorldTransform
             end
-            LLGlobals.AttachEntity[character][hand].Visual.Visual:SetWorldTranslate(DummyTransform.Translate)
-            LLGlobals.AttachEntity[character][hand].Visual.Visual:SetWorldRotate(DummyTransform.RotationQuat)
+            _GLL.AttachedEntities[character][hand].Visual.Visual:SetWorldTranslate(DummyTransform.Translate)
+            _GLL.AttachedEntities[character][hand].Visual.Visual:SetWorldRotate(DummyTransform.RotationQuat)
         end
     end
 end
 
 
 
---- 2e8cc79e-ca32-e196-0bb1-a6084c1328bb
+function ScaleAttachment(hand, value)
+        local character = getSelectedDummy()
+        local entity = _GLL.AttachedEntities[character] and _GLL.AttachedEntities[character][hand]
+        if entity and entity.Visual then
+            entity.Visual.Visual:SetWorldScale({value, value, value})
+        end
+    end
+
+
+
+function tickAttach(e, hand)
+    local character = getSelectedDummy()
+    local uuid = (hand == 'Main') and E.inputAttachItem.Text or E.inputAttachItemOff.Text
+    local key  = 'LL_Attachies_' .. hand .. '_' .. tostring(character)
+
+    if e.Checked then
+        if not _GLL.States.inPhotoMode then e.Checked = false return end
+
+        Utils:SubUnsubToTick(1, key, function()
+            if _GLL.States.inPhotoMode then
+                AttachObjectToHand(hand, uuid, character)
+            else
+                Utils:SubUnsubToTick(0, key, _)
+                if getSelectedDummy() == character then
+                    e.Checked = false
+                end
+            end
+        end)
+    else
+        Utils:SubUnsubToTick(0, key, _)
+    end
+    SaveAttachState(character)
+end
+
+
+
+function SaveAttachState(character)
+    local uuid = getDummyOwnerUuid(character)
+    _GLL.AttachState[uuid] = {
+        mainChecked = E.checkAttachies.Checked,
+        mainUuid    = E.inputAttachItem.Text,
+        mainScale   = E.slAttachScale.Value[1],
+        offChecked  = E.checkAttachiesOff.Checked,
+        offUuid     = E.inputAttachItemOff.Text,
+        offScale    = E.slAttachScaleOff.Value[1],
+    }
+end
+
+
+
+function LoadAttachState(character)
+    local uuid = getDummyOwnerUuid(character)
+    local xd = _GLL.AttachState[uuid]
+
+    if xd then
+        E.checkAttachies.Checked     = xd.mainChecked
+        E.inputAttachItem.Text       = xd.mainUuid
+        E.slAttachScale.Value        = {xd.mainScale, 0, 0, 0}
+
+        E.checkAttachiesOff.Checked  = xd.offChecked
+        E.inputAttachItemOff.Text    = xd.offUuid
+        E.slAttachScaleOff.Value     = {xd.offScale, 0, 0, 0}
+    else
+        E.checkAttachies.Checked     = false
+        E.inputAttachItem.Text       = ''
+        E.slAttachScale.Value        = {1, 0, 0, 0}
+
+        E.checkAttachiesOff.Checked  = false
+        E.inputAttachItemOff.Text    = ''
+        E.slAttachScaleOff.Value     = {1, 0, 0, 0}
+    end
+end
+
+
+--- 24fc6855-03e7-3b20-7a99-13d4d942ad26

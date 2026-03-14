@@ -19,13 +19,13 @@ end)
 
 
 
--- Globals.States.isLtalpInstalled = false
+-- _GLL.States.isLtalpInstalled = false
 
 -- Ext.OnNextTick(function(e)
 --     if Mods.LTALP then
 --         DPrint('Level Triggers and Light Probes')
---         Globals.States.isLtalpInstalled = true
+--         _GLL.States.isLtalpInstalled = true
 --     else
---         Globals.States.isLtalpInstalled = false
+--         _GLL.States.isLtalpInstalled = false
 --     end
 -- end)

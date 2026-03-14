@@ -11,17 +11,17 @@
     Ch.CurrentEntityTransform:Broadcast(Response)
 
 ]]
-LLGlobals.CreatedLightsServer = {}
-LLGlobals.LightParametersServer = {}
-LLGlobals.selectedUuid = nil
-LLGlobals.selectedEntity = nil
+_GLL.CreatedLightsServer = {}
+_GLL.LightParametersServer = {}
+_GLL.selectedUuid = nil
+_GLL.selectedEntity = nil
 
-LLGlobals.States = {}
-LLGlobals.States.allMarkersExisting = false
-LLGlobals.States.beamExisting = false
-LLGlobals.States.lastMode = {}
+_GLL.States = {}
+_GLL.States.allMarkersExisting = false
+_GLL.States.beamExisting = false
+_GLL.States.lastMode = {}
 
-LLGlobals.CreatedAllMarkers = {}
+_GLL.CreatedAllMarkers = {}
 
 MAZZLE_BEAM = 'ee3cf097-6e5f-40a2-8ed7-68073d50225f'
 
@@ -35,7 +35,7 @@ end)
 
 
 
-local function getAvailableRootTemplate()
+function getAvailableRootTemplate()
     for uuid, state in pairs(RootTemplates) do
         if state == true then
             RootTemplates[uuid] = false
@@ -71,92 +71,68 @@ end
 
 
 
-Ch.CreateLight:SetRequestHandler(function (Data)
-    local HumanRotation
-    local OFFSET = 2
-    local uuid = getAvailableRootTemplate()
+function CreateLight(x, y, z, HumanRotation, OrbitParams, rtUuid)
+    local rtUuid = rtUuid or getAvailableRootTemplate()
+    if not rtUuid then return nil end
 
-    if not uuid then return end
+    local entUuid = Osi.CreateAt(rtUuid, x, y, z, 0, 0, '')
+    local rx, ry, rz = table.unpack(HumanRotation)
+    Osi.ToTransform(entUuid, x, y, z, rx, ry, rz)
 
-    local x, y, z = table.unpack(getSourcePosition())
+    _GLL.selectedUuid   = entUuid
+    _GLL.selectedEntity = Ext.Entity.Get(entUuid)
 
-    if uuid then
-        LLGlobals.selectedUuid = Osi.CreateAt(uuid, x, y + OFFSET, z, 0, 0, '')
-        HumanRotation = {0, 0, 0}
+    _GLL.LightParametersServer[entUuid] = {
+        Translate     = {x, y, z},
+        RotationQuat  = Math.EulerToQuats(HumanRotation),
+        HumanRotation = HumanRotation,
+    }
+    _GLL.OrbitParams[entUuid]          = OrbitParams
+    _GLL.CreatedLightsServer[entUuid]  = rtUuid
+    _GLL.States.lastMode[entUuid]      = 'World'
 
-        if Data.lightType == 'Spotlight' then
-            HumanRotation = {90, 0, 0}
-            local rx, ry, rz = table.unpack(HumanRotation)
-            Osi.ToTransform(LLGlobals.selectedUuid, x, y + OFFSET, z, rx, ry, rz)
-        end
-
-
-        LLGlobals.LightParametersServer[LLGlobals.selectedUuid] = {}
-        LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate = {x,y + OFFSET ,z}
-        LLGlobals.LightParametersServer[LLGlobals.selectedUuid].RotationQuat = Math.EulerToQuats(HumanRotation)
-        LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = HumanRotation
-        LLGlobals.selectedEntity = Ext.Entity.Get(LLGlobals.selectedUuid)
-        LLGlobals.CreatedLightsServer[LLGlobals.selectedUuid] = LLGlobals.selectedUuid
-
-        if LLGlobals.markerUuid then
-            UpdateMarkerPosition()
-            UpdateBeamPosition()
-        else
-            CreateMarker(true)
-        end
-
-        local Response = {
-            LLGlobals.CreatedLightsServer,
-            LLGlobals.selectedUuid,
-            LLGlobals.markerUuid
-        }
-
-        LLGlobals.States.lastMode[LLGlobals.selectedUuid] = 'World'
-
-        return Response
-    else
-        return nil
-    end
-end)
-
-
-
-Ch.DuplicateLight:SetRequestHandler(function ()
-    if not LLGlobals.selectedUuid then return end
-
-    local uuid = getAvailableRootTemplate()
-    local x,y,z = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate)
-    local rx,ry,rz = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation)
-    local PreviousOrbitParams = LLGlobals.OrbitParams[LLGlobals.selectedUuid]
-
-    LLGlobals.selectedUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
-    Osi.ToTransform(LLGlobals.selectedUuid, x, y, z, rx, ry, rz)
-
-    LLGlobals.selectedEntity = Ext.Entity.Get(LLGlobals.selectedUuid)
-
-
-    local HumanRotation = {rx,ry,rz}
-    LLGlobals.LightParametersServer[LLGlobals.selectedUuid] = {}
-    LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate = {x,y,z}
-    LLGlobals.LightParametersServer[LLGlobals.selectedUuid].RotationQuat = Math.EulerToQuats(HumanRotation)
-    LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = HumanRotation
-    LLGlobals.OrbitParams[LLGlobals.selectedUuid] = PreviousOrbitParams
-    LLGlobals.CreatedLightsServer[LLGlobals.selectedUuid] = LLGlobals.selectedUuid
-
-    if LLGlobals.markerUuid then
+    if _GLL.markerUuid then
         UpdateMarkerPosition()
         UpdateBeamPosition()
     else
         CreateMarker(true)
     end
 
-    local Response = {
-        LLGlobals.CreatedLightsServer,
-        LLGlobals.selectedUuid,
-        LLGlobals.LightParametersServer[LLGlobals.selectedUuid]
-    }
 
-    LLGlobals.States.lastMode[LLGlobals.selectedUuid] = 'World'
+    return {
+        _GLL.CreatedLightsServer,
+        entUuid,
+        _GLL.markerUuid,
+    }
+end
+
+
+
+Ch.CreateLight:SetRequestHandler(function(Data)
+    local OFFSET = 2
+    local x, y, z = table.unpack(getSourcePosition())
+
+    local HumanRotation = {0, 0, 0}
+    if Data.lightType == 'Spotlight' then
+        HumanRotation = {90, 0, 0}
+    end
+    local uuid = Data.uuid or nil
+    return CreateLight(x, y + OFFSET, z, HumanRotation, nil, uuid)
+end)
+
+
+
+Ch.DuplicateLight:SetRequestHandler(function()
+    if not _GLL.selectedUuid then return end
+
+    local prev    = _GLL.LightParametersServer[_GLL.selectedUuid]
+    local x, y, z = table.unpack(prev.Translate)
+    local HumanRotation = prev.HumanRotation
+
+    local Response = CreateLight(x, y, z, HumanRotation, _GLL.OrbitParams[_GLL.selectedUuid])
+    if not Response then return nil end
+
+    Response[3] = _GLL.LightParametersServer[Response[2]]
 
     return Response
 end)
@@ -167,35 +143,35 @@ function CreateMarker(single)
     local R_OFFSET = 90
 
     if single then
-        local x,y,z = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate)
-        local rx,ry,rz = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation)
+        local x,y,z = table.unpack(_GLL.LightParametersServer[_GLL.selectedUuid].Translate)
+        local rx,ry,rz = table.unpack(_GLL.LightParametersServer[_GLL.selectedUuid].HumanRotation)
         local uuid = lightMarkerGUID
-        LLGlobals.markerUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
-        Osi.ToTransform(LLGlobals.markerUuid, x, y, z, rx - R_OFFSET, ry, rz)
-        Data = LLGlobals.markerUuid
+        _GLL.markerUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
+        Osi.ToTransform(_GLL.markerUuid, x, y, z, rx - R_OFFSET, ry, rz)
+        Data = _GLL.markerUuid
         Ch.MarkerHandler:Broadcast(Data)
-        return LLGlobals.markerUuid
+        return _GLL.markerUuid
     else
-        LLGlobals.States.allMarkersExisting = not LLGlobals.States.allMarkersExisting
+        _GLL.States.allMarkersExisting = not _GLL.States.allMarkersExisting
 
-        if LLGlobals.States.allMarkersExisting then
-            for lightUuid,v in pairs(LLGlobals.CreatedLightsServer) do
-                LLGlobals.CreatedAllMarkers[lightUuid] = LLGlobals.CreatedAllMarkers[lightUuid] or {}
-                local x,y,z = table.unpack(LLGlobals.LightParametersServer[v].Translate)
-                local rx,ry,rz = table.unpack(LLGlobals.LightParametersServer[v].HumanRotation)
+        if _GLL.States.allMarkersExisting then
+            for lightUuid, _ in pairs(_GLL.CreatedLightsServer) do
+                _GLL.CreatedAllMarkers[lightUuid] = _GLL.CreatedAllMarkers[lightUuid] or {}
+                local x,y,z = table.unpack(_GLL.LightParametersServer[lightUuid].Translate)
+                local rx,ry,rz = table.unpack(_GLL.LightParametersServer[lightUuid].HumanRotation)
                 local uuid = lightMarker2GUID
 
                 local markerUuid = Osi.CreateAt(uuid, x, y, z, 0, 0, '')
                 Osi.ToTransform(markerUuid, x, y, z, rx - R_OFFSET, ry, rz)
-                LLGlobals.CreatedAllMarkers[lightUuid] = markerUuid
-                return LLGlobals.CreatedAllMarkers
+                _GLL.CreatedAllMarkers[lightUuid] = markerUuid
+                return _GLL.CreatedAllMarkers
             end
         else
-            for lightUuid, markerUuid in pairs(LLGlobals.CreatedAllMarkers) do
+            for lightUuid, markerUuid in pairs(_GLL.CreatedAllMarkers) do
                 Osi.RequestDelete(markerUuid)
             end
 
-            LLGlobals.CreatedAllMarkers = {}
+            _GLL.CreatedAllMarkers = {}
         end
 
     end
@@ -204,23 +180,23 @@ end
 
 
 function UpdateMarkerPosition()
-    if LLGlobals.markerUuid and LLGlobals.LightParametersServer[LLGlobals.selectedUuid] then
+    if _GLL.markerUuid and _GLL.LightParametersServer[_GLL.selectedUuid] then
         local R_OFFSET = 90
-        local x,y,z = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate)
-        local rx,ry,rz = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation)
-        Osi.ToTransform(LLGlobals.markerUuid, x, y, z, rx - R_OFFSET, ry, rz)
+        local x,y,z = table.unpack(_GLL.LightParametersServer[_GLL.selectedUuid].Translate)
+        local rx,ry,rz = table.unpack(_GLL.LightParametersServer[_GLL.selectedUuid].HumanRotation)
+        Osi.ToTransform(_GLL.markerUuid, x, y, z, rx - R_OFFSET, ry, rz)
     end
 end
 
 
 
 function UpdateAllMarkersPosition()
-    if not LLGlobals.States.allMarkersExisting then return end
+    if not _GLL.States.allMarkersExisting then return end
     local R_OFFSET = 90
-    for uuid, _ in pairs(LLGlobals.CreatedLightsServer) do
-        local x, y, z = table.unpack(LLGlobals.LightParametersServer[uuid].Translate)
-        local rx, ry, rz = table.unpack(LLGlobals.LightParametersServer[uuid].HumanRotation)
-        local markerUuid = LLGlobals.CreatedAllMarkers[uuid]
+    for uuid, _ in pairs(_GLL.CreatedLightsServer) do
+        local x, y, z = table.unpack(_GLL.LightParametersServer[uuid].Translate)
+        local rx, ry, rz = table.unpack(_GLL.LightParametersServer[uuid].HumanRotation)
+        local markerUuid = _GLL.CreatedAllMarkers[uuid]
         Osi.ToTransform(markerUuid, x, y, z, rx - R_OFFSET, ry, rz)
     end
 end
@@ -228,13 +204,13 @@ end
 
 
 function UpdateBeamPosition()
-    if not LLGlobals.beamUuid then return end
+    if not _GLL.beamUuid then return end
 
-    local uuid = LLGlobals.selectedUuid
+    local uuid = _GLL.selectedUuid
     local rx, ry, rz = Osi.GetRotation(uuid)
     local x, y, z = Osi.GetPosition(uuid)
     local OFFSET = 180
-    Osi.ToTransform(LLGlobals.beamUuid, x, y, z, rx + OFFSET, ry, rz)
+    Osi.ToTransform(_GLL.beamUuid, x, y, z, rx + OFFSET, ry, rz)
 end
 
 
@@ -246,8 +222,8 @@ end)
 
 
 Ch.SelectedLight:SetHandler(function (selectedUuid)
-    LLGlobals.selectedUuid = selectedUuid
-    LLGlobals.selectedEntity = Ext.Entity.Get(LLGlobals.selectedUuid)
+    _GLL.selectedUuid = selectedUuid
+    _GLL.selectedEntity = Ext.Entity.Get(_GLL.selectedUuid)
     UpdateMarkerPosition()
     UpdateBeamPosition()
 end)
@@ -256,34 +232,35 @@ end)
 
 Ch.DeleteLight:SetHandler(function (request)
     if request == 'All' then
-        for _, lightUuid in pairs(LLGlobals.CreatedLightsServer) do
+        for lightUuid, _ in pairs(_GLL.CreatedLightsServer) do
             Osi.RequestDelete(lightUuid)
         end
 
-        for _, markerUuid in pairs(LLGlobals.CreatedAllMarkers) do
+        for _, markerUuid in pairs(_GLL.CreatedAllMarkers) do
             Osi.RequestDelete(markerUuid)
         end
 
-        LLGlobals.CreatedLightsServer = {}
-        LLGlobals.LightParametersServer = {}
-        LLGlobals.beamUuid = nil
-        LLGlobals.selectedEntity = nil
-        LLGlobals.selectedUuid = nil
-        LLGlobals.CreatedAllMarkers = {}
-        LLGlobals.States.allMarkersExisting = false
-        LLGlobals.GoboLightMap = {}
-        LLGlobals.GoboDistances = {}
-        LLGlobals.beamUuid = nil
-        LLGlobals.States.beamExisting = false
+        _GLL.CreatedLightsServer = {}
+        _GLL.LightParametersServer = {}
+        _GLL.beamUuid = nil
+        _GLL.selectedEntity = nil
+        _GLL.selectedUuid = nil
+        _GLL.CreatedAllMarkers = {}
+        _GLL.States.allMarkersExisting = false
+        _GLL.GoboLightMap = {}
+        _GLL.GoboDistances = {}
+        _GLL.beamUuid = nil
+        _GLL.States.beamExisting = false
 
-        if LLGlobals.markerUuid then
-            Osi.RequestDelete(LLGlobals.markerUuid)
-            LLGlobals.markerUuid = nil
+        if _GLL.markerUuid then
+            Osi.RequestDelete(_GLL.markerUuid)
+            _GLL.markerUuid = nil
         end
 
         resetAvailableRootTemplate()
         return
     end
+
 
 
     if request then
@@ -293,11 +270,11 @@ Ch.DeleteLight:SetHandler(function (request)
         if ent and ent.GameObjectVisual and ent.GameObjectVisual.RootTemplateId then
             local rootId = ent.GameObjectVisual.RootTemplateId
             Osi.RequestDelete(lightUuidFromClientJustToMakeSureBecauseIHadProblemsForSomeReasonImProbablyDumb)
-            LLGlobals.CreatedLightsServer[lightUuidFromClientJustToMakeSureBecauseIHadProblemsForSomeReasonImProbablyDumb] = nil
-            LLGlobals.LightParametersServer[lightUuidFromClientJustToMakeSureBecauseIHadProblemsForSomeReasonImProbablyDumb] = nil
-            LLGlobals.GoboLightMap[lightUuidFromClientJustToMakeSureBecauseIHadProblemsForSomeReasonImProbablyDumb] = nil
+            _GLL.CreatedLightsServer[lightUuidFromClientJustToMakeSureBecauseIHadProblemsForSomeReasonImProbablyDumb] = nil
+            _GLL.LightParametersServer[lightUuidFromClientJustToMakeSureBecauseIHadProblemsForSomeReasonImProbablyDumb] = nil
+            _GLL.GoboLightMap[lightUuidFromClientJustToMakeSureBecauseIHadProblemsForSomeReasonImProbablyDumb] = nil
 
-            if LLGlobals.GoboDistances then LLGlobals.GoboDistances[lightUuidFromClientJustToMakeSureBecauseIHadProblemsForSomeReasonImProbablyDumb] = nil end
+            if _GLL.GoboDistances then _GLL.GoboDistances[lightUuidFromClientJustToMakeSureBecauseIHadProblemsForSomeReasonImProbablyDumb] = nil end
 
             changeRootTemplateState(rootId)
         end
@@ -305,26 +282,26 @@ Ch.DeleteLight:SetHandler(function (request)
         --TBD: find a better solution later, because I'm sleepy af rn
         --now I'm too lazy
         local count = 0
-        for _ in pairs(LLGlobals.CreatedLightsServer) do
+        for _ in pairs(_GLL.CreatedLightsServer) do
             count = count + 1
         end
 
-        if count == 0 and LLGlobals.markerUuid then
-            Osi.RequestDelete(LLGlobals.markerUuid)
-            LLGlobals.markerUuid = nil
+        if count == 0 and _GLL.markerUuid then
+            Osi.RequestDelete(_GLL.markerUuid)
+            _GLL.markerUuid = nil
 
-            if LLGlobals.beamUuid then
-                Osi.RequestDelete(LLGlobals.beamUuid)
-                LLGlobals.beamUuid = nil
-                LLGlobals.States.beamExisting = false
+            if _GLL.beamUuid then
+                Osi.RequestDelete(_GLL.beamUuid)
+                _GLL.beamUuid = nil
+                _GLL.States.beamExisting = false
             end
 
         end
 
     else
-        if LLGlobals.markerUuid then
-            Osi.RequestDelete(LLGlobals.markerUuid)
-            LLGlobals.markerUuid = nil
+        if _GLL.markerUuid then
+            Osi.RequestDelete(_GLL.markerUuid)
+            _GLL.markerUuid = nil
 
         end
     end
@@ -335,39 +312,39 @@ end)
 
 Ext.RegisterConsoleCommand('lldumpall', function (cmd, ...)
     DPrint('CreatedLightsServer -----------------------------------')
-    DDump(LLGlobals.CreatedLightsServer)
+    DDump(_GLL.CreatedLightsServer)
     DPrint('LightParametersServer ---------------------------------')
-    DDump(LLGlobals.LightParametersServer)
+    DDump(_GLL.LightParametersServer)
     DPrint('LightParametersServer ---------------------------------')
-    DDump(LLGlobals.selectedUuid)
+    DDump(_GLL.selectedUuid)
     DPrint('allMarkersExisting ------------------------------------')
-    DDump(LLGlobals.CreatedAllMarkers)
+    DDump(_GLL.CreatedAllMarkers)
     DPrint('States.allMarkersExisting -----------------------------')
-    DDump(LLGlobals.States.allMarkersExisting)
+    DDump(_GLL.States.allMarkersExisting)
     DPrint('States.GoboLightMap -----------------------------------')
-    DDump(LLGlobals.GoboLightMap)
+    DDump(_GLL.GoboLightMap)
 end)
 
 
 
-LLGlobals.States.sourceClient = false
+_GLL.States.sourceClient = false
 
 
 
 Ch.CurrentEntityTransform:SetHandler(function (Data)
     if Data then
-        LLGlobals.States.sourceClient = true
-        LLGlobals.SourceClientTranslate = Data
+        _GLL.States.sourceClient = true
+        _GLL.SourceClientTranslate = Data
     else
-        LLGlobals.States.sourceClient = false
+        _GLL.States.sourceClient = false
     end
 end)
 
 
 
 function getSourcePosition()
-    if LLGlobals.States.sourceClient then
-        SourceTranslate = LLGlobals.SourceClientTranslate
+    if _GLL.States.sourceClient then
+        SourceTranslate = _GLL.SourceClientTranslate
     else
         SourceTranslate = _C().Transform.Transform.Translate
     end
@@ -377,19 +354,19 @@ end
 
 
 Ch.StickToCamera:SetHandler(function (Data)
-    if not LLGlobals.selectedUuid then return end
-    if not LLGlobals.LightParametersServer  then return end
-    if not LLGlobals.LightParametersServer[LLGlobals.selectedUuid] then return end
+    if not _GLL.selectedUuid then return end
+    if not _GLL.LightParametersServer  then return end
+    if not _GLL.LightParametersServer[_GLL.selectedUuid] then return end
 
-    local uuid = LLGlobals.selectedUuid
+    local uuid = _GLL.selectedUuid
     local x,y,z = table.unpack(Data.Translate)
     local rx,ry,rz = table.unpack(Helpers.Math.QuatToEuler(Data.RotationQuat))
 
-    LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate = {x, y, z}
-    LLGlobals.LightParametersServer[LLGlobals.selectedUuid].RotationQuat = Data.RotationQuat
-    LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = {rx, ry, rz}
+    _GLL.LightParametersServer[_GLL.selectedUuid].Translate = {x, y, z}
+    _GLL.LightParametersServer[_GLL.selectedUuid].RotationQuat = Data.RotationQuat
+    _GLL.LightParametersServer[_GLL.selectedUuid].HumanRotation = {rx, ry, rz}
 
-    Osi.ToTransform(LLGlobals.selectedUuid, x, y, z, rx, ry, rz)
+    Osi.ToTransform(_GLL.selectedUuid, x, y, z, rx, ry, rz)
 
     --- For look at
     local centerX, centerY, centerZ = table.unpack(getSourcePosition())
@@ -401,10 +378,10 @@ Ch.StickToCamera:SetHandler(function (Data)
 
     local curRx, curRy, curRz = Osi.GetRotation(uuid)
 
-    local params = LLGlobals.OrbitParams[uuid] or {}
+    local params = _GLL.OrbitParams[uuid] or {}
     params.userYawOffset = curRy - baseYaw
     params.userPitchOffset = curRx - basePitch
-    LLGlobals.OrbitParams[uuid] = params
+    _GLL.OrbitParams[uuid] = params
 
 
     UpdateMarkerPosition()
@@ -416,31 +393,31 @@ end)
 
 Ch.SaveLoadLightPos:SetHandler(function (action)
     if action == 'Save' then
-        LLGlobals.LightParametersServer[LLGlobals.selectedUuid].SavedPosition = LLGlobals.LightParametersServer[LLGlobals.selectedUuid.SavedPosition] or {}
+        _GLL.LightParametersServer[_GLL.selectedUuid].SavedPosition = _GLL.LightParametersServer[_GLL.selectedUuid.SavedPosition] or {}
 
-        LLGlobals.LightParametersServer[LLGlobals.selectedUuid].SavedPosition.Translate = LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate
-        LLGlobals.LightParametersServer[LLGlobals.selectedUuid].SavedPosition.RotationQuat = LLGlobals.LightParametersServer[LLGlobals.selectedUuid].RotationQuat
-        LLGlobals.LightParametersServer[LLGlobals.selectedUuid].SavedPosition.HumanRotation = LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation
+        _GLL.LightParametersServer[_GLL.selectedUuid].SavedPosition.Translate = _GLL.LightParametersServer[_GLL.selectedUuid].Translate
+        _GLL.LightParametersServer[_GLL.selectedUuid].SavedPosition.RotationQuat = _GLL.LightParametersServer[_GLL.selectedUuid].RotationQuat
+        _GLL.LightParametersServer[_GLL.selectedUuid].SavedPosition.HumanRotation = _GLL.LightParametersServer[_GLL.selectedUuid].HumanRotation
     end
 
     if action == 'Load' then
-        local x,y,z = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].SavedPosition.Translate)
-        local rx,ry,rz = table.unpack(LLGlobals.LightParametersServer[LLGlobals.selectedUuid].SavedPosition.HumanRotation)
+        local x,y,z = table.unpack(_GLL.LightParametersServer[_GLL.selectedUuid].SavedPosition.Translate)
+        local rx,ry,rz = table.unpack(_GLL.LightParametersServer[_GLL.selectedUuid].SavedPosition.HumanRotation)
 
 
-        LLGlobals.LightParametersServer[LLGlobals.selectedUuid].Translate = {x,y,z}
-        LLGlobals.LightParametersServer[LLGlobals.selectedUuid].HumanRotation = {rx,ry,rz}
+        _GLL.LightParametersServer[_GLL.selectedUuid].Translate = {x,y,z}
+        _GLL.LightParametersServer[_GLL.selectedUuid].HumanRotation = {rx,ry,rz}
 
 
         local Response = {
-            Translate = LLGlobals.LightParametersServer[LLGlobals.selectedUuid].SavedPosition.Translate,
-            RotationQuat = LLGlobals.LightParametersServer[LLGlobals.selectedUuid].SavedPosition.RotationQuat,
-            HumanRotation = LLGlobals.LightParametersServer[LLGlobals.selectedUuid].SavedPosition.HumanRotation
+            Translate = _GLL.LightParametersServer[_GLL.selectedUuid].SavedPosition.Translate,
+            RotationQuat = _GLL.LightParametersServer[_GLL.selectedUuid].SavedPosition.RotationQuat,
+            HumanRotation = _GLL.LightParametersServer[_GLL.selectedUuid].SavedPosition.HumanRotation
         }
 
         Ch.CurrentEntityTransform:Broadcast(Response)
 
-        Osi.ToTransform(LLGlobals.selectedUuid, x, y, z, rx, ry, rz)
+        Osi.ToTransform(_GLL.selectedUuid, x, y, z, rx, ry, rz)
 
         UpdateMarkerPosition()
         UpdateGoboPosition()
@@ -459,25 +436,25 @@ end)
 
 
 Ch.MazzleBeam:SetHandler(function (Data)
-    if not LLGlobals.selectedUuid then return end
+    if not _GLL.selectedUuid then return end
 
-    LLGlobals.States.beamExisting = not LLGlobals.States.beamExisting
+    _GLL.States.beamExisting = not _GLL.States.beamExisting
 
-    if LLGlobals.States.beamExisting then
-        local uuid = LLGlobals.selectedUuid
+    if _GLL.States.beamExisting then
+        local uuid = _GLL.selectedUuid
         local rx, ry, rz = Osi.GetRotation(uuid)
         local x, y, z = Osi.GetPosition(uuid)
         local R_OFFSET = 180
 
-        LLGlobals.beamUuid =  Osi.CreateAt(MAZZLE_BEAM, x, y, z, 0, 0, '')
+        _GLL.beamUuid =  Osi.CreateAt(MAZZLE_BEAM, x, y, z, 0, 0, '')
 
         Helpers.Timer:OnTicks(1, function ()
-            Osi.ToTransform(LLGlobals.beamUuid, x, y, z, rx + R_OFFSET, ry, rz)
+            Osi.ToTransform(_GLL.beamUuid, x, y, z, rx + R_OFFSET, ry, rz)
         end)
 
     else
-        Osi.RequestDelete(LLGlobals.beamUuid)
-        LLGlobals.beamUuid = nil
+        Osi.RequestDelete(_GLL.beamUuid)
+        _GLL.beamUuid = nil
     end
 end)
 
@@ -493,13 +470,13 @@ end
 
 
 Ch.EntityTranslate:SetHandler(function (Data)
-    if not LLGlobals.selectedUuid then return end
+    if not _GLL.selectedUuid then return end
 
     local axis = Data.axis
     local step = Data.step
     local OFFSET = Data.offset
-    local entity = LLGlobals.selectedEntity
-    -- local uuid = LLGlobals.selectedUuid
+    local entity = _GLL.selectedEntity
+    -- local uuid = _GLL.selectedUuid
     local uuid = Data.lightUuid
     local rx, ry, rz = Osi.GetRotation(uuid)
     local x, y, z = Osi.GetPosition(uuid)
@@ -526,9 +503,9 @@ Ch.EntityTranslate:SetHandler(function (Data)
     local Translate = entity.Transform.Transform.Translate
     local HumanRotation = {rx,ry,rz}
 
-    LLGlobals.LightParametersServer[uuid].Translate = Translate
-    LLGlobals.LightParametersServer[uuid].RotationQuat = RotationQuat
-    LLGlobals.LightParametersServer[uuid].HumanRotation = HumanRotation
+    _GLL.LightParametersServer[uuid].Translate = Translate
+    _GLL.LightParametersServer[uuid].RotationQuat = RotationQuat
+    _GLL.LightParametersServer[uuid].HumanRotation = HumanRotation
 
     local Response = {
         Translate = Translate,
@@ -536,7 +513,7 @@ Ch.EntityTranslate:SetHandler(function (Data)
         HumanRotation = HumanRotation
     }
 
-    -- LLGlobals.OrbitParams[uuid] = nil
+    -- _GLL.OrbitParams[uuid] = nil
 
     Ch.CurrentEntityTransform:Broadcast(Response)
 
@@ -544,21 +521,21 @@ Ch.EntityTranslate:SetHandler(function (Data)
     UpdateGoboPosition()
     UpdateBeamPosition()
 
-    LLGlobals.States.lastMode[uuid] = 'World'
+    _GLL.States.lastMode[uuid] = 'World'
 end)
 
 
 
 Ch.EntityRotation:SetHandler(function (Data)
-    if not LLGlobals.selectedUuid then return end
+    if not _GLL.selectedUuid then return end
 
     local axis = Data.axis
     local uuid = Data.lightUuid
-    local entity = LLGlobals.selectedEntity
+    local entity = _GLL.selectedEntity
     local x, y, z = Osi.GetPosition(uuid)
     local Translate = entity.Transform.Transform.Translate
 
-    LLGlobals.LightParametersServer[uuid].Translate = Translate
+    _GLL.LightParametersServer[uuid].Translate = Translate
 
     if axis == 'x' or axis == 'y' or axis == 'z' then
         local delta = math.rad(Data.offset / Data.step)
@@ -571,8 +548,8 @@ Ch.EntityRotation:SetHandler(function (Data)
         Osi.ToTransform(uuid, x, y, z, rx, ry, rz)
 
         local RotationQuat = entity.Transform.Transform.RotationQuat
-        LLGlobals.LightParametersServer[uuid].RotationQuat = RotationQuat
-        LLGlobals.LightParametersServer[uuid].HumanRotation = HumanRotation
+        _GLL.LightParametersServer[uuid].RotationQuat = RotationQuat
+        _GLL.LightParametersServer[uuid].HumanRotation = HumanRotation
 
         local Response = {Translate = Translate, RotationQuat = RotationQuat, HumanRotation = HumanRotation}
         Ch.CurrentEntityTransform:Broadcast(Response)
@@ -580,10 +557,10 @@ Ch.EntityRotation:SetHandler(function (Data)
         local centerX, centerY, centerZ = table.unpack(getSourcePosition())
         local basePitch, baseYaw = GetBaseAngles(uuid, centerX, centerY, centerZ)
         local curRx, curRy, curRz = Osi.GetRotation(uuid)
-        local params = LLGlobals.OrbitParams[uuid] or {}
+        local params = _GLL.OrbitParams[uuid] or {}
         params.userYawOffset = curRy - baseYaw
         params.userPitchOffset = curRx - basePitch
-        LLGlobals.OrbitParams[uuid] = params
+        _GLL.OrbitParams[uuid] = params
 
         UpdateMarkerPosition()
         UpdateGoboPosition()
@@ -597,9 +574,9 @@ Ch.EntityRotation:SetHandler(function (Data)
 
         local RotationQuat = entity.Transform.Transform.RotationQuat
         local HumanRotation = {resetPitch, resetYaw, 0}
-        LLGlobals.LightParametersServer[uuid].RotationQuat = RotationQuat
-        LLGlobals.LightParametersServer[uuid].HumanRotation = HumanRotation
-        LLGlobals.OrbitParams[uuid] = {userYawOffset = 0, userPitchOffset = 0}
+        _GLL.LightParametersServer[uuid].RotationQuat = RotationQuat
+        _GLL.LightParametersServer[uuid].HumanRotation = HumanRotation
+        _GLL.OrbitParams[uuid] = {userYawOffset = 0, userPitchOffset = 0}
 
         local Response = {Translate = Translate, RotationQuat = RotationQuat, HumanRotation = HumanRotation}
         Ch.CurrentEntityTransform:Broadcast(Response)
@@ -613,20 +590,20 @@ end)
 
 
 --- mmmmmmmm slop tasty slop m m m m :P
-LLGlobals.OrbitParams = LLGlobals.OrbitParams or {}
+_GLL.OrbitParams = _GLL.OrbitParams or {}
 
 Ch.EntityRotationOrbit:SetHandler(function (Data)
-    if not LLGlobals.selectedUuid then return end
+    if not _GLL.selectedUuid then return end
 
-    -- local uuid = LLGlobals.selectedUuid
+    -- local uuid = _GLL.selectedUuid
     local uuid = Data.lightUuid
     local entity = Ext.Entity.Get(uuid)
     local centerX, centerY, centerZ = table.unpack(getSourcePosition())
     local curX, curY, curZ = Osi.GetPosition(uuid)
     local curRx, curRy, curRz = Osi.GetRotation(uuid)
 
-    if not LLGlobals.OrbitParams[uuid] then
-        LLGlobals.OrbitParams[uuid] = {
+    if not _GLL.OrbitParams[uuid] then
+        _GLL.OrbitParams[uuid] = {
             angle = 0,
             radius = 1,
             height = 0,
@@ -634,10 +611,10 @@ Ch.EntityRotationOrbit:SetHandler(function (Data)
             lastCenterY = centerY,
             lastCenterZ = centerZ
         }
-        InitOrbitParamsFromCurrent(uuid, LLGlobals.OrbitParams[uuid], centerX, centerY, centerZ)
+        InitOrbitParamsFromCurrent(uuid, _GLL.OrbitParams[uuid], centerX, centerY, centerZ)
     end
 
-    local params = LLGlobals.OrbitParams[uuid]
+    local params = _GLL.OrbitParams[uuid]
     local centerMoved = centerX ~= params.lastCenterX or centerY ~= params.lastCenterY or centerZ ~= params.lastCenterZ
     local posChanged = curX ~= (params.baseX or curX) or curY ~= (params.baseY or curY) or curZ ~= (params.baseZ or curZ)
     local rotChanged = curRx ~= (params.lastActualRx or curRx) or curRy ~= (params.lastActualRy or curRy) or curRz ~= (params.lastActualRz or curRz)
@@ -649,21 +626,25 @@ Ch.EntityRotationOrbit:SetHandler(function (Data)
         params.lastCenterZ = centerZ
     end
 
-    local change = Data.offset / Data.step
+    -- local change = Data.offset / Data.step
+    local change = Data.offset
 
     if Data.axis == 'x' then
-        params.angle = params.angle + change*50
+        -- params.angle = params.angle + change*50
+        params.angle = change
 
     elseif Data.axis == 'y' then
-        params.height = params.height + change
+        -- params.height = params.height + change
+        params.height = change/100
 
     elseif Data.axis == 'z' then
-        params.radius = math.max(0.1, params.radius + change)
+        -- params.radius = math.max(0.1, params.radius + change)
+        params.radius = change/100
 
     else
         local charX, charY, charZ = table.unpack(getSourcePosition())
         Osi.ToTransform(uuid, charX, charY, charZ, curRx, curRy, curRz)
-        LLGlobals.OrbitParams[uuid] = nil
+        _GLL.OrbitParams[uuid] = nil
         return
     end
 
@@ -682,10 +663,10 @@ Ch.EntityRotationOrbit:SetHandler(function (Data)
     params.lastActualRy = actualRy
     params.lastActualRz = actualRz
 
-    LLGlobals.LightParametersServer[uuid].Translate = {params.baseX, params.baseY, params.baseZ}
+    _GLL.LightParametersServer[uuid].Translate = {params.baseX, params.baseY, params.baseZ}
     local RotationQuat = entity.Transform.Transform.RotationQuat
-    LLGlobals.LightParametersServer[uuid].RotationQuat = RotationQuat
-    LLGlobals.LightParametersServer[uuid].HumanRotation = {actualRx, actualRy, actualRz}
+    _GLL.LightParametersServer[uuid].RotationQuat = RotationQuat
+    _GLL.LightParametersServer[uuid].HumanRotation = {actualRx, actualRy, actualRz}
 
     local Response = {
         Translate = {params.baseX, params.baseY, params.baseZ},
@@ -698,7 +679,7 @@ Ch.EntityRotationOrbit:SetHandler(function (Data)
     UpdateGoboPosition()
     UpdateBeamPosition()
 
-    LLGlobals.States.lastMode[uuid] = 'Orbit'
+    _GLL.States.lastMode[uuid] = 'Orbit'
     Ch.CurrentEntityTransform:Broadcast(Response)
 end)
 
@@ -785,3 +766,6 @@ Ch.GetDaggers:SetHandler(function(Data)
     Osi.TemplateAddTo('bfadc906-02cd-442f-beff-04d5a40543fe', character, 1)
     Osi.TemplateAddTo('bfadc906-02cd-442f-beff-04d5a40543fe', character, 1)
 end)
+
+
+

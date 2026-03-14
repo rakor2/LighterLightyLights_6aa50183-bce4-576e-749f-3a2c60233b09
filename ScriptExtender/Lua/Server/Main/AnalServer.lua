@@ -1,13 +1,13 @@
 function getLevelAvailableLTNTriggers()
-    LLGlobals.LightingTriggers = Ext.Entity.GetAllEntitiesWithComponent('ServerLightingTrigger')
-    return LLGlobals.LightingTriggers
+    _GLL.LightingTriggers = Ext.Entity.GetAllEntitiesWithComponent('ServerLightingTrigger')
+    return _GLL.LightingTriggers
 end
 
 
 
 function getLevelAvailableATMTriggers()
-    LLGlobals.AtmosphereTriggers = Ext.Entity.GetAllEntitiesWithComponent('ServerAtmosphereTrigger')
-    return LLGlobals.AtmosphereTriggers
+    _GLL.AtmosphereTriggers = Ext.Entity.GetAllEntitiesWithComponent('ServerAtmosphereTrigger')
+    return _GLL.AtmosphereTriggers
 end
 
 
@@ -32,19 +32,19 @@ end)
 
 
 function LightingApply(payload)
-    for _, trigger in pairs(LLGlobals.LightingTriggers) do
+    for _, trigger in pairs(_GLL.LightingTriggers) do
         Osi.TriggerSetLighting(trigger.Uuid.EntityUuid, ltn_templates2[payload])
     end
-    LLGlobals.SelectedLighting = ltn_templates2[payload]
+    _GLL.SelectedLighting = ltn_templates2[payload]
 end
 
 
 
 function AtmosphereApple(payload)
-    for _, trigger in pairs(LLGlobals.AtmosphereTriggers) do
+    for _, trigger in pairs(_GLL.AtmosphereTriggers) do
         Osi.TriggerSetAtmosphere(trigger.Uuid.EntityUuid, atm_templates2[payload])
     end
-    LLGlobals.SelectedAtmosphere = atm_templates2[payload]
+    _GLL.SelectedAtmosphere = atm_templates2[payload]
 end
 
 
@@ -64,14 +64,14 @@ end)
 Ch.ApplyANL:SetRequestHandler(function(Data)
     local uuid = '6e3f3623-5c84-a681-6131-2da753fa2c8f'
 
-    for _, trigger in pairs(LLGlobals.LightingTriggers) do
+    for _, trigger in pairs(_GLL.LightingTriggers) do
         Osi.TriggerSetLighting(trigger.Uuid.EntityUuid, uuid)
     end
 
-    local uuid = LLGlobals.SelectedLighting or '6e3f3623-5c84-a681-6131-2da753fa2c8f'
+    local uuid = _GLL.SelectedLighting or '6e3f3623-5c84-a681-6131-2da753fa2c8f'
 
     Helpers.Timer:OnTicks(2, function ()
-        for _, trigger in pairs(LLGlobals.LightingTriggers) do
+        for _, trigger in pairs(_GLL.LightingTriggers) do
             Osi.TriggerSetLighting(trigger.Uuid.EntityUuid, uuid)
         end
     end)
@@ -82,11 +82,11 @@ end)
 
 Ch.ResetANL:SetHandler(function(Data)
     if Data == 'Lighting' then
-        for _, trigger in pairs(LLGlobals.LightingTriggers) do
+        for _, trigger in pairs(_GLL.LightingTriggers) do
             Osi.TriggerResetLighting(trigger.Uuid.EntityUuid)
         end
     else
-        for _, trigger in pairs(LLGlobals.AtmosphereTriggers) do
+        for _, trigger in pairs(_GLL.AtmosphereTriggers) do
             Osi.TriggerResetAtmosphere(trigger.Uuid.EntityUuid)
         end
     end
@@ -203,16 +203,16 @@ function SetCurrentAtmosphereAndLightingServer()
 
     if not uuidAtmosphere or not uuidLighting then return end
 
-    for _, trigger in pairs(LLGlobals.AtmosphereTriggers) do
+    for _, trigger in pairs(_GLL.AtmosphereTriggers) do
         Osi.TriggerSetAtmosphere(trigger.Uuid.EntityUuid, uuidAtmosphere)
     end
 
-    for _, trigger in pairs(LLGlobals.LightingTriggers) do
+    for _, trigger in pairs(_GLL.LightingTriggers) do
         Osi.TriggerSetLighting(trigger.Uuid.EntityUuid, uuidLighting)
     end
 
-    LLGlobals.SelectedAtmosphere = uuidAtmosphere
-    LLGlobals.SelectedLighting = uuidLighting
+    _GLL.SelectedAtmosphere = uuidAtmosphere
+    _GLL.SelectedLighting = uuidLighting
 
     local Response = {
         uuidAtmosphere = uuidAtmosphere,

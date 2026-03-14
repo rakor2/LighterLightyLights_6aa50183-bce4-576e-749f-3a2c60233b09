@@ -1,0 +1,12 @@
+{
+  "lib": "I:/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/_Libs",
+  "out": "I:/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/xd.lua",
+  "contexts": [
+    "I:/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Client",
+    "I:/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Server",
+    "I:/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/LighterLightyLights_6aa50183-bce4-576e-749f-3a2c60233b09/ScriptExtender/Lua/Shared",
+    "I:/SteamLibrary/steamapps/common/Baldurs Gate 3/Data/Mods/_LibLib/ScriptExtender/Lua/Shared/LibLib"
+  ],
+  "dry_run": false,
+  "geometry": "01d9d0cb00030000000002c600000127000008a300000535000002c600000146000008a30000053500000000000000000a00000002c600000146000008a300000535"
+}

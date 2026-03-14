@@ -28,7 +28,7 @@ function Gobo2Tab(p)
 
     for uuid, name in pairs(GoboUuidNameMap) do
         if name == GoboNames[1] then
-            LLGlobals.selectedGobo = uuid
+            _GLL.selectedGobo = uuid
         end
     end
 
@@ -36,13 +36,13 @@ function Gobo2Tab(p)
 
     E.comboIHateCombos2 = p:AddCombo('')
         UI:Config(E.comboIHateCombos2, {
-            Options       = LLGlobals.LightsNames,
-            SelectedIndex = LLGlobals.syncedSelectedIndex,
+            Options       = _GLL.LightsNames,
+            SelectedIndex = _GLL.syncedSelectedIndex,
             OnChange      = function(e)
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
 
-                LLGlobals.syncedSelectedIndex = E.comboIHateCombos2.SelectedIndex
-                E.comboIHateCombos.SelectedIndex = LLGlobals.syncedSelectedIndex
+                _GLL.syncedSelectedIndex = E.comboIHateCombos2.SelectedIndex
+                E.comboIHateCombos.SelectedIndex = _GLL.syncedSelectedIndex
                 SelectLight()
             end
         })
@@ -57,7 +57,7 @@ function Gobo2Tab(p)
     local function ReCreateGobo()
         for guid, name in pairs(GoboUuidNameMap) do
             if name == E.goboList.Options[E.goboList.SelectedIndex + 1] then
-                LLGlobals.selectedGobo = guid
+                _GLL.selectedGobo = guid
             end
         end
 
@@ -65,11 +65,11 @@ function Gobo2Tab(p)
 
         Helpers.Timer:OnTicks(3, function()
             local Data = {
-                goboGuid = LLGlobals.selectedGobo
+                goboGuid = _GLL.selectedGobo
             }
 
             Ch.CreateGobo:RequestToServer(Data, function(Response)
-                LLGlobals.selectedGoboUuid = Response
+                _GLL.selectedGoboUuid = Response
             end)
         end)
     end
@@ -82,11 +82,11 @@ function Gobo2Tab(p)
             Options      = GoboNames,
             SelectedIndex = 0,
             OnChange     = function(e)
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
                 ReCreateGobo()
             end,
             OnRightClick = function(e)
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
                 ReCreateGobo()
             end
         })
@@ -98,7 +98,7 @@ function Gobo2Tab(p)
             SameLine  = true,
             IDContext = 'a;leksfmn',
             OnClick   = function(e)
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
                 UI:PrevOption(E.goboList)
                 ReCreateGobo()
             end
@@ -111,7 +111,7 @@ function Gobo2Tab(p)
             SameLine  = true,
             IDContext = 'a;leksawdfmn',
             OnClick   = function(e)
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
                 UI:NextOption(E.goboList)
                 ReCreateGobo()
             end
@@ -128,7 +128,7 @@ function Gobo2Tab(p)
         UI:Config(E.goboDistanceSlider, {
             IDContext = 'E.goboDistanceSlider',
             OnChange  = function(e)
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
                 local Data = {
                     step   = 1,
                     offset = e.Value[1],
@@ -143,12 +143,12 @@ function Gobo2Tab(p)
         UI:Config(E.createGoboButton, {
             IDContext = 'E.createGoboButton',
             OnClick   = function()
-                if not LLGlobals.selectedUuid then return end
+                if not _GLL.selectedUuid then return end
                 local Data = {
-                    goboGuid = LLGlobals.selectedGobo
+                    goboGuid = _GLL.selectedGobo
                 }
                 Ch.CreateGobo:RequestToServer(Data, function(Response)
-                    LLGlobals.selectedGoboUuid = Response
+                    _GLL.selectedGoboUuid = Response
                 end)
             end
         })
@@ -178,9 +178,9 @@ function Gobo2Tab(p)
 
 
     local function HideGobo()
-        if not LLGlobals.selectedUuid then return end
+        if not _GLL.selectedUuid then return end
 
-        local uuid         = LLGlobals.selectedGoboUuid
+        local uuid         = _GLL.selectedGoboUuid
         local newScaleX
         local defaultScale = 0.07
         local entity       = Ext.Entity.Get(uuid)

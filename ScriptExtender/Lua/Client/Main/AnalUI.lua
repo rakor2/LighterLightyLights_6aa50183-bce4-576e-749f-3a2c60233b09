@@ -2,8 +2,8 @@ function Anal2Tab(p)
     local CHILD_WIN_SIZE = {554, 200}
     local winLtnFav
     local winAtmFav
-    LLGlobals.FilteredLTNOptions = LLGlobals.LtnComboOptions
-    LLGlobals.FilteredATMOptions = LLGlobals.AtmComboOptions
+    _GLL.FilteredLTNOptions = _GLL.LtnComboOptions
+    _GLL.FilteredATMOptions = _GLL.AtmComboOptions
 
     p:AddText([[YOU CAN'T CHANGE ATMOSPHERE AND LIGHTING IN PHOTOMODE]])
     p:AddSeparator()
@@ -25,8 +25,8 @@ function Anal2Tab(p)
         UI:Config(E.inpSearchLighting, {
             IDContext = 'o9irtqjwno9485839c',
             OnChange  = function()
-                LLGlobals.FilteredLTNOptions = UI:FilterOptions(E.inpSearchLighting.Text, LLGlobals.LtnComboOptions)
-                E.comboLighting.Options = LLGlobals.FilteredLTNOptions
+                _GLL.FilteredLTNOptions = UI:FilterOptions(E.inpSearchLighting.Text, _GLL.LtnComboOptions)
+                E.comboLighting.Options = _GLL.FilteredLTNOptions
                 E.comboLighting.SelectedIndex = 0
             end
         })
@@ -38,8 +38,8 @@ function Anal2Tab(p)
             SameLine = true,
             OnClick  = function()
                 E.inpSearchLighting.Text = ''
-                LLGlobals.FilteredLTNOptions = LLGlobals.LtnComboOptions
-                E.comboLighting.Options = LLGlobals.LtnComboOptions
+                _GLL.FilteredLTNOptions = _GLL.LtnComboOptions
+                E.comboLighting.Options = _GLL.LtnComboOptions
             end
         })
 
@@ -48,7 +48,7 @@ function Anal2Tab(p)
     E.comboLighting = p:AddCombo('')
         UI:Config(E.comboLighting, {
             IDContext     = ';oeirj4eiouh',
-            Options       = LLGlobals.LtnComboOptions or {},
+            Options       = _GLL.LtnComboOptions or {},
             SelectedIndex = 0,
             OnChange      = function()
                 comboLightingFunc()
@@ -89,10 +89,10 @@ function Anal2Tab(p)
             IDContext = 'oiurfhaieowurhi4wh5iu',
             SameLine  = true,
             OnClick   = function()
-                if LLGlobals.FavLighting[UI:SelectedOpt(E.comboLighting)] == UI:SelectedOpt(E.comboLighting) then
+                if _GLL.FavLighting[UI:SelectedOpt(E.comboLighting)] == UI:SelectedOpt(E.comboLighting) then
                     return
                 else
-                    CreateSelectable(winLtnFav, LLGlobals.FavLighting, LLGlobals.FilteredLTNOptions[E.comboLighting.SelectedIndex + 1], 'FavoriteLighting', 'LL_LightingApply')
+                    CreateSelectable(winLtnFav, _GLL.FavLighting, _GLL.FilteredLTNOptions[E.comboLighting.SelectedIndex + 1], 'FavoriteLighting', 'LL_LightingApply')
                 end
             end
         })
@@ -119,11 +119,11 @@ function Anal2Tab(p)
 
     if Ext.IO.LoadFile('LightyLights/FavoriteLighting.json') then
         pcall(function()
-            LLGlobals.FavLighting = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/FavoriteLighting.json'))
-            PopulateLTNFavorites(winLtnFav, LLGlobals.FavLighting)
+            _GLL.FavLighting = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/FavoriteLighting.json'))
+            PopulateLTNFavorites(winLtnFav, _GLL.FavLighting)
         end)
     else
-        LLGlobals.FavLighting = {}
+        _GLL.FavLighting = {}
     end
 
 
@@ -136,8 +136,8 @@ function Anal2Tab(p)
         UI:Config(E.inpSearchAtmosphere, {
             IDContext = 'pfkjawpo3i4rho83hr',
             OnChange  = function(e)
-                LLGlobals.FilteredATMOptions = UI:FilterOptions(e.Text, LLGlobals.AtmComboOptions)
-                E.comboAtmosphere.Options = LLGlobals.FilteredATMOptions
+                _GLL.FilteredATMOptions = UI:FilterOptions(e.Text, _GLL.AtmComboOptions)
+                E.comboAtmosphere.Options = _GLL.FilteredATMOptions
                 E.comboAtmosphere.SelectedIndex = 0
             end
         })
@@ -150,8 +150,8 @@ function Anal2Tab(p)
             SameLine  = true,
             OnClick   = function()
                 E.inpSearchAtmosphere.Text = ''
-                LLGlobals.FilteredATMOptions = LLGlobals.AtmComboOptions
-                E.comboAtmosphere.Options = LLGlobals.AtmComboOptions
+                _GLL.FilteredATMOptions = _GLL.AtmComboOptions
+                E.comboAtmosphere.Options = _GLL.AtmComboOptions
             end
         })
 
@@ -159,7 +159,7 @@ function Anal2Tab(p)
     E.comboAtmosphere = p:AddCombo('')
         UI:Config(E.comboAtmosphere, {
             IDContext     = ';o342342etm',
-            Options       = LLGlobals.AtmComboOptions or {},
+            Options       = _GLL.AtmComboOptions or {},
             SelectedIndex = 0,
             OnChange      = function(e)
                 comboAtmosphereFunc()
@@ -200,10 +200,10 @@ function Anal2Tab(p)
             IDContext = 'oiu12312354125m',
             SameLine  = true,
             OnClick   = function()
-                if LLGlobals.FavAtmosphere[UI:SelectedOpt(E.comboAtmosphere)] == UI:SelectedOpt(E.comboAtmosphere) then
+                if _GLL.FavAtmosphere[UI:SelectedOpt(E.comboAtmosphere)] == UI:SelectedOpt(E.comboAtmosphere) then
                     return
                 else
-                    CreateSelectable(winAtmFav, LLGlobals.FavAtmosphere, LLGlobals.FilteredATMOptions[E.comboAtmosphere.SelectedIndex + 1], 'FavoriteAtmosphere', 'LL_AtmosphereApply')
+                    CreateSelectable(winAtmFav, _GLL.FavAtmosphere, _GLL.FilteredATMOptions[E.comboAtmosphere.SelectedIndex + 1], 'FavoriteAtmosphere', 'LL_AtmosphereApply')
                 end
             end
         })
@@ -230,11 +230,11 @@ function Anal2Tab(p)
 
     if Ext.IO.LoadFile('LightyLights/FavoriteAtmosphere.json') then
         pcall(function()
-            LLGlobals.FavAtmosphere = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/FavoriteAtmosphere.json'))
-            PopulateATMFavorites(winAtmFav, LLGlobals.FavAtmosphere)
+            _GLL.FavAtmosphere = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/FavoriteAtmosphere.json'))
+            PopulateATMFavorites(winAtmFav, _GLL.FavAtmosphere)
         end)
     else
-        LLGlobals.FavAtmosphere = {}
+        _GLL.FavAtmosphere = {}
     end
 
 
@@ -342,13 +342,13 @@ function Anal2Tab(p)
                     return
                 end
 
-                if LLGlobals.LightingPresets[presetName] == presetName then
+                if _GLL.LightingPresets[presetName] == presetName then
                     DWarn('Preset already exists')
                     return
                 end
 
                 SaveAsPreset(presetName, 'Lighting')
-                CreatePresetSelectable(winLightingPresets, LLGlobals.LightingPresets, presetName, 'Lighting')
+                CreatePresetSelectable(winLightingPresets, _GLL.LightingPresets, presetName, 'Lighting')
             end
         })
 
@@ -366,11 +366,11 @@ function Anal2Tab(p)
 
     if Ext.IO.LoadFile('LightyLights/AnLPresets/_LightingNames.json') then
         pcall(function()
-            LLGlobals.LightingPresets = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/AnLPresets/_LightingNames.json'))
-            PopulatePresets(winLightingPresets, LLGlobals.LightingPresets, 'Lighting')
+            _GLL.LightingPresets = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/AnLPresets/_LightingNames.json'))
+            PopulatePresets(winLightingPresets, _GLL.LightingPresets, 'Lighting')
         end)
     else
-        LLGlobals.LightingPresets = {}
+        _GLL.LightingPresets = {}
     end
 
 
@@ -396,13 +396,13 @@ function Anal2Tab(p)
                     return
                 end
 
-                if LLGlobals.AtmospherePresets[presetName] == presetName then
+                if _GLL.AtmospherePresets[presetName] == presetName then
                     DWarn('Preset already exists')
                     return
                 end
 
                 SaveAsPreset(presetName, 'Atmosphere')
-                CreatePresetSelectable(winAtmospherePresets, LLGlobals.AtmospherePresets, presetName, 'Atmosphere')
+                CreatePresetSelectable(winAtmospherePresets, _GLL.AtmospherePresets, presetName, 'Atmosphere')
             end
         })
 
@@ -419,11 +419,11 @@ function Anal2Tab(p)
 
     if Ext.IO.LoadFile('LightyLights/AnLPresets/_AtmosphereNames.json') then
         pcall(function()
-            LLGlobals.AtmospherePresets = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/AnLPresets/_AtmosphereNames.json'))
-            PopulatePresets(winAtmospherePresets, LLGlobals.AtmospherePresets, 'Atmosphere')
+            _GLL.AtmospherePresets = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/AnLPresets/_AtmosphereNames.json'))
+            PopulatePresets(winAtmospherePresets, _GLL.AtmospherePresets, 'Atmosphere')
         end)
     else
-        LLGlobals.AtmospherePresets = {}
+        _GLL.AtmospherePresets = {}
     end
 
 
