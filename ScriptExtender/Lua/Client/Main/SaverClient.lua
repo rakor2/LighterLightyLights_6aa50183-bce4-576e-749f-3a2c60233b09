@@ -10,11 +10,11 @@ function Saver2Tab(p)
         _GLL.Scene.Client = {
             CreatedLightsServer   = _GLL.CreatedLightsServer,
             LightsUuidNameMap     = _GLL.LightsUuidNameMap,
-            LightsNames           = _GLL.LightsNames,
+            -- LightsNames           = _GLL.LightsNames,
             LightParametersClient = _GLL.LightParametersClient,
             selectedUuid          = _GLL.selectedUuid,
-            markerUuid            = _GLL.markerUuid,
-            selectedGobo          = _GLL.selectedGobo,
+            -- markerUuid            = _GLL.markerUuid,
+            -- selectedGobo          = _GLL.selectedGobo,
             nameIndex             = nameIndex,
         }
         Ch.SceneSave:SendToServer(_GLL.Scene.Client)
@@ -27,36 +27,38 @@ function Saver2Tab(p)
         local json = Ext.IO.LoadFile("LightyLights/SceneState.json")
         _GLL.Scene = Ext.Json.Parse(json)
 
-        local gsc = _GLL.Scene.Client
-        local gss = _GLL.Scene.Server
-        local LightsUuidNameMap = gsc.LightsUuidNameMap
-
-        nameIndex = 0
+        local GSC = _GLL.Scene.Client
+        local GSS = _GLL.Scene.Server
+        local LightsUuidNameMap = GSC.LightsUuidNameMap
 
         local function createNext(i)
             if i > #LightsUuidNameMap then
                 Ch.SceneLoad:RequestToServer(_GLL.LightsUuidNameMap, function(Response)
+                    Ch.SelectedLight:SendToServer(_GLL.selectedUuid)
                 end)
                 return
             end
 
-            local savedLight     = LightsUuidNameMap[i]
-            local oldUuid        = savedLight.uuid
-            local rtUuid         = gsc.CreatedLightsServer[oldUuid]
-            local savedLightType = lightType
-
-            if     savedLight.name:find('Spotlight')   then lightType = 'Spotlight'
-            elseif savedLight.name:find('Directional') then lightType = 'Directional'
-            else                                            lightType = 'Point'
-            end
+            local savedLight = LightsUuidNameMap[i]
+            local oldUuid    = savedLight.uuid
+            local rtUuid     = GSC.CreatedLightsServer[oldUuid]
+            local LPS        = GSS.LightParametersServer[oldUuid]
 
             CreateLight(rtUuid)
 
-            Helpers.Timer:OnTicks(25, function()
-                lightType = savedLightType
+            local Color     = GSC.LightParametersClient[oldUuid].Color
+            local lightType = GSC.LightParametersClient[oldUuid].LightType
+            local radius    = GSC.LightParametersClient[oldUuid].Radius
 
+            if lightType == 'Spotlight'   then lt = 'Spot' end
+            if lightType == 'Directional' then lt = 'Direction' end
+            Ext.Template.GetRootTemplate('aca228c3-f0c5-41e0-bc00-d11ddee12ed0').LightType = lt or 'Point'
+            Ext.Template.GetRootTemplate('aca228c3-f0c5-41e0-bc00-d11ddee12ed0').Color = Color or {1,1,1}
+            Ext.Template.GetRootTemplate('aca228c3-f0c5-41e0-bc00-d11ddee12ed0').Radius = radius or 6
+
+            Helpers.Timer:OnTicks(25, function()
                 local newUuid     = _GLL.selectedUuid
-                local SavedParams = gsc.LightParametersClient[oldUuid]
+                local SavedParams = GSC.LightParametersClient[oldUuid]
 
                 if SavedParams then
                     _GLL.LightParametersClient[newUuid] = SavedParams
@@ -85,10 +87,21 @@ function Saver2Tab(p)
                 end
                 UpdateCreatedLightsCombo()
 
+                --- Slop for fun
+                if LPS then
+                    Ch.SceneAnimate:SendToServer({{
+                        uuid = newUuid,
+                        tx = LPS.Translate[1],
+                        ty = LPS.Translate[2],
+                        tz = LPS.Translate[3],
+                        rx = LPS.HumanRotation[1],
+                        ry = LPS.HumanRotation[2],
+                        rz = LPS.HumanRotation[3],
+                    }})
+                end
                 createNext(i + 1)
             end)
         end
-
         createNext(1)
     end
 end

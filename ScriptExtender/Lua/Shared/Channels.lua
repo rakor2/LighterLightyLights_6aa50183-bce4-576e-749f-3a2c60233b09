@@ -46,6 +46,7 @@ local Channels = {
 	'GetDaggers',
 
 	'SceneSaver',
+	'SceneAnimate',
 }
 
 for _, channel in pairs(Channels) do

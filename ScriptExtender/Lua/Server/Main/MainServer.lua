@@ -72,8 +72,10 @@ end
 
 
 function CreateLight(x, y, z, HumanRotation, OrbitParams, rtUuid)
+    if rtUuid then changeRootTemplateState(rtUuid) end
     local rtUuid = rtUuid or getAvailableRootTemplate()
     if not rtUuid then return nil end
+
 
     local entUuid = Osi.CreateAt(rtUuid, x, y, z, 0, 0, '')
     local rx, ry, rz = table.unpack(HumanRotation)
@@ -113,10 +115,13 @@ Ch.CreateLight:SetRequestHandler(function(Data)
     local x, y, z = table.unpack(getSourcePosition())
 
     local HumanRotation = {0, 0, 0}
+
     if Data.lightType == 'Spotlight' then
         HumanRotation = {90, 0, 0}
     end
+
     local uuid = Data.uuid or nil
+
     return CreateLight(x, y + OFFSET, z, HumanRotation, nil, uuid)
 end)
 
