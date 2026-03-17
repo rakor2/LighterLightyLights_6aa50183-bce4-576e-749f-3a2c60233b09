@@ -243,6 +243,19 @@ end
 local Postfixes = {'_Trans', '_Rot', '_Scale'}
 
 function ResetAllBones()
+    local uuid = getSelectedDummyOwnerUuid()
+    if uuid then
+        for _, postfix in pairs(Postfixes) do
+            for boneGroupName, BoneCategories in pairs(AllBones) do
+                for boneCategory, Bones in pairs(BoneCategories) do
+                    for _, boneName in pairs(Bones) do
+                        BZCaptureOldValue(uuid, boneName .. postfix)
+                    end
+                end
+            end
+        end
+    end
+
     local value
     for _, postfix in pairs(Postfixes) do
         for boneGroupName, BoneCategories in pairs(AllBones) do
@@ -256,14 +269,24 @@ function ResetAllBones()
         end
     end
     SetVarValuesToSliders()
+    if uuid then BZHistorySnapshotIK() end
 end
 
 
 
 function ResetBonesForCategory(boneGroupName, boneCategory)
     if not _GLL.States.inPhotoMode then return end
+    local uuid = getSelectedDummyOwnerUuid()
     local BoneCategories = AllBones[boneGroupName]
     local Bones = BoneCategories[boneCategory]
+
+    if uuid then
+        for _, postfix in pairs(Postfixes) do
+            for _, boneName in pairs(Bones) do
+                BZCaptureOldValue(uuid, boneName .. postfix)
+            end
+        end
+    end
 
     for _, postfix in pairs(Postfixes) do
         for _, boneName in pairs(Bones) do
@@ -273,13 +296,25 @@ function ResetBonesForCategory(boneGroupName, boneCategory)
         end
     end
     SetVarValuesToSliders()
+    if uuid then BZHistorySnapshotIK() end
 end
 
 
 
 function ResetBonesForGroup(boneGroupName)
     if not _GLL.States.inPhotoMode then return end
+    local uuid = getSelectedDummyOwnerUuid()
     local BoneCategories = AllBones[boneGroupName]
+
+    if uuid then
+        for _, postfix in pairs(Postfixes) do
+            for boneCategory, Bones in pairs(BoneCategories) do
+                for _, boneName in pairs(Bones) do
+                    BZCaptureOldValue(uuid, boneName .. postfix)
+                end
+            end
+        end
+    end
 
     for _, postfix in pairs(Postfixes) do
         for boneCategory, Bones in pairs(BoneCategories) do
@@ -291,6 +326,7 @@ function ResetBonesForGroup(boneGroupName)
         end
     end
     SetVarValuesToSliders()
+    if uuid then BZHistorySnapshotIK() end
 end
 
 
@@ -503,12 +539,21 @@ function createBoneSlider(parent, boneName, axis)
 
                 local characterUuid = getSelectedDummyOwnerUuid()
                 PopulateWithDefaultValues(characterUuid, varName)
+
+                -- Capture old value before mutation (only on first OnChange of this drag)
+                BZCaptureOldValue(characterUuid, varName)
+
                 _GLL.PoseValues[characterUuid][varName]['HumanValue'][Config.index] = e.Value[1]
                 SetValueToVarAndTableIt(varName, _GLL.PoseValues[characterUuid][varName]['HumanValue'])
 
                 if _GLL.States.bzSymmetry then
                     SetSymmetry(characterUuid, varName, Config.index, e.Value[1])
                 end
+
+                Utils:AntiSpam(400, function()
+                    DPrint('BONE SNAPSHOTTED')
+                    BZHistorySnapshot(characterUuid, varName)
+                end)
             end
         })
 
@@ -568,6 +613,8 @@ function CreateControls2(boneGroupName, boneCategory, boneName)
                 local characterUuid = getSelectedDummyOwnerUuid()
                 local Value = _GLL.PoseValues[characterUuid][varName]['HumanValue']
 
+                BZCaptureOldValue(characterUuid, varName)
+
                 Value[axisIndex] = defaultValue
                 slider.Value = {defaultValue, 0, 0, 0}
 
@@ -576,6 +623,8 @@ function CreateControls2(boneGroupName, boneCategory, boneName)
                 if _GLL.States.bzSymmetry then
                     SetSymmetry(characterUuid, varName, axisIndex, defaultValue)
                 end
+
+                BZHistorySnapshot(characterUuid, varName)
             end)
 
             tree:AddText(SliderConfigs[axis].label).SameLine = true
@@ -1020,6 +1069,9 @@ function ApplyProportionalIK(chain, axisDelta, axisIndex)
         local Value = (CurrentValue and CurrentValue.HumanValue) and
                     {CurrentValue.HumanValue[1], CurrentValue.HumanValue[2], CurrentValue.HumanValue[3]} or {0, 0, 0}
 
+        -- Capture old value before mutation
+        BZCaptureOldValue(characterUuid, varName)
+
         Value[axisIndex] = Value[axisIndex] + axisDelta * influence
         SetValueToVarAndTableIt(varName, Value)
 
@@ -1041,6 +1093,10 @@ local function createIKSliders(parent, axisIndex, axisLabel, Value, fn)
             local delta  = newVal - Value[axisIndex]
             Value[axisIndex] = newVal
             fn(delta, axisIndex)
+
+            Utils:AntiSpam(400, function()
+                BZHistorySnapshotIK()
+            end)
         end
     })
     createStepButtons(parent, slider, function(direction)
@@ -1202,3 +1258,165 @@ end
 
 
 --- 24fc6855-03e7-3b20-7a99-13d4d942ad26
+
+
+
+
+--- I'm still to uneducated, for now I'll let it slop
+local BZ_HISTORY_MAX = 100
+
+_GLL.BZHistory      = _GLL.BZHistory      or {}
+_GLL.BZHistoryIndex = _GLL.BZHistoryIndex or {}
+_GLL.BZOldValues    = _GLL.BZOldValues    or {}
+
+
+
+function BZCaptureOldValue(uuid, varName)
+    _GLL.BZOldValues[uuid] = _GLL.BZOldValues[uuid] or {}
+    if _GLL.BZOldValues[uuid][varName] then return end
+
+    local cur = _GLL.PoseValues[uuid] and _GLL.PoseValues[uuid][varName]
+    if cur and cur.HumanValue then
+        _GLL.BZOldValues[uuid][varName] = {cur.HumanValue[1], cur.HumanValue[2], cur.HumanValue[3]}
+    else
+        local default = varName:find('_Scale') and {1,1,1} or {0,0,0}
+        _GLL.BZOldValues[uuid][varName] = default
+    end
+end
+
+
+
+function BZHistorySnapshot(uuid, varName)
+    if not uuid or not varName then return end
+
+    local oldValues = _GLL.BZOldValues[uuid]
+    if not oldValues or not oldValues[varName] then return end
+
+    local cur = _GLL.PoseValues[uuid] and _GLL.PoseValues[uuid][varName]
+    if not cur or not cur.HumanValue then return end
+
+    local old = oldValues[varName]
+    local new = {cur.HumanValue[1], cur.HumanValue[2], cur.HumanValue[3]}
+
+    if old[1] == new[1] and old[2] == new[2] and old[3] == new[3] then
+        _GLL.BZOldValues[uuid][varName] = nil
+        return
+    end
+
+    _GLL.BZHistory[uuid]      = _GLL.BZHistory[uuid]      or {}
+    _GLL.BZHistoryIndex[uuid] = _GLL.BZHistoryIndex[uuid] or 0
+
+    local history = _GLL.BZHistory[uuid]
+    local index   = _GLL.BZHistoryIndex[uuid]
+
+    while #history > index do
+        table.remove(history)
+    end
+
+    if #history >= BZ_HISTORY_MAX then
+        table.remove(history, 1)
+        index = index - 1
+    end
+
+    table.insert(history, {varName = varName, old = old, new = new})
+    _GLL.BZHistoryIndex[uuid] = #history
+
+    _GLL.BZOldValues[uuid][varName] = nil
+end
+
+
+
+
+function BZHistorySnapshotIK()
+    local uuid = getSelectedDummyOwnerUuid()
+    if not uuid then return end
+
+    local oldValues = _GLL.BZOldValues[uuid]
+    if not oldValues then return end
+
+    _GLL.BZHistory[uuid]      = _GLL.BZHistory[uuid]      or {}
+    _GLL.BZHistoryIndex[uuid] = _GLL.BZHistoryIndex[uuid] or 0
+
+    local history = _GLL.BZHistory[uuid]
+    local index   = _GLL.BZHistoryIndex[uuid]
+
+    local diffs = {}
+    for varName, old in pairs(oldValues) do
+        local cur = _GLL.PoseValues[uuid] and _GLL.PoseValues[uuid][varName]
+        if cur and cur.HumanValue then
+            local new = {cur.HumanValue[1], cur.HumanValue[2], cur.HumanValue[3]}
+            if old[1] ~= new[1] or old[2] ~= new[2] or old[3] ~= new[3] then
+                table.insert(diffs, {varName = varName, old = old, new = new})
+            end
+        end
+    end
+
+    if #diffs == 0 then return end
+
+    while #history > index do table.remove(history) end
+    if #history >= BZ_HISTORY_MAX then
+        table.remove(history, 1)
+        index = index - 1
+    end
+
+    table.insert(history, diffs)
+    _GLL.BZHistoryIndex[uuid] = #history
+
+    _GLL.BZOldValues[uuid] = {}
+end
+
+
+
+local function BZApplyDiff(uuid, entry, direction)
+    local diffs = entry.varName and {entry} or entry
+
+    for _, diff in ipairs(diffs) do
+        local value = direction == 'undo' and diff.old or diff.new
+        SetValueToVarAndTableIt(diff.varName, value)
+    end
+
+    SetVarValuesToSliders()
+    SetValuesToVars()
+end
+
+
+
+function BZHistoryUndo()
+    if not _GLL.States.inPhotoMode then return end
+    if Utils.antiSpam then DPrint([[CAN'T DO, Wating for snapshot]]) return end
+
+    local uuid = getSelectedDummyOwnerUuid()
+    if not uuid then return end
+
+    _GLL.BZHistory[uuid]      = _GLL.BZHistory[uuid]      or {}
+    _GLL.BZHistoryIndex[uuid] = _GLL.BZHistoryIndex[uuid] or 0
+
+    local index = _GLL.BZHistoryIndex[uuid]
+    if index < 1 then DPrint('Nothing to undo') return end
+
+    BZApplyDiff(uuid, _GLL.BZHistory[uuid][index], 'undo')
+    _GLL.BZHistoryIndex[uuid] = index - 1
+    DPrint('Undo (' .. _GLL.BZHistoryIndex[uuid] .. '/' .. #_GLL.BZHistory[uuid] .. ')')
+end
+
+
+
+function BZHistoryRedo()
+    if not _GLL.States.inPhotoMode then return end
+    if Utils.antiSpam then DPrint([[CAN'T DO, Wating for snapshot]]) return end
+
+    local uuid = getSelectedDummyOwnerUuid()
+    if not uuid then return end
+
+    _GLL.BZHistory[uuid]      = _GLL.BZHistory[uuid]      or {}
+    _GLL.BZHistoryIndex[uuid] = _GLL.BZHistoryIndex[uuid] or 0
+
+    local history = _GLL.BZHistory[uuid]
+    local index   = _GLL.BZHistoryIndex[uuid]
+
+    if index >= #history then DPrint('Nothing to redo') return end
+
+    _GLL.BZHistoryIndex[uuid] = index + 1
+    BZApplyDiff(uuid, history[_GLL.BZHistoryIndex[uuid]], 'redo')
+    DPrint('Redo (' .. _GLL.BZHistoryIndex[uuid] .. '/' .. #history .. ')')
+end

@@ -249,6 +249,34 @@
               "Options": {
                 "BlockIfLevelNotStarted": true
               }
+            },
+            {
+              "Id": "ll_bone_undo",
+              "Name": "Undo bone change",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "Z",
+                  "ModifierKeys": ["LShift"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_bone_redo",
+              "Name": "Undo bone change",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "X",
+                  "ModifierKeys": ["LShift"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
             }
           ]
 }

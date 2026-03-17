@@ -232,6 +232,26 @@ function BZAgreed()
 
 
 
+    E.btnUndo = bz:AddButton('Undo')
+            UI:Config(E.btnUndo, {
+                SameLine = false,
+                OnClick = function()
+                    BZHistoryUndo()
+                end
+            })
+
+
+
+    E.btnRedo = bz:AddButton('Redo')
+        UI:Config(E.btnRedo, {
+            SameLine = true,
+            OnClick = function()
+                BZHistoryRedo()
+            end
+        })
+
+
+
     _GLL.States.bzSymmetry = false
 
     E.checkSymm = bz:AddCheckbox('Symmetry|Alt+F')

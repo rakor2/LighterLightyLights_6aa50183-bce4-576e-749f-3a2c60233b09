@@ -177,6 +177,9 @@ local function OnPhotoModeDestroy()
 
     -- _GLL.gizmo:SetActive(false)
 end
+    _GLL.BZHistory      = {}
+    _GLL.BZHistoryIndex = {}
+    _GLL.BZOldValues    = {}
 
 
 
