@@ -40,6 +40,10 @@ function BZAgreed()
 
 
 
+
+
+
+
     function UpdateBZDummyCombo(e)
         selectedCharacter = E.cmbBoneDummies.SelectedIndex + 1
         SetVarValuesToSliders()
@@ -76,6 +80,8 @@ function BZAgreed()
 
 
     E.checkAutoTail = bz:AddCheckbox('Disable tail physics')
+    bz:AddDummy(10, 0).SameLine = true
+    bz:AddText('You need to disable it before entering').SameLine = true
 
 
 
@@ -256,7 +262,7 @@ function BZAgreed()
 
     E.checkSymm = bz:AddCheckbox('Symmetry|Alt+F')
         UI:Config(E.checkSymm, {
-            SameLine = true,
+            SameLine = false,
             OnChange = function(e)
                 _GLL.States.bzSymmetry = e.Checked
             end

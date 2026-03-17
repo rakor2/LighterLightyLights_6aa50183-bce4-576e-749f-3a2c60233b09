@@ -130,9 +130,9 @@ function MainWindow(mw)
     ViewportSize = Ext.IMGUI.GetViewportSize()
     mw:SetPos({ViewportSize[1] / 6, ViewportSize[2] / 10})
     if ViewportSize[1] <= 1920 and ViewportSize[2] <= 1080 then
-        mw:SetSize({ 571, 750 })
+        mw:SetSize({670, 710})
     else
-        mw:SetSize({ 766, 1000 })
+        mw:SetSize({860, 1000})
     end
     mw.AlwaysAutoResize = false
     mw.Scaling = 'Scaled'
@@ -287,116 +287,6 @@ end
 
 
 
---- TBD: MAYBE PAIRS
-MCM.SetKeybindingCallback('ll_toggle_window', function()
-    mw.Open = not mw.Open
-end)
-
-
-MCM.SetKeybindingCallback('ll_toggle_light', function()
-    toggleLightBtn()
-end)
-
-
-MCM.SetKeybindingCallback('ll_toggle_all_lights', function()
-    toggleAllLightsBtn()
-end)
-
-
-MCM.SetKeybindingCallback('ll_toggle_marker', function()
-    ToggleMarker(_GLL.markerUuid)
-end)
-
-
-MCM.SetKeybindingCallback('ll_toggle_all_markers', function()
-    Ch.MarkerHandler:RequestToServer({}, function (Response)
-    end)
-end)
-
-
-MCM.SetKeybindingCallback('ll_duplicate', function()
-    DuplicateLight()
-end)
-
-
-MCM.SetKeybindingCallback('ll_beam', function()
-    Ch.MazzleBeam:SendToServer({})
-end)
-
-
-MCM.SetKeybindingCallback('ll_stick', function()
-    E.checkStick.Checked = not E.checkStick.Checked
-    StickToCamera()
-end)
-
-
-MCM.SetKeybindingCallback('ll_next', function()
-    nextOptionBtn()
-end)
-
-
-MCM.SetKeybindingCallback('ll_prev', function()
-    prevOptionBtn()
-end)
-
-
-MCM.SetKeybindingCallback('ll_selected_popup', function()
-    local lightName = getSelectedLightName() or 'None'
-    if lightName then selectedLightNotification.Label = lightName end
-    windowNotification.Visible = not windowNotification.Visible
-    E.checkSelectedLightNotification.Checked = not E.checkSelectedLightNotification.Checked
-end)
-
-
-
-MCM.SetKeybindingCallback('ll_apply_anl', function()
-    ApplyParameters()
-end)
-
-
-MCM.SetKeybindingCallback('ll_hide_gobo', function()
-    hideGobo()
-end)
-
-
-MCM.SetKeybindingCallback('ll_toggle_bz_symm', function()
-    local state = E.checkSymm.Checked
-    state = not state
-
-    _GLL.States.bzSymmetry = state
-    E.checkSymm.Checked = state
-end)
-
-
-
-MCM.SetKeybindingCallback('ll_save_pose', function()
-end)
-
-
-
-MCM.SetKeybindingCallback('ll_pm_prev_dummy', function()
-    UI:PrevOption(E.visTemComob)
-    UpdatePMDummyCombo(E.visTemComob)
-end)
-
-
-
-MCM.SetKeybindingCallback('ll_pm_next_dummy', function()
-    UI:NextOption(E.visTemComob)
-    UpdatePMDummyCombo(E.visTemComob)
-end)
-
-
-
-MCM.SetKeybindingCallback('ll_dummy_popup', function()
-    E.checkDummiesPop.Checked = not E.checkDummiesPop.Checked
-    for _, v in pairs(PM.DummyWidgets) do
-        v.Window.Visible = not v.Window.Visible
-    end
-end)
-
-
-
 function MainTab(p)
     local rngMax = #MOTD
     p:AddSeparatorText(MOTD[Ext.Math.Random(1, rngMax)])
@@ -443,6 +333,12 @@ function MainTab(p)
         UI:Config(E.btnCreate2, {
             SameLine = true,
             OnClick  = function()
+                local lt = 'Point'
+                if lightType == 'Spotlight'   then lt = 'Spot' end
+                if lightType == 'Directional' then lt = 'Direction' end
+                Ext.Template.GetRootTemplate('aca228c3-f0c5-41e0-bc00-d11ddee12ed0').LightType = lt
+                Ext.Template.GetRootTemplate('aca228c3-f0c5-41e0-bc00-d11ddee12ed0').Color = {1,1,1}
+                Ext.Template.GetRootTemplate('aca228c3-f0c5-41e0-bc00-d11ddee12ed0').Radius = 6
                 CreateLight()
                 E.checkGroup.Checked = false
             end

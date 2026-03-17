@@ -253,7 +253,7 @@ end
 
 lightType = defaultLightType
 
-function CreateLight(uuid, Position)
+function CreateLight(uuid)
     if not _GLL.States.allowLightCreation then return end
 
     _GLL.States.allowLightCreation = false
@@ -265,6 +265,9 @@ function CreateLight(uuid, Position)
         lightType = lightType or 'Point',
         Position  = Position,
     }
+
+
+
 
     Ch.CreateLight:RequestToServer(Data, function(Response)
         if not Response then
@@ -303,7 +306,6 @@ function CreateLight(uuid, Position)
         end)
     end)
 end
-
 
 
 
@@ -499,7 +501,7 @@ function ColorizeMarkers(Color)
     if not colorfulMarkers then return end
     local Color = Color or getSelectedLightEntity().Color
     local marker = _GLL.markerEntity
-    if marker then
+    if marker and marker.Visual and marker.Visual.Visual then
         marker.Visual.Visual.ObjectDescs[1].Renderable.ActiveMaterial:SetVector3('GlowColor', Color)
     end
 end

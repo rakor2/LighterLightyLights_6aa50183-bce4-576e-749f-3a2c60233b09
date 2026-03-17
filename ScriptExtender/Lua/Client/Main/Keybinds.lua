@@ -57,6 +57,10 @@ local keybindings = {
             v.Window.Visible = not v.Window.Visible
         end
     end,
+
+    ll_bone_undo = function() BZHistoryUndo() end,
+
+    ll_bone_redo = function() BZHistoryRedo() end,
 }
 
 for key, callback in pairs(keybindings) do

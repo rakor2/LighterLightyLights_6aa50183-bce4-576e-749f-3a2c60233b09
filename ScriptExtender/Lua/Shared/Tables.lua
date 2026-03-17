@@ -2,6 +2,8 @@
 LLGlobals = LLGlobals or {}
 Styles = {}
 
+
+
 RootTemplates = {
     ['b8305734-4f4a-4699-a0b5-91a735a5783a'] = true,
     ['28e9d938-4274-40e3-b3d8-a61a11b31aff'] = true,
@@ -174,6 +176,8 @@ MOTD = {
     'not just a bug in a jug',
     'Luna R2',
     'https://www.youtube.com/watch?v=s5cGwvq50co',
+    [[Yo, guys, it's not that hard to say thank you]],
+    [[Undercover accounts, I see you guys xD]],
 }
 
 
@@ -254,7 +258,6 @@ IGNORE_PARAMS = {
     "DeltaMin",
     'EnvironmentEffectEnabledForTimeline',
     'TimelineFog',
-
 }
 
 
@@ -388,6 +391,7 @@ LTN_ORDER = {
 }
 
 
+
 ATM_ORDER = {
     "NearPlane",
     "FarPlane",
@@ -431,7 +435,6 @@ ATM_ORDER = {
     "GodRaysPower",
     "GodRaysRayIntensity",
     "GodRaysThreshold",
-
 }
 
 
