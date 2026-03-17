@@ -1,25 +1,170 @@
-local boneZoneInit = false
+local boneZoneInit   = false
+local HEIGHT_OFFSET  = 2
+local MAX_DISTANCE   = 11
+
+
 
 _GLL.DummyVeryOriginalTransforms = {}
-
-local HEIGHT_OFFSET = 2
-local MAX_DISTANCE = 11
+_GLL.GizmoDummySelections        = {}
 
 
 
 local function photoModeExists()
-    return Ext.Entity.GetAllEntitiesWithComponent('PhotoModeSession')[1] and true or false
+    return Ext.Entity.GetAllEntitiesWithComponent('PhotoModeSession')[1] ~= nil
 end
 
 
 
-local function AttachWindowToEntity(w, TargetTranslate, WinSize)
-    local Pos = Screen.WorldToScreenPoint(TargetTranslate)
-    if not Pos then w.Visible = false return end
-    if not WinSize then WinSize = {0,0} end
+local function AttachWindowToEntity(window, targetTranslate, winSize)
+    local pos = Screen.WorldToScreenPoint(targetTranslate)
+    if not pos then window.Visible = false return end
 
-    local WindowCenter = {WinSize[1]*0.5, WinSize[2]*0.5}
-    w:SetPos(Vec2.__sub({Pos[1], Pos[2]}, WindowCenter))
+    winSize = winSize or {0, 0}
+    local center = {winSize[1] * 0.5, winSize[2] * 0.5}
+    window:SetPos(Vec2.__sub({pos[1], pos[2]}, center))
+end
+
+
+
+local function updateGizmoTargets()
+    local Targets = {}
+    local Proxies = {}
+    for _, entity in pairs(_GLL.GizmoDummySelections) do
+        table.insert(Targets, entity)
+        local proxy = API.GameObject.Create(entity.Uuid.EntityUuid)
+        if proxy then
+            table.insert(Proxies, proxy)
+        end
+    end
+    if #Targets == 0 then
+        GL_GLOBALS.TransformEditor.Target = {}
+        _GLL.gizmo:Select({})
+    else
+        GL_GLOBALS.TransformEditor.Target = Proxies
+        _GLL.gizmo:Select(Targets)
+    end
+end
+
+
+
+local function createDummySelectionCheckbox(dummy, dummyId)
+    E.checkAddTarget          = E.checkAddTarget or {}
+    E.checkAddTarget[dummyId] = E.grpGizmoDummies:AddCheckbox(dummyId)
+
+    UI:Config(E.checkAddTarget[dummyId], {
+        SameLine = true,
+        OnChange = function(e)
+            local uuid = dummy.Dummy.Entity.Uuid.EntityUuid
+
+            if e.Checked then
+                _GLL.GizmoDummySelections[uuid] = dummy.Dummy.Entity
+            else
+                _GLL.GizmoDummySelections[uuid] = nil
+            end
+
+            updateGizmoTargets()
+        end,
+    })
+end
+
+
+
+local function createDummyFloatingWidget(dummy, dummyName)
+    local wn = Ext.IMGUI.NewWindow(Ext.Math.Random(1, 100))
+    wn.Visible       = false
+    wn.NoDecoration  = true
+    wn.AlwaysAutoResize = true
+    ApplyStyle(wn, StyleSettings.selectedStyle)
+
+    local x, y, z = table.unpack(dummy.DummyOriginalTransform.Transform.Translate)
+    AttachWindowToEntity(wn, {x, y + HEIGHT_OFFSET, z})
+    wn:AddText(dummyName)
+
+    return wn
+end
+
+
+
+local function applySavedTransform(dummy, dummyId)
+    if not (_GLL.SavedTransforms and _GLL.SavedTransforms[dummyId]) then return end
+
+    local S = _GLL.SavedTransforms[dummyId]
+    local Pos   = {S.pos[1],   S.pos[2],   S.pos[3]}
+    local Rot   = {S.rot[1],   S.rot[2],   S.rot[3],   S.rot[4]}
+    local Scale = {S.scale[1], S.scale[2], S.scale[3]}
+
+    dummy.Visual.Visual.WorldTransform.Translate             = Pos
+    dummy.Visual.Visual.WorldTransform.RotationQuat          = Rot
+    dummy.Visual.Visual.WorldTransform.Scale                 = Scale
+    dummy.DummyOriginalTransform.Transform.Translate         = Pos
+    dummy.DummyOriginalTransform.Transform.RotationQuat      = Rot
+    dummy.DummyOriginalTransform.Transform.Scale             = Scale
+end
+
+
+
+local function initDummy(dummy)
+    local uuid     = dummy.Dummy.Entity.Uuid.EntityUuid
+    local name     = Dummy:Name(dummy)
+    local dummyId       = name .. '##' .. uuid
+
+    --- Store original transforms
+    _GLL.DummyVeryOriginalTransforms[uuid] = Ext.Types.Serialize(dummy.Transform.Transform)
+
+    --- Name map
+    _GLL.DummyNameMap[dummyId] = dummy
+    _GLL.DummyNames       = Utils:MapToArray(_GLL.DummyNameMap)
+
+    E.visTemComob.Options  = _GLL.DummyNames
+    E.cmbBoneDummies.Options = _GLL.DummyNames
+
+    --- UI
+    createDummySelectionCheckbox(dummy, dummyId)
+
+    local window = createDummyFloatingWidget(dummy, name)
+    PM.DummyWidgets[dummyId] = {Window = window, Size = window.LastSize, Dummy = dummy, Name = name}
+
+    --- BoneZone
+    GetGenomeVariablesIndicies(dummy)
+    if not boneZoneInit then
+        TableBoneValues(dummy)
+    end
+
+    --- Restore saved transforms
+    applySavedTransform(dummy, dummyId)
+end
+
+
+
+local function syncDofDistance()
+    pcall(function()
+        local distance = Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFDistance
+        E.dofDistance.Value = {distance, 0, 0, 0}
+    end)
+end
+
+
+
+local function updateFloatingWidgets()
+    if not E.checkDummiesPop.Checked then return end
+
+    for _, key in ipairs(E.visTemComob.Options) do
+        local entry = PM.DummyWidgets[key]
+        local x, y, z = table.unpack(entry.Dummy.Visual.Visual.WorldTransform.Translate)
+        local target   = {x, y + HEIGHT_OFFSET, z}
+        local camPos   = Camera:GetActiveCamera().Transform.Transform.Translate
+        local distance = Ext.Math.Distance(target, camPos)
+
+        entry.Window.Visible = distance < MAX_DISTANCE
+        AttachWindowToEntity(entry.Window, target, entry.Size)
+    end
+end
+
+
+
+local function onPhotoModeTick()
+    syncDofDistance()
+    updateFloatingWidgets()
 end
 
 
@@ -27,171 +172,91 @@ end
 local function OnPhotoModeCreate()
     PM.DummyWidgets = {}
 
-    if E.checkAutoTail.Checked then
-        DisableTailPhysics()
-    else
-        EnableTailPhysics()
-    end
+    if E.checkAutoTail.Checked then DisableTailPhysics() else EnableTailPhysics() end
 
-    Helpers.Timer:OnTicks(30, function ()
+    Helpers.Timer:OnTicks(30, function()
         _GLL.States.inPhotoMode = true
-        _GLL.DummyNameMap = {}
+        _GLL.DummyNameMap       = {}
 
-        local Dummies = Ext.Entity.GetAllEntitiesWithComponent('Dummy')
-
-        for index, dummy in pairs(Dummies) do
-            _GLL.DummyVeryOriginalTransforms[dummy.Dummy.Entity.Uuid.EntityUuid] = Ext.Types.Serialize(dummy.Transform.Transform)
-
-            --- Dummy name and map mhm
-            local dummyName = Dummy:Name(dummy)
-            local dummyId = dummyName .. '##' .. dummy.Dummy.Entity.Uuid.EntityUuid
-            _GLL.DummyNameMap[dummyId] = dummy
-            _GLL.DummyNames = Utils:MapToArray(_GLL.DummyNameMap)
-
-
-            E.visTemComob.Options = _GLL.DummyNames
-            E.cmbBoneDummies.Options = _GLL.DummyNames
-
-
-            GetGenomeVariablesIndicies(dummy)
-            if not boneZoneInit then
-                TableBoneValues(dummy)
-            end
-
-            --- Selected dummy widgets
-            local wn =  Ext.IMGUI.NewWindow(Ext.Math.Random(1, 100))
-            wn.Visible = false
-            ApplyStyle(wn, StyleSettings.selectedStyle)
-            wn.NoDecoration = true
-            wn.AlwaysAutoResize = true
-
-            local x, y, z = table.unpack(dummy.DummyOriginalTransform.Transform.Translate)
-            local TargetTranslate = {x, y + HEIGHT_OFFSET, z}
-
-            AttachWindowToEntity(wn, TargetTranslate)
-
-            local selectedLightNotification = wn:AddText(dummyName)
-            PM.DummyWidgets[dummyId] = {Window = wn, Size = wn.LastSize, Dummy = dummy, Name = dummyName}
-
-
-            --- Reaplying saved transforms on photomode enter
-            --- TBD: refactor temp garbo
-            if _GLL.SavedTransforms and _GLL.SavedTransforms[dummyId] then
-                -- DDump(_GLL.SavedTransforms[dummyId])
-                local saved = _GLL.SavedTransforms[dummyId]
-                dummy.Visual.Visual.WorldTransform.Translate = {saved.pos[1], saved.pos[2], saved.pos[3]}
-                dummy.Visual.Visual.WorldTransform.RotationQuat = {saved.rot[1], saved.rot[2], saved.rot[3], saved.rot[4]}
-                dummy.Visual.Visual.WorldTransform.Scale = {saved.scale[1], saved.scale[2], saved.scale[3]}
-                dummy.DummyOriginalTransform.Transform.Translate = {saved.pos[1], saved.pos[2], saved.pos[3]}
-                dummy.DummyOriginalTransform.Transform.RotationQuat = {saved.rot[1], saved.rot[2], saved.rot[3], saved.rot[4]}
-                dummy.DummyOriginalTransform.Transform.Scale = {saved.scale[1], saved.scale[2], saved.scale[3]}
-            end
+        local dummies = Ext.Entity.GetAllEntitiesWithComponent('Dummy')
+        for _, dummy in pairs(dummies) do
+            initDummy(dummy)
         end
 
-
-        --- Abusing tick for some bs
-        Utils:SubUnsubToTick('sub', 'PhotoMode', function ()
-
-            --- Copying dof distance value from noesis
-            pcall(function()
-                local distance = Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFDistance
-                E.dofDistance.Value = {distance, 0, 0, 0}
-            end)
-
-            --- Updating widget position for all dummies
-            if E.checkDummiesPop.Checked then
-                for index, dummy in ipairs(E.visTemComob.Options) do
-                    local tbl = PM.DummyWidgets[dummy]
-                    local x, y, z = table.unpack(tbl.Dummy.DummyOriginalTransform.Transform.Translate)
-                    local TargetTranslate = {x, y + HEIGHT_OFFSET, z}
-                    local CamTranslate = Camera:GetActiveCamera().Transform.Transform.Translate
-                    local distanceToTarget = Ext.Math.Distance(TargetTranslate, CamTranslate)
-
-                    if E.checkDummiesPop.Checked then
-                        tbl.Window.Visible = distanceToTarget < MAX_DISTANCE
-                    end
-                    AttachWindowToEntity(tbl.Window, TargetTranslate, tbl.Size)
-                end
-            end
-        end)
-
+        Utils:SubUnsubToTick('sub', 'PhotoMode', onPhotoModeTick)
 
         CharacterLightSetupState(lightSetupState)
         UpdateCharacterInfo(E.visTemComob.SelectedIndex + 1)
 
-
         --- BoneZone
-
-
-        --- TBD: to one pass
         if boneZoneInit then
-            for index, dummy in pairs(Dummies) do
+            for _, dummy in pairs(dummies) do
                 SetValuesToVars(dummy)
             end
         end
         SetVarValuesToSliders()
-
         boneZoneInit = true
 
 
-        --- Gitzmo
-        -- _GLL.gizmo:SetActive(true)
+        --- Gizmo
+        if Mods.GizmoLib then
+            _GLL.gizmo:SetActive(true)
+            Helpers.Timer:OnTicks(5, function()
+                GL_GLOBALS.TransformEditor.Gizmo:DeleteItem()
+                GL_GLOBALS.TransformEditor.Target = nil
+            end)
+        end
+
     end)
 end
 
 
 
-
 local function OnPhotoModeDestroy()
-    if E.checkAutoTail.Checked then
-        EnableTailPhysics()
-    end
+    if E.checkAutoTail.Checked then EnableTailPhysics() end
 
     _GLL.States.inPhotoMode = false
+    _GLL.DummyNameMap       = nil
+    _GLL.DummyNames         = nil
 
-    _GLL.DummyNameMap = nil
-    _GLL.DummyNames = nil
-
-    E.visTemComob.Options = {'Not in Photo Mode'}
+    E.visTemComob.Options    = {'Not in Photo Mode'}
     E.cmbBoneDummies.Options = {'Not in Photo Mode'}
-
     E.visTemComob.SelectedIndex = 0
-    E.checkPMSrc.Checked = false
+    E.checkPMSrc.Checked     = false
 
-    if Utils.subID and Utils.subID['SourcePhotoMode'] then
-        Utils:SubUnsubToTick('unsub', 'SourcePhotoMode',_)
-    end
-
-    if Utils.subID and Utils.subID['PhotoMode'] then
-        Utils:SubUnsubToTick('unsub', 'PhotoMode',_)
+    for _, key in ipairs({'SourcePhotoMode', 'PhotoMode'}) do
+        if Utils.subID and Utils.subID[key] then
+            Utils:SubUnsubToTick('unsub', key, _)
+        end
     end
 
     UpdateCharacterInfo(nil)
-
     ResetSliderValue()
 
     E.checkDummiesPop.Checked = false
-    for _, v in pairs(PM.DummyWidgets) do
-        v.Window:Destroy()
+    for _, entry in pairs(PM.DummyWidgets) do
+        entry.Window:Destroy()
     end
 
-    -- _GLL.gizmo:SetActive(false)
-end
     _GLL.BZHistory      = {}
     _GLL.BZHistoryIndex = {}
     _GLL.BZOldValues    = {}
 
+    _GLL.GizmoDummySelections = {}
+    GL_GLOBALS.TransformEditor.Target = {}
+
+    Imgui.ClearChildren(E.grpGizmoDummies)
+
+    if Mods.GizmoLib then
+        _GLL.gizmo:SetActive(false)
+        _GLL.gizmo:Clear()
+    end
+end
 
 
-Ext.Entity.OnCreate('PhotoModeSession', function ()
-    OnPhotoModeCreate()
-end)
 
-
-
-Ext.Entity.OnDestroy('PhotoModeSession', function ()
-    OnPhotoModeDestroy()
-end)
+Ext.Entity.OnCreate('PhotoModeSession',  OnPhotoModeCreate)
+Ext.Entity.OnDestroy('PhotoModeSession', OnPhotoModeDestroy)
 
 
 
@@ -205,7 +270,7 @@ end)
 
 Ext.RegisterNetListener('LL_SendLookAtTargetUuid', function(channel, payload)
     _GLL.tragetUuid = payload
-    Helpers.Timer:OnTicks(3, function ()
+    Helpers.Timer:OnTicks(3, function()
         _GLL.tragetEntity = Ext.Entity.Get(_GLL.tragetUuid)
     end)
     CharacterLightSetupState(E.checkLightSetupState.Checked)
@@ -213,8 +278,8 @@ end)
 
 
 
-Ext.Entity.OnChange('CCState', function ()
-    Helpers.Timer:OnTicks(200, function ()
+Ext.Entity.OnChange('CCState', function()
+    Helpers.Timer:OnTicks(200, function()
         CharacterLightSetupState(lightSetupState)
     end)
 end)
@@ -223,18 +288,12 @@ end)
 
 Ext.RegisterNetListener('LL_JumpFollow', function(channel, payload)
     Helpers.Timer:OnTicks(100, function()
-        -- DPrint('xdddddddddddd')
         CharacterLightSetupState(lightSetupState)
-        -- Ch.CurrentResource:RequestToServer({}, function(Response)
-        --     SetCurrentAtmosphereAndLighting(Response)
-        -- end)
     end)
 end)
 
 
 
-Ext.RegisterNetListener('LLL_LevelStarted', function (channel, payload, user)
-    -- Ch.CurrentResource:RequestToServer({}, function(Response)
-    --     SetCurrentAtmosphereAndLighting(Response)
-    -- end)
+Ext.RegisterNetListener('LLL_LevelStarted', function(channel, payload, user)
+    --- XD
 end)
