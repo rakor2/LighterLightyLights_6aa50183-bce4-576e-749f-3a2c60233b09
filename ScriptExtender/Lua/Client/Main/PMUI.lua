@@ -213,44 +213,51 @@ function BetterPMTab(parent)
     local sepa2 = parent:AddSeparatorText('Dummy controls')
 
 
-    -- _GLL.gizmo = API.CreateManipulator()
-    -- _GLL.gizmo.Config.IsSelectableEntity = function(info)
-    --     return info.Type == "Unknown"
-    -- end
-
-
-
-    -- API.Events.OnTransformEnd:Subscribe(function(data)
-    --     local dummy =  _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]]
-    --     local Ser = Ext.Types.Serialize(dummy.Visual.Visual.WorldTransform)
-    --     Ext.Types.Unserialize(dummy.DummyOriginalTransform.Transform, Ser)
-    --     -- DDump(dummy.Visual.Visual.WorldTransform)
-    -- end)
-
-
-
-    local function gizmoSelectDummy()
-        -- local ent = _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]]
-        -- _GLL.gizmo:Select({ent.Dummy.Entity})
-        return
-    end
-
-
 
     function UpdateDummyCombo(e)
+        if not _GLL.States.inPhotoMode then return end
+
         PM.DummyWidgets[_GLL.DummyNames[selectedCharacter]].Window:SetColor('WindowBg', Style.Colors.windowBg)
         PM.DummyWidgets[_GLL.DummyNames[selectedCharacter]].Window:SetColor('Text', Style.Colors.textColor)
-
         selectedCharacter = e.SelectedIndex + 1
+
         E.visTemComob.SelectedIndex    = e.SelectedIndex
         E.cmbBoneDummies.SelectedIndex = e.SelectedIndex
+
+        _GLL.GizmoDummySelections = {}
+
+        for k, v in pairs(_GLL.DummyNames) do
+            E.checkAddTarget[v].Checked = false
+        end
+
+        local selectedId = _GLL.DummyNames[selectedCharacter]
+
+
+        local selectedUuid = _GLL.DummyNameMap[selectedId].Dummy.Entity.Uuid.EntityUuid
+
+        E.checkAddTarget[selectedId].Checked = true
+        _GLL.GizmoDummySelections[selectedUuid] = _GLL.DummyNameMap[selectedId].Dummy.Entity
+
+        if Mods.GizmoLib then
+            local owener = _GLL.GizmoDummySelections[selectedUuid]
+            _GLL.gizmo:Select({owener})
+            local proxy = API.GameObject.Create(owener.Uuid.EntityUuid)
+            GL_GLOBALS.TransformEditor.Target = {proxy}
+        end
 
         UpdateCharacterInfo(selectedCharacter)
         SetVarValuesToSliders()
         LoadAttachState(getSelectedDummy())
+        PM.DummyWidgets[selectedId].Window:SetColor('WindowBg', Style.Colors.special)
+        SetHighlightColor(PM.DummyWidgets[selectedId].Window)
+    end
 
-        PM.DummyWidgets[_GLL.DummyNames[selectedCharacter]].Window:SetColor('WindowBg', Style.Colors.special)
-        SetHighlightColor(PM.DummyWidgets[_GLL.DummyNames[selectedCharacter]].Window)
+
+
+    function GizmoSelectDummy()
+        local selectedId = _GLL.DummyNames[selectedCharacter]
+        local entity = _GLL.DummyNameMap[selectedId].Dummy.Entity
+        _GLL.gizmo:Select({entity})
     end
 
 
@@ -266,7 +273,19 @@ function BetterPMTab(parent)
                 UpdateDummyCombo(e)
             end,
             OnRightClick = function(e)
-                gizmoSelectDummy()
+                if not Mods.GizmoLib then return end
+
+                _GLL.GizmoDummySelections = {}
+                for k, v in pairs(_GLL.DummyNames) do
+                    E.checkAddTarget[v].Checked = false
+                end
+
+                local selectedId = _GLL.DummyNames[selectedCharacter]
+                local selectedUuid = _GLL.DummyNameMap[selectedId].Dummy.Entity.Uuid.EntityUuid
+                _GLL.GizmoDummySelections[selectedUuid] = _GLL.DummyNameMap[selectedId].Dummy.Entity
+                E.checkAddTarget[selectedId].Checked = true
+
+                GizmoSelectDummy()
             end
         })
     selectedCharacter = E.visTemComob.SelectedIndex + 1
@@ -295,11 +314,21 @@ function BetterPMTab(parent)
 
 
 
-    local txtDum = parent:AddText('Dummies')
-        UI:Config(txtDum, { SameLine = true })
 
+    local txtDum = parent:AddText('Dummies')
+        UI:Config(txtDum, {SameLine = true})
+
+
+
+    parent:AddDummy(0,0)
+    E.grpGizmoDummies = parent:AddGroup('GizmoDummies')
+
+
+
+    parent:AddDummy(0,0)
     E.checkDummiesPop = parent:AddCheckbox('Dummies popup')
         UI:Config(E.checkDummiesPop, {
+            SameLine = true,
             OnChange = function(e)
                 if not _GLL.States.inPhotoMode then E.checkDummiesPop.Checked = false return end
                 for _, v in pairs(PM.DummyWidgets) do
@@ -307,7 +336,6 @@ function BetterPMTab(parent)
                 end
             end
         })
-
 
 
     E.infoCollapse = parent:AddCollapsingHeader('Info')
