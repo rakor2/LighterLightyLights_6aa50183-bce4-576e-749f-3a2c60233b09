@@ -80,8 +80,10 @@ function BZAgreed()
 
 
     E.checkAutoTail = bz:AddCheckbox('Disable tail physics')
-    bz:AddDummy(10, 0).SameLine = true
-    bz:AddText('You need to disable it before entering').SameLine = true
+    E.checkAutoHair = bz:AddCheckbox('Disable hair physics')
+    E.checkAutoTent = bz:AddCheckbox('Disable tentacles physics')
+    -- bz:AddDummy(10, 0).SameLine = true
+    bz:AddText('You need to disable it before entering')
 
 
 
@@ -129,6 +131,7 @@ function BZAgreed()
     E.slAttachScale = bz:AddSlider('', 1, 0.1, 2, 1)
         UI:Config(E.slAttachScale, {
             OnChange = function(e)
+                if not _GLL.States.inPhotoMode then e.Value = {1,0,0,0} return end
                 ScaleAttachment('Main', e.Value[1])
                 SaveAttachState(getSelectedDummy())
             end
@@ -165,6 +168,7 @@ function BZAgreed()
     E.slAttachScaleOff = bz:AddSlider('', 1, 0.1, 2, 1)
         UI:Config(E.slAttachScaleOff, {
             OnChange = function(e)
+                if not _GLL.States.inPhotoMode then e.Value = {1,0,0,0} return end
                 ScaleAttachment('Main', e.Value[1])
                 SaveAttachState(getSelectedDummy())
             end
@@ -177,48 +181,30 @@ function BZAgreed()
 
     bz:AddSeparatorText('Garbo')
 
-
-
-    E.btnTposeQSAT = bz:AddButton('TPose [QSAT SLOT 10]')
-        UI:Config(E.btnTposeQSAT, {
-            SameLine = false,
-            OnClick = function(e)
-                if not Mods.QSAT then return end
-
-                for _, AnimationSet in pairs(Mods.QSAT.BaseBodyAnimationSets) do
-                    Mods.QSAT.SkizzingSataning(
-                        AnimationSet,
-                        '88838fb7-4548-4471-a88c-f833f7aaedad',
-                        '0dbb3f66-2e8e-20b6-1d08-6331dee65e7b',
-                        ''
-                    )
-                end
-            end
-        })
-
-
-
-    -- E.resetBtn = bz:AddButton('Reload SE')
-    -- E.resetBtn.SameLine = true
-    -- local btnResetSE = UI:CreateConfirmButton(p, E.resetBtn, 'Reload SE', function()
-    --     Ext.Debug.Reset(false, true)
-    -- end)
-    -- E.resetBtn.OnClick = function ()
-    --     UI:Confirm(E.resetBtn, btnResetSE)
-    -- end
-
-
-
-    bz:AddText([[    No one reads, so I'll type it here.
-    Not fully releasing until Skiz finishes BG3AF.
-    Unfortunately there's no way to make this better right now.
-    Treat this as additional pose adjustment thing for now.
-    But I kinda learned bone names, so I'm almost at blender pace ong fr.
-    If you want to make a pose from scratch, I recommend starting from Tpose.]])
+    bz:AddText([[    If you want to make a pose from scratch,
+    you should start from this T-Pose IMP_Rig_TPose]])
 
     bz:AddDummy(1,10)
     bz:AddText([[    You can change gradient color in the settings.]])
 
+
+
+    E.btnTposeQSAT = bz:AddButton('IMP_Rig_TPose [QSAT SLOT 10]')
+            UI:Config(E.btnTposeQSAT, {
+                SameLine = false,
+                OnClick = function(e)
+                    if not Mods.QSAT then return end
+
+                    for _, AnimationSet in pairs(Mods.QSAT.BaseBodyAnimationSets) do
+                        Mods.QSAT.SkizzingSataning(
+                            AnimationSet,
+                            '88838fb7-4548-4471-a88c-f833f7aaedad',
+                            'db3f767f-c553-e9b2-3a2a-08037bd484a1',
+                            ''
+                        )
+                    end
+                end
+            })
 
 
     bz:AddSeparatorText('Garbo 2')
@@ -238,21 +224,21 @@ function BZAgreed()
 
 
 
-    E.btnUndo = bz:AddButton('Undo')
-            UI:Config(E.btnUndo, {
-                SameLine = false,
-                OnClick = function()
-                    BZHistoryUndo()
-                end
-            })
+    E.btnUndo = bz:AddButton('Undo|Shift+Z')
+        UI:Config(E.btnUndo, {
+            SameLine = false,
+            OnClick = function()
+                HistoryUndo()
+            end
+        })
 
 
 
-    E.btnRedo = bz:AddButton('Redo')
+    E.btnRedo = bz:AddButton('Redo|Shift+X')
         UI:Config(E.btnRedo, {
             SameLine = true,
             OnClick = function()
-                BZHistoryRedo()
+                HistoryRedo()
             end
         })
 
@@ -300,6 +286,8 @@ function BZAgreed()
     end
     collapseIK:AddSeparator()
 
+
+
     ---TBD: Temporal garbo
     local treeLockedRootM = additionalGroup:AddTree('Root_M_Locked')
 
@@ -309,17 +297,61 @@ function BZAgreed()
 
 
     local function negativeTbl(tbl)
-        return Vector.Mul(tbl, {-1, 0, 0, 0})
+        return Vector.Mul(tbl, {-1, -1, -1, 0})
     end
 
 
-    E.slLockedRootM = treeLRMRot:AddSlider('', 0, MAX_ROT, MIN_ROT, 1)
+
+    E.slLockedRootM = treeLRMRot:AddDrag('RootM', 0, MAX_ROT, MIN_ROT, 1)
         UI:Config(E.slLockedRootM, {
+            Components = 3,
             OnChange = function(e)
                 SetValueToVarAndTableIt('Root_M_Rot', e.Value)
                 SetValueToVarAndTableIt('Spine1_M_Rot', negativeTbl(e.Value))
+
+                SetVarValuesToSliders()
+
             end
         })
+
+
+
+    E.slLockedRootMH = treeLRMRot:AddDrag('RootMHips', 0, MAX_ROT, MIN_ROT, 1)
+        UI:Config(E.slLockedRootMH, {
+            Components = 3,
+            OnChange = function(e)
+                SetValueToVarAndTableIt('Root_M_Rot', e.Value)
+                SetValueToVarAndTableIt('Spine1_M_Rot', negativeTbl(e.Value))
+
+                local Value = e.Value
+                local c = {Value[1], -Value[2], -Value[3]}
+
+                SetValueToVarAndTableIt('Hip_L_Rot', c)
+
+                local Value = e.Value
+                local c = {-Value[1], Value[2], -Value[3]}
+
+                SetValueToVarAndTableIt('Hip_R_Rot', c)
+
+                SetVarValuesToSliders()
+
+            end
+        })
+
+
+
+    E.slLockedRootM = treeLRMRot:AddDrag('RootM', 0, MAX_ROT, MIN_ROT, 1)
+        UI:Config(E.slLockedRootM, {
+            Components = 3,
+            OnChange = function(e)
+                SetValueToVarAndTableIt('Root_M_Rot', e.Value)
+                SetValueToVarAndTableIt('Spine1_M_Rot', negativeTbl(e.Value))
+
+                SetVarValuesToSliders()
+
+            end
+        })
+
 
 
 
@@ -427,6 +459,7 @@ function BZAgreed()
                 Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(_GLL.SavedPoses))
             end
         })
+
 
 
     E.checkPoseUpd = bz:AddCheckbox('Blender to Bone Zone')

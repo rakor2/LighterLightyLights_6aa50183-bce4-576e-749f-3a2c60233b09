@@ -1,10 +1,11 @@
 GroupOrder = {
-    -- 'Bones',
-    -- 'BonesFacialDani',
     'BonesBody',
     'BonesFacial',
     'BonesTail',
     'BonesWings',
+    'BonesGen',
+    -- 'BonesTentacles',
+    'BonesHair',
 }
 
 CategoryOrder = {
@@ -38,6 +39,27 @@ CategoryOrder = {
     'WingShoulders',
     'WingElbows',
     'WingWrist',
+
+    'Tentacles',
+
+    'Genitals',
+
+    'SocketChest',
+    'SocketCrown',
+    'SocketFace',
+    'SocketEars',
+    'SocketNeck',
+    'SocketScapula',
+    'SocketTop',
+    'HairBun',
+    'HairDreads',
+    'HairStraightB',
+    'HairStraightC',
+    'HairBraids',
+    'HairPonytailMain',
+    'HairSide',
+
+
 }
 
 BodyBones = {
@@ -466,6 +488,231 @@ WingsBones = {
     },
 }
 
+
+HairBones = {
+    SocketBack = {
+        'Socket_Hair_Back_L',
+        'Socket_Hair_Back_M',
+        'Socket_Hair_Back_R',
+    },
+
+    SocketChest = {
+        'Socket_Hair_Chest1_L',
+        'Socket_Hair_Chest1_R',
+        'Socket_Hair_Chest2_L',
+        'Socket_Hair_Chest2_R',
+    },
+
+    SocketCrown = {
+        'Socket_Hair_Crown_L',
+        'Socket_Hair_Crown_M',
+        'Socket_Hair_Crown_R',
+
+        'Socket_Hair_CrownTop_L',
+        'Socket_Hair_CrownTop_M',
+        'Socket_Hair_CrownTop_R',
+    },
+
+    SocketFace = {
+        'Socket_Hair_Forehead_L',
+        'Socket_Hair_Forehead_M',
+        'Socket_Hair_Forehead_R',
+
+        'Socket_Hair_FrontTop_M',
+
+        'Socket_Hair_Sideburn_L',
+        'Socket_Hair_Sideburn_R',
+
+        'Socket_Hair_Temple_L',
+        'Socket_Hair_Temple_R',
+    },
+
+    SocketEars = {
+        'Socket_Hair_Ear_L',
+        'Socket_Hair_Ear_R',
+
+        'Socket_Hair_Ear_Adjust_L',
+        'Socket_Hair_Ear_Adjust_R',
+
+        'Socket_Hair_LowerEar_L',
+        'Socket_Hair_LowerEar_R',
+    },
+
+    SocketNeck = {
+        'Socket_Hair_Neck_L',
+        'Socket_Hair_Neck_R',
+        'Socket_Hair_Neck1_M',
+        'Socket_Hair_Neck2_L',
+        'Socket_Hair_Neck2_M',
+        'Socket_Hair_Neck2_R',
+    },
+
+    SocketScapula = {
+        'Socket_Hair_Scapula1_L',
+        'Socket_Hair_Scapula1_R',
+        'Socket_Hair_Scapula2_L',
+        'Socket_Hair_Scapula2_R',
+    },
+
+    SocketTop = {
+        'Socket_Hair_Top_M',
+        'Socket_Hair_Top1_L',
+        'Socket_Hair_Top1_R',
+        'Socket_Hair_Top2_L',
+        'Socket_Hair_Top2_R',
+    },
+
+    HairBun = {
+        'Hair_Bun_00_L',
+        'Hair_Bun_00_R',
+        'Hair_Bun_01_L',
+        'Hair_Bun_01_R',
+    },
+
+    HairDreads = {
+        'Hair_FemDreads_Long_A_0',
+        'Hair_FemDreads_Long_A_1',
+        'Hair_FemDreads_Long_A_2',
+        'Hair_FemDreads_Long_A_3',
+    },
+
+    HairStraightB = {
+        'Hair_FemStraight_Long_B_0',
+        'Hair_FemStraight_Long_B_1',
+        'Hair_FemStraight_Long_B_2',
+        'Hair_FemStraight_Long_B_3',
+    },
+
+    HairStraightC = {
+        'Hair_FemStraight_Long_C_0',
+        'Hair_FemStraight_Long_C_1',
+        'Hair_FemStraight_Long_C_2',
+        'Hair_FemStraight_Long_C_3',
+        'Hair_FemStraight_Long_C_4',
+        'Hair_FemStraight_Long_C_5',
+        'Hair_FemStraight_Long_C_6',
+        'Hair_FemStraight_Long_C_7',
+    },
+
+    HairBraids = {
+        'Hair_MenBraids_Long_B_0',
+        'Hair_MenBraids_Long_B_1',
+        'Hair_MenBraids_Long_B_2',
+        'Hair_MenBraids_Long_B_3',
+        'Hair_MenBraids_Long_B_4',
+    },
+
+    HairPonytailMain = {
+        'Hair_Ponytail_00_L',
+        'Hair_Ponytail_00_M',
+        'Hair_Ponytail_00_R',
+
+        'Hair_Ponytail_01_L',
+        'Hair_Ponytail_01_M',
+        'Hair_Ponytail_01_R',
+
+        'Hair_Ponytail_02_L',
+        'Hair_Ponytail_02_M',
+        'Hair_Ponytail_02_R',
+
+        'Hair_Ponytail_03_L',
+        'Hair_Ponytail_03_M',
+        'Hair_Ponytail_03_R',
+
+        'Hair_Ponytail_04_L',
+        'Hair_Ponytail_04_M',
+        'Hair_Ponytail_04_R',
+
+        'Hair_Ponytail_05_L',
+        'Hair_Ponytail_05_R',
+
+        'Hair_ponytail_0_L1',
+        'Hair_ponytail_0_R1',
+        'Hair_ponytail_1_L',
+        'Hair_ponytail_1_R',
+        'Hair_ponytail_2_L',
+        'Hair_ponytail_2_R',
+    },
+
+    HairSide = {
+        'Hair_Side_00_L',
+        'Hair_Side_00_R',
+        'Hair_Side_01_L',
+        'Hair_Side_01_R',
+        'Hair_Side_02_L',
+        'Hair_Side_02_R',
+        'Hair_Side_03_L',
+        'Hair_Side_03_R',
+        'Hair_Side_04_L',
+        'Hair_Side_04_R',
+    },
+}
+
+
+
+-- TentaclesBones = {
+--     Tentacles = {
+--     'Tentacle_10_BL',
+--     'Tentacle_09_BL',
+--     'Tentacle_08_BL',
+--     'Tentacle_07_BL',
+--     'Tentacle_06_BL',
+--     'Tentacle_05_BL',
+--     'Tentacle_04_BL',
+--     'Tentacle_03_BL',
+--     'Tentacle_02_BL',
+--     'Tentacle_01_BL',
+--     'Tentacle_00_BL',
+--     'Tentacle_10_FL',
+--     'Tentacle_09_FL',
+--     'Tentacle_08_FL',
+--     'Tentacle_07_FL',
+--     'Tentacle_06_FL',
+--     'Tentacle_05_FL',
+--     'Tentacle_04_FL',
+--     'Tentacle_03_FL',
+--     'Tentacle_02_FL',
+--     'Tentacle_01_FL',
+--     'Tentacle_00_FL',
+--     'tentacle_l',
+--     'Tentacle_10_BR',
+--     'Tentacle_09_BR',
+--     'Tentacle_08_BR',
+--     'Tentacle_07_BR',
+--     'Tentacle_06_BR',
+--     'Tentacle_05_BR',
+--     'Tentacle_04_BR',
+--     'Tentacle_03_BR',
+--     'Tentacle_02_BR',
+--     'Tentacle_01_BR',
+--     'Tentacle_00_BR',
+--     'Tentacle_10_FR',
+--     'Tentacle_09_FR',
+--     'Tentacle_08_FR',
+--     'Tentacle_07_FR',
+--     'Tentacle_06_FR',
+--     'Tentacle_05_FR',
+--     'Tentacle_04_FR',
+--     'Tentacle_03_FR',
+--     'Tentacle_02_FR',
+--     'Tentacle_01_FR',
+--     'Tentacle_00_FR',
+--     'tentacle_r',
+--     }
+-- }
+
+
+
+GenBones = {
+    Genitals = {
+        'Penis1_M',
+        'Penis2_M',
+        'Scrotum1_M',
+    }
+}
+
+
+
 Bones = {
     Bonez = {
         'eye_r',
@@ -477,6 +724,7 @@ Bones = {
         'Chest_M',
     }
 }
+
 
 BonesFacialDani = {
     MisAmora = {
@@ -504,4 +752,7 @@ AllBones = {
     BonesFacial = FacialBones,
     BonesTail = TailBones,
     BonesWings = WingsBones,
+    BonesGen = GenBones,
+    BonesTentacles = TentaclesBones,
+    BonesHair = HairBones,
 }

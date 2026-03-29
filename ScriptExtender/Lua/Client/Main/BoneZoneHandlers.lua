@@ -1,6 +1,10 @@
 local xd
 
 
+--- TBD: Lines
+--- Instead of parsing through the whole bone transform table, catch only specific changes or the latest ones
+--- Add I know what I'm doing setting to let people scale bones
+
 
 function getDummyOwnerUuid(entity)
     if entity then
@@ -39,7 +43,7 @@ end
 
 
 
-local TailVisualResources = {
+local TailSkeletonSpring = {
     ['63ac4e80-72f2-55bb-1fe7-eb8c7a7e020b'] = 'd31d958e-306a-c81c-50d2-5fd86749b48e', -- TIF_F_Tail_Base
     ['ffc0935c-375d-6f84-c13b-d545205f0301'] = '4c0140a2-6e9d-2aea-34a0-b4280e78b7d2', -- TIF_M_Tail_Base
     ['6906e3cc-7b8d-a860-dccf-9ad5c87f0e13'] = '0922a138-5ea8-1273-334f-80013492e0d3', -- TIF_FS_Tail_Base
@@ -52,8 +56,47 @@ local TailVisualResources = {
 
 
 
+local TentaclesSkeletonSpring = {
+    ['a81d5230-18e5-0a14-9732-021f235ef36a'] = '4ca070cb-c496-0c52-f401-b0ea969c4423',
+    ['9e88d017-d42d-ea31-dd1e-446e314db630'] = '4ca070cb-c496-0c52-f401-b0ea969c4423',
+    ['ff5c6d9d-16ef-5d97-5b01-ca07ec5c390f'] = '4ca070cb-c496-0c52-f401-b0ea969c4423',
+}
+
+
+
+local HairSkeletonSpring = {}
+
+
+
+function GetHairSprings()
+    local Origin = Ext.Entity.GetAllEntitiesWithComponent('Origin')
+
+    for _, origin in pairs(Origin) do
+        for attIndex, attachment in pairs(origin.Visual.Visual.Attachments) do
+            local vr = attachment.Visual.VisualResource
+            if vr then
+                if vr.Slot:lower():find('hair') then
+                    if vr.SkeletonResource ~= '' then
+                        local skRes = Ext.Resource.Get(vr.SkeletonResource, 'Skeleton')
+                        if skRes.SpringResourceID then
+                            if HairSkeletonSpring[vr.SkeletonResource] ~= nil then
+                                return DPrint('Hair already exists')
+                            else
+                                HairSkeletonSpring[vr.SkeletonResource] = skRes.SpringResourceID
+                                return HairSkeletonSpring
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+
+
 function DisableTailPhysics()
-    for resource, tailSpring in pairs(TailVisualResources) do
+    for resource, tailSpring in pairs(TailSkeletonSpring) do
         Ext.Resource.Get(resource, 'Skeleton').SpringResourceID = ''
     end
 end
@@ -61,8 +104,40 @@ end
 
 
 function EnableTailPhysics()
-    for resource, tailSpring in pairs(TailVisualResources) do
+    for resource, tailSpring in pairs(TailSkeletonSpring) do
         Ext.Resource.Get(resource, 'Skeleton').SpringResourceID = tailSpring
+    end
+end
+
+
+
+function DisableHairPhysics()
+    for skRes, springUuid in pairs(HairSkeletonSpring) do
+        Ext.Resource.Get(skRes, 'Skeleton').SpringResourceID = ''
+    end
+end
+
+
+
+function EnableHairPhysics()
+    for skRes, springUuid in pairs(HairSkeletonSpring) do
+        Ext.Resource.Get(skRes, 'Skeleton').SpringResourceID = springUuid
+    end
+end
+
+
+
+function DisableTentPhysics()
+    for skRes, springUuid in pairs(TentaclesSkeletonSpring) do
+        Ext.Resource.Get(skRes, 'Skeleton').SpringResourceID = ''
+    end
+end
+
+
+
+function EnableTentPhysics()
+    for skRes, springUuid in pairs(TentaclesSkeletonSpring) do
+        Ext.Resource.Get(skRes, 'Skeleton').SpringResourceID = springUuid
     end
 end
 
@@ -81,14 +156,16 @@ local IndexNameMap = {}
 local HasIndexNameMap = {}
 function GetGenomeVariablesIndicies(entity)
     if not HasIndexNameMap[entity] then
-        local VarsResource = entity.AnimationBlueprint.Resource.Blueprints[1].Variables
-        IndexNameMap[entity] = {}
+        if entity.AnimationBlueprint then
+            local VarsResource = entity.AnimationBlueprint.Resource.Blueprints[1].Variables
+            IndexNameMap[entity] = {}
 
-        for index, var in ipairs(VarsResource) do
-            IndexNameMap[entity][tostring(index)] = var.Name
+            for index, var in ipairs(VarsResource) do
+                IndexNameMap[entity][tostring(index)] = var.Name
+            end
+
+            HasIndexNameMap[entity] = true
         end
-
-        HasIndexNameMap[entity] = true
     end
     return IndexNameMap[entity]
 end
@@ -96,13 +173,15 @@ end
 
 
 function SetValueToGenomeVariable(entity, varName, value)
-    local VarsInstance = entity.AnimationBlueprint.Instance.Variables
-    for index, name in pairs(IndexNameMap[entity]) do
-        if VarsInstance[index] and name == varName then
-            local varType = VarsInstance[index].Type -- TBD: CHECK IK FEET BUG
+    if entity.AnimationBlueprint then
+        local VarsInstance = entity.AnimationBlueprint.Instance.Variables
+        for index, name in pairs(IndexNameMap[entity]) do
+            if VarsInstance[index] and name == varName then
+                local varType = VarsInstance[index].Type -- TBD: CHECK IK FEET BUG
 
-            VarsInstance[index] = {Type = varType, Value = value}
-            return VarsInstance[index]
+                VarsInstance[index] = {Type = varType, Value = value}
+                return VarsInstance[index]
+            end
         end
     end
 end
@@ -111,10 +190,12 @@ end
 
 function GetValueFromGenomeVariable(entity, varName)
     if varName then
-        local VarsInstance = entity.AnimationBlueprint.Instance.Variables
-        for index, name in pairs(IndexNameMap[entity]) do
-            if name == varName then
-                return VarsInstance[index]
+        if entity.AnimationBlueprint then
+            local VarsInstance = entity.AnimationBlueprint.Instance.Variables
+            for index, name in pairs(IndexNameMap[entity]) do
+                if name == varName then
+                    return VarsInstance[index]
+                end
             end
         end
     end
@@ -124,26 +205,35 @@ end
 
 _GLL.PoseValues = {}
 
+local rad = math.pi / 180
+local axes = {{1,0,0}, {0,1,0}, {0,0,1}}
+
+function EulerToQuat(hv)
+    local qx = Ext.Math.QuatRotateAxisAngle({0,0,0,1}, axes[1], hv[1] * rad)
+    local qy = Ext.Math.QuatRotateAxisAngle({0,0,0,1}, axes[2], hv[2] * rad)
+    local qz = Ext.Math.QuatRotateAxisAngle({0,0,0,1}, axes[3], hv[3] * rad)
+    return Ext.Math.QuatMul(Ext.Math.QuatMul(qx, qy), qz)
+end
+
+
+
 function SetValueToVarAndTableIt(varName, value)
-    local X = 1
-    local Y = 1
-    local newValue
     local characterUuid = getSelectedDummyOwnerUuid()
     local entity = getSelectedDummy()
     Utils:EnsureTable(_GLL.PoseValues, characterUuid, varName)
 
-
+    local newValue
     if varName:find('_Trans') or varName:find('_Scale') then
-        newValue = {value[1]/X,value[2]/X,value[3]/X}
+        newValue = {value[1], value[2], value[3]}
+        _GLL.PoseValues[characterUuid][varName]['HumanValue'] = value
     else
-        local Quats = Math.EulerToQuats({value[1]/X,value[2]/X,value[3]/X})
-        _GLL.PoseValues[characterUuid][varName]['Quats'] = Quats
-        newValue = Quats
+        local q = EulerToQuat(value)
+        _GLL.PoseValues[characterUuid][varName]['Quats']      = q
+        _GLL.PoseValues[characterUuid][varName]['HumanValue'] = value
+        newValue = q
     end
 
-    _GLL.PoseValues[characterUuid][varName]['HumanValue'] = value
     SetValueToGenomeVariable(entity, varName, newValue)
-
     _GLL.States.bzLastModifiedVar = varName
 end
 
@@ -163,7 +253,11 @@ function SetVarValuesToSliders()
                         local sl = slTable[varName .. '_' .. i]
                         if sl then
                             if poseData and poseData.HumanValue then
-                                sl.Value = {poseData.HumanValue[i], 0, 0, 0}
+                                if postfix == ('_Trans' or '_Scale') then
+                                    sl.Value = {poseData.HumanValue[i]*100, 0, 0, 0}
+                                else
+                                    sl.Value = {poseData.HumanValue[i], 0, 0, 0}
+                                end
                             else
                                 sl.Value = {defaultValue, 0, 0, 0}
                             end
@@ -177,6 +271,8 @@ function SetVarValuesToSliders()
     restoreGroup(E.slBZ, '_Trans', 0)
     restoreGroup(E.slBZ, '_Rot',   0)
     restoreGroup(E.slBZ, '_Scale', 1)
+
+
 end
 
 
@@ -249,7 +345,7 @@ function ResetAllBones()
             for boneGroupName, BoneCategories in pairs(AllBones) do
                 for boneCategory, Bones in pairs(BoneCategories) do
                     for _, boneName in pairs(Bones) do
-                        BZCaptureOldValue(uuid, boneName .. postfix)
+                        CaptureOldValue(uuid, boneName .. postfix)
                     end
                 end
             end
@@ -262,15 +358,37 @@ function ResetAllBones()
             for boneCategory, Bones in pairs(BoneCategories) do
                 for _, boneName in pairs(Bones) do
                     local varName = boneName .. postfix
-                    value = varName:find('_Scale') and {1,1,1,0} or {0,0,0,0}
-                    SetValueToVarAndTableIt(varName, value)
+                    if varName:find('_Scale') then
+                        value = {1,1,1,0}
+                        SetValueToVarAndTableIt(varName, value)
+                    elseif varName:find('_Rot') then
+                        Utils:EnsureTable(_GLL.PoseValues, uuid or getSelectedDummyOwnerUuid(), varName)
+                        local u = uuid or getSelectedDummyOwnerUuid()
+                        _GLL.PoseValues[u][varName] = {Quats = {0,0,0,1}, HumanValue = {0,0,0}}
+                        SetValueToGenomeVariable(getSelectedDummy(), varName, {0,0,0,1})
+                    else
+                        value = {0,0,0,0}
+                        SetValueToVarAndTableIt(varName, value)
+                    end
                 end
             end
         end
     end
     SetVarValuesToSliders()
-    if uuid then BZHistorySnapshotIK() end
+    if uuid then HistorySnapshotIK() end
 end
+
+
+
+--[[
+x = Ext.Template.GetAllRootTemplates('Scenery')
+for k, v in pairs(x) do
+    if v.TemplateType == 'scenery' then
+        v.SeeThrough = false
+        v.CastShadow = true
+    end
+end
+]]--
 
 
 
@@ -283,7 +401,7 @@ function ResetBonesForCategory(boneGroupName, boneCategory)
     if uuid then
         for _, postfix in pairs(Postfixes) do
             for _, boneName in pairs(Bones) do
-                BZCaptureOldValue(uuid, boneName .. postfix)
+                CaptureOldValue(uuid, boneName .. postfix)
             end
         end
     end
@@ -291,12 +409,19 @@ function ResetBonesForCategory(boneGroupName, boneCategory)
     for _, postfix in pairs(Postfixes) do
         for _, boneName in pairs(Bones) do
             local varName = boneName .. postfix
-            local value = varName:find('_Scale') and {1,1,1,0} or {0,0,0,0}
-            SetValueToVarAndTableIt(varName, value)
+            if varName:find('_Rot') then
+                local u = uuid or getSelectedDummyOwnerUuid()
+                Utils:EnsureTable(_GLL.PoseValues, u, varName)
+                _GLL.PoseValues[u][varName] = {Quats = {0,0,0,1}, HumanValue = {0,0,0}}
+                SetValueToGenomeVariable(getSelectedDummy(), varName, {0,0,0,1})
+            else
+                local value = varName:find('_Scale') and {1,1,1,0} or {0,0,0,0}
+                SetValueToVarAndTableIt(varName, value)
+            end
         end
     end
     SetVarValuesToSliders()
-    if uuid then BZHistorySnapshotIK() end
+    if uuid then HistorySnapshotIK() end
 end
 
 
@@ -310,7 +435,7 @@ function ResetBonesForGroup(boneGroupName)
         for _, postfix in pairs(Postfixes) do
             for boneCategory, Bones in pairs(BoneCategories) do
                 for _, boneName in pairs(Bones) do
-                    BZCaptureOldValue(uuid, boneName .. postfix)
+                    CaptureOldValue(uuid, boneName .. postfix)
                 end
             end
         end
@@ -320,13 +445,20 @@ function ResetBonesForGroup(boneGroupName)
         for boneCategory, Bones in pairs(BoneCategories) do
             for _, boneName in pairs(Bones) do
                 local varName = boneName .. postfix
-                local value = varName:find('_Scale') and {1,1,1,0} or {0,0,0,0}
-                SetValueToVarAndTableIt(varName, value)
+                if varName:find('_Rot') then
+                    local u = uuid or getSelectedDummyOwnerUuid()
+                    Utils:EnsureTable(_GLL.PoseValues, u, varName)
+                    _GLL.PoseValues[u][varName] = {Quats = {0,0,0,1}, HumanValue = {0,0,0}}
+                    SetValueToGenomeVariable(getSelectedDummy(), varName, {0,0,0,1})
+                else
+                    local value = varName:find('_Scale') and {1,1,1,0} or {0,0,0,0}
+                    SetValueToVarAndTableIt(varName, value)
+                end
             end
         end
     end
     SetVarValuesToSliders()
-    if uuid then BZHistorySnapshotIK() end
+    if uuid then HistorySnapshotIK() end
 end
 
 
@@ -362,13 +494,13 @@ end
 
 
 
-MAX_TRANS = 1
+MAX_TRANS = 300
 MIN_TRANS = -MAX_TRANS
 
 MAX_ROT = 180
 MIN_ROT = -MAX_ROT
 
-MAX_SCALE = 5
+MAX_SCALE = 500
 MIN_SCALE = 0
 
 
@@ -502,6 +634,10 @@ function SetSymmetry(characterUuid, varName, axisIndex, value)
 
     -- DPrint('isFacial: %s, isEye: %s, invert: %s', isFacial, isEye, invert)
 
+    if mirrorVar:find('_Trans') or mirrorVar:find('_Scale') then
+        value = value/100
+    end
+
     _GLL.PoseValues[characterUuid][mirrorVar]['HumanValue'][axisIndex] = value
     SetValueToVarAndTableIt(mirrorVar, _GLL.PoseValues[characterUuid][mirrorVar]['HumanValue'])
 
@@ -511,7 +647,7 @@ end
 
 
 
-local SliderConfigs = {
+SliderConfigs = {
     X  = {label = 'Up/Down',    type = 'Translate', postfix = '_Trans', index = 1, min = MIN_TRANS, max = MAX_TRANS, default = 0},
     Y  = {label = 'Forw/Backw', type = 'Translate', postfix = '_Trans', index = 2, min = MIN_TRANS, max = MAX_TRANS, default = 0},
     Z  = {label = 'Left/Right', type = 'Translate', postfix = '_Trans', index = 3, min = MIN_TRANS, max = MAX_TRANS, default = 0},
@@ -528,34 +664,56 @@ local SliderConfigs = {
 
 
 function createBoneSlider(parent, boneName, axis)
-    local Config = SliderConfigs[axis]
-    local slider = parent:AddDrag('', Config.default, Config.min, Config.max)
+    local Config  = SliderConfigs[axis]
+    local slider  = parent:AddDrag('', Config.default, Config.min, Config.max)
     local varName = boneName .. Config.postfix
 
-    E.slBZ[boneName .. Config.postfix .. '_' .. Config.index] = slider
-        UI:Config(slider, {
-            OnChange = function(e)
-                if not _GLL.States.inPhotoMode then slider.Value = {0,0,0,0} return end
+    E.slBZ[varName .. '_' .. Config.index] = slider
 
-                local characterUuid = getSelectedDummyOwnerUuid()
-                PopulateWithDefaultValues(characterUuid, varName)
+    UI:Config(slider, {
+        OnChange = function(e)
+            if not _GLL.States.inPhotoMode then slider.Value = {0,0,0,0} return end
 
-                -- Capture old value before mutation (only on first OnChange of this drag)
-                BZCaptureOldValue(characterUuid, varName)
+            local characterUuid = getSelectedDummyOwnerUuid()
+            PopulateWithDefaultValues(characterUuid, varName)
+            CaptureOldValue(characterUuid, varName)
 
-                _GLL.PoseValues[characterUuid][varName]['HumanValue'][Config.index] = e.Value[1]
+            if Config.postfix == '_Trans' or Config.postfix == '_Scale' then
+                --- Translation / Scale: keep old direct path (no gimbal issue here)
+                local humanVal = Config.postfix == '_Trans'
+                    and e.Value[1]/100
+                    or  e.Value[1]
+                _GLL.PoseValues[characterUuid][varName]['HumanValue'][Config.index] = humanVal
                 SetValueToVarAndTableIt(varName, _GLL.PoseValues[characterUuid][varName]['HumanValue'])
 
                 if _GLL.States.bzSymmetry then
                     SetSymmetry(characterUuid, varName, Config.index, e.Value[1])
                 end
+            else
+                --- Rotation: rebuild quat from all three slider values.
+                --- HumanValue is source of truth, quat is derived from it.
+                --- No gimbal lock because each axis is an independent quaternion
+                --- multiplied in order, not accumulated Euler.
+                local hv = _GLL.PoseValues[characterUuid][varName]['HumanValue']
+                hv[Config.index] = e.Value[1]
 
-                Utils:AntiSpam(400, function()
-                    DPrint('BONE SNAPSHOTTED')
-                    BZHistorySnapshot(characterUuid, varName)
-                end)
+                local newQuat = EulerToQuat(hv)
+
+                _GLL.PoseValues[characterUuid][varName]['Quats'] = newQuat
+                SetValueToGenomeVariable(getSelectedDummy(), varName, newQuat)
+                _GLL.States.bzLastModifiedVar = varName
+
+                if _GLL.States.bzSymmetry then
+                    SetSymmetry(characterUuid, varName, Config.index, e.Value[1])
+                end
             end
-        })
+
+            Utils:AntiSpam(400, function()
+                DPrint('BONE SNAPSHOTTED')
+                HistorySnapshot(characterUuid, varName)
+            end)
+        end
+    })
 
     return slider, varName, axis, Config.index
 end
@@ -565,7 +723,7 @@ end
 local AxesNames = {
     Translate = {'X','Y','Z'},
     Rotation  = {'RX','RY','RZ'},
-    Scale     = {'SX','SY','SZ'},
+    -- Scale     = {'SX','SY','SZ'}, --- Disabled due to Larian being Larian
 }
 
 
@@ -611,20 +769,34 @@ function CreateControls2(boneGroupName, boneCategory, boneName)
 
             createResetButton(tree, slider, function()
                 local characterUuid = getSelectedDummyOwnerUuid()
-                local Value = _GLL.PoseValues[characterUuid][varName]['HumanValue']
+                CaptureOldValue(characterUuid, varName)
 
-                BZCaptureOldValue(characterUuid, varName)
+                if varName:find('_Rot') then
+                    Utils:EnsureTable(_GLL.PoseValues, characterUuid, varName)
+                    local hv = _GLL.PoseValues[characterUuid][varName]['HumanValue'] or {0, 0, 0}
+                    hv[axisIndex] = 0
+                    slider.Value = {0, 0, 0, 0}
 
-                Value[axisIndex] = defaultValue
-                slider.Value = {defaultValue, 0, 0, 0}
+                    local newQuat = EulerToQuat(hv)
 
-                SetValueToVarAndTableIt(varName, {Value[1], Value[2], Value[3]})
+                    _GLL.PoseValues[characterUuid][varName]['Quats']      = newQuat
+                    _GLL.PoseValues[characterUuid][varName]['HumanValue'] = hv
+                    SetValueToGenomeVariable(getSelectedDummy(), varName, newQuat)
+                else
+                    local Value = _GLL.PoseValues[characterUuid] and
+                                  _GLL.PoseValues[characterUuid][varName] and
+                                  _GLL.PoseValues[characterUuid][varName]['HumanValue'] or
+                                  {defaultValue, defaultValue, defaultValue}
+                    Value[axisIndex] = defaultValue
+                    slider.Value = {defaultValue, 0, 0, 0}
+                    SetValueToVarAndTableIt(varName, {Value[1], Value[2], Value[3]})
+                end
 
                 if _GLL.States.bzSymmetry then
                     SetSymmetry(characterUuid, varName, axisIndex, defaultValue)
                 end
 
-                BZHistorySnapshot(characterUuid, varName)
+                HistorySnapshot(characterUuid, varName)
             end)
 
             tree:AddText(SliderConfigs[axis].label).SameLine = true
@@ -1070,7 +1242,7 @@ function ApplyProportionalIK(chain, axisDelta, axisIndex)
                     {CurrentValue.HumanValue[1], CurrentValue.HumanValue[2], CurrentValue.HumanValue[3]} or {0, 0, 0}
 
         -- Capture old value before mutation
-        BZCaptureOldValue(characterUuid, varName)
+        CaptureOldValue(characterUuid, varName)
 
         Value[axisIndex] = Value[axisIndex] + axisDelta * influence
         SetValueToVarAndTableIt(varName, Value)
@@ -1095,7 +1267,7 @@ local function createIKSliders(parent, axisIndex, axisLabel, Value, fn)
             fn(delta, axisIndex)
 
             Utils:AntiSpam(400, function()
-                BZHistorySnapshotIK()
+                HistorySnapshotIK()
             end)
         end
     })
@@ -1220,6 +1392,7 @@ end
 
 
 function SaveAttachState(character)
+    if not _GLL.States.inPhotoMode then return end
     local uuid = getDummyOwnerUuid(character)
     _GLL.AttachState[uuid] = {
         mainChecked = E.checkAttachies.Checked,
@@ -1271,7 +1444,7 @@ _GLL.BZOldValues    = _GLL.BZOldValues    or {}
 
 
 
-function BZCaptureOldValue(uuid, varName)
+function CaptureOldValue(uuid, varName)
     _GLL.BZOldValues[uuid] = _GLL.BZOldValues[uuid] or {}
     if _GLL.BZOldValues[uuid][varName] then return end
 
@@ -1286,7 +1459,7 @@ end
 
 
 
-function BZHistorySnapshot(uuid, varName)
+function HistorySnapshot(uuid, varName)
     if not uuid or not varName then return end
 
     local oldValues = _GLL.BZOldValues[uuid]
@@ -1326,8 +1499,7 @@ end
 
 
 
-
-function BZHistorySnapshotIK()
+function HistorySnapshotIK()
     local uuid = getSelectedDummyOwnerUuid()
     if not uuid then return end
 
@@ -1367,7 +1539,7 @@ end
 
 
 
-local function BZApplyDiff(uuid, entry, direction)
+local function ApplyDiff(uuid, entry, direction)
     local diffs = entry.varName and {entry} or entry
 
     for _, diff in ipairs(diffs) do
@@ -1381,7 +1553,7 @@ end
 
 
 
-function BZHistoryUndo()
+function HistoryUndo()
     if not _GLL.States.inPhotoMode then return end
     if Utils.antiSpam then DPrint([[CAN'T DO, Wating for snapshot]]) return end
 
@@ -1394,14 +1566,14 @@ function BZHistoryUndo()
     local index = _GLL.BZHistoryIndex[uuid]
     if index < 1 then DPrint('Nothing to undo') return end
 
-    BZApplyDiff(uuid, _GLL.BZHistory[uuid][index], 'undo')
+    ApplyDiff(uuid, _GLL.BZHistory[uuid][index], 'undo')
     _GLL.BZHistoryIndex[uuid] = index - 1
     DPrint('Undo (' .. _GLL.BZHistoryIndex[uuid] .. '/' .. #_GLL.BZHistory[uuid] .. ')')
 end
 
 
 
-function BZHistoryRedo()
+function HistoryRedo()
     if not _GLL.States.inPhotoMode then return end
     if Utils.antiSpam then DPrint([[CAN'T DO, Wating for snapshot]]) return end
 
@@ -1417,6 +1589,6 @@ function BZHistoryRedo()
     if index >= #history then DPrint('Nothing to redo') return end
 
     _GLL.BZHistoryIndex[uuid] = index + 1
-    BZApplyDiff(uuid, history[_GLL.BZHistoryIndex[uuid]], 'redo')
+    ApplyDiff(uuid, history[_GLL.BZHistoryIndex[uuid]], 'redo')
     DPrint('Redo (' .. _GLL.BZHistoryIndex[uuid] .. '/' .. #history .. ')')
 end
