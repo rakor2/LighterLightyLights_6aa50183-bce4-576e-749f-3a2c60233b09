@@ -144,8 +144,13 @@ end
 
 
 function LoadPoseList()
-    if Ext.IO.LoadFile('LightyLights/Poses/_POSE_LIST.json') then
-        _GLL.SavedPoses = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/Poses/_POSE_LIST.json'))
+    local PoseList = Ext.IO.LoadFile('LightyLights/Poses/_POSE_LIST.json')
+    if PoseList then
+        local parsed = Ext.Json.Parse(PoseList)
+        _GLL.SavedPoses = {}
+        for catName, poses in pairs(parsed) do
+            _GLL.SavedPoses[catName .. ' | Local'] = poses
+        end
     end
 end
 LoadPoseList()
@@ -709,7 +714,7 @@ function createBoneSlider(parent, boneName, axis)
             end
 
             Utils:AntiSpam(400, function()
-                DPrint('BONE SNAPSHOTTED')
+                DDebug('BONE SNAPSHOTTED')
                 HistorySnapshot(characterUuid, varName)
             end)
         end
@@ -720,11 +725,11 @@ end
 
 
 
-local AxesNames = {
+AxesNames = {
     Translate = {'X','Y','Z'},
     Rotation  = {'RX','RY','RZ'},
-    -- Scale     = {'SX','SY','SZ'}, --- Disabled due to Larian being Larian
 }
+
 
 
 
@@ -899,13 +904,14 @@ end
 
 
 
-function ResetBoneZoneColors()
+function ResetBoneZoneTab()
     Imgui.ClearChildren(E.boneZone)
 
     ---TBD: Should have put all elements to a sub table smhing my head
     E.btnPose          = nil
     E.btnX2            = nil
     E.btnUpd           = nil
+    E.btnExp           = nil
     E.slBZ             = nil
     E.collapseGroup    = nil
     E.treeCategory     = nil
@@ -1008,8 +1014,21 @@ function AddPoseToList(catName, poseName)
     end
 
     table.insert(_GLL.SavedPoses[catName], poseName)
-    Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(_GLL.SavedPoses))
+    StripAndSavePoseList()
     return true
+end
+
+
+
+local function StripAndSavePoseList()
+    local ToSave = {}
+    for catName, poses in pairs(_GLL.SavedPoses) do
+        local stripCatName = catName:gsub(' | Local$', ''):gsub(' | Shared$', '')
+        if not _GLL.ModPosePaths or not next(_GLL.ModPosePaths) or not catName:find('| Shared') then
+            ToSave[stripCatName] = poses
+        end
+    end
+    Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(ToSave))
 end
 
 
@@ -1021,23 +1040,24 @@ local function DeleteCategoryOrPose(typeThing, catName, poseName)
         local index = table.find(_GLL.SavedPoses[catName], poseName)
         table.remove(_GLL.SavedPoses[catName], index)
     end
-    Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(_GLL.SavedPoses))
+    StripAndSavePoseList()
 end
 
 
 
-local SaveCategories = {}
+SaveCategories = {}
 local IDCat = {}
 local IDPoses = {}
+local Window = {}
 
 function CreateCategoryTree(catName)
-    E.btnX = E.btnX or {}
-    E.catTree = E.catTree or {}
-
+    local stripCatName = catName:gsub(' | Local$', ''):gsub(' | Shared$', '')
+    IDCat[catName] = IDCat[catName] or {}
     if E.catTree[catName] then return end
 
     E.btnX[catName] = E.savedPoseParent:AddButton('x')
-    IDCat[catName] = UI:CreateConfirmButton(
+    local xd = Ext.Math.Random(1, 100000)
+    IDCat[catName][xd] = UI:CreateConfirmButton(
         E.savedPoseParent,
         E.btnX[catName],
         'x',
@@ -1051,7 +1071,7 @@ function CreateCategoryTree(catName)
                     E.btnPose[poseName]:Destroy()
                     E.btnX2[poseName]:Destroy()
                     E.btnPose[poseName] = nil
-                    E.btnX2[poseName] = nil
+                    E.btnX2[poseName]   = nil
                 end
                 IDPoses[catName] = nil
             end
@@ -1060,16 +1080,190 @@ function CreateCategoryTree(catName)
 
             E.catTree[catName]:Destroy()
             E.btnX[catName]:Destroy()
+            E.btnExp[catName]:Destroy()
             E.catTree[catName] = nil
-            IDCat[catName] = nil
+            E.btnExp[catName] = nil
+            E.btnX[catName]    = nil
+
+            IDCat[catName][xd] = nil
         end
     )
 
         UI:Config(E.btnX[catName], {
             OnClick = function(e)
-                UI:Confirm(E.btnX[catName], IDCat[catName])
+                UI:Confirm(E.btnX[catName], IDCat[catName][xd])
             end
         })
+
+
+
+    E.btnExp[catName] = E.savedPoseParent:AddButton('e')
+    E.btnExp[catName].SameLine = true
+
+    if catName:find('Shared') then E.btnExp[catName].Disabled = true end
+
+    local xd = Ext.Math.Random(1, 100000)
+
+    IDCat[catName][xd] = UI:CreateConfirmButton(
+        E.savedPoseParent,
+        E.btnExp[catName],
+        'e',
+        function()
+            if Window[catName] then return end
+            Window[catName] = Window[catName] or {}
+
+            Window[catName] = Ext.IMGUI.NewWindow('Export' .. ' ' .. stripCatName .. ' ' .. '##' .. xd)
+            local w = Window[catName]
+
+            w.Open = true
+            w.Closeable = true
+            w:SetSize({500, 500})
+            w.AlwaysAutoResize = true
+            ApplyStyle(w, StyleSettings.selectedStyle)
+
+            w.OnClose = function(e)
+                Window[catName] = nil
+            end
+
+            local treelsx = w:AddSeparatorText('Generate folder and meta.lsx')
+            local txtAgree = w:AddText([[Note that you agreed your poses can be freely modified and shared]])
+
+            E.inputPackAuthor = w:AddInputText('Author')
+            E.inputPackAuthor.CharsNoBlank = true
+
+
+            E.inputPackName   = w:AddInputText('Pak name')
+            E.inputPackName.CharsNoBlank = true
+
+
+            E.inputPackVersion = w:AddInputText('Version')
+            E.inputPackVersion.Text = '1.0.0.0'
+            E.inputPackVersion.CharsDecimal = true
+            E.inputPackVersion.CharsNoBlank = true
+
+
+            --- Thx, Mr.Clanker for stings and math FeelsStrongMan
+            --- I could just ask scripting nerds, but I'm shy :)
+            E.btnGenPack = w:AddButton('Export')
+                UI:Config(E.btnGenPack, {
+                    OnClick = function()
+                        local author  = E.inputPackAuthor.Text
+                        local name    = E.inputPackName.Text
+                        local version = E.inputPackVersion.Text
+
+                        if author == '' then return DPrint('Author is required') end
+                        if name == '' then return DPrint('Name is required') end
+
+                        local uuid = string.format('%08x-%04x-%04x-%04x-%012x',
+                            Ext.Math.Random(0, 0xFFFFFFFF),
+                            Ext.Math.Random(0, 0xFFFF),
+                            Ext.Math.Random(0, 0xFFFF),
+                            Ext.Math.Random(0, 0xFFFF),
+                            Ext.Math.Random(0, 0xFFFFFFFFFFFF)
+                        )
+
+                        local maj, min, pat, bld = version:match('(%d+)%.(%d+)%.(%d+)%.(%d+)')
+                        maj = tonumber(maj) or 1
+                        min = tonumber(min) or 0
+                        pat = tonumber(pat) or 0
+                        bld = tonumber(bld) or 0
+                        local version64 = maj * (2^55) + min * (2^47) + pat * (2^31) + bld
+
+
+                        --- Ok, this is easy, I could learn it myself, smh
+                        local xml = string.format([[<?xml version="1.0" encoding="UTF-8"?>
+        <save>
+            <version major="4" minor="8" revision="0" build="200"/>
+            <region id="Config">
+                <node id="root">
+                    <children>
+                        <node id="Conflicts"/>
+                        <node id="Dependencies">
+                            <children>
+                            </children>
+                        </node>
+                        <node id="ModuleInfo">
+                            <attribute id="Author" type="LSString" value="%s"/>
+                            <attribute id="CharacterCreationLevelName" type="FixedString" value=""/>
+                            <attribute id="Description" type="LSString" value=""/>
+                            <attribute id="FileSize" type="uint64" value="0"/>
+                            <attribute id="Folder" type="LSString" value="%s"/>
+                            <attribute id="LobbyLevelName" type="FixedString" value=""/>
+                            <attribute id="MD5" type="LSString" value=""/>
+                            <attribute id="MenuLevelName" type="FixedString" value=""/>
+                            <attribute id="Name" type="LSString" value="%s"/>
+                            <attribute id="NumPlayers" type="uint8" value="4"/>
+                            <attribute id="PhotoBooth" type="FixedString" value=""/>
+                            <attribute id="PublishHandle" type="uint64" value="0"/>
+                            <attribute id="StartupLevelName" type="FixedString" value=""/>
+                            <attribute id="UUID" type="FixedString" value="%s"/>
+                            <attribute id="Version64" type="int64" value="%d"/>
+                            <children>
+                                <node id="PublishVersion">
+                                    <attribute id="Version64" type="int64" value="%d"/>
+                                </node>
+                                <node id="Scripts"/>
+                            </children>
+                        </node>
+                    </children>
+                </node>
+            </region>
+        </save>]], author, name, name, uuid, version64, version64)
+
+
+
+                        Ext.IO.SaveFile('LightyLights/Poses/!1a_Generated/'.. name .. '/Mods/' .. name .. '/meta.lsx', xml)
+
+
+                        local ExportPoseList = {}
+
+                        ExportPoseList[stripCatName] = _GLL.SavedPoses[catName]
+
+                        for _, poseName in pairs(_GLL.SavedPoses[catName]) do
+                            if poseName ~= '' then
+                                local Pose = Ext.IO.LoadFile('LightyLights/Poses/'.. stripCatName .. '/' .. poseName .. '.json')
+                                if Pose then
+                                    Ext.IO.SaveFile('LightyLights/Poses/!1a_Generated/' .. name ..
+                                        '/Mods/' .. name .. '/' .. poseName .. '.json', Pose)
+                                end
+                            end
+                        end
+
+                        Ext.IO.SaveFile('LightyLights/Poses/!1a_Generated/' .. name ..
+                            '/Mods/' .. name .. '/_POSE_LIST.json', Ext.Json.Stringify(ExportPoseList))
+                        ExportPoseList = {}
+                    end
+                })
+
+        local collapseGuide = w:AddCollapsingHeader('How to use')
+        collapseGuide.DefaultOpen = true
+        local txt = collapseGuide:AddText([[Enter author name.
+Enter pose pak name (.pak name, pack name is category name).
+Do not use spaces, special characters, only letters and _.
+Enter version with dots, i.e., 2.3.6.0 or 6.6.6.6.
+Export.
+In windows press Win + R.
+In the opened lil window paste this path.]])
+        local inputGuide = collapseGuide:AddInputText('')
+        inputGuide.Text = [[%LocalAppData%\Larian Studios\Baldur's Gate 3\Script Extender\LightyLights\Poses\!1a_Generated\]]
+        local txt = collapseGuide:AddText([[Find your saved pose pack.
+Pak it with LSLib or Multitool.
+For example you have !1a_Generated/DaniSexGoddes/Mods/DaniSexGoddes/meta.lsx,
+in LSLib choose first DaniSexGoddes folder or
+in Multitool drag and drop first DaniSexGoddes folder as well.
+Share the pak if LSLib or archive if Multitool.
+Paks have to be placed below Lighty Lights.]])
+        end
+    )
+
+        UI:Config(E.btnExp[catName], {
+            OnClick = function(e)
+                UI:Confirm(E.btnExp[catName], IDCat[catName][xd])
+            end
+        })
+
+
+
 
     E.catTree[catName] = E.savedPoseParent:AddTree(catName)
         UI:Config(E.catTree[catName], { SameLine = true })
@@ -1081,14 +1275,24 @@ end
 
 
 
+local function localPosePath(catName, poseName)
+    local folder = catName:gsub(' | Local$', ''):gsub(' | Shared$', '')
+    return string.format('LightyLights/Poses/%s/%s.json', folder, poseName)
+end
+
+
+
 function CreatePoseButton(catName, poseName)
     if E.btnPose[poseName] then return false end
     if not E.catTree and not E.catTree[catName] then return fasle end
 
-    E.btnX2[poseName] = E.catTree[catName]:AddButton('x')
-
     IDPoses[catName] = IDPoses[catName] or {}
-    IDPoses[catName][poseName] = UI:CreateConfirmButton(
+    IDPoses[catName][poseName] = IDPoses[catName][poseName] or {}
+
+    E.btnX2[poseName] = E.catTree[catName]:AddButton('x')
+    E.btnX2[poseName].IDContext = Ext.Math.Random(1,10000)
+    local xd = Ext.Math.Random(1,10000)
+    IDPoses[catName][poseName][xd] = UI:CreateConfirmButton(
         E.catTree[catName],
         E.btnX2[poseName],
         'x',
@@ -1107,19 +1311,33 @@ function CreatePoseButton(catName, poseName)
 
         UI:Config(E.btnX2[poseName], {
             OnClick = function(e)
-                UI:Confirm(E.btnX2[poseName], IDPoses[catName][poseName])
+                UI:Confirm(E.btnX2[poseName], IDPoses[catName][poseName][xd])
             end
         })
 
+
     E.btnUpd[poseName] = E.catTree[catName]:AddButton('o')
+    E.btnUpd[poseName].SameLine = true
+    local xd = Ext.Math.Random(1,10000)
+    IDPoses[catName][poseName][xd] = UI:CreateConfirmButton(
+        E.catTree[catName],
+        E.btnUpd[poseName],
+        'o',
+        function()
+            Ext.IO.SaveFile(localPosePath(catName, poseName),
+                Ext.Json.Stringify(_GLL.PoseValues[getSelectedDummyOwnerUuid()]))
+        end
+    )
+
         UI:Config(E.btnUpd[poseName], {
             SameLine = true,
             OnClick = function(e)
-                Ext.IO.SaveFile('LightyLights/Poses/' .. poseName .. '.json',
-                    Ext.Json.Stringify(_GLL.PoseValues[getSelectedDummyOwnerUuid()]))
+                UI:Confirm(E.btnUpd[poseName], IDPoses[catName][poseName][xd])
             end
         })
 
+
+    _GLL.currentPose = nil
 
     E.btnPose[poseName] = E.catTree[catName]:AddButton(poseName)
         UI:Config(E.btnPose[poseName], {
@@ -1130,8 +1348,18 @@ function CreatePoseButton(catName, poseName)
 
                 ResetAllBones()
 
-                local SavedPose = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/Poses/' .. poseName .. '.json'))
+                local PoseFile
+                if _GLL.ModPosePaths[poseName] then
+                    PoseFile = Ext.IO.LoadFile(_GLL.ModPosePaths[poseName], 'data')
+                else
+                    PoseFile = Ext.IO.LoadFile(localPosePath(catName, poseName))
+                        or Ext.IO.LoadFile('LightyLights/Poses/' .. poseName .. '.json')
+                end
+                if not PoseFile then return DPrint('Pose file not found: ' .. poseName) end
+                local SavedPose = Ext.Json.Parse(PoseFile)
                 _GLL.PoseValues[getSelectedDummyOwnerUuid()] = SavedPose
+
+                _GLL.currentPose = poseName
 
                 SetVarValuesToSliders()
                 SetValuesToVars()
@@ -1157,10 +1385,12 @@ function FilterPoses(searchText)
                     if searchText == '' or poseMatch then
                         E.btnPose[poseName].Visible = true
                         E.btnX2[poseName].Visible = true
+                        E.btnUpd[poseName].Visible = true
                         hasFilteredPose = true
                     else
                         E.btnPose[poseName].Visible = false
                         E.btnX2[poseName].Visible = false
+                        E.btnUpd[poseName].Visible = false
                     end
                 end
             end
@@ -1170,9 +1400,11 @@ function FilterPoses(searchText)
             if searchText == '' or hasFilteredPose then
                 E.catTree[catName].Visible = true
                 E.btnX[catName].Visible = true
+                E.btnExp[catName].Visible = true
             else
                 E.catTree[catName].Visible = false
                 E.btnX[catName].Visible = false
+                E.btnExp[catName].Visible = false
             end
         end
     end
@@ -1592,3 +1824,37 @@ function HistoryRedo()
     ApplyDiff(uuid, history[_GLL.BZHistoryIndex[uuid]], 'redo')
     DPrint('Redo (' .. _GLL.BZHistoryIndex[uuid] .. '/' .. #history .. ')')
 end
+
+
+
+--- MCM yoink
+_GLL.ModPosePaths = _GLL.ModPosePaths or {}
+
+function getJsons()
+    for _, modUUID in pairs(Ext.Mod.GetLoadOrder()) do
+        local mod = Ext.Mod.GetMod(modUUID)
+        local modDir = mod.Info.Directory
+        local configPath = string.format("Mods/%s/_POSE_LIST.json", modDir)
+        local InputFile = Ext.IO.LoadFile(configPath, 'data')
+
+        if InputFile then
+            local config = Ext.Json.Parse(InputFile)
+            if config then
+                for catName, poseNames in pairs(config) do
+
+                    local sharedCatName = catName .. ' | Shared'
+                    _GLL.SavedPoses = _GLL.SavedPoses or {}
+                    _GLL.SavedPoses[sharedCatName] = _GLL.SavedPoses[sharedCatName] or {}
+
+                    for _, poseName in pairs(poseNames) do
+                        if not table.find(_GLL.SavedPoses[sharedCatName], poseName) then
+                            table.insert(_GLL.SavedPoses[sharedCatName], poseName)
+                            _GLL.ModPosePaths[poseName] = string.format("Mods/%s/%s.json", modDir, poseName)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+getJsons()

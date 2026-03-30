@@ -261,6 +261,7 @@ function BZAgreed()
     E.btnPose       = {}
     E.btnX2         = {}
     E.btnUpd        = {}
+    E.btnExp        = {}
     E.slBZ          = {}
     E.collapseGroup = {}
     E.treeCategory  = {}
@@ -268,13 +269,27 @@ function BZAgreed()
     E.treeTrans     = {}
     E.treeRot       = {}
     E.treeScale     = {}
+    E.btnX          = {}
+    E.catTree       = {}
+
+
+
+
+    if bzScaleEnabled then --- Disabled due to Larian being Larian
+        AxesNames.Scale = {'SX','SY','SZ'}
+    else
+        AxesNames.Scale = nil
+    end
+    SaveCategories = {}
+
 
     ActiveGradient = Style.Gradients[defaultGradient]
+
+    --- MAIN BONES TREES INITIALIZATION
+    --- MAIN BONES TREES INITIALIZATION
+    --- MAIN BONES TREES INITIALIZATION
+
     CreateContolsForEachBoneGroupAndColorize()
-
-    -- E.slBZ['eye_l_Rot_1'].Disabled = true
-    -- E.slBZ['eye_r_Rot_1'].Disabled = true
-
 
 
     local additionalGroup = bns:AddCollapsingHeader('Additional')
@@ -290,6 +305,8 @@ function BZAgreed()
 
     ---TBD: Temporal garbo
     local treeLockedRootM = additionalGroup:AddTree('Root_M_Locked')
+
+    local txt = treeLockedRootM:AddText('THIS IS GARBO, BE CAREFUL')
 
     local treeLRMRot = treeLockedRootM:AddTree('Rotation')
     treeLRMRot.DefaultOpen = true
@@ -359,6 +376,8 @@ function BZAgreed()
 
 
 
+
+
     bz:AddSeparatorText('Saved poses')
 
 
@@ -401,7 +420,7 @@ function BZAgreed()
 
                 if poseDoesntExist then
                     TableBoneValues()
-                    Ext.IO.SaveFile('LightyLights/Poses/' .. poseName .. '.json',
+                    Ext.IO.SaveFile('LightyLights/Poses/' .. catName:gsub(' | Local$', '') .. '/' .. poseName .. '.json',
                         Ext.Json.Stringify(_GLL.PoseValues[getSelectedDummyOwnerUuid()]))
 
                     _GLL.SavedPoses[catName] = _GLL.SavedPoses[catName] or {}
@@ -412,7 +431,13 @@ function BZAgreed()
                         return DPrint('Pose already added')
                     end
 
-                    Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(_GLL.SavedPoses))
+                    local ToSave = {}
+                    for k, v in pairs(_GLL.SavedPoses) do
+                        if not k:find('| Shared') then
+                            ToSave[k:gsub(' | Local$', '')] = v
+                        end
+                    end
+                    Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(ToSave))
                 else
                     return DPrint('Pose already added')
                 end
@@ -449,14 +474,20 @@ function BZAgreed()
             SameLine = true,
             OnClick = function(e)
                 if E.inputCatName.Text == '' then return end
-                local catName = E.inputCatName.Text
+                local catName = E.inputCatName.Text .. ' | Local'
                 CreateCategoryTree(catName)
-                E.comboCats.SelectedIndex = table.find(SaveCategories, catName) - 1
+                E.comboCats.SelectedIndex = (table.find(SaveCategories, catName) or 1) - 1
                 E.inputCatName.Text = ''
 
                 _GLL.SavedPoses[catName] = _GLL.SavedPoses[catName] or {}
 
-                Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(_GLL.SavedPoses))
+                local ToSave = {}
+                for k, v in pairs(_GLL.SavedPoses) do
+                    if not k:find('| Shared') then
+                        ToSave[k:gsub(' | Local$', '')] = v
+                    end
+                end
+                Ext.IO.SaveFile('LightyLights/Poses/_POSE_LIST.json', Ext.Json.Stringify(ToSave))
             end
         })
 
@@ -501,22 +532,50 @@ function BZAgreed()
 
 
     function CreateCategoriesAndButtons()
+        local CategoryOrder = {}
+
         for catName, Poses in pairs(_GLL.SavedPoses) do
+            table.insert(CategoryOrder, catName)
+        end
+        table.sort(CategoryOrder)
+
+        for _, catName in pairs(CategoryOrder) do
             CreateCategoryTree(catName)
-            for _, poseName in pairs(Poses) do
+            for _, poseName in pairs(_GLL.SavedPoses[catName]) do
                 CreatePoseButton(catName, poseName)
             end
         end
     end
     CreateCategoriesAndButtons()
 
+    E.savedPoseParent:AddText([[
+o - overwrite saved pose
+e - export category (double-click required)
 
-    E.savedPoseParent:AddText([[Deleted posed are not deleted completely, you need to delete them after in
-AppData\Local\Larian Studios\Baldur's Gate 3\Script Extender\LightyLights\Poses\]])
+Note: Deleted poses are not fully removed automatically.
+Please delete them manually from:
+AppData\Local\Larian Studios\Baldur's Gate 3\Script Extender\LightyLights\Poses\
 
+If you plan to export poses, please be respectful to others and help keep the experience good for everyone.
+
+I recommend to follow Larian's animation naming convention (partially).
+
+For singular character: HUM_F_BendOver
+Where HUM - race, F - body type, BendOver - action
+
+For multiple characters pose: HUM_F_BendOver_A, HUM_F_BendOver_B
+Where A, B, C, D, etc. represent each character.
+
+For individual body parts: HUM_F_Hand_BendOver
+Where Hand is a body part
+
+You can find all races and body types on the BG3 Community Wiki:
+]])
+    local link = E.savedPoseParent:AddInputText('')
+    link.Text = 'https://wiki.bg3.community/en/Information/races'
     E.savedPoseParent:AddDummy(1,10)
 
-    E.savedPoseParent:AddText('o overwrites saved pose')
+
 
 
     -- Test = {
