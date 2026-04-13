@@ -1146,4 +1146,13 @@ end
                 UpdateCharacterInfo(E.visTemComob.SelectedIndex + 1)
             end
         })
+    E.checkAutoSave = E.saveLoadCollapse:AddCheckbox('Re-apply saved positions to dummies')
+        UI:Config(E.checkAutoSave, {
+            SameLine = true,
+            Checked = true,
+        })
+
+
+    E.saveLoadCollapse:AddSeparator()
+
 end
