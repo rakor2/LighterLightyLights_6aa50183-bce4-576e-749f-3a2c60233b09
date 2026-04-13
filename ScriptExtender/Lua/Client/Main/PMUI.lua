@@ -52,6 +52,111 @@ function BetterPMTab(parent)
                 end
             end
         })
+    local function DistanceSq(a, b)
+        local dx = a[1] - b[1]
+        local dy = a[2] - b[2]
+        local dz = a[3] - b[3]
+        return dx*dx + dy*dy + dz*dz
+    end
+    local function removeFadeables()
+        local BATCH_SIZE = 10
+        local TICK_INTERVAL = 10
+        local Pos = _C().Transform.Transform.Translate
+        local Entities = {}
+        local tickCnt = 0
+        local index = 1
+        local tick
+        for _, ent in pairs(Ext.Entity.GetAllEntitiesWithComponent('FadeableObstruction')) do
+            if ent.Transform then
+                if DistanceSq(Pos, ent.Transform.Transform.Translate) < 10000 then
+                    table.insert(Entities, ent)
+                end
+            end
+        end
+
+        tick = Ext.Events.Tick:Subscribe(function()
+            tickCnt = tickCnt + 1
+            if tickCnt % TICK_INTERVAL ~= 0 then return end
+
+            for i = index, math.min(index + BATCH_SIZE - 1, #Entities) do
+                local ent = Entities[i]
+                if ent and ent.FadeableObstruction then
+                    ent:RemoveComponent('FadeableObstruction')
+                end
+            end
+
+            index = index + BATCH_SIZE
+
+            E.progressFace.Value = index / #Entities
+
+            if index > #Entities then
+                Ext.Events.Tick:Unsubscribe(tick)
+                E.progressFace.Value = 0
+            end
+        end)
+    end
+
+
+    E.btnTaperFade = parent:AddButton('Remove fade objects [SE Devel only]')
+        UI:Config(E.btnTaperFade, {
+            OnClick = function(e)
+                s, err = pcall(removeFadeables)
+                if err then DPrint('Remove fade objects available only on Devel version of SE') end
+            end
+        })
+
+
+    E.progressFace = parent:AddProgressBar('Fade progress')
+    E.progressFace.Size = {850, 0}
+    E.progressFace.Value = 0
+
+
+
+--- Crashes
+--[[
+for _, ent in pairs(Ext.Entity.GetAllEntitiesWithComponent('FadeableObstruction')) do
+    _D(ent:RemoveComponent('FadeableObstruction'))
+end
+]]--
+
+
+
+--- Doesn't get Constructions
+--[[
+for _, ent in pairs(Ext.Entity.GetEntitiesAroundPosition(_C().Transform.Transform.Translate, 30)) do
+    if ent.FadeableObstruction then
+        _D(ent:RemoveComponent('FadeableObstruction'))
+    end
+end
+]]--
+
+
+
+--- Doesn't get Constructions
+--[[
+for _, shape in pairs(Ext.Level.TestSphere(_C().Transform.Transform.Translate, 140, 4, 4096, 16, 1).Shapes) do
+    _D(shape.PhysicsObject.Entity:RemoveComponent('FadeableObstruction'))
+end
+]]--
+
+
+
+---Lowkey works
+--[[
+for _, ent in pairs(Ext.Entity.GetAllEntities()) do
+    if ent.FadeableObstruction and ent.Transform then
+        if Mods.LL2.DistanceSq(_C().Transform.Transform.Translate, ent.Transform.Transform.Translate) < 100 then
+            ent:RemoveComponent('FadeableObstruction')
+        end
+    end
+end
+]]--
+
+
+    parent:AddSeparatorText('Camera controls')
+
+
+
     E.camCollapse = parent:AddCollapsingHeader('Parameters')
     E.camCollapse.DefaultOpen = openByDefaultPMCamera
 
