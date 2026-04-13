@@ -224,25 +224,17 @@ function BetterPMTab(parent)
         E.visTemComob.SelectedIndex    = e.SelectedIndex
         E.cmbBoneDummies.SelectedIndex = e.SelectedIndex
 
-        _GLL.GizmoDummySelections = {}
+        local dummyId = _GLL.DummyNames[selectedCharacter]
 
-        for k, v in pairs(_GLL.DummyNames) do
-            E.checkAddTarget[v].Checked = false
-        end
+        if Mods.GizmoLib and not E.checkPreventGizmo.Checked then
 
-        local selectedId = _GLL.DummyNames[selectedCharacter]
+            for k, v in pairs(_GLL.DummyNames) do
+                E.checkAddTarget[v].Checked = false
+            end
 
-
-        local selectedUuid = _GLL.DummyNameMap[selectedId].Dummy.Entity.Uuid.EntityUuid
-
-        E.checkAddTarget[selectedId].Checked = true
-        _GLL.GizmoDummySelections[selectedUuid] = _GLL.DummyNameMap[selectedId].Dummy.Entity
-
-        if Mods.GizmoLib then
-            local owener = _GLL.GizmoDummySelections[selectedUuid]
-            _GLL.gizmo:Select({owener})
-            local proxy = API.GameObject.Create(owener.Uuid.EntityUuid)
-            GL_GLOBALS.TransformEditor.Target = {proxy}
+            local selectedUuid = _GLL.DummyNameMap[dummyId].Dummy.Entity.Uuid.EntityUuid
+            E.checkAddTarget[dummyId].Checked = true
+            _GLL.gizmo:Select({_GLL.DummyNameMap[dummyId].Dummy.Entity})
         end
 
         UpdateCharacterInfo(selectedCharacter)
@@ -275,14 +267,14 @@ function BetterPMTab(parent)
             OnRightClick = function(e)
                 if not Mods.GizmoLib then return end
 
-                _GLL.GizmoDummySelections = {}
+                -- _GLL.GizmoDummySelections = {}
                 for k, v in pairs(_GLL.DummyNames) do
                     E.checkAddTarget[v].Checked = false
                 end
 
                 local selectedId = _GLL.DummyNames[selectedCharacter]
                 local selectedUuid = _GLL.DummyNameMap[selectedId].Dummy.Entity.Uuid.EntityUuid
-                _GLL.GizmoDummySelections[selectedUuid] = _GLL.DummyNameMap[selectedId].Dummy.Entity
+                -- _GLL.GizmoDummySelections[selectedUuid] = _GLL.DummyNameMap[selectedId].Dummy.Entity
                 E.checkAddTarget[selectedId].Checked = true
 
                 GizmoSelectDummy()
@@ -319,11 +311,13 @@ function BetterPMTab(parent)
         UI:Config(txtDum, {SameLine = true})
 
 
+    if Mods.GizmoLib then
+        parent:AddDummy(0,0)
+        E.grpGizmoDummies = parent:AddGroup('GizmoDummies')
 
-    parent:AddDummy(0,0)
-    E.grpGizmoDummies = parent:AddGroup('GizmoDummies')
-
-
+        parent:AddDummy(0,0)
+        E.checkPreventGizmo = parent:AddCheckbox('Prevent gizmo when selecting in Dummies')
+    end
 
     parent:AddDummy(0,0)
     E.checkDummiesPop = parent:AddCheckbox('Dummies popup')

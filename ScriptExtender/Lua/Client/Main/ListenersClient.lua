@@ -5,7 +5,6 @@ local MAX_DISTANCE   = 11
 
 
 _GLL.DummyVeryOriginalTransforms = {}
-_GLL.GizmoDummySelections        = {}
 
 
 
@@ -26,27 +25,6 @@ end
 
 
 
-local function updateGizmoTargets()
-    local Targets = {}
-    local Proxies = {}
-    for _, entity in pairs(_GLL.GizmoDummySelections) do
-        table.insert(Targets, entity)
-        local proxy = API.GameObject.Create(entity.Uuid.EntityUuid)
-        if proxy then
-            table.insert(Proxies, proxy)
-        end
-    end
-    if #Targets == 0 then
-        GL_GLOBALS.TransformEditor.Target = {}
-        _GLL.gizmo:Select({})
-    else
-        GL_GLOBALS.TransformEditor.Target = Proxies
-        _GLL.gizmo:Select(Targets)
-    end
-end
-
-
-
 local function createDummySelectionCheckbox(dummy, dummyId)
     E.checkAddTarget          = E.checkAddTarget or {}
     E.checkAddTarget[dummyId] = E.grpGizmoDummies:AddCheckbox(dummyId)
@@ -57,12 +35,10 @@ local function createDummySelectionCheckbox(dummy, dummyId)
             local uuid = dummy.Dummy.Entity.Uuid.EntityUuid
 
             if e.Checked then
-                _GLL.GizmoDummySelections[uuid] = dummy.Dummy.Entity
+                _GLL.gizmo:AddTarget(dummy.Dummy.Entity)
             else
-                _GLL.GizmoDummySelections[uuid] = nil
+                _GLL.gizmo:RemoveTarget(dummy.Dummy.Entity)
             end
-
-            updateGizmoTargets()
         end,
     })
 end
@@ -86,12 +62,12 @@ end
 
 
 local function applySavedTransform(dummy, dummyId)
-    if not (_GLL.SavedTransforms and _GLL.SavedTransforms[dummyId]) then return end
+    if not (_GLL.SavedTransforms and _GLL.SavedTransforms[dummyId] and E.checkAutoSave.Checked) then return end
 
-    local S = _GLL.SavedTransforms[dummyId]
-    local Pos   = {S.pos[1],   S.pos[2],   S.pos[3]}
-    local Rot   = {S.rot[1],   S.rot[2],   S.rot[3],   S.rot[4]}
-    local Scale = {S.scale[1], S.scale[2], S.scale[3]}
+    local ST = _GLL.SavedTransforms[dummyId]
+    local Pos   = {ST.pos[1],   ST.pos[2],   ST.pos[3]}
+    local Rot   = {ST.rot[1],   ST.rot[2],   ST.rot[3],   ST.rot[4]}
+    local Scale = {ST.scale[1], ST.scale[2], ST.scale[3]}
 
     dummy.Visual.Visual.WorldTransform.Translate             = Pos
     dummy.Visual.Visual.WorldTransform.RotationQuat          = Rot
@@ -183,6 +159,10 @@ local function OnPhotoModeCreate()
             initDummy(dummy)
         end
 
+        if Mods.GizmoLib then
+            E.grpGizmoDummies:AddText(' | Gizmo selections').SameLine = true
+        end
+
         Utils:SubUnsubToTick('sub', 'PhotoMode', onPhotoModeTick)
 
         CharacterLightSetupState(lightSetupState)
@@ -202,8 +182,16 @@ local function OnPhotoModeCreate()
         if Mods.GizmoLib then
             _GLL.gizmo:SetActive(true)
             Helpers.Timer:OnTicks(5, function()
-                GL_GLOBALS.TransformEditor.Gizmo:DeleteItem()
-                GL_GLOBALS.TransformEditor.Target = nil
+                --- Delete the main gizmo, cuz it creates on initialization
+                local globalEditor = GL_GLOBALS.TransformEditor
+                if not globalEditor.Gizmo.Guid then
+                    NetChannel.ManageGizmo:RequestToServer({Clear = true}, function(response)
+                        globalEditor.Gizmo.Guid = nil
+                        globalEditor.Gizmo.SavedGizmos = {}
+                    end)
+                end
+                globalEditor.Gizmo:DeleteItem()
+                globalEditor.Target = nil
             end)
         end
 
@@ -248,6 +236,11 @@ local function OnPhotoModeDestroy()
     Imgui.ClearChildren(E.grpGizmoDummies)
 
     if Mods.GizmoLib then
+        _GLL.GizmoDummySelections = {}
+        GL_GLOBALS.TransformEditor.Target = {}
+
+        Imgui.ClearChildren(E.grpGizmoDummies)
+
         _GLL.gizmo:SetActive(false)
         _GLL.gizmo:Clear()
     end
