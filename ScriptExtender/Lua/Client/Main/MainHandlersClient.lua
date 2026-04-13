@@ -1208,23 +1208,3 @@ function RotateHorns(axis, value, rotMod, index)
     end
 end
 
-
-
-function StartFollowIGCS()
-    -- Utils:SubUnsubToTick('sub', 'look', function ()
-    --     local camera = Camera:GetActiveCamera()
-    --     local Transform = camera.Transform.Transform
-    --     Camera:GetPhotoModeCamera().PhotoModeCameraTransform.Transform = Transform
-    -- end)
-    assert(false)
-end
-
-
-
-function StopFollowIGCS()
-    -- if Utils.subID and Utils.subID['look'] then
-    --     Utils:SubUnsubToTick('unsub', 'look', _)
-    -- end
-    -- E.checkFollowIGCS.Checked = false
-    assert(false)
-end

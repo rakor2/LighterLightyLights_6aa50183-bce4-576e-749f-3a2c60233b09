@@ -10,19 +10,6 @@ end)
 
 
 
-local lookAtExists = false
-Ext.RegisterNetListener('LL_CreateLookAtTarget', function(channel, payload, user)
-    if lookAtExists ~= true then
-        local pos = _C().Transform.Transform.Translate
-        _GLL.tragetUuid = Osi.CreateAt('12f13f99-c12f-4b79-a487-4dc187d44cb5', pos[1], pos[2], pos[3], 1, 0, '')
-        lookAtExists = true
-        _GLL.tragetEntity = Ext.Entity.Get(_GLL.tragetUuid)
-    end
-    Ext.Net.BroadcastMessage('LL_SendLookAtTargetUuid', _GLL.tragetUuid)
-end)
-
-
-
 Ext.RegisterNetListener('LL_DeleteLookAtTarget', function(channel, payload, user)
     if _GLL.tragetUuid then
         Osi.RequestDelete(_GLL.tragetUuid)
