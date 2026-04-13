@@ -72,18 +72,20 @@ function GetHairSprings()
     local Origin = Ext.Entity.GetAllEntitiesWithComponent('Origin')
 
     for _, origin in pairs(Origin) do
-        for attIndex, attachment in pairs(origin.Visual.Visual.Attachments) do
-            local vr = attachment.Visual.VisualResource
-            if vr then
-                if vr.Slot:lower():find('hair') then
-                    if vr.SkeletonResource ~= '' then
-                        local skRes = Ext.Resource.Get(vr.SkeletonResource, 'Skeleton')
-                        if skRes.SpringResourceID then
-                            if HairSkeletonSpring[vr.SkeletonResource] ~= nil then
-                                return DPrint('Hair already exists')
-                            else
-                                HairSkeletonSpring[vr.SkeletonResource] = skRes.SpringResourceID
-                                return HairSkeletonSpring
+        if Entity.hasVisual(origin) then
+            for attIndex, attachment in pairs(origin.Visual.Visual.Attachments) do
+                local vr = attachment.Visual.VisualResource
+                if vr then
+                    if vr.Slot:lower():find('hair') then
+                        if vr.SkeletonResource ~= '' then
+                            local skRes = Ext.Resource.Get(vr.SkeletonResource, 'Skeleton')
+                            if skRes.SpringResourceID then
+                                if HairSkeletonSpring[vr.SkeletonResource] ~= nil then
+                                    return DPrint('Hair already exists')
+                                else
+                                    HairSkeletonSpring[vr.SkeletonResource] = skRes.SpringResourceID
+                                    return HairSkeletonSpring
+                                end
                             end
                         end
                     end
