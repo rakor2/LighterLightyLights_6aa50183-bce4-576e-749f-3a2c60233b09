@@ -891,7 +891,7 @@ end
 
 
 
-local function GradientSplitColor(Bones)
+function GradientSplitColor(Bones)
     local LeftBones, RightBones, CenterBones = {}, {}, {}
 
     for _, boneName in ipairs(Bones) do
@@ -949,12 +949,12 @@ function ResetBoneZoneTab()
     E.btnX             = nil
     E.catTree          = nil
 
-    Helpers.Timer:OnTicks(10, function ()
-        BoneZoneTab(E.boneZone)
+    Helpers.Timer:OnTicks(10, function()
+        ActiveGradient = Style.Gradients[E.comboGradients.SelectedIndex + 1] or Style.Gradients[defaultGradient] or Style.Gradients[7]
     end)
 
-    Helpers.Timer:OnTicks(20, function()
-        ActiveGradient = Style.Gradients[E.comboGradients.SelectedIndex + 1]
+    Helpers.Timer:OnTicks(20, function ()
+        BoneZoneTab(E.boneZone)
     end)
 end
 

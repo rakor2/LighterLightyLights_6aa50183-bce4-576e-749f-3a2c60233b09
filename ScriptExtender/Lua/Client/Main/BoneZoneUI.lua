@@ -285,7 +285,7 @@ function BZAgreed()
     SaveCategories = {}
 
 
-    ActiveGradient = Style.Gradients[defaultGradient]
+    ActiveGradient = Style.Gradients[defaultGradient] or Style.Gradients[7]
 
     --- MAIN BONES TREES INITIALIZATION
     --- MAIN BONES TREES INITIALIZATION
