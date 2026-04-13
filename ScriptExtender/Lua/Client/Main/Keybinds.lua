@@ -58,10 +58,12 @@ local keybindings = {
         end
     end,
 
-    ll_bone_undo = function() BZHistoryUndo() end,
+    ll_bone_undo = function() HistoryUndo() end,
 
-    ll_bone_redo = function() BZHistoryRedo() end,
+    ll_bone_redo = function() HistoryRedo() end,
+
     ll_select_item_main = function() SelectItemAsAttachable('Main') end,
+
     ll_select_item_off = function() SelectItemAsAttachable('Off') end,
 }
 
