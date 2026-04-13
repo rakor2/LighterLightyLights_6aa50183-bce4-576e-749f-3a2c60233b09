@@ -108,11 +108,13 @@ local DEFAULT_SETTINGS = {
     {'markerOff',               false},
     {'stickToggleOff',          false},
     {'RecentColors',            {}},
-    {'applyDelay',              {500,0,0,0}},
-    {'defaultGradient',         1},
+    {'anlApplyDelay',              {500,0,0,0}},
+    {'defaultGradient',         7},
     {'lockCrystalToWhite',      false},
     {'readTheRules',            false},
     {'colorfulMarkers',         true},
+    {'pmInitDelay',             {35,0,0,0}},
+    {'bzScaleEnabled',          false},
     {'style',                   1},
 }
 

@@ -261,7 +261,7 @@ function Settings2Tab(p)
             OnChange = function(e)
                 defaultGradient = e.SelectedIndex + 1
                 SettingsSave()
-                ResetBoneZoneColors()
+                ResetBoneZoneTab()
             end
         })
 
@@ -356,14 +356,39 @@ function Settings2Tab(p)
 
 
 
-    E.txtApplyDelay = p:AddSliderInt('AnL apply delay', 500, 1, 1000, 1)
-        UI:Config(E.txtApplyDelay, {
-            Value = applyDelay or {500,0,0,0},
+    E.slAnlApplyDelay = p:AddSliderInt('AnL apply delay', 500, 1, 1000, 1)
+        UI:Config(E.slAnlApplyDelay, {
+            Value = anlApplyDelay or {500,0,0,0},
             OnChange = function(e)
-                applyDelay = e.Value
+                anlApplyDelay = e.Value
                 SettingsSave()
             end
         })
+
+
+
+    E.slPmDelay = p:AddSliderInt('Delay before initializing PM bs', 35, 35, 200, 1)
+        UI:Config(E.slPmDelay, {
+            Value = pmInitDelay or {35,0,0,0},
+            OnChange = function(e)
+                pmInitDelay = e.Value
+                SettingsSave()
+            end
+        })
+
+
+
+    E.checkBzScale = p:AddCheckbox([[Enable Bone Zone Scale, I know what I'm doing, I am aware of the issue and
+I know all workarounds]])
+        UI:Config(E.checkBzScale, {
+            Checked = bzScaleEnabled,
+            OnChange = function (e)
+                bzScaleEnabled = e.Checked
+                SettingsSave()
+                ResetBoneZoneTab()
+            end
+        })
+
 
     -- function TableTest()
     --     local colCnt = 0
