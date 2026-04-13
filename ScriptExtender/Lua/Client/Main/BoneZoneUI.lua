@@ -40,7 +40,34 @@ function BZAgreed()
 
 
 
+    bz:AddText([[
+x - delete (double-click)
+o - overwrite saved pose (double-click)
+m - apply pose as mask (overlay onto current pose)
+e - export category (double-click)
 
+Deleted poses are not fully removed automatically.
+Please delete them manually from:
+AppData\Local\Larian Studios\Baldur's Gate 3\Script Extender\LightyLights\Poses\
+
+If you plan to export poses, please be respectful to others and
+help keep the experience good for everyone, I recommend to follow
+Larian's animation naming convention (partially).
+
+For singular character: HUM_F_BendOver_Left
+Where HUM - race, F - body type, BendOver - action, Left - direction of the actions (optional)
+
+For multiple characters pose: HUM_F_BendOver_A, HUM_F_BendOver_B
+Where A, B, C, D, etc. represent each character.
+
+For individual body parts: HUM_F_Mask_Hand_Fist
+Where Mask - keyword for mask, Hand - body part, Fist - action
+
+You can find all races and body types on the BG3 Community Wiki:
+]])
+    local link = bz:AddInputText('copy me')
+    link.Text = 'https://wiki.bg3.community/en/Information/races'
+    bz:AddDummy(1,20)
 
 
 
@@ -128,11 +155,11 @@ function BZAgreed()
     bz:AddText('Main hand').SameLine = true
 
 
-    E.slAttachScale = bz:AddSlider('', 1, 0.1, 2, 1)
+    E.slAttachScale = bz:AddDrag('', 1, 0.001, 1000, 1)
         UI:Config(E.slAttachScale, {
             OnChange = function(e)
                 if not _GLL.States.inPhotoMode then e.Value = {1,0,0,0} return end
-                ScaleAttachment('Main', e.Value[1])
+                ScaleAttachment('Main', e.Value[1]/100)
                 SaveAttachState(getSelectedDummy())
             end
         })
@@ -165,18 +192,17 @@ function BZAgreed()
 
 
 
-    E.slAttachScaleOff = bz:AddSlider('', 1, 0.1, 2, 1)
+    E.slAttachScaleOff = bz:AddDrag('', 1, 0.001, 1000, 1)
         UI:Config(E.slAttachScaleOff, {
             OnChange = function(e)
                 if not _GLL.States.inPhotoMode then e.Value = {1,0,0,0} return end
-                ScaleAttachment('Main', e.Value[1])
+                ScaleAttachment('Off', e.Value[1]/100)
                 SaveAttachState(getSelectedDummy())
             end
         })
 
     bz:AddDummy(40,0).SameLine = true
     bz:AddText('Off scale').SameLine = true
-
 
     bz:AddText('Dummy_R/L_Hand bones to control item position')
 
@@ -215,6 +241,7 @@ function BZAgreed()
     E.btnResetBpnes = bz:AddButton('Reset all')
     local resetId = UI:CreateConfirmButton(bz, E.btnResetBpnes, 'Reset all', function()
         ResetAllBones()
+        SetVarValuesToSliders()
     end)
         UI:Config(E.btnResetBpnes, {
             OnClick = function()
@@ -466,7 +493,6 @@ function BZAgreed()
         })
 
 
-
     E.inputCatName = bz:AddInputText('')
 
 
@@ -550,32 +576,7 @@ function BZAgreed()
     end
     CreateCategoriesAndButtons()
 
-    E.savedPoseParent:AddText([[
-o - overwrite saved pose
-e - export category (double-click required)
 
-Note: Deleted poses are not fully removed automatically.
-Please delete them manually from:
-AppData\Local\Larian Studios\Baldur's Gate 3\Script Extender\LightyLights\Poses\
-
-If you plan to export poses, please be respectful to others and help keep the experience good for everyone.
-
-I recommend to follow Larian's animation naming convention (partially).
-
-For singular character: HUM_F_BendOver
-Where HUM - race, F - body type, BendOver - action
-
-For multiple characters pose: HUM_F_BendOver_A, HUM_F_BendOver_B
-Where A, B, C, D, etc. represent each character.
-
-For individual body parts: HUM_F_Hand_BendOver
-Where Hand is a body part
-
-You can find all races and body types on the BG3 Community Wiki:
-]])
-    local link = E.savedPoseParent:AddInputText('')
-    link.Text = 'https://wiki.bg3.community/en/Information/races'
-    E.savedPoseParent:AddDummy(1,10)
 
 
 

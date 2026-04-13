@@ -3,37 +3,8 @@ local xd
 
 --- TBD: Lines
 --- Instead of parsing through the whole bone transform table, catch only specific changes or the latest ones
---- Add I know what I'm doing setting to let people scale bones
+--- Refactor whole bone table save/load/parse thing; remove 0 values to stop iterating them (holy, -1000ms incoming)
 
-
-function getDummyOwnerUuid(entity)
-    if entity then
-        local characterUuid = entity.Dummy.Entity.Uuid.EntityUuid
-        if characterUuid then
-            return characterUuid
-        end
-    end
-end
-
-
-
-function getSelectedDummy()
-    if not _GLL.DummyNameMap then return end
-    local entity = _GLL.DummyNameMap[E.cmbBoneDummies.Options[selectedCharacter]]
-    return entity
-end
-
-
-
-function getSelectedDummyOwnerUuid()
-    local entity = _GLL.DummyNameMap[E.cmbBoneDummies.Options[selectedCharacter]]
-    if entity then
-        local characterUuid = entity.Dummy.Entity.Uuid.EntityUuid
-        if characterUuid then
-            return characterUuid
-        end
-    end
-end
 
 
 
@@ -381,7 +352,7 @@ function ResetAllBones()
             end
         end
     end
-    SetVarValuesToSliders()
+    -- SetVarValuesToSliders()
     if uuid then HistorySnapshotIK() end
 end
 
@@ -709,7 +680,6 @@ function createBoneSlider(parent, boneName, axis)
             CaptureOldValue(characterUuid, varName)
 
             if Config.postfix == '_Trans' or Config.postfix == '_Scale' then
-                --- Translation / Scale: keep old direct path (no gimbal issue here)
                 local humanVal = Config.postfix == '_Trans'
                     and e.Value[1]/100
                     or  e.Value[1]
@@ -720,10 +690,6 @@ function createBoneSlider(parent, boneName, axis)
                     SetSymmetry(characterUuid, varName, Config.index, e.Value[1])
                 end
             else
-                --- Rotation: rebuild quat from all three slider values.
-                --- HumanValue is source of truth, quat is derived from it.
-                --- No gimbal lock because each axis is an independent quaternion
-                --- multiplied in order, not accumulated Euler.
                 local hv = _GLL.PoseValues[characterUuid][varName]['HumanValue']
                 hv[Config.index] = e.Value[1]
 
@@ -936,6 +902,7 @@ function ResetBoneZoneTab()
     E.btnPose          = nil
     E.btnX2            = nil
     E.btnUpd           = nil
+    E.btnMask          = nil
     E.btnExp           = nil
     E.slBZ             = nil
     E.collapseGroup    = nil
@@ -1235,10 +1202,7 @@ function CreateCategoryTree(catName)
             </region>
         </save>]], author, name, name, uuid, version64, version64)
 
-
-
                         Ext.IO.SaveFile('LightyLights/Poses/!1a_Generated/'.. name .. '/Mods/' .. name .. '/meta.lsx', xml)
-
 
                         local ExportPoseList = {}
 
@@ -1263,16 +1227,23 @@ function CreateCategoryTree(catName)
         local collapseGuide = w:AddCollapsingHeader('How to use')
         collapseGuide.DefaultOpen = true
         local txt = collapseGuide:AddText([[Enter author name.
-Enter pose pak name (.pak name, pack name is category name).
+Enter pose pak name (.pak name, pose pack name is category name).
 Do not use spaces, special characters, only letters and _.
 Enter version with dots, i.e., 2.3.6.0 or 6.6.6.6.
 Export.
 In windows press Win + R.
 In the opened lil window paste this path.]])
-        local inputGuide = collapseGuide:AddInputText('')
+
+        local inputGuide = collapseGuide:AddInputText('copy me')
         inputGuide.Text = [[%LocalAppData%\Larian Studios\Baldur's Gate 3\Script Extender\LightyLights\Poses\!1a_Generated\]]
+
         local txt = collapseGuide:AddText([[Find your saved pose pack.
-Pak it with LSLib or Multitool.
+Pak it with LSLib or Multitool. How to pak:]])
+
+        local inputGuide2 = collapseGuide:AddInputText('copy me##2')
+        inputGuide2.Text = [[https://bg3.wiki/wiki/Modding:Packaging_mods]]
+
+        local txt = collapseGuide:AddText([[
 For example you have !1a_Generated/DaniSexGoddes/Mods/DaniSexGoddes/meta.lsx,
 in LSLib choose first DaniSexGoddes folder or
 in Multitool drag and drop first DaniSexGoddes folder as well.
@@ -1796,10 +1767,6 @@ function LoadAttachState(character)
 end
 
 
---- 24fc6855-03e7-3b20-7a99-13d4d942ad26
-
-
-
 
 --- I'm still to uneducated, for now I'll let it slop
 local BZ_HISTORY_MAX = 100
@@ -1991,7 +1958,9 @@ function getJsons()
         end
     end
 end
-getJsons()local selectedItem
+getJsons()
+
+local selectedItem
 
 
 
