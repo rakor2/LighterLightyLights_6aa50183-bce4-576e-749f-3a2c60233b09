@@ -6,7 +6,9 @@ function Origin2PointTab(p)
             OnClick = function(e)
                 if _GLL.pointUuid then return end
 
-                Ch.CreateOriginPoint:RequestToServer({}, function(Response)
+                local Data = {Position = getSourcePositionCl()}
+
+                Ch.CreateOriginPoint:RequestToServer(Data, function(Response)
                     _GLL.pointUuid = Response[1]
 
                     Helpers.Timer:OnTicks(5, function()

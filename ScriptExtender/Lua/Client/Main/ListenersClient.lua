@@ -210,13 +210,13 @@ local function OnPhotoModeDestroy()
     E.visTemComob.Options    = {'Not in Photo Mode'}
     E.cmbBoneDummies.Options = {'Not in Photo Mode'}
     E.visTemComob.SelectedIndex = 0
-    E.checkPMSrc.Checked     = false
+    -- E.checkPMSrc.Checked     = false
 
-    for _, key in ipairs({'SourcePhotoMode', 'PhotoMode'}) do
-        if Utils.subID and Utils.subID[key] then
-            Utils:SubUnsubToTick('unsub', key, _)
-        end
-    end
+    -- for _, key in ipairs({'SourcePhotoMode', 'PhotoMode'}) do
+    --     if Utils.subID and Utils.subID[key] then
+    --         Utils:SubUnsubToTick('unsub', key, _)
+    --     end
+    -- end
 
     UpdateCharacterInfo(nil)
     ResetSliderValue()

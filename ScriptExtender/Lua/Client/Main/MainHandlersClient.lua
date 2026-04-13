@@ -635,69 +635,55 @@ function SourceCutscene(state)
     if not entity then return end
 
     E.checkPMSrc.Checked = false
+Ch.Source:SetRequestHandler(function()
+    return _GLL.SourceTranslate
+end)
+
+function SourceCutscene(state)
+    local entity
+
+    -- E.checkPMSrc.Checked = false
     E.checkClientSrc.Checked = false
     E.checkOriginSrc.Checked = false
 
     if state then
-        Utils:SubUnsubToTick('sub', 'SourceCutscene', function ()
+        entity = Dummy:TLPreviewDummyPlayer()
+        if not entity then return end
 
-        if not E.checkCutsceneSrc.Checked then return end
-
-        if Dummy:TLPreviewDummyPlayer() then
-            local Transform = Dummy:TLPreviewDummyPlayerTransform()
-            _GLL.SourceTranslate = Transform.Translate
-            Ch.CurrentEntityTransform:SendToServer(_GLL.SourceTranslate)
-        else
-            Utils:SubUnsubToTick('unsub', 'SourceCutscene',_)
-            -- DPrint('SourceCutscene off')
-            E.checkCutsceneSrc.Checked = false
-            _GLL.SourceTranslate = entity.Transform.Transform.Translate
-            Ch.CurrentEntityTransform:SendToServer(nil)
-        end
-    end)
+        _GLL.SourceTranslate = entity.Transform.Transform.Translate
+        Ch.Source:SendToServer(_GLL.SourceTranslate)
     else
-        if Utils.subID['SourceCutscene'] then
-            Utils:SubUnsubToTick('unsub', 'SourceCutscene',_)
-            -- DPrint('SourceCutscene off 2')
-            _GLL.SourceTranslate = entity.Transform.Transform.Translate
-        end
-        Ch.CurrentEntityTransform:SendToServer(nil)
+        _GLL.SourceTranslate = _C().Transform.Transform.Translate
+        Ch.Source:SendToServer(_GLL.SourceTranslate)
     end
+    return _GLL.SourceTranslate
 end
 
 
 
 function SourcePoint(state)
     local entity = _GLL.pointEntity
-    if not entity then E.checkOriginSrc.Checked = false return end
-
-    E.checkPMSrc.Checked = false
-    E.checkClientSrc.Checked = false
-    E.checkCutsceneSrc.Checked = false
+    local entity
 
     if state then
-        Utils:SubUnsubToTick('sub', 'SourcePoint', function ()
+        entity = _GLL.pointEntity
 
-        if not E.checkOriginSrc.Checked then return end
-        if not entity.Transform then return end
+        if not entity then E.checkOriginSrc.Checked = false return end
+        -- E.checkPMSrc.Checked = false
+        E.checkClientSrc.Checked = false
+        E.checkCutsceneSrc.Checked = false
 
-        local Transform = entity.Transform.Transform
-        _GLL.SourceTranslate = Transform.Translate
-        Ch.CurrentEntityTransform:SendToServer(_GLL.SourceTranslate)
-    end)
+        _GLL.SourceTranslate = entity.Transform.Transform.Translate
+        Ch.Source:SendToServer(_GLL.SourceTranslate)
     else
-        if Utils.subID and Utils.subID['SourcePoint'] then
-            Utils:SubUnsubToTick('unsub', 'SourcePoint',_)
-            _GLL.SourceTranslate = _C().Transform.Transform.Translate
-        end
-        Ch.CurrentEntityTransform:SendToServer(nil)
+        _GLL.SourceTranslate = _C().Transform.Transform.Translate
+        Ch.Source:SendToServer(_GLL.SourceTranslate)
     end
-    return false
+    return _GLL.SourceTranslate
 end
 
 
 
---- TBD: fix this garbo
 function SourcePhotoMode(state)
     if not _GLL.DummyNameMap then E.checkPMSrc.Checked = false return end
 
@@ -706,48 +692,34 @@ function SourcePhotoMode(state)
     E.checkOriginSrc.Checked = false
 
     if state then
-        Utils:SubUnsubToTick('sub', 'SourcePhotoMode', function ()
+        entity = getSelectedDummy()
 
-        if not E.checkPMSrc.Checked then return end
+        if not entity then E.checkPMSrc.Checked = false return end
 
-        local entity = _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]]
-        if not entity or not entity.Visual then E.checkPMSrc.Checked = false return end
-        local Transform = entity.Visual.Visual.WorldTransform
-        _GLL.SourceTranslate = Transform.Translate
-        Ch.CurrentEntityTransform:SendToServer(_GLL.SourceTranslate)
-    end)
+        _GLL.SourceTranslate = entity.Visual.Visual.WorldTransform.Translate
+        Ch.Source:SendToServer(_GLL.SourceTranslate)
     else
-        if Utils.subID and Utils.subID['SourcePhotoMode'] then
-            Utils:SubUnsubToTick('unsub', 'SourcePhotoMode',_)
-            _GLL.SourceTranslate = _C().Transform.Transform.Translate
-        end
-        Ch.CurrentEntityTransform:SendToServer(nil)
+        _GLL.SourceTranslate = _C().Transform.Transform.Translate
+        Ch.Source:SendToServer(_GLL.SourceTranslate)
     end
-    return false
+    return _GLL.SourceTranslate
 end
 
 
 
 function SourceClient(state)
-    E.checkPMSrc.Checked = false
+    local entity
+
+    -- E.checkPMSrc.Checked = false
     E.checkCutsceneSrc.Checked = false
     E.checkOriginSrc.Checked = false
 
-    if state then
-        Utils:SubUnsubToTick('sub', 'SourceClient', function ()
-        if not E.checkClientSrc.Checked then return end
-        if _C() and _C().Visual and _C().Visual.Visual.WorldTransform then
-            local Transform = _C().Visual.Visual.WorldTransform
-            _GLL.SourceTranslate = Transform.Translate
-            Ch.CurrentEntityTransform:SendToServer(_GLL.SourceTranslate)
-        end
-    end)
+    if state and Entity.hasVisual(_C())then
+        _GLL.SourceTranslate = _C().Visual.Visual.WorldTransform.Translate
+        Ch.Source:SendToServer(_GLL.SourceTranslate)
     else
-        if Utils.subID['SourceClient'] then
-            Utils:SubUnsubToTick('unsub', 'SourceClient',_)
-            _GLL.SourceTranslate = _C().Transform.Transform.Translate
-        end
-        Ch.CurrentEntityTransform:SendToServer(nil)
+        _GLL.SourceTranslate = _C().Transform.Transform.Translate
+        Ch.Source:SendToServer(_GLL.SourceTranslate)
     end
 end
 

@@ -1,6 +1,3 @@
---[[
-Light Setup on level change
-]]
 _GLL.CreatedLightsClient = {} --UNUSED
 
 _GLL.LightsUuidNameMap = {}
@@ -10,16 +7,12 @@ _GLL.LightParametersClient = {}
 _GLL.States = _GLL.States or {}
 _GLL.States.allowLightCreation = {}
 
----@class Settings
 Settings = Settings or {}
 
----@type string EntityUuid
 _GLL.selectedUuid = nil
 
----@type EntityHandle
 _GLL.selectedEntity = nil
 
----@type LightComponent
 _GLL.selectedLightEntity = nil
 
 
@@ -29,6 +22,9 @@ nameIndex = 0
 
 _GLL.syncedSelectedIndex = 0
 
+
+
+--- TBD: Remove these
 ---@class Elements
 E = {
     slIntLightType,
@@ -93,7 +89,7 @@ function LLMCM(mt2)
             OnChange      = function(widget)
                 StyleSettings.selectedStyle = widget.SelectedIndex + 1
                 ApplyStyle(mw, StyleSettings.selectedStyle)
-                ResetBoneZoneColors()
+                ResetBoneZoneTab()
 
                 if windowNotification then
                     E.checkSelectedLightNotification.Checked = false
@@ -107,18 +103,30 @@ function LLMCM(mt2)
                 end
 
                 if Mods.GizmoLib then
-                    initGizmoLibColors()
+                    local s, err = pcall(function() initGizmoLibColors() end)
+                    if err then
+                        DPrint('IF YOU SEE THIS TRY PUTTING LIGHTY LIGHTS MUCH LOVER THAN GIZMOLIB')
+                        DPrint('IF YOU SEE THIS TRY PUTTING LIGHTY LIGHTS MUCH LOVER THAN GIZMOLIB')
+                        DPrint('IF YOU SEE THIS TRY PUTTING LIGHTY LIGHTS MUCH LOVER THAN GIZMOLIB')
+                        DPrint('IF YOU SEE THIS TRY PUTTING LIGHTY LIGHTS MUCH LOVER THAN GIZMOLIB')
+                        DPrint('IF YOU SEE THIS TRY PUTTING LIGHTY LIGHTS MUCH LOVER THAN GIZMOLIB')
+                        DPrint('IF YOU SEE THIS TRY PUTTING LIGHTY LIGHTS MUCH LOVER THAN GIZMOLIB')
+                        DPrint('IF YOU SEE THIS TRY PUTTING LIGHTY LIGHTS MUCH LOVER THAN GIZMOLIB')
+                        DPrint('IF YOU SEE THIS TRY PUTTING LIGHTY LIGHTS MUCH LOVER THAN GIZMOLIB')
+                        DPrint('WEEEEEEEEEEEEEEEEEE ERRORS BELOW HYPERS')
+                    end
                 end
-
                 SettingsSave()
             end
         })
 
 
     if Mods.GizmoLib then
-        initGizmoLibColors()
+        local s, err = pcall(function() initGizmoLibColors() end)
+        if err then
+            gizmoLibError = true
+        end
     end
-
 
     ApplyStyle(mw, StyleSettings.selectedStyle)
     MainWindow(mw)
@@ -143,6 +151,17 @@ function MainWindow(mw)
     mainTabBar = mw:AddTabBar('LL')
 
     E.main2 = mainTabBar:AddTabItem('Main')
+
+
+    --- idk wtf is going on, it's just can keep up with initizlizations or something
+    if gizmoLibError then
+        local txt = E.main2:AddText('IF YOU SEE THIS TRY PUTTING LIGHTY LIGHTS MUCH LOVER THAN GIZMOLIB')
+        local txt = E.main2:AddText('IF YOU SEE THIS TRY PUTTING LIGHTY LIGHTS MUCH LOVER THAN GIZMOLIB')
+        local txt = E.main2:AddText('IF YOU SEE THIS TRY PUTTING LIGHTY LIGHTS MUCH LOVER THAN GIZMOLIB')
+        return
+    end
+
+
     MainTab(E.main2)
 
     E.anal2Tab = mainTabBar:AddTabItem('AnL')
@@ -171,6 +190,7 @@ function MainWindow(mw)
 
     E.docsTab = mainTabBar:AddTabItem('Docs')
     Docs2Tab(E.docsTab)
+
 
     function buttonSizes()
         for _, element in pairs(ER) do
@@ -290,6 +310,8 @@ end
 function MainTab(p)
     local rngMax = #MOTD
     p:AddSeparatorText(MOTD[Ext.Math.Random(1, rngMax)])
+
+
 
     E.checkTypePoint = p:AddCheckbox('Point')
         UI:Config(E.checkTypePoint, {
@@ -712,7 +734,12 @@ function MainTab(p)
     p:AddSeparatorText('Parameters')
     ---------------------------------------------------------
 
-
+    local txtttt = p:AddText([[DRAG SLIDERS SUPPORT SHIFT + DRAG, ALT + DRAG, SHIFT + ALT + DRAG]])
+    local txtttt = p:AddText([[DRAG SLIDERS SUPPORT SHIFT + DRAG, ALT + DRAG, SHIFT + ALT + DRAG]])
+    local txtttt = p:AddText([[DRAG SLIDERS SUPPORT SHIFT + DRAG, ALT + DRAG, SHIFT + ALT + DRAG]])
+    local txtttt = p:AddText([[DOUBLE CLICK FOR ENTERING VALUE MANUALLY]])
+    local txtttt = p:AddText([[DOUBLE CLICK FOR ENTERING VALUE MANUALLY]])
+    local txtttt = p:AddText([[DOUBLE CLICK FOR ENTERING VALUE MANUALLY]])
 
     E.collapseParameters = p:AddCollapsingHeader('Main parameters')
     E.collapseParameters.DefaultOpen = true
@@ -737,13 +764,13 @@ function MainTab(p)
                         if e.Value[1] == 0 then localLightType = 'Point' end
                         if e.Value[1] == 1 then localLightType = 'Spotlight' end
                         if e.Value[1] == 2 then localLightType = 'Directional'
-                            E.slRotRollSlider.Disabled = false
-                            E.btnRot_Rp.Disabled = false
-                            E.btnRot_Rm.Disabled = false
+                            -- E.slRotRollSlider.Disabled = false
+                            -- E.btnRot_Rp.Disabled = false
+                            -- E.btnRot_Rm.Disabled = false
                         else
-                            E.slRotRollSlider.Disabled = true
-                            E.btnRot_Rp.Disabled = true
-                            E.btnRot_Rm.Disabled = true
+                            -- E.slRotRollSlider.Disabled = true
+                            -- E.btnRot_Rp.Disabled = true
+                            -- E.btnRot_Rm.Disabled = true
                         end
 
                         local lightEntity = getSelectedLightEntity()
@@ -775,7 +802,7 @@ function MainTab(p)
 
     if biggerPicker then
         E.pickerLightColor = E.treeGen:AddColorPicker('')
-        textPicker = E.treeGen:AddText('Icon')
+        textPicker = E.treeGen:AddText('xd')
             UI:Config(textPicker, { SameLine = true })
     else
         E.pickerLightColor = E.treeGen:AddColorEdit('')
@@ -849,10 +876,8 @@ function MainTab(p)
 
 
 
-    E.slLightTemp = E.treeGen:AddSlider('', 5600, 1000, 40000, 1)
+    E.slLightTemp = E.treeGen:AddSlider('', 5600, 1000, 40000)
         UI:Config(E.slLightTemp, {
-            IDContext   = 'wlekjfnlkm',
-            Logarithmic = true,
             OnChange    = function(e)
                 if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     local Color = Math.KelvinToRGB(e.Value[1])
@@ -879,13 +904,11 @@ function MainTab(p)
 
 
 
-    E.slLightRadius = E.treeGen:AddSlider('', 1, 0, 60, 1)
+    E.slLightRadius = E.treeGen:AddDrag('', 1000, 0, 60*DRAG_SENSE)
         UI:Config(E.slLightRadius, {
-            IDContext   = 'adwadqw3d',
-            Logarithmic = true,
             OnChange    = function(e)
                 if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
-                    SetLightRadius(e.Value[1])
+                    SetLightRadius(e.Value[1]/DRAG_SENSE)
                 end
             end
         })
@@ -920,13 +943,11 @@ function MainTab(p)
 
 
 
-    E.slLightScattering = E.treeGen:AddSlider('', 0, 0, 100, 1)
+    E.slLightScattering = E.treeGen:AddDrag('', 100, 0, 1000*DRAG_SENSE)
         UI:Config(E.slLightScattering, {
-            IDContext   = 'esrgsrengsrg',
-            Logarithmic = true,
-            OnChange    = function(e)
+            OnChange = function(e)
                 if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
-                    SetLightScattering(e.Value[1])
+                    SetLightScattering(e.Value[1]/DRAG_SENSE)
                 end
             end
         })
@@ -1016,7 +1037,6 @@ function MainTab(p)
 
     E.slLightOuterAngle = E.treeSpot:AddSlider('', 45, 0, 179, 1)
         UI:Config(E.slLightOuterAngle, {
-            IDContext = '123dwfsefa',
             OnChange  = function(e)
                 if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     SetLightOuterAngle(e.Value[1])
@@ -1041,7 +1061,6 @@ function MainTab(p)
 
     E.slLightInnerAngle = E.treeSpot:AddSlider('', 1, 0, 179, 1)
         UI:Config(E.slLightInnerAngle, {
-            IDContext = 'rfgrtynj5r6',
             OnChange  = function(e)
                 if _GLL.selectedUuid and _GLL.LightParametersClient[_GLL.selectedUuid] then
                     SetLightInnerAngle(e.Value[1])
@@ -1076,7 +1095,7 @@ function MainTab(p)
 
 
 
-    E.slLightDirEnd = E.treeDir:AddSlider('Falloff front', 0, 0, 20, 1)
+    E.slLightDirEnd = E.treeDir:AddDrag('Falloff front', 0, 0, 20, 1)
         UI:Config(E.slLightDirEnd, {
             IDContext = 'olkjsdeafoiuzsrenbf',
             OnChange  = function(e)
@@ -1088,7 +1107,7 @@ function MainTab(p)
 
 
 
-    E.slLightDirSide = E.treeDir:AddSlider('Falloff back', 0, 0, 20, 1)
+    E.slLightDirSide = E.treeDir:AddDrag('Falloff back', 0, 0, 20, 1)
         UI:Config(E.slLightDirSide, {
             IDContext = 'o12312',
             OnChange  = function(e)
@@ -1100,7 +1119,7 @@ function MainTab(p)
 
 
 
-    E.slLightDirSide2 = E.treeDir:AddSlider('Falloff sides', 0, 0, 10, 1)
+    E.slLightDirSide2 = E.treeDir:AddDrag('Falloff sides', 0, 0, 10, 1)
         UI:Config(E.slLightDirSide2, {
             IDContext = 'asdaw',
             OnChange  = function(e)
@@ -1129,7 +1148,7 @@ function MainTab(p)
 
 
 
-    E.slLightDirDim = E.treeDir:AddSlider('Width/Height/Length', 0, 0, 100, 1)
+    E.slLightDirDim = E.treeDir:AddDrag('Width/Height/Length', 0, 0, 100, 1)
         UI:Config(E.slLightDirDim, {
             IDContext   = 'lkasenfaolkejfn',
             Components  = 3,
@@ -1536,38 +1555,24 @@ function MainTab(p)
 
 
 
-    E.slRotTiltSlider = E.collapsRot:AddSlider('', 0, -1000, 1000, 0.1)
+    E.slRotTiltSlider = E.collapsRot:AddDrag('', 0.1, 0, 360)
         UI:Config(E.slRotTiltSlider, {
-            IDContext    = 'Pitch',
+            WrapAround   = true,
             Value        = {0, 0, 0, 0},
             OnChange     = function(e)
-                RotateEntity(_GLL.selectedEntity, 'x', e.Value[1], E.modRotSlider.Value[1], 'Light')
-                E.slRotTiltSlider.Value = {0, 0, 0, 0}
+                if not _GLL.selectedUuid then return end
+                _GLL.RotDragValues[_GLL.selectedUuid] = _GLL.RotDragValues[_GLL.selectedUuid] or {0, 0, 0}
+                _GLL.RotDragValues[_GLL.selectedUuid][1] = e.Value[1]
+                local r = _GLL.RotDragValues[_GLL.selectedUuid]
+                RotateEntityAbs(_GLL.selectedEntity, r[1], r[2], r[3])
             end,
             OnRightClick = function(e)
-                RotateEntity(_GLL.selectedEntity, 'x', 90, 1, 'Light')
-            end
-        })
-
-
-
-    E.btnRot_Pp = E.collapsRot:AddButton('<')
-        UI:Config(E.btnRot_Pp, {
-            IDContext = 'adawdawd',
-            SameLine  = true,
-            OnClick   = function(e)
-                RotateEntity(_GLL.selectedEntity, 'x', -100, E.modRotSlider.Value[1], 'Light')
-            end
-        })
-
-
-
-    E.btnRot_Pm = E.collapsRot:AddButton('>')
-        UI:Config(E.btnRot_Pm, {
-            IDContext = 'awdawdawd',
-            SameLine  = true,
-            OnClick   = function(e)
-                RotateEntity(_GLL.selectedEntity, 'x', 100, E.modRotSlider.Value[1], 'Light')
+                if not _GLL.selectedUuid then return end
+                _GLL.RotDragValues[_GLL.selectedUuid] = _GLL.RotDragValues[_GLL.selectedUuid] or {0, 0, 0}
+                _GLL.RotDragValues[_GLL.selectedUuid][1] = 0
+                E.slRotTiltSlider.Value = {0, 0, 0, 0}
+                local r = _GLL.RotDragValues[_GLL.selectedUuid]
+                RotateEntityAbs(_GLL.selectedEntity, r[1], r[2], r[3])
             end
         })
 
@@ -1581,41 +1586,25 @@ function MainTab(p)
 
 
 
-    E.slRotRollSlider = E.collapsRot:AddSlider('', 0, -1000, 1000, 0.1)
+    E.slRotRollSlider = E.collapsRot:AddDrag('', 0.1, 0, 360)
         UI:Config(E.slRotRollSlider, {
-            IDContext    = 'roll',
-            Disabled     = true,
+            WrapAround   = true,
+            Disabled     = false,
             Value        = {0, 0, 0, 0},
             OnChange     = function(e)
-                RotateEntity(_GLL.selectedEntity, 'z', e.Value[1], E.modRotSlider.Value[1], 'Light')
-                E.slRotRollSlider.Value = {0, 0, 0, 0}
+                if not _GLL.selectedUuid then return end
+                _GLL.RotDragValues[_GLL.selectedUuid] = _GLL.RotDragValues[_GLL.selectedUuid] or {0, 0, 0}
+                _GLL.RotDragValues[_GLL.selectedUuid][3] = e.Value[1]
+                local r = _GLL.RotDragValues[_GLL.selectedUuid]
+                RotateEntityAbs(_GLL.selectedEntity, r[1], r[2], r[3])
             end,
             OnRightClick = function(e)
-                RotateEntity(_GLL.selectedEntity, 'z', 90, 1, 'Light')
-            end
-        })
-
-
-
-    E.btnRot_Rp = E.collapsRot:AddButton('<')
-        UI:Config(E.btnRot_Rp, {
-            IDContext = 'adwdawdawdawd',
-            Disabled  = true,
-            SameLine  = true,
-            OnClick   = function(e)
-                RotateEntity(_GLL.selectedEntity, 'z', -100, E.modRotSlider.Value[1], 'Light')
-            end
-        })
-
-
-
-    E.btnRot_Rm = E.collapsRot:AddButton('>')
-        UI:Config(E.btnRot_Rm, {
-            IDContext = 'awdddddawdawd',
-            Disabled  = true,
-            SameLine  = true,
-            OnClick   = function(e)
-                RotateEntity(_GLL.selectedEntity, 'z', 100, E.modRotSlider.Value[1], 'Light')
+                if not _GLL.selectedUuid then return end
+                _GLL.RotDragValues[_GLL.selectedUuid] = _GLL.RotDragValues[_GLL.selectedUuid] or {0, 0, 0}
+                _GLL.RotDragValues[_GLL.selectedUuid][3] = 0
+                E.slRotRollSlider.Value = {0, 0, 0, 0}
+                local r = _GLL.RotDragValues[_GLL.selectedUuid]
+                RotateEntityAbs(_GLL.selectedEntity, r[1], r[2], r[3])
             end
         })
 
@@ -1629,40 +1618,27 @@ function MainTab(p)
 
 
 
-    E.slRotYawSlider = E.collapsRot:AddSlider('', 0, -1000, 1000, 0.1)
+    E.slRotYawSlider = E.collapsRot:AddDrag('', 0.1, 0, 360)
         UI:Config(E.slRotYawSlider, {
-            IDContext    = 'yaw',
+            WrapAround   = true,
             Value        = {0, 0, 0, 0},
             OnChange     = function(e)
-                RotateEntity(_GLL.selectedEntity, 'y', e.Value[1], E.modRotSlider.Value[1], 'Light')
-                E.slRotYawSlider.Value = {0, 0, 0, 0}
+                if not _GLL.selectedUuid then return end
+                _GLL.RotDragValues[_GLL.selectedUuid] = _GLL.RotDragValues[_GLL.selectedUuid] or {0, 0, 0}
+                _GLL.RotDragValues[_GLL.selectedUuid][2] = e.Value[1]
+                local r = _GLL.RotDragValues[_GLL.selectedUuid]
+                RotateEntityAbs(_GLL.selectedEntity, r[1], r[2], r[3])
             end,
             OnRightClick = function(e)
-                RotateEntity(_GLL.selectedEntity, 'y', 90, 1, 'Light')
+                if not _GLL.selectedUuid then return end
+                _GLL.RotDragValues[_GLL.selectedUuid] = _GLL.RotDragValues[_GLL.selectedUuid] or {0, 0, 0}
+                _GLL.RotDragValues[_GLL.selectedUuid][2] = 0
+                E.slRotYawSlider.Value = {0, 0, 0, 0}
+                local r = _GLL.RotDragValues[_GLL.selectedUuid]
+                RotateEntityAbs(_GLL.selectedEntity, r[1], r[2], r[3])
             end
         })
 
-
-
-    E.btnRot_Yp = E.collapsRot:AddButton('<')
-        UI:Config(E.btnRot_Yp, {
-            IDContext = 'adwdawddddawdawd',
-            SameLine  = true,
-            OnClick   = function(e)
-                RotateEntity(_GLL.selectedEntity, 'y', -100, E.modRotSlider.Value[1], 'Light')
-            end
-        })
-
-
-
-    E.btnRot_Ym = E.collapsRot:AddButton('>')
-        UI:Config(E.btnRot_Ym, {
-            IDContext = 'awdddddddddawdawd',
-            SameLine  = true,
-            OnClick   = function(e)
-                RotateEntity(_GLL.selectedEntity, 'y', 100, E.modRotSlider.Value[1], 'Light')
-            end
-        })
 
 
 
@@ -1713,14 +1689,14 @@ function MainTab(p)
 
 
 
-    E.checkPMSrc = p:AddCheckbox('PhotoMode')
-        UI:Config(E.checkPMSrc, {
-            SameLine = true,
-            Disabled = false,
-            OnChange = function(e)
-                SourcePhotoMode(e.Checked)
-            end
-        })
+    -- E.checkPMSrc = p:AddCheckbox('PhotoMode')
+    --     UI:Config(E.checkPMSrc, {
+    --         SameLine = true,
+    --         Disabled = false,
+    --         OnChange = function(e)
+    --             SourcePhotoMode(e.Checked)
+    --         end
+    --     })
 
 
 
@@ -1881,4 +1857,3 @@ for _, ent in pairs(Ext.Entity.GetAllEntitiesWithComponent('GameObjectVisual')) 
     end
 end
 ]]--
-

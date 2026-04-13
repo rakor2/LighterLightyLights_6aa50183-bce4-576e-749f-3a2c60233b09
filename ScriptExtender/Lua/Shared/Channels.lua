@@ -8,6 +8,7 @@ local Channels = {
 	'EntityTranslate',
 	'EntityRotation',
 	'EntityRotationOrbit',
+	'CurrentOrbit',
 
 	'SaveLoadLightPos',
 
@@ -47,6 +48,9 @@ local Channels = {
 
 	'SceneSaver',
 	'SceneAnimate',
+
+	'Source',
+
 }
 
 for _, channel in pairs(Channels) do

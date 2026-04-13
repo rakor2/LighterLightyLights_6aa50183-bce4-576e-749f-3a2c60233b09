@@ -112,7 +112,7 @@ end
 
 Ch.CreateLight:SetRequestHandler(function(Data)
     local OFFSET = 2
-    local x, y, z = table.unpack(getSourcePosition())
+    local x, y, z = table.unpack(Data.Position)
 
     local HumanRotation = {0, 0, 0}
 
@@ -129,13 +129,13 @@ end)
 
 Ch.DuplicateLight:SetRequestHandler(function()
     if not _GLL.selectedUuid then return end
+    local Prev    = _GLL.LightParametersServer[_GLL.selectedUuid]
 
-    local prev    = _GLL.LightParametersServer[_GLL.selectedUuid]
-    local x, y, z = table.unpack(prev.Translate)
-    local HumanRotation = prev.HumanRotation
+
+    local x, y, z = table.unpack(Prev.Translate)
+    local HumanRotation = Prev.HumanRotation
 
     local Response = CreateLight(x, y, z, HumanRotation, _GLL.OrbitParams[_GLL.selectedUuid])
-    if not Response then return nil end
 
     Response[3] = _GLL.LightParametersServer[Response[2]]
 
@@ -347,13 +347,40 @@ end)
 
 
 
+Ch.Source:SetHandler(function(Data)
+    -- local uuid = Data
+    _GLL.SourceTranslate = Data
+end)
+
+
+
 function getSourcePosition()
-    if _GLL.States.sourceClient then
-        SourceTranslate = _GLL.SourceClientTranslate
-    else
-        SourceTranslate = _C().Transform.Transform.Translate
+    local SourceTranslate
+    local userId = _C().ServerCharacter.UserID
+    Ch.Source:RequestToClient('', userId, function(Response)
+        DDump(Response)
+        return Response
+    end)
+    -- local SourceTranslate = _GLL.sourceEntity.Transform.Transform.Translate
+
+    -- if _GLL.States.sourceClient then
+    --     SourceTranslate = _GLL.pointEntity.Transform.Transform.Translate
+    -- else
+    --     SourceTranslate = _C().Transform.Transform.Translate
+    -- end
+end
+
+
+
+function broadcastEntityTransformsAndOrbit(Transforms, Orbit)
+    if not Orbit then
+        local uuid = _GLL.selectedUuid
+        local centerX, centerY, centerZ = table.unpack(_GLL.SourceTranslate) --- idk, fix later when buuged???????
+        local angle, radius, height = GetOrbitParameters(uuid, centerX, centerY, centerZ)
+        Orbit = {angle, radius, height}
     end
-    return SourceTranslate
+    Ch.CurrentOrbit:Broadcast(Orbit)
+    Ch.CurrentEntityTransform:Broadcast(Transforms)
 end
 
 
@@ -363,18 +390,18 @@ Ch.StickToCamera:SetHandler(function (Data)
     if not _GLL.LightParametersServer  then return end
     if not _GLL.LightParametersServer[_GLL.selectedUuid] then return end
 
-    local uuid = _GLL.selectedUuid
-    local x,y,z = table.unpack(Data.Translate)
+    local uuid     = _GLL.selectedUuid
+    local x,y,z    = table.unpack(_GLL.SourceTranslate)
     local rx,ry,rz = table.unpack(Helpers.Math.QuatToEuler(Data.RotationQuat))
 
-    _GLL.LightParametersServer[_GLL.selectedUuid].Translate = {x, y, z}
-    _GLL.LightParametersServer[_GLL.selectedUuid].RotationQuat = Data.RotationQuat
+    _GLL.LightParametersServer[_GLL.selectedUuid].Translate     = {x, y, z}
+    _GLL.LightParametersServer[_GLL.selectedUuid].RotationQuat  = Data.RotationQuat
     _GLL.LightParametersServer[_GLL.selectedUuid].HumanRotation = {rx, ry, rz}
 
     Osi.ToTransform(_GLL.selectedUuid, x, y, z, rx, ry, rz)
 
     --- For look at
-    local centerX, centerY, centerZ = table.unpack(getSourcePosition())
+    local centerX, centerY, centerZ = table.unpack(_GLL.SourceTranslate)
     local curX, curY, curZ = Osi.GetPosition(uuid)
     local dx, dy, dz = centerX - curX, centerY - curY, centerZ - curZ
     local distance = math.sqrt(dx*dx + dy*dy + dz*dz)
@@ -388,6 +415,22 @@ Ch.StickToCamera:SetHandler(function (Data)
     params.userPitchOffset = curRx - basePitch
     _GLL.OrbitParams[uuid] = params
 
+    ---TBD: temp garbo
+    local angle, radius, height = GetOrbitParameters(uuid, centerX, centerY, centerZ)
+
+    local entity = _GLL.selectedEntity
+    local RotationQuat = Data.RotationQuat
+    local Translate = {x, y, z}
+    -- local rx, ry, rz = Osi.GetRotation(uuid)
+    local HumanRotation = {rx, ry, rz}
+
+    local Transforms = {
+        Translate     = Translate,
+        RotationQuat  = RotationQuat,
+        HumanRotation = HumanRotation
+    }
+
+    broadcastEntityTransformsAndOrbit(Transforms, {angle, radius, height})
 
     UpdateMarkerPosition()
     UpdateGoboPosition()
@@ -474,6 +517,7 @@ local function GetBaseAngles(uuid, centerX, centerY, centerZ, heightOffset)
 end
 
 
+
 Ch.EntityTranslate:SetHandler(function (Data)
     if not _GLL.selectedUuid then return end
 
@@ -481,7 +525,6 @@ Ch.EntityTranslate:SetHandler(function (Data)
     local step = Data.step
     local OFFSET = Data.offset
     local entity = _GLL.selectedEntity
-    -- local uuid = _GLL.selectedUuid
     local uuid = Data.lightUuid
     local rx, ry, rz = Osi.GetRotation(uuid)
     local x, y, z = Osi.GetPosition(uuid)
@@ -499,7 +542,7 @@ Ch.EntityTranslate:SetHandler(function (Data)
         Osi.ToTransform(uuid, x, y, z, rx, ry, rz)
 
     else
-        local x, y, z = table.unpack(getSourcePosition())
+        local x, y, z = table.unpack(_GLL.SourceTranslate)
         Osi.ToTransform(uuid, x, y, z, rx, ry, rz)
     end
 
@@ -512,7 +555,7 @@ Ch.EntityTranslate:SetHandler(function (Data)
     _GLL.LightParametersServer[uuid].RotationQuat = RotationQuat
     _GLL.LightParametersServer[uuid].HumanRotation = HumanRotation
 
-    local Response = {
+    local Transforms = {
         Translate = Translate,
         RotationQuat = RotationQuat,
         HumanRotation = HumanRotation
@@ -520,7 +563,7 @@ Ch.EntityTranslate:SetHandler(function (Data)
 
     -- _GLL.OrbitParams[uuid] = nil
 
-    Ch.CurrentEntityTransform:Broadcast(Response)
+    broadcastEntityTransformsAndOrbit(Transforms, nil)
 
     UpdateMarkerPosition()
     UpdateGoboPosition()
@@ -539,57 +582,59 @@ Ch.EntityRotation:SetHandler(function (Data)
     local entity = _GLL.selectedEntity
     local x, y, z = Osi.GetPosition(uuid)
     local Translate = entity.Transform.Transform.Translate
-
     _GLL.LightParametersServer[uuid].Translate = Translate
 
-    if axis == 'x' or axis == 'y' or axis == 'z' then
+    local RotationQuat, HumanRotation
+
+    if Data.absolute then
+        local rx, ry, rz = Data.rx, Data.ry, Data.rz
+        Osi.ToTransform(uuid, x, y, z, rx, ry, rz)
+
+        RotationQuat = entity.Transform.Transform.RotationQuat
+        HumanRotation = {rx, ry, rz}
+        local centerX, centerY, centerZ = table.unpack(_GLL.SourceTranslate)
+        local basePitch, baseYaw = GetBaseAngles(uuid, centerX, centerY, centerZ)
+        local params = _GLL.OrbitParams[uuid] or {}
+        params.userYawOffset   = ry - baseYaw
+        params.userPitchOffset = rx - basePitch
+        _GLL.OrbitParams[uuid] = params
+
+    elseif axis == 'x' or axis == 'y' or axis == 'z' then
         local delta = math.rad(Data.offset / Data.step)
         local currentQuat = entity.Transform.Transform.RotationQuat
         local axisVec = ({x={1,0,0}, y={0,1,0}, z={0,0,1}})[axis]
         local newQuat = Ext.Math.QuatRotateAxisAngle(currentQuat, axisVec, delta)
+        HumanRotation = Helpers.Math.QuatToEuler(newQuat)
 
-        local HumanRotation = Helpers.Math.QuatToEuler(newQuat)
         local rx, ry, rz = table.unpack(HumanRotation)
         Osi.ToTransform(uuid, x, y, z, rx, ry, rz)
 
-        local RotationQuat = entity.Transform.Transform.RotationQuat
-        _GLL.LightParametersServer[uuid].RotationQuat = RotationQuat
-        _GLL.LightParametersServer[uuid].HumanRotation = HumanRotation
-
-        local Response = {Translate = Translate, RotationQuat = RotationQuat, HumanRotation = HumanRotation}
-        Ch.CurrentEntityTransform:Broadcast(Response)
-
-        local centerX, centerY, centerZ = table.unpack(getSourcePosition())
+        RotationQuat = entity.Transform.Transform.RotationQuat
+        local centerX, centerY, centerZ = table.unpack(_GLL.SourceTranslate)
         local basePitch, baseYaw = GetBaseAngles(uuid, centerX, centerY, centerZ)
         local curRx, curRy, curRz = Osi.GetRotation(uuid)
         local params = _GLL.OrbitParams[uuid] or {}
-        params.userYawOffset = curRy - baseYaw
+        params.userYawOffset   = curRy - baseYaw
         params.userPitchOffset = curRx - basePitch
         _GLL.OrbitParams[uuid] = params
-
-        UpdateMarkerPosition()
-        UpdateGoboPosition()
-        UpdateBeamPosition()
-        return Response
-
     else
-        local centerX, centerY, centerZ = table.unpack(getSourcePosition())
+        local centerX, centerY, centerZ = table.unpack(_GLL.SourceTranslate)
         local resetPitch, resetYaw = GetBaseAngles(uuid, centerX, centerY, centerZ, 1.3)
         Osi.ToTransform(uuid, x, y, z, resetPitch, resetYaw, 0)
-
-        local RotationQuat = entity.Transform.Transform.RotationQuat
-        local HumanRotation = {resetPitch, resetYaw, 0}
-        _GLL.LightParametersServer[uuid].RotationQuat = RotationQuat
-        _GLL.LightParametersServer[uuid].HumanRotation = HumanRotation
+        RotationQuat = entity.Transform.Transform.RotationQuat
+        HumanRotation = {resetPitch, resetYaw, 0}
         _GLL.OrbitParams[uuid] = {userYawOffset = 0, userPitchOffset = 0}
-
-        local Response = {Translate = Translate, RotationQuat = RotationQuat, HumanRotation = HumanRotation}
-        Ch.CurrentEntityTransform:Broadcast(Response)
-        UpdateMarkerPosition()
-        UpdateGoboPosition()
-        UpdateBeamPosition()
-        return Response
     end
+
+    _GLL.LightParametersServer[uuid].RotationQuat = RotationQuat
+    _GLL.LightParametersServer[uuid].HumanRotation = HumanRotation
+    local Transforms = {Translate = Translate, RotationQuat = RotationQuat, HumanRotation = HumanRotation}
+    Ch.CurrentEntityTransform:Broadcast(Transforms)
+
+    UpdateMarkerPosition()
+    UpdateGoboPosition()
+    UpdateBeamPosition()
+    return Transforms
 end)
 
 
@@ -603,7 +648,7 @@ Ch.EntityRotationOrbit:SetHandler(function (Data)
     -- local uuid = _GLL.selectedUuid
     local uuid = Data.lightUuid
     local entity = Ext.Entity.Get(uuid)
-    local centerX, centerY, centerZ = table.unpack(getSourcePosition())
+    local centerX, centerY, centerZ = table.unpack(_GLL.SourceTranslate)
     local curX, curY, curZ = Osi.GetPosition(uuid)
     local curRx, curRy, curRz = Osi.GetRotation(uuid)
 
@@ -647,7 +692,7 @@ Ch.EntityRotationOrbit:SetHandler(function (Data)
         params.radius = change/100
 
     else
-        local charX, charY, charZ = table.unpack(getSourcePosition())
+        local charX, charY, charZ = table.unpack(_GLL.SourceTranslate)
         Osi.ToTransform(uuid, charX, charY, charZ, curRx, curRy, curRz)
         _GLL.OrbitParams[uuid] = nil
         return
@@ -721,7 +766,7 @@ function InitOrbitParamsFromCurrent(uuid, params, centerX, centerY, centerZ)
 
     params.userYawOffset = ry - baseYaw
     params.userPitchOffset = rx - basePitch
-
+    return
 end
 
 
@@ -771,6 +816,3 @@ Ch.GetDaggers:SetHandler(function(Data)
     Osi.TemplateAddTo('bfadc906-02cd-442f-beff-04d5a40543fe', character, 1)
     Osi.TemplateAddTo('bfadc906-02cd-442f-beff-04d5a40543fe', character, 1)
 end)
-
-
-

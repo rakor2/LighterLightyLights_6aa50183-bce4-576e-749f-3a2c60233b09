@@ -1,13 +1,17 @@
 Ch.CreateOriginPoint:SetRequestHandler(function (Data)
     if _GLL.States.pointIsExisting then return end
-    local x, y, z = table.unpack(getSourcePosition())
-    _GLL.pointUuid = Osi.CreateAt(lightMarkerGUID, x, y, z, 0, 0, '')
-    _GLL.pointEntity = Ext.Entity.Get(_GLL.pointUuid)
-    _GLL.States.pointIsExisting = true
-    local Response = {
-        _GLL.pointUuid
-    }
-    return Response
+    local x, y, z = table.unpack(Data.Position)
+    if z then
+        _GLL.pointUuid = Osi.CreateAt(lightMarkerGUID, x, y, z, 0, 0, '')
+        _GLL.pointEntity = Ext.Entity.Get(_GLL.pointUuid)
+        _GLL.States.pointIsExisting = true
+        local Response = {
+            _GLL.pointUuid
+        }
+        return Response
+    else
+        DWarn('CreateOriginPoint|No position')
+    end
 end)
 
 
@@ -51,6 +55,7 @@ Ch.MoveOriginPoint:SetHandler(function (Data)
     end
 
 end)
+
 
 
 Ch.ToCamOriginPoint:SetHandler(function (Data)

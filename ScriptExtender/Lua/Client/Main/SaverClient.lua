@@ -44,17 +44,21 @@ function Saver2Tab(p)
             local rtUuid     = GSC.CreatedLightsServer[oldUuid]
             local LPS        = GSS.LightParametersServer[oldUuid]
 
-            CreateLight(rtUuid)
 
             local Color     = GSC.LightParametersClient[oldUuid].Color
             local lightType = GSC.LightParametersClient[oldUuid].LightType
             local radius    = GSC.LightParametersClient[oldUuid].Radius
 
-            if lightType == 'Spotlight'   then lt = 'Spot' end
-            if lightType == 'Directional' then lt = 'Direction' end
-            Ext.Template.GetRootTemplate('aca228c3-f0c5-41e0-bc00-d11ddee12ed0').LightType = lt or 'Point'
-            Ext.Template.GetRootTemplate('aca228c3-f0c5-41e0-bc00-d11ddee12ed0').Color = Color or {1,1,1}
-            Ext.Template.GetRootTemplate('aca228c3-f0c5-41e0-bc00-d11ddee12ed0').Radius = radius or 6
+            Ext.OnNextTick(function()
+                if lightType == 'Spotlight'   then lt = 'Spot' end
+                if lightType == 'Directional' then lt = 'Direction' end
+                Ext.Template.GetRootTemplate('aca228c3-f0c5-41e0-bc00-d11ddee12ed0').LightType = lt or 'Point'
+                Ext.Template.GetRootTemplate('aca228c3-f0c5-41e0-bc00-d11ddee12ed0').Color = Color or {1,1,1}
+                Ext.Template.GetRootTemplate('aca228c3-f0c5-41e0-bc00-d11ddee12ed0').Radius = radius or 5
+                --- Int = 100
+            end)
+
+            CreateLight(rtUuid)
 
             Helpers.Timer:OnTicks(25, function()
                 local newUuid     = _GLL.selectedUuid
