@@ -1097,6 +1097,53 @@ end
 
 
     E.saveLoadCollapse:AddSeparator()
+    E.exportPosButton = E.saveLoadCollapse:AddButton('Export')
+        UI:Config(E.exportPosButton, {
+            SameLine  = true,
+            OnClick   = function()
+                if not _GLL.SavedTransforms then return end
+
+                local json = Ext.Json.Stringify(_GLL.SavedTransforms)
+                Ext.IO.SaveFile('LightyLights/ExportedPositions.json', json)
+            end
+        })
 
 
+    E.importPosButton = E.saveLoadCollapse:AddButton('Import')
+        UI:Config(E.importPosButton, {
+            SameLine  = true,
+            OnClick   = function()
+                if not _GLL.DummyNameMap then return end
+
+                local json = Ext.IO.LoadFile('LightyLights/ExportedPositions.json')
+                if not json then DPrint('LOL') return end
+
+                local importData = Ext.Json.Parse(json)
+                if not importData then DPrint('XD') return end
+
+                local savedIndex = E.visTemComob.SelectedIndex
+                for dummyName, saved in pairs(importData) do
+                    local entity = _GLL.DummyNameMap[dummyName]
+                    if entity then
+                        entity.Visual.Visual.WorldTransform.Translate    = {saved.pos[1],   saved.pos[2],   saved.pos[3]}
+                        entity.Visual.Visual.WorldTransform.RotationQuat = {saved.rot[1],   saved.rot[2],   saved.rot[3], saved.rot[4]}
+                        entity.Visual.Visual.WorldTransform.Scale        = {saved.scale[1], saved.scale[2], saved.scale[3]}
+                        entity.DummyOriginalTransform.Transform.Translate    = {saved.pos[1],   saved.pos[2],   saved.pos[3]}
+                        entity.DummyOriginalTransform.Transform.RotationQuat = {saved.rot[1],   saved.rot[2],   saved.rot[3], saved.rot[4]}
+                        entity.DummyOriginalTransform.Transform.Scale        = {saved.scale[1], saved.scale[2], saved.scale[3]}
+
+                        for i, name in ipairs(E.visTemComob.Options) do
+                            if name == dummyName then
+                                E.visTemComob.SelectedIndex = i - 1
+                                break
+                            end
+                        end
+                        SaveVisTempCharacterPosition()
+                    end
+                end
+
+                E.visTemComob.SelectedIndex = savedIndex
+                UpdateCharacterInfo(E.visTemComob.SelectedIndex + 1)
+            end
+        })
 end
