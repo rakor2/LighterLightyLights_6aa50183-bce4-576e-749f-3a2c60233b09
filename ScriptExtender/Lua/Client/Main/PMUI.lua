@@ -11,6 +11,22 @@ function BetterPMTab(parent)
 
 
     local camSepa = parent:AddSeparatorText('Camera controls')
+    E.checkPause = parent:AddCheckbox('Unpause')
+        UI:Config(E.checkPause, {
+            OnChange = function(e)
+                if not _GLL.pauseEntity then
+                    _GLL.pauseEntity = Ext.Entity.GetAllEntitiesWithComponent('Pause')[1]
+                end
+
+                if _GLL.pauseEntity then
+                    if e.Checked then
+                        _GLL.pauseEntity:RemoveComponent('Pause')
+                    else
+                        _GLL.pauseEntity:CreateComponent('Pause')
+                    end
+                end
+            end
+        })
 
     E.camCollapse = parent:AddCollapsingHeader('Parameters')
     E.camCollapse.DefaultOpen = openByDefaultPMCamera
