@@ -262,6 +262,7 @@ function BZAgreed()
     E.btnPose       = {}
     E.btnX2         = {}
     E.btnUpd        = {}
+    E.btnMask       = {}
     E.btnExp        = {}
     E.slBZ          = {}
     E.collapseGroup = {}

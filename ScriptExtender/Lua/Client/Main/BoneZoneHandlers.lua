@@ -1327,6 +1327,10 @@ function CreatePoseButton(catName, poseName)
             E.btnPose[poseName]:Destroy()
             E.btnX2[poseName]:Destroy()
             E.btnUpd[poseName]:Destroy()
+            if E.btnMask and E.btnMask[poseName] then
+                E.btnMask[poseName]:Destroy()
+                E.btnMask[poseName] = nil
+            end
             E.btnUpd[poseName]  = nil
             E.btnPose[poseName] = nil
             E.btnX2[poseName] = nil
@@ -1358,6 +1362,16 @@ function CreatePoseButton(catName, poseName)
             SameLine = true,
             OnClick = function(e)
                 UI:Confirm(E.btnUpd[poseName], IDPoses[catName][poseName][xd])
+            end
+        })
+
+
+    E.btnMask = E.btnMask or {}
+    E.btnMask[poseName] = E.catTree[catName]:AddButton('m')
+        UI:Config(E.btnMask[poseName], {
+            SameLine = true,
+            OnClick = function(e)
+                ApplyPoseMask(poseName, catName)
             end
         })
 
@@ -1395,6 +1409,55 @@ end
 
 
 
+function ApplyPoseMask(poseName, catName)
+    if not _GLL.States.inPhotoMode then return end
+
+    local PoseFile
+    if _GLL.ModPosePaths and _GLL.ModPosePaths[poseName] then
+        PoseFile = Ext.IO.LoadFile(_GLL.ModPosePaths[poseName], 'data')
+    else
+        PoseFile = Ext.IO.LoadFile(localPosePath(catName, poseName))
+               or Ext.IO.LoadFile('LightyLights/Poses/' .. poseName .. '.json')
+    end
+
+    if not PoseFile then return DPrint('Pose not found: ' .. poseName) end
+
+    local MaskPose   = Ext.Json.Parse(PoseFile)
+    local uuid       = getSelectedDummyOwnerUuid()
+
+    _GLL.PoseValues[uuid] = _GLL.PoseValues[uuid] or {}
+
+    for varName, Mask in pairs(MaskPose) do
+        local hv = Mask.HumanValue
+        if hv then
+            local isDefault
+            if varName:find('_Scale') then
+                isDefault = (hv[1] == 1 and hv[2] == 1 and hv[3] == 1)
+            else
+                isDefault = (hv[1] == 0 and hv[2] == 0 and hv[3] == 0)
+            end
+
+            if not isDefault then
+                Utils:EnsureTable(_GLL.PoseValues, uuid, varName)
+                if varName:find('_Rot') then
+                    local q = EulerToQuat(hv)
+                    _GLL.PoseValues[uuid][varName]['Quats']      = q
+                    _GLL.PoseValues[uuid][varName]['HumanValue'] = {hv[1], hv[2], hv[3]}
+                    SetValueToGenomeVariable(getSelectedDummy(), varName, q)
+                else
+                    _GLL.PoseValues[uuid][varName]['HumanValue'] = {hv[1], hv[2], hv[3]}
+                    SetValueToGenomeVariable(getSelectedDummy(), varName, {hv[1], hv[2], hv[3]})
+                end
+            end
+        end
+    end
+
+    SetVarValuesToSliders()
+    DPrint('Pose Mask applied: ' .. poseName)
+end
+
+
+
 function FilterPoses(searchText)
     searchText = searchText:lower()
 
@@ -1411,11 +1474,13 @@ function FilterPoses(searchText)
                         E.btnPose[poseName].Visible = true
                         E.btnX2[poseName].Visible = true
                         E.btnUpd[poseName].Visible = true
+                        if E.btnMask and E.btnMask[poseName] then E.btnMask[poseName].Visible = true end
                         hasFilteredPose = true
                     else
                         E.btnPose[poseName].Visible = false
                         E.btnX2[poseName].Visible = false
                         E.btnUpd[poseName].Visible = false
+                        if E.btnMask and E.btnMask[poseName] then E.btnMask[poseName].Visible = false end
                     end
                 end
             end
