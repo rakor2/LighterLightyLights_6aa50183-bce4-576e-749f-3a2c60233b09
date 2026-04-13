@@ -2,8 +2,78 @@ Ext.Require('_Libs/_InitLibs.lua')
 -- Ext.Require("Shared/_Libs.lua")
 Ext.Require('Shared/_init.lua')
 
+
+gizmoLibError = false
+
 if Mods.GizmoLib then
-    Utils:StripPrefixes(Mods.LL2, Mods.GizmoLib)
+    Utils.StripPrefixes(Mods.LL2, Mods.GizmoLib)
+
+    --- IDK WHY IT CAN'T KEEP UP WITH INITIALIZATIONS FOR SOME PEOPLE T_T
+    --- HOPEFULLY THIS WILL HELP
+    GL_GLOBALS = GL_GLOBALS or {}
+    GL_GLOBALS = Mods.GizmoLib.GL_GLOBALS
+
+    function initGizmoLibColors()
+        if GL_GLOBALS and Mods.GizmoLib.GL_GLOBALS then
+            local tb = GL_GLOBALS.TransformToolbar
+            tb.TopToolBar:SetColor("WindowBg", Style.Colors.windowBg)
+            tb.TopToolBar:SetColor("Text", Style.Colors.textColor)
+            tb.TopToolBar:SetColor("FrameBg", Style.Colors.frameBg)
+            tb.TopToolBar:SetColor("TextDisabled", Style.Colors.textDisabled)
+            tb.TopToolBar:SetColor("Button", Style.Colors.button)
+
+            tb.CloseButton:SetColor("Button", Style.Colors.special)
+            tb.CloseButton:SetColor("ButtonActive", Style.Colors.buttonActive)
+            tb.CloseButton:SetColor("ButtonHovered", Style.Colors.buttonHovered)
+            Mods.GizmoLib.MCM.Set("boxsel_border_color", Style.Colors.special)
+        end
+    end
+
+
+
+    _GLL.gizmo = API.CreateManipulator()
+    _GLL.gizmo.Config.IsSelectableEntity = function(info)
+        return info.Type == "Unknown"
+    end
+
+
+
+    API.Events.OnTransformApplied:Subscribe(function(Data)
+        for k, Target in pairs(Data.Targets) do
+            local dummy = Ext.Entity.Get(Target.Guid).HasDummy.Entity
+            local Ser = Ext.Types.Serialize(dummy.Visual.Visual.WorldTransform)
+            Ext.Types.Unserialize(dummy.DummyOriginalTransform.Transform, Ser)
+            -- DDump(dummy.Visual.Visual.WorldTransform)
+        end
+    end)
+
+
+
+    API.Events.OnClearSelection:Subscribe(function(Data)
+        if not _GLL.States.inPhotoMode then return end
+        _GLL.GizmoDummySelections = {}
+        for k, v in pairs(_GLL.DummyNames) do
+            E.checkAddTarget[v].Checked = false
+        end
+    end)
+
+
+
+    API.Events.OnCommandExecuted:Subscribe(function(Data)
+        DDump(Data)
+    end)
+
+
+
+    API.Events.OnMoveToCursor:Subscribe(function(Data)
+        if not _GLL.States.inPhotoMode then return end
+        local Dummies = Ext.Entity.GetAllEntitiesWithComponent('Dummy')
+        for k, dummy in pairs(Dummies) do
+            local Ser = Ext.Types.Serialize(dummy.Visual.Visual.WorldTransform)
+            Ext.Types.Unserialize(dummy.DummyOriginalTransform.Transform, Ser)
+        end
+    end)
+
 end
 
 
