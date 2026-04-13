@@ -10,7 +10,9 @@ function BetterPMTab(parent)
     end
 
 
-    local camSepa = parent:AddSeparatorText('Camera controls')
+    parent:AddSeparatorText('Photo Mode controls')
+
+
     E.checkPause = parent:AddCheckbox('Unpause')
         UI:Config(E.checkPause, {
             OnChange = function(e)
@@ -27,6 +29,8 @@ function BetterPMTab(parent)
                 end
             end
         })
+
+
 
     E.btnSeeThr = parent:AddButton('Disable SeeThrough walls circle thingy type thing')
         UI:Config(E.btnSeeThr, {
@@ -52,12 +56,18 @@ function BetterPMTab(parent)
                 end
             end
         })
+
+
+
     local function DistanceSq(a, b)
         local dx = a[1] - b[1]
         local dy = a[2] - b[2]
         local dz = a[3] - b[3]
         return dx*dx + dy*dy + dz*dz
     end
+
+
+
     local function removeFadeables()
         local BATCH_SIZE = 10
         local TICK_INTERVAL = 10
@@ -164,13 +174,13 @@ end
 
     Ext.Stats.GetStatsManager().ExtraData['PhotoModeCameraMovementSpeed'] = defaultCameraSpeed
 
-    E.camSpeed = E.camCollapse:AddSlider('Speed', 0, 0.01, 100, 0.1)
+    E.camSpeed = E.camCollapse:AddSlider('Speed [W SPEED]', 0, 0.01, 100, 0.1)
         UI:Config(E.camSpeed, {
-            SameLine   = false,
+            SameLine    = false,
             Logarithmic = true,
-            Components = 1,
-            Value      = {defaultCameraSpeed, 0, 0, 0},
-            OnChange   = function()
+            Components  = 1,
+            Value       = {defaultCameraSpeed, 0, 0, 0},
+            OnChange    = function()
                 Ext.Stats.GetStatsManager().ExtraData['PhotoModeCameraMovementSpeed'] = E.camSpeed.Value[1]
             end
         })
@@ -197,12 +207,12 @@ end
 
 
 
-    E.dofCollapse = parent:AddCollapsingHeader("DoF")
+    E.dofCollapse = parent:AddCollapsingHeader('DoF')
     E.dofCollapse.DefaultOpen = false
 
 
 
-    E.dofStrength = E.dofCollapse:AddSlider("Strength", 0, 22, 1, 0.001)
+    E.dofStrength = E.dofCollapse:AddSlider('Strength', 0, 22, 1, 0.001)
         UI:Config(E.dofStrength, {
             SameLine    = false,
             Logarithmic = true,
@@ -210,7 +220,7 @@ end
             Value       = {1, 0, 0, 0},
             OnChange    = function()
                 local success, result = pcall(function()
-                    return Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFStrength
+                    return Ext.UI.GetRoot():Find('ContentRoot'):Child(21).DataContext.DOFStrength
                 end)
 
                 if success and result then
@@ -385,8 +395,8 @@ end
         UpdateCharacterInfo(selectedCharacter)
         SetVarValuesToSliders()
         LoadAttachState(getSelectedDummy())
-        PM.DummyWidgets[selectedId].Window:SetColor('WindowBg', Style.Colors.special)
-        SetHighlightColor(PM.DummyWidgets[selectedId].Window)
+        PM.DummyWidgets[dummyId].Window:SetColor('WindowBg', Style.Colors.special)
+        SetHighlightColor(PM.DummyWidgets[dummyId].Window)
     end
 
 
@@ -464,10 +474,9 @@ end
         E.checkPreventGizmo = parent:AddCheckbox('Prevent gizmo when selecting in Dummies')
     end
 
-    parent:AddDummy(0,0)
     E.checkDummiesPop = parent:AddCheckbox('Dummies popup')
         UI:Config(E.checkDummiesPop, {
-            SameLine = true,
+            SameLine = false,
             OnChange = function(e)
                 if not _GLL.States.inPhotoMode then E.checkDummiesPop.Checked = false return end
                 for _, v in pairs(PM.DummyWidgets) do
@@ -609,6 +618,7 @@ end
                 UpdateCharacterInfo(selectedCharacter)
             end
         })
+
 
 
     E.charPosCollapse:AddSeparator()
@@ -801,141 +811,141 @@ end
 
     E.collapseParts = parent:AddCollapsingHeader('Other body parts')
 
-    E.treeTail = E.collapseParts:AddTree('Tail')
+    -- E.treeTail = E.collapseParts:AddTree('Tail')
 
-    E.tailPosCollapse = E.treeTail:AddTree("Position")
-        UI:Config(E.tailPosCollapse, {
-            DefaultOpen  = false
-        })
-
-
-
-    E.tposX = E.tailPosCollapse:AddSlider("W/E", 0, -100, 100, 1)
-        UI:Config(E.tposX, {
-            SameLine   = false,
-            Components = 1,
-            Value      = {0, 0, 0, 0},
-            OnChange   = function()
-                local value = E.tposX.Value[1]
-                MoveTail("x", value, 3000, selectedCharacter)
-                E.tposX.Value = {0, 0, 0, 0}
-            end
-        })
+    -- E.tailPosCollapse = E.treeTail:AddTree("Position")
+    --     UI:Config(E.tailPosCollapse, {
+    --         DefaultOpen  = false
+    --     })
 
 
 
-    E.tposY = E.tailPosCollapse:AddSlider("D/U", 0, -100, 100, 1)
-        UI:Config(E.tposY, {
-            SameLine   = false,
-            Components = 1,
-            Value      = {0, 0, 0, 0},
-            OnChange   = function()
-                local value = E.tposY.Value[1]
-                MoveTail("y", value, 3000, selectedCharacter)
-                E.tposY.Value = {0, 0, 0, 0}
-            end
-        })
+    -- E.tposX = E.tailPosCollapse:AddSlider("W/E", 0, -100, 100, 1)
+    --     UI:Config(E.tposX, {
+    --         SameLine   = false,
+    --         Components = 1,
+    --         Value      = {0, 0, 0, 0},
+    --         OnChange   = function()
+    --             local value = E.tposX.Value[1]
+    --             MoveTail("x", value, 3000, selectedCharacter)
+    --             E.tposX.Value = {0, 0, 0, 0}
+    --         end
+    --     })
 
 
 
-    E.tposZ = E.tailPosCollapse:AddSlider("S/N", 0, -100, 100, 1)
-        UI:Config(E.tposZ, {
-            SameLine   = false,
-            Components = 1,
-            Value      = {0, 0, 0, 0},
-            OnChange   = function()
-                local value = E.tposZ.Value[1]
-                MoveTail("z", value, 3000, selectedCharacter)
-                E.tposZ.Value = {0, 0, 0, 0}
-            end
-        })
+    -- E.tposY = E.tailPosCollapse:AddSlider("D/U", 0, -100, 100, 1)
+    --     UI:Config(E.tposY, {
+    --         SameLine   = false,
+    --         Components = 1,
+    --         Value      = {0, 0, 0, 0},
+    --         OnChange   = function()
+    --             local value = E.tposY.Value[1]
+    --             MoveTail("y", value, 3000, selectedCharacter)
+    --             E.tposY.Value = {0, 0, 0, 0}
+    --         end
+    --     })
 
 
 
-    E.resettPos = E.tailPosCollapse:AddButton("Reset")
-        UI:Config(E.resettPos, {
-            SameLine  = false,
-            OnClick   = function()
-                for i = 1, #_GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
-                    if _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
-                        _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(
-                            _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate)
-                        break
-                    end
-                end
-            end
-        })
+    -- E.tposZ = E.tailPosCollapse:AddSlider("S/N", 0, -100, 100, 1)
+    --     UI:Config(E.tposZ, {
+    --         SameLine   = false,
+    --         Components = 1,
+    --         Value      = {0, 0, 0, 0},
+    --         OnChange   = function()
+    --             local value = E.tposZ.Value[1]
+    --             MoveTail("z", value, 3000, selectedCharacter)
+    --             E.tposZ.Value = {0, 0, 0, 0}
+    --         end
+    --     })
 
 
 
-    E.tailPosCollapse:AddSeparator()
+    -- E.resettPos = E.tailPosCollapse:AddButton("Reset")
+    --     UI:Config(E.resettPos, {
+    --         SameLine  = false,
+    --         OnClick   = function()
+    --             for i = 1, #_GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
+    --                 if _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
+    --                     _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldTranslate(
+    --                         _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.Translate)
+    --                     break
+    --                 end
+    --             end
+    --         end
+    --     })
 
 
 
-    E.tailRotCollapse = E.treeTail:AddTree("Rotation")
-        UI:Config(E.tailRotCollapse, {
-            DefaultOpen = false
-        })
+    -- E.tailPosCollapse:AddSeparator()
 
 
 
-    E.trotX = E.tailRotCollapse:AddSlider("Pitch", 0, -100, 100, 1)
-        UI:Config(E.trotX, {
-            SameLine   = false,
-            Components = 1,
-            Value      = {0, 0, 0, 0},
-            OnChange   = function()
-                local value = E.trotX.Value[1]
-                RotateTail("x", value, 3000, selectedCharacter)
-                E.trotX.Value = {0, 0, 0, 0}
-            end
-        })
+    -- E.tailRotCollapse = E.treeTail:AddTree("Rotation")
+    --     UI:Config(E.tailRotCollapse, {
+    --         DefaultOpen = false
+    --     })
 
 
 
-    E.trotY = E.tailRotCollapse:AddSlider("Yaw", 0, -100, 100, 1)
-        UI:Config(E.trotY, {
-            SameLine   = false,
-            Components = 1,
-            Value      = {0, 0, 0, 0},
-            OnChange   = function()
-                local value = E.trotY.Value[1]
-                RotateTail("y", value, 3000, selectedCharacter)
-                E.trotY.Value = {0, 0, 0, 0}
-            end
-        })
+    -- E.trotX = E.tailRotCollapse:AddSlider("Pitch", 0, -100, 100, 1)
+    --     UI:Config(E.trotX, {
+    --         SameLine   = false,
+    --         Components = 1,
+    --         Value      = {0, 0, 0, 0},
+    --         OnChange   = function()
+    --             local value = E.trotX.Value[1]
+    --             RotateTail("x", value, 3000, selectedCharacter)
+    --             E.trotX.Value = {0, 0, 0, 0}
+    --         end
+    --     })
 
 
 
-    E.trotZ = E.tailRotCollapse:AddSlider("Roll", 0, -100, 100, 1)
-        UI:Config(E.trotZ, {
-            SameLine   = false,
-            Components = 1,
-            Value      = {0, 0, 0, 0},
-            OnChange   = function()
-                local value = E.trotZ.Value[1]
-                RotateTail("z", value, 3000, selectedCharacter)
-                E.trotZ.Value = {0, 0, 0, 0}
-            end
-        })
+    -- E.trotY = E.tailRotCollapse:AddSlider("Yaw", 0, -100, 100, 1)
+    --     UI:Config(E.trotY, {
+    --         SameLine   = false,
+    --         Components = 1,
+    --         Value      = {0, 0, 0, 0},
+    --         OnChange   = function()
+    --             local value = E.trotY.Value[1]
+    --             RotateTail("y", value, 3000, selectedCharacter)
+    --             E.trotY.Value = {0, 0, 0, 0}
+    --         end
+    --     })
 
 
 
-    E.resettRot = E.tailRotCollapse:AddButton("Reset")
-        UI:Config(E.resettRot, {
-            SameLine  = false,
-            OnClick   = function()
-                for i = 1, #_GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
-                    if _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
-                        _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldRotate(
-                            _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat)
-                        break
-                    end
-                end
-            end
-        })
+    -- E.trotZ = E.tailRotCollapse:AddSlider("Roll", 0, -100, 100, 1)
+    --     UI:Config(E.trotZ, {
+    --         SameLine   = false,
+    --         Components = 1,
+    --         Value      = {0, 0, 0, 0},
+    --         OnChange   = function()
+    --             local value = E.trotZ.Value[1]
+    --             RotateTail("z", value, 3000, selectedCharacter)
+    --             E.trotZ.Value = {0, 0, 0, 0}
+    --         end
+    --     })
 
-    E.tailRotCollapse:AddSeparator()
+
+
+    -- E.resettRot = E.tailRotCollapse:AddButton("Reset")
+    --     UI:Config(E.resettRot, {
+    --         SameLine  = false,
+    --         OnClick   = function()
+    --             for i = 1, #_GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments do
+    --                 if _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual.VisualResource.Objects[1].ObjectID:lower():find('tail') then
+    --                     _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.Attachments[i].Visual:SetWorldRotate(
+    --                         _GLL.DummyNameMap[E.visTemComob.Options[selectedCharacter]].Visual.Visual.WorldTransform.RotationQuat)
+    --                     break
+    --                 end
+    --             end
+    --         end
+    --     })
+
+    -- E.tailRotCollapse:AddSeparator()
 
 
     E.treeHorns = E.collapseParts:AddTree('Horns')
@@ -1085,7 +1095,7 @@ end
 
 
 
-    E.saveButton = E.saveLoadCollapse:AddButton("Save")
+    E.saveButton = E.saveLoadCollapse:AddButton('Save')
         UI:Config(E.saveButton, {
             SameLine  = false,
             OnClick   = function()
@@ -1096,7 +1106,6 @@ end
         })
 
 
-    E.saveLoadCollapse:AddSeparator()
     E.exportPosButton = E.saveLoadCollapse:AddButton('Export')
         UI:Config(E.exportPosButton, {
             SameLine  = true,
@@ -1146,6 +1155,9 @@ end
                 UpdateCharacterInfo(E.visTemComob.SelectedIndex + 1)
             end
         })
+
+
+
     E.checkAutoSave = E.saveLoadCollapse:AddCheckbox('Re-apply saved positions to dummies')
         UI:Config(E.checkAutoSave, {
             SameLine = true,
