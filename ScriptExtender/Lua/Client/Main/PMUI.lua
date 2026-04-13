@@ -28,6 +28,30 @@ function BetterPMTab(parent)
             end
         })
 
+    E.btnSeeThr = parent:AddButton('Disable SeeThrough walls circle thingy type thing')
+        UI:Config(E.btnSeeThr, {
+            SameLine = false,
+            OnClick = function()
+                for _, v in pairs(Ext.Entity.GetAllEntities()) do
+                    -- if v.VisualLoadDescription and v.VisualLoadDescription.Flags.IsScenery then
+                        if v.Visual and v.Visual.Visual then
+                            for _, h in pairs(v.Visual.Visual.ObjectDescs) do
+                                if h.Renderable then
+                                    local am = h.Renderable.ActiveMaterial
+                                    if am then
+                                        for _, g in pairs(am.Material.Parameters.ScalarParameters) do
+                                            if g.ParameterName == 'SeeThroughEnabled' then
+                                                h.Renderable.ActiveMaterial:SetScalar('SeeThroughEnabled', 0)
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    -- end
+                end
+            end
+        })
     E.camCollapse = parent:AddCollapsingHeader('Parameters')
     E.camCollapse.DefaultOpen = openByDefaultPMCamera
 
