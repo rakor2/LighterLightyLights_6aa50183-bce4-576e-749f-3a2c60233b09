@@ -501,6 +501,29 @@ end
 
 
 
+function StripDefaultBoneValues(uuid)
+    local src = _GLL.PoseValues[uuid]
+    if not src then return {} end
+    local out = {}
+    for varName, data in pairs(src) do
+        local hv = data and data.HumanValue
+        if hv then
+            local isDefault
+            if varName:find('_Scale') then
+                isDefault = (hv[1] == 1 and hv[2] == 1 and hv[3] == 1)
+            else
+                isDefault = (hv[1] == 0 and hv[2] == 0 and hv[3] == 0)
+            end
+            if not isDefault then
+                out[varName] = data
+            end
+        end
+    end
+    return out
+end
+
+
+
 MAX_TRANS = 300
 MIN_TRANS = -MAX_TRANS
 
@@ -1327,7 +1350,7 @@ function CreatePoseButton(catName, poseName)
         'o',
         function()
             Ext.IO.SaveFile(localPosePath(catName, poseName),
-                Ext.Json.Stringify(_GLL.PoseValues[getSelectedDummyOwnerUuid()]))
+                Ext.Json.Stringify(StripDefaultBoneValues(getSelectedDummyOwnerUuid())))
         end
     )
 

@@ -422,7 +422,7 @@ function BZAgreed()
                 if poseDoesntExist then
                     TableBoneValues()
                     Ext.IO.SaveFile('LightyLights/Poses/' .. catName:gsub(' | Local$', '') .. '/' .. poseName .. '.json',
-                        Ext.Json.Stringify(_GLL.PoseValues[getSelectedDummyOwnerUuid()]))
+                        Ext.Json.Stringify(StripDefaultBoneValues(getSelectedDummyOwnerUuid())))
 
                     _GLL.SavedPoses[catName] = _GLL.SavedPoses[catName] or {}
 
