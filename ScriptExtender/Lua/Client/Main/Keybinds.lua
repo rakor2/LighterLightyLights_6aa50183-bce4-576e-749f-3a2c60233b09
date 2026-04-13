@@ -61,6 +61,8 @@ local keybindings = {
     ll_bone_undo = function() BZHistoryUndo() end,
 
     ll_bone_redo = function() BZHistoryRedo() end,
+    ll_select_item_main = function() SelectItemAsAttachable('Main') end,
+    ll_select_item_off = function() SelectItemAsAttachable('Off') end,
 }
 
 for key, callback in pairs(keybindings) do

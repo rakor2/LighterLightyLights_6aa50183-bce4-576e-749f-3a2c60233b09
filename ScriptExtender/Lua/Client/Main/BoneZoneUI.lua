@@ -178,6 +178,7 @@ function BZAgreed()
     bz:AddText('Off scale').SameLine = true
 
 
+    bz:AddText('Dummy_R/L_Hand bones to control item position')
 
     bz:AddSeparatorText('Garbo')
 

@@ -1559,6 +1559,7 @@ end
 
 _GLL.AttachedEntities = {}
 _GLL.AttachState = {}
+_GLL.AttachOriginalTransform = {}
 
 
 function AttachObjectToHand(hand, uuid, character)
@@ -1579,8 +1580,8 @@ function AttachObjectToHand(hand, uuid, character)
             elseif hand == 'Off' then
                 DummyTransform = eq.MeleeOffHand.SubVisuals[1].Visual.Visual.WorldTransform
             end
-            _GLL.AttachedEntities[character][hand].Visual.Visual:SetWorldTranslate(DummyTransform.Translate)
             _GLL.AttachedEntities[character][hand].Visual.Visual:SetWorldRotate(DummyTransform.RotationQuat)
+            _GLL.AttachedEntities[character][hand].Visual.Visual:SetWorldTranslate(DummyTransform.Translate)
         end
     end
 end
@@ -1599,11 +1600,19 @@ function ScaleAttachment(hand, value)
 
 function tickAttach(e, hand)
     local character = getSelectedDummy()
-    local uuid = (hand == 'Main') and E.inputAttachItem.Text or E.inputAttachItemOff.Text
+    local uuid = (hand == 'Main') and _GLL.selectedObjectMainUuid or _GLL.selectedObjectOffUuid
     local key  = 'LL_Attachies_' .. hand .. '_' .. tostring(character)
+    local entity = Ext.Entity.Get(uuid)
 
     if e.Checked then
         if not _GLL.States.inPhotoMode then e.Checked = false return end
+
+        local WT = entity.Visual.Visual.WorldTransform
+        _GLL.AttachOriginalTransform[uuid] = {
+            Rotate    = {WT.RotationQuat[1], WT.RotationQuat[2], WT.RotationQuat[3], WT.RotationQuat[4]},
+            Translate = {WT.Translate[1],    WT.Translate[2],    WT.Translate[3]},
+            Scale     = {WT.Scale[1],        WT.Scale[2],        WT.Scale[3]},
+        }
 
         Utils:SubUnsubToTick(1, key, function()
             if _GLL.States.inPhotoMode then
@@ -1617,8 +1626,43 @@ function tickAttach(e, hand)
         end)
     else
         Utils:SubUnsubToTick(0, key, _)
+
+        local Orig = _GLL.AttachOriginalTransform[uuid]
+        if Orig then
+            entity.Visual.Visual:SetWorldRotate(Orig.Rotate)
+            entity.Visual.Visual:SetWorldTranslate(Orig.Translate)
+            entity.Visual.Visual:SetWorldScale(Orig.Scale)
+        end
     end
     SaveAttachState(character)
+end
+
+
+
+function DetachAllAttachies()
+    for _, hand in ipairs({'Main', 'Off'}) do
+        local e = hand == 'Main' and E.checkAttachies or E.checkAttachiesOff
+        if e.Checked then
+            e.Checked = false
+            local character = getSelectedDummy()
+            local uuid = hand == 'Main' and _GLL.selectedObjectMainUuid or _GLL.selectedObjectOffUuid
+            local key  = 'LL_Attachies_' .. hand .. '_' .. tostring(character)
+
+            Utils:SubUnsubToTick(0, key, _)
+
+            local Orig = uuid and _GLL.AttachOriginalTransform[uuid]
+            if Orig then
+                local entity = Ext.Entity.Get(uuid)
+                entity.Visual.Visual:SetWorldRotate(Orig.Rotate)
+                entity.Visual.Visual:SetWorldTranslate(Orig.Translate)
+                entity.Visual.Visual:SetWorldScale(Orig.Scale)
+                _GLL.AttachOriginalTransform[uuid] = nil
+            end
+        end
+    end
+
+    _GLL.AttachedEntities        = {}
+    _GLL.AttachOriginalTransform = {}
 end
 
 
@@ -1857,4 +1901,27 @@ function getJsons()
         end
     end
 end
-getJsons()
+getJsons()local selectedItem
+
+
+
+function SelectItemAsAttachable(hand)
+    DDebug('SelectItemAsAttachable()')
+    local selectedItem = Utils:GetMouseoverObject()
+    if not selectedItem then return end
+
+    if selectedItem.Scenery then
+        DDebug('Item is Scenery, skip')
+        return
+    end
+
+    if hand == 'Main' then
+        _GLL.selectedObjectMainUuid = selectedItem.Uuid.EntityUuid
+        E.inputAttachItem.Text = selectedItem.DisplayName.Name:Get()
+    else
+        _GLL.selectedObjectOffUuid = selectedItem.Uuid.EntityUuid
+        E.inputAttachItemOff.Text = selectedItem.DisplayName.Name:Get()
+    end
+
+    return selectedItem.Uuid.EntityUuid, selectedItem.DisplayName.Name:Get()
+end
