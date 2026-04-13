@@ -145,16 +145,7 @@ function SetCurrentAtmosphereAndLighting(Response)
         if Response and v == Response.uuidAtmosphere then
             local atmIndex = table.find(E.comboAtmosphere.Options, k) - 1
             E.comboAtmosphere.SelectedIndex = atmIndex
-            comboAtmosphereFunc()
-
-            ---Temporal slop until Norb maps ClientLightingTrigger
-            local ltnKey = findBestLtnKey(k)
-            if ltnKey and ltn_templates2[ltnKey] then
-                local ltnIndex = table.find(E.comboLighting.Options, ltnKey) - 1
-                E.comboLighting.SelectedIndex = ltnIndex
-                comboLightingFunc()
-            end
-            break
+            AtmospherePostAndUI()
         end
     end
 end

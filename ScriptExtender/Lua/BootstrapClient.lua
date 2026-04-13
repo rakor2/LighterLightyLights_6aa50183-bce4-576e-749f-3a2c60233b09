@@ -6,7 +6,7 @@ Ext.Require('Shared/_init.lua')
 gizmoLibError = false
 
 if Mods.GizmoLib then
-    Utils.StripPrefixes(Mods.LL2, Mods.GizmoLib)
+    Utils:StripPrefixes(Mods.LL2, Mods.GizmoLib)
 
     --- IDK WHY IT CAN'T KEEP UP WITH INITIALIZATIONS FOR SOME PEOPLE T_T
     --- HOPEFULLY THIS WILL HELP

@@ -30,9 +30,11 @@ function Utils2Tab(p)
 
         else
             for lightEnt, saved in pairs(WorldLights) do
-                local light = lightEnt.Light
-                light.Intensity = saved.Intensity
-                light.Gain      = saved.Gain
+                if lightEnt and lightEnt.Light then
+                    local light = lightEnt.Light
+                    light.Intensity = saved.Intensity
+                    light.Gain      = saved.Gain
+                end
             end
         end
     end

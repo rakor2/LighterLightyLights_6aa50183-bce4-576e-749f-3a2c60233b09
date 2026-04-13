@@ -277,6 +277,34 @@
               "Options": {
                 "BlockIfLevelNotStarted": true
               }
+            },
+            {
+              "Id": "ll_select_item_main",
+              "Name": "Attach to Main-hand",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "",
+                  "ModifierKeys": [""]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
+              "Id": "ll_select_item_off",
+              "Name": "Attach to Off-hand",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "",
+                  "ModifierKeys": [""]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
             }
           ]
         }

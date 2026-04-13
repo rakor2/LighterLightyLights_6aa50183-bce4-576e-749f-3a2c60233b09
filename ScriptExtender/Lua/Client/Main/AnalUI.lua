@@ -5,19 +5,19 @@ function Anal2Tab(p)
     _GLL.FilteredLTNOptions = _GLL.LtnComboOptions
     _GLL.FilteredATMOptions = _GLL.AtmComboOptions
 
-    p:AddText([[YOU CAN'T CHANGE ATMOSPHERE AND LIGHTING IN PHOTOMODE]])
-    p:AddSeparator()
+    -- p:AddText([[YOU CAN'T CHANGE ATMOSPHERE AND LIGHTING IN PHOTOMODE]])
+    -- p:AddSeparator()
 
-    local dddd = p:AddButton([[Get current atmosphere and lighting]])
-        UI:Config(dddd, {
-            OnClick = function(e)
-                Ch.CurrentResource:RequestToServer({}, function(Response)
-                    SetCurrentAtmosphereAndLighting(Response)
-                end)
-            end
-        })
-    p:AddText([[    IT CAN GET ONLY PRESETS THAT I CHOSE,
-    IT CANNOT GET ALL OF THEM]])
+    -- local dddd = p:AddButton([[Get current atmosphere and lighting]])
+    --     UI:Config(dddd, {
+    --         OnClick = function(e)
+    --             Ch.CurrentResource:RequestToServer({}, function(Response)
+    --                 SetCurrentAtmosphereAndLighting(Response)
+    --             end)
+    --         end
+    --     })
+    -- p:AddText([[    IT CAN GET ONLY PRESETS THAT I CHOSE,
+    -- IT CANNOT GET ALL OF THEM]])
 
     p:AddSeparatorText('Lighting')
 
@@ -51,10 +51,10 @@ function Anal2Tab(p)
             Options       = _GLL.LtnComboOptions or {},
             SelectedIndex = 0,
             OnChange      = function()
-                comboLightingFunc()
+                LightingPostAndUI()
             end,
             OnRightClick  = function()
-                comboLightingFunc()
+                LightingPostAndUI()
             end
         })
 
@@ -66,7 +66,7 @@ function Anal2Tab(p)
             SameLine  = true,
             OnClick   = function()
                 UI:PrevOption(E.comboLighting)
-                comboLightingFunc()
+                LightingPostAndUI()
             end
         })
 
@@ -78,7 +78,7 @@ function Anal2Tab(p)
             SameLine  = true,
             OnClick   = function()
                 UI:NextOption(E.comboLighting)
-                comboLightingFunc()
+                LightingPostAndUI()
             end
         })
 
@@ -162,10 +162,10 @@ function Anal2Tab(p)
             Options       = _GLL.AtmComboOptions or {},
             SelectedIndex = 0,
             OnChange      = function(e)
-                comboAtmosphereFunc()
+                AtmospherePostAndUI()
             end,
             OnRightClick  = function(e)
-                comboAtmosphereFunc()
+                AtmospherePostAndUI()
             end
         })
 
@@ -177,7 +177,7 @@ function Anal2Tab(p)
             SameLine  = true,
             OnClick   = function()
                 UI:PrevOption(E.comboAtmosphere)
-                comboAtmosphereFunc()
+                AtmospherePostAndUI()
             end
         })
 
@@ -189,7 +189,7 @@ function Anal2Tab(p)
             SameLine  = true,
             OnClick   = function()
                 UI:NextOption(E.comboAtmosphere)
-                comboAtmosphereFunc()
+                AtmospherePostAndUI()
             end
         })
 
@@ -440,7 +440,7 @@ function Anal2Tab(p)
 
 
     local function delayedApply()
-        Utils:AntiSpam(applyDelay[1], function()
+        Utils:AntiSpam(anlApplyDelay[1], function()
             ApplyParameters()
         end)
     end
@@ -460,18 +460,20 @@ function Anal2Tab(p)
 
 
         local function getSortedKeys(tbl)
-            local keys = {}
-            local orderMap = {}
-            for i, key in ipairs(PARAMETER_ORDER) do orderMap[key] = i end
-            for k in pairs(tbl) do
-                if not isIgnored(k) then table.insert(keys, k) end
+            if tbl then
+                local keys = {}
+                local orderMap = {}
+                for i, key in ipairs(PARAMETER_ORDER) do orderMap[key] = i end
+                for k in pairs(tbl) do
+                    if not isIgnored(k) then table.insert(keys, k) end
+                end
+                table.sort(keys, function(a, b)
+                    local oa, ob = orderMap[a] or 9999, orderMap[b] or 9999
+                    if oa ~= ob then return oa < ob end
+                    return tostring(a) < tostring(b)
+                end)
+                return keys
             end
-            table.sort(keys, function(a, b)
-                local oa, ob = orderMap[a] or 9999, orderMap[b] or 9999
-                if oa ~= ob then return oa < ob end
-                return tostring(a) < tostring(b)
-            end)
-            return keys
         end
 
 
@@ -584,14 +586,14 @@ function Anal2Tab(p)
 
 
 
-    function comboLightingFunc()
+    function LightingPostAndUI()
         Ext.Net.PostMessageToServer('LL_LightingApply', UI:SelectedOpt(E.comboLighting))
         CreateUI(ltn_templates2[UI:SelectedOpt(E.comboLighting)], 'Lighting', E.collapseParamsLTN, LTN_ORDER) --yes.
     end
 
 
 
-    function comboAtmosphereFunc()
+    function AtmospherePostAndUI()
         Ext.Net.PostMessageToServer('LL_AtmosphereApply', UI:SelectedOpt(E.comboAtmosphere))
         CreateUI(atm_templates2[UI:SelectedOpt(E.comboAtmosphere)], 'Atmosphere', E.collapseParamsATM, ATM_ORDER) --yes.
     end
@@ -599,16 +601,16 @@ function Anal2Tab(p)
 
 
     function ApplyParameters()
-        comboLightingFunc()
-        comboAtmosphereFunc()
+        LightingPostAndUI()
+        AtmospherePostAndUI()
 
         local Data = {
             uuid = ltn_templates2[UI:SelectedOpt(E.comboLighting)]
         }
         Ch.ApplyANL:RequestToServer(Data, function(Response)
             if Response then
-                comboLightingFunc()
-                comboAtmosphereFunc()
+                LightingPostAndUI()
+                AtmospherePostAndUI()
             end
         end)
     end
