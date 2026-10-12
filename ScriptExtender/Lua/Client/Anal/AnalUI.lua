@@ -1,8 +1,11 @@
 local LTN_Templates, ATM_Templates = Ext.Require('Shared/Anal/ATM_LTN_Templates.lua')
 local CONFIG, ATM_ORDER, LTN_ORDER, IGNORE_PARAMS, RANDOM_EXCLUDE = GetANLbsTemporary()
+local Anl = Ext.Require('Client/Anal/Anal.lua')
 
 local AtmospherePresets = {}
 local LightingPresets = {}
+
+
 
 function Anal3Tab(p)
     local CHILD_WIN_SIZE = {554, 200}
