@@ -171,8 +171,8 @@ local function OnPhotoModeTick()
 end
 
 
-
 function OnPhotoModeCreate()
+
     if gizmoLibError then return end
     DDebug('ENTERED PHOTOMODE')
     DDebug('Current delay: %i', Settings.pmInitDelay[1])
@@ -188,6 +188,10 @@ function OnPhotoModeCreate()
 
     Helpers.Timer:OnTicks(Settings.pmInitDelay[1], function()
         DDebug('PHOTOMODE BS START')
+
+        Anl.Switch()
+
+
         _GLL.States.inPhotoMode = true
         _GLL.DummyNameMap       = {}
 
@@ -243,6 +247,11 @@ end
 
 
 local function OnPhotoModeDestroy()
+    OnTicks(6, function()
+        Anl.Switch()
+    end)
+    -- ANL.ApplyLighting()
+
     if gizmoLibError then return end
     if E.checkAutoTail.Checked then EnableTailPhysics() end
     -- if E.checkAutoHair.Checked then EnableHairPhysics() end

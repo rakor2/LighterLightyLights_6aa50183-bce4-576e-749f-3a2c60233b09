@@ -21,7 +21,7 @@ Settings:AddDefaultSettings({
     {'markerScale',             0.699999988079071},
     {'fadeTime',                0.150},
     {'defaultCameraSpeed',      6},
-    {'lightSetupState',         true},
+    {'lightSetupState',         false},
     {'markerOff',               false},
     {'stickToggleOff',          false},
     {'RecentColors',            {}},
@@ -43,5 +43,6 @@ Settings:AddDefaultSettings({
     {'fadeableBatchSize',       10},
     {'fadeableTickInterval',    10},
     {'disableCrowd',            false},
+    {'degenExtendedScriptExtender', false},
 })
 Settings:Initialize()

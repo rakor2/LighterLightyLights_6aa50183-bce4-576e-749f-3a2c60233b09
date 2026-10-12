@@ -869,6 +869,8 @@ if you haven't selected any Lighting or Atmosphere]])
 
 
     function SetLightingAndUpdateUI()
+        Anl.CapturedValues = {}
+
         DisplayBlockedLevel()
         -- Ext.Net.PostMessageToServer('LL_LightingApply', UI:SelectedOpt(E.comboLighting))
         ANL.SetLigthing(LTN_Templates[UI:SelectedOpt(E.comboLighting)])
@@ -878,6 +880,8 @@ if you haven't selected any Lighting or Atmosphere]])
 
 
     function SetAtmosphereAndUpdateUI()
+        Anl.CapturedValues = {}
+
         DisplayBlockedLevel()
         -- Ext.Net.PostMessageToServer('LL_AtmosphereApply', UI:SelectedOpt(E.comboAtmosphere))
         ANL.SetAtmosphere(ATM_Templates[UI:SelectedOpt(E.comboAtmosphere)])
