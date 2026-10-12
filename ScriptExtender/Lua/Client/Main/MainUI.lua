@@ -200,9 +200,6 @@ function MainWindow(mw)
     E.anal2Tab = mainTabBar:AddTabItem('AnL')
     Anal2Tab(E.anal2Tab)
 
-    E.anl3Tab = mainTabBar:AddTabItem('AnL2')
-    Anal3Tab(E.anl3Tab)
-
     E.betterPM = mainTabBar:AddTabItem('PM')
     BetterPMTab(E.betterPM)
 
@@ -226,7 +223,6 @@ function MainWindow(mw)
 
     E.docsTab = mainTabBar:AddTabItem('Docs')
     Docs2Tab(E.docsTab)
-
 
 
 
@@ -423,6 +419,7 @@ function MainTab(p)
 
     E.btnOptionsPrev = p:AddButton('<')
         UI:Config(E.btnOptionsPrev, {
+            IDContext = 'adawd',
             SameLine  = true,
             OnClick   = function(e)
                 if not _GLL.selectedUuid then return end
@@ -451,6 +448,7 @@ function MainTab(p)
 
     E.btnOptionsNext = p:AddButton('>')
         UI:Config(E.btnOptionsNext, {
+            IDContext = 'adadwwd',
             SameLine  = true,
             OnClick   = function(e)
                 if not _GLL.selectedUuid then return end

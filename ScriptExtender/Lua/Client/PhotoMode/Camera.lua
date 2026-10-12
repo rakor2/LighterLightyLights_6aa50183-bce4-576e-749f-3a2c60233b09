@@ -1,6 +1,5 @@
 function CameraSaveLoadPosition(index)
     local CameraPositions = CameraPositions or {}
-    local CameraXd = CameraXd or {}
 
     if not _GLL.States.inPhotoMode then return end
     local pmCamera = Camera:GetPhotoModeCamera()
@@ -8,15 +7,13 @@ function CameraSaveLoadPosition(index)
 
     if pmCamera then
         CameraPositions[tostring(index)] = Ext.Types.Serialize(activeCam.Transform.Transform)
-        CameraXd[tostring(index)] = {LookAt = activeCam.Camera.Controller.LookAt, field_58 = activeCam.Camera.Controller.field_58}
-
         -- {
         --     Translate = activeCam.Transform.Transform.Translate,
         --     RotationQuat = activeCam.Transform.Transform.RotationQuat,
         --     Scale = activeCam.Transform.Transform.Scale,
         -- }
     end
-    return CameraPositions, CameraXd
+    return CameraPositions
 end
 
 
@@ -31,7 +28,7 @@ function CreateSelectableForSavedCameraPos()
     local currentIndex = btnCounter
     local size = 0
 
-    local CameraPositions, CameraXd = CameraSaveLoadPosition(currentIndex)
+    local CameraPositions = CameraSaveLoadPosition(currentIndex)
 
     E.windowLoadPos.Size = {
         E.windowLoadPos.Size[1],
@@ -70,20 +67,13 @@ function CreateSelectableForSavedCameraPos()
     btnLoad.OnClick = function()
         local index = tostring(currentIndex)
         if CameraPositions[index] then
-            local ActiveCamera = Camera:GetActiveCamera()
-            local PmCamera = Camera:GetPhotoModeCamera()
-            local Translate = CameraPositions[index].Translate
-            local RotationQuat = CameraPositions[index].RotationQuat
+            local Camera = Camera:GetActiveCamera()
+            Ext.Types.Unserialize(Camera.PhotoModeCameraSavedTransform.Transform, CameraPositions[index])
+            -- Camera.PhotoModeCameraSavedTransform.Transform.Translate    = CameraPositions[index].Translate
+            -- Camera.PhotoModeCameraSavedTransform.Transform.RotationQuat = CameraPositions[index].RotationQuat
+            -- Camera.PhotoModeCameraSavedTransform.Transform.Scale        = CameraPositions[index].Scale
 
-            Camera.SetRotationQuat(RotationQuat)
-            Camera.SetTranslate(Translate)
-            Ext.Types.Unserialize(ActiveCamera.PhotoModeCameraSavedTransform.Transform, CameraPositions[index])
-
-            OnTicks(5, function()
-                -- local Rotation = Helpers.Math.QuatToEuler(RotationQuat)
-                -- DDump(CameraXd)
-                -- Ext.System.PhotoModeMovementSystem:UpdateCameraController(ActiveCamera.Camera, CameraXd[index].LookAt, CameraXd[index].field_58)
-                -- Ext.System.PhotoModeMovementSystem.field_30 = 1
+            Helpers.Timer:OnTicks(5, function()
                 Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.RecallCameraTransform:Execute()
             end)
         end

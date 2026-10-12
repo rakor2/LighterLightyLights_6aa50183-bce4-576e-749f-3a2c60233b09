@@ -142,27 +142,6 @@ function Utils2Tab(p)
         Ch.DisableCrowd:SendToServer(Settings.disableCrowd)
     end
 
-
-    if Settings.degenExtendedScriptExtender then
-
-        E.checkCinema = p:AddCheckbox('Cinematic Mode')
-            UI:Config(E.checkCinema, {
-                OnChange = function(e)
-                   Ext.GameRenderView.GetGameRenderView().IsCinematicMode = e.Checked
-                end
-            })
-
-
-        E.slLOD = p:AddSlider('LOD distance', 1, 0, 3)
-            UI:Config(E.slLOD, {
-                Value = {Ext.GameRenderView.GetLODScale(), 0,0,0},
-                OnChange = function(e)
-                    Ext.GameRenderView.SetLODScale(e.Value[1])
-                end
-            })
-
-    end
-
 end
 
 

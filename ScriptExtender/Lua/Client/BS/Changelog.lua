@@ -1,13 +1,6 @@
 Changelog.currentVersion = '1.13.0.3'
 Changelog.ChangelogText = {
     {
-        version = '1.13.1',
-        Text = {
-            [[ SETTINGS:]],
-            [[    CharacterLight is Off by default. Don't forget that you can make it On by default in the Settings]],
-        }
-    },
-    {
         version = '1.13.0',
         Text = {
             [[ BONE ZONE:]],

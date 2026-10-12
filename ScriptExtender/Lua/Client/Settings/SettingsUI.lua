@@ -549,17 +549,6 @@ I know all workarounds]])
             end
         })
 
-
-    E.checkGizmoToolbar = p:AddCheckbox([[Don't check if you want AnL being broken]])
-        UI:Config(E.checkGizmoToolbar, {
-            Checked = Settings.degenExtendedScriptExtender,
-            OnChange = function (e)
-                Settings.degenExtendedScriptExtender = e.Checked
-                Settings:Save()
-            end
-        })
-
-
     -- function TableTest()
     --     local colCnt = 0
     --     local MAX_ROW = 5
