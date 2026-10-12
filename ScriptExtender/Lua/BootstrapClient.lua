@@ -13,7 +13,6 @@ end
 
 
 Ext.Require('Shared/_init.lua')
-Ext.Require('Client/_init.lua')
 
 
 local LTN_Templates, ATM_Templates = Ext.Require('Shared/Anal/ATM_LTN_Templates.lua')
@@ -106,6 +105,8 @@ LoadCacheFromFile()
 function GetZipBombTemporary()
     return ZipBomb
 end
+
+Ext.Require('Client/_init.lua')
 
 
 print('')

@@ -119,7 +119,7 @@ function SelectAtmosphereFromCurrentTrigger()
         if v == atmUuid then
             local atmIndex = table.find(E.comboAtmosphere.Options, k) - 1
             E.comboAtmosphere.SelectedIndex = atmIndex
-            SetAtmosphereAndUpdateUI()
+            Anl.SetAtmosphereAndUpdateUI()
         end
     end
 end
@@ -135,7 +135,7 @@ function SelectLightingFromCurrentTrigger()
         if v == ltnUuid then
             local ltnIndex = table.find(E.comboLighting.Options, k) - 1
             E.comboLighting.SelectedIndex = ltnIndex
-            SetLightingAndUpdateUI()
+            Anl.SetLightingAndUpdateUI()
         end
     end
 end

@@ -189,7 +189,9 @@ function OnPhotoModeCreate()
     Helpers.Timer:OnTicks(Settings.pmInitDelay[1], function()
         DDebug('PHOTOMODE BS START')
 
-        Anl.Switch()
+        if Settings.degenExtendedScriptExtender then
+            Anl.Switch()
+        end
 
 
         _GLL.States.inPhotoMode = true
@@ -247,9 +249,12 @@ end
 
 
 local function OnPhotoModeDestroy()
-    OnTicks(6, function()
-        Anl.Switch()
-    end)
+
+    if Settings.degenExtendedScriptExtender then
+        OnTicks(6, function()
+            Anl.Switch()
+        end)
+    end
     -- ANL.ApplyLighting()
 
     if gizmoLibError then return end

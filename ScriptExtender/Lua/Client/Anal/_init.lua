@@ -1,6 +1,5 @@
 RequireFiles('Client/Anal/', {
+	'Anal3',
 	'AnalClient',
 	'AnalUI',
-	'Anal3',
-	'Anal3UI',
-})
+r})

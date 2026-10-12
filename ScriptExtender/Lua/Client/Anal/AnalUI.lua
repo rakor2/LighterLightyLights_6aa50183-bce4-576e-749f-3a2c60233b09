@@ -4,9 +4,7 @@ local CONFIG, ATM_ORDER, LTN_ORDER, IGNORE_PARAMS, RANDOM_EXCLUDE = GetANLbsTemp
 local AtmospherePresets = {}
 local LightingPresets = {}
 
-
-
-function Anal2Tab(p)
+function Anal3Tab(p)
     local CHILD_WIN_SIZE = {554, 200}
     local winLtnFav
     local winAtmFav
@@ -73,10 +71,10 @@ function Anal2Tab(p)
             SelectedIndex = 0,
             ItemWidth     = COMBO_WIDTH,
             OnChange      = function()
-                SetLightingAndUpdateUI()
+                Anl.SetLightingAndUpdateUI()
             end,
             OnRightClick  = function()
-                SetLightingAndUpdateUI()
+                Anl.SetLightingAndUpdateUI()
             end
         })
 
@@ -86,7 +84,7 @@ function Anal2Tab(p)
             SameLine  = true,
             OnClick   = function()
                 UI:PrevOption(E.comboLighting)
-                SetLightingAndUpdateUI()
+                Anl.SetLightingAndUpdateUI()
             end
         })
 
@@ -97,7 +95,7 @@ function Anal2Tab(p)
             SameLine  = true,
             OnClick   = function()
                 UI:NextOption(E.comboLighting)
-                SetLightingAndUpdateUI()
+                Anl.SetLightingAndUpdateUI()
             end
         })
 
@@ -133,7 +131,7 @@ function Anal2Tab(p)
             SameLine  = true,
             OnClick   = function()
                 UI:RandomOption(E.comboLighting)
-                SetLightingAndUpdateUI()
+                Anl.SetLightingAndUpdateUI()
             end
         })
 
@@ -171,7 +169,7 @@ function Anal2Tab(p)
                         local LTN = Ext.Types.Serialize(Ext.Resource.Get(LTN_Templates[UI:SelectedOpt(E.comboLighting)], 'Lighting'))
                         LTN.ParentGUID = _GLL.lightingParent
                         Ext.Types.Unserialize(Ext.Resource.Get(LTN_Templates[UI:SelectedOpt(E.comboLighting)], 'Lighting').Lighting, LTN)
-                        ApplyParameters('Lighting')
+                        Anl.ApplyParameters('Lighting')
                     else
                         canClick = false
                         E.btnParentSet.Label = 'Parent lighting is unset'
@@ -282,10 +280,10 @@ function Anal2Tab(p)
             SelectedIndex = 0,
             ItemWidth     = COMBO_WIDTH,
             OnChange      = function(e)
-                SetAtmosphereAndUpdateUI()
+                Anl.SetAtmosphereAndUpdateUI()
             end,
             OnRightClick  = function(e)
-                SetAtmosphereAndUpdateUI()
+                Anl.SetAtmosphereAndUpdateUI()
             end
         })
 
@@ -296,7 +294,7 @@ function Anal2Tab(p)
             SameLine  = true,
             OnClick   = function()
                 UI:PrevOption(E.comboAtmosphere)
-                SetAtmosphereAndUpdateUI()
+                Anl.SetAtmosphereAndUpdateUI()
             end
         })
 
@@ -307,7 +305,7 @@ function Anal2Tab(p)
             SameLine  = true,
             OnClick   = function()
                 UI:NextOption(E.comboAtmosphere)
-                SetAtmosphereAndUpdateUI()
+                Anl.SetAtmosphereAndUpdateUI()
             end
         })
 
@@ -343,7 +341,7 @@ function Anal2Tab(p)
             SameLine  = true,
             OnClick   = function()
                 UI:RandomOption(E.comboAtmosphere)
-                SetAtmosphereAndUpdateUI()
+                Anl.SetAtmosphereAndUpdateUI()
             end
         })
 
@@ -376,7 +374,7 @@ function Anal2Tab(p)
     E.btnApplyParam = p:AddButton('Apply')
         UI:Config(E.btnApplyParam, {
             OnClick = function(e)
-                ApplyParameters('All')
+                Anl.ApplyParameters('All')
             end
         })
 
@@ -386,31 +384,35 @@ function Anal2Tab(p)
         UI:Config(E.btnResetCLTN, {
             SameLine = true,
             OnClick  = function()
-                ResetLTN(false)
-                ApplyParameters('Lighting')
-                CreateUI(LTN_Templates[UI:SelectedOpt(E.comboLighting)], 'Lighting', E.collapseParamsLTN, LTN_ORDER)
+            	Anl.ResetValues('Lighting')
+                -- ResetLTN(false)
+                -- Anl.ApplyParameters('Lighting')
+                -- CreateUI(LTN_Templates[UI:SelectedOpt(E.comboLighting)], 'Lighting', E.collapseParamsLTN, LTN_ORDER)
             end,
             OnRightClick = function()
-                ResetLTN(true)
-                ApplyParameters('Lighting')
-                CreateUI(LTN_Templates[UI:SelectedOpt(E.comboLighting)], 'Lighting', E.collapseParamsLTN, LTN_ORDER)
+            	Anl.ResetValues('Lighting')
+                -- ResetLTN(true)
+                -- Anl.ApplyParameters('Lighting')
+                -- CreateUI(LTN_Templates[UI:SelectedOpt(E.comboLighting)], 'Lighting', E.collapseParamsLTN, LTN_ORDER)
             end
         })
 
-
+    E.btnResetCATM = p:AddButton('Reset atmosphere')
 
     E.btnResetCATM = p:AddButton('Reset atmosphere')
         UI:Config(E.btnResetCATM, {
             SameLine = true,
             OnClick  = function()
-                ResetATM(false)
-                ApplyParameters('Atmosphere')
-                CreateUI(ATM_Templates[UI:SelectedOpt(E.comboAtmosphere)], 'Atmosphere', E.collapseParamsATM, ATM_ORDER)
+            	Anl.ResetValues('Atmosphere')
+                -- ResetATM(false)
+                -- Anl.ApplyParameters('Atmosphere')
+                -- CreateUI(ATM_Templates[UI:SelectedOpt(E.comboAtmosphere)], 'Atmosphere', E.collapseParamsATM, ATM_ORDER)
             end,
             OnRightClick = function()
-                ResetATM(true)
-                ApplyParameters('Atmosphere')
-                CreateUI(ATM_Templates[UI:SelectedOpt(E.comboAtmosphere)], 'Atmosphere', E.collapseParamsATM, ATM_ORDER)
+            	Anl.ResetValues('Atmosphere')
+                -- ResetATM(true)
+                -- Anl.ApplyParameters('Atmosphere')
+                -- CreateUI(ATM_Templates[UI:SelectedOpt(E.comboAtmosphere)], 'Atmosphere', E.collapseParamsATM, ATM_ORDER)
             end
         })
 
@@ -446,7 +448,7 @@ function Anal2Tab(p)
         Parsed.ParentGUID = _GLL.lightingParent
 
         Ext.Types.Unserialize(Ext.Resource.Get(uuid, type_)[type_], Parsed)
-        ApplyParameters(type_)
+        Anl.ApplyParameters(type_)
     end
 
 
@@ -564,427 +566,45 @@ if you haven't selected any Lighting or Atmosphere]])
 
     p:AddBulletText([[Right click on any parameter will reset it]])
 
-    E.collapseParamsLTN = p:AddCollapsingHeader('Lighting')
-        UI:Config(E.collapseParamsLTN, {})
 
 
-    E.collapseParamsATM = p:AddCollapsingHeader('Atmosphere')
-        UI:Config(E.collapseParamsATM, {})
 
 
-    -- local uuid2
 
-    local function ApplyChange(uuid, resource, p, value)
-        -- if uuid2 ~= uuid then
-            -- SelectAtmosphereAndLightingFromCurrentTrigger()
-        -- end
-        -- uuid2 = uuid
 
-        local Target = Resource:GetResource(uuid, resource)
+	local ltnUuid = LTN_Templates['LTN_CIN_Laezel_ROM_EV11_Dawn']
+	local atmUuid = ATM_Templates['ATM_CIN_WLD_Crash_Beach_FakeNight_01']
 
-        for i = 1, #p - 1 do Target = Target[p[i]] end
 
-        Target[p[#p]] = value
-        ApplyParameters(resource)
-    end
-
-
-
-    local function getConf(p)
-        local conf = CONFIG[table.concat(p, ".")] or {}
-        return conf.min or 0, conf.max or 1, conf.log or false
-    end
-
-
-
-    local function ResetToDefaultValue(uuid, resource, path)
-        local ZipBomb = GetZipBombTemporary()
-        local CachedTable
-
-        if resource == 'Lighting' then
-            CachedTable = ZipBomb.CachedLighting
-        elseif resource == 'Atmosphere' then
-            CachedTable = ZipBomb.CachedAtmosphere
-        end
-
-        local CachedResource = CachedTable[uuid]
-
-        local CR = CachedResource[2]
-        for _, key in ipairs(path) do
-            if CR[key] == nil then return end
-            CR = CR[key]
-        end
-
-        local value = CR
-
-        local target = Resource:GetResource(uuid, resource)
-        for i = 1, #path - 1 do
-            target = target[path[i]]
-        end
-
-        target[path[#path]] = value
-        ApplyChange(uuid, resource, path, value)
-
-        if resource == 'Lighting' then
-            CreateUI(LTN_Templates[UI:SelectedOpt(E.comboLighting)], 'Lighting', E.collapseParamsLTN, LTN_ORDER)
-        elseif resource == 'Atmosphere' then
-            CreateUI(ATM_Templates[UI:SelectedOpt(E.comboAtmosphere)], 'Atmosphere', E.collapseParamsATM, ATM_ORDER)
-        end
-    end
-
-
-    --- TBD: UNSLOP IT WHEN IM NOT DUMB
-    --- UPD: Kinda unsloped
-    function CreateUI(uuid, resource, mainParent, PARAMETER_ORDER)
-        Imgui.ClearChildren(mainParent)
-
-        local function isIgnored(key)
-            for _, ignoreKey in ipairs(IGNORE_PARAMS) do
-                if key == ignoreKey then return true end
-            end
-            return false
-        end
-
-
-        local function getSortedKeys(tbl)
-            if tbl then
-                local keys = {}
-                local orderMap = {}
-                for i, key in ipairs(PARAMETER_ORDER) do orderMap[key] = i end
-                for k in pairs(tbl) do
-                    if not isIgnored(k) then table.insert(keys, k) end
-                end
-                table.sort(keys, function(a, b)
-                    local oa, ob = orderMap[a] or 9999, orderMap[b] or 9999
-                    if oa ~= ob then return oa < ob end
-                    return tostring(a) < tostring(b)
-                end)
-                return keys
-            end
-        end
-
-        local function randomizeSubtree(tbl, path)
-            for _, k in ipairs(tbl and getSortedKeys(tbl)) do
-                local v = tbl[k]
-                local pp = {table.unpack(path)}
-                table.insert(pp, k)
-
-                if RANDOM_EXCLUDE[k] or RANDOM_EXCLUDE[table.concat(pp, '.')] then
-
-                elseif type(v) == 'table' or type(v) == 'userdata' then
-                    local ok4, v4    = pcall(function() return v[4] end)
-                    local ok3, v3    = pcall(function() return v[3] end)
-                    local ok2, v2    = pcall(function() return v[2] end)
-                    local isVec4 = ok4 and type(v4) == 'number'
-                    local isVec3 = not isVec4 and ok3 and type(v3) == 'number'
-                    local isVec2 = not isVec4 and not isVec3 and ok2 and type(v2) == 'number'
-
-                    if isVec4 or isVec3 then
-                        local minVal, maxVal = getConf(pp)
-                        local col = {
-                            minVal + math.random() * (maxVal - minVal),
-                            minVal + math.random() * (maxVal - minVal),
-                            minVal + math.random() * (maxVal - minVal),
-                        }
-                        if isVec4 then col[4] = math.random() end
-                        ApplyChange(uuid, resource, pp, col)
-
-                    elseif isVec2 then
-                        local minVal, maxVal = getConf(pp)
-                        ApplyChange(uuid, resource, pp, {
-                            minVal + math.random() * (maxVal - minVal),
-                            minVal + math.random() * (maxVal - minVal),
-                        })
-
-                    else
-                        randomizeSubtree(v, pp)
-                    end
-
-                elseif Ext.Types.GetValueType(v) == 'boolean' then
-                    ApplyChange(uuid, resource, pp, math.random() > 0.5)
-
-                elseif type(v) == 'string' then
-
-                else --- int or float
-                    local minVal, maxVal = getConf(pp)
-                    local isInt = math.type(v) == 'integer'
-                    if isInt then
-                        ApplyChange(uuid, resource, pp, math.random(math.floor(minVal), math.floor(maxVal)))
-                    else
-                        ApplyChange(uuid, resource, pp, minVal + math.random() * (maxVal - minVal))
-                    end
-                end
-            end
-        end
-
-
-
-        local function trev(tbl, tbl2, depth, parent, path)
-            tbl2  = tbl2  or {}
-            depth = depth or 1
-            path  = path  or {}
-
-            for _, k in ipairs(tbl and getSortedKeys(tbl)) do
-                local v = tbl[k]
-                local p = {table.unpack(path)}
-                table.insert(p, k)
-
-                if type(v) == 'table' or type(v) == 'userdata' then
-                    local ok4, v4    = pcall(function() return v[4] end)
-                    local ok3, v3    = pcall(function() return v[3] end)
-                    local IAMok2, v2 = pcall(function() return v[2] end)
-                    local isScal  = v == 'number'
-                    local isVec4  = ok4 and type(v4) == 'number'
-                    local isVec3  = not isVec4 and ok3 and type(v3) == 'number'
-                    local isVec2  = not isVec4 and not isVec3 and IAMok2 and type(v2) == 'number'
-
-                    if isVec4 or isVec3 then
-                        local w = parent:AddColorEdit(k)
-                        w.IDContext = Ext.Math.Random(1, 1000)
-                        w.Color     = {v[1] or 0, v[2] or 0, v[3] or 0, v[4] or 1}
-                        w.NoAlpha   = isVec3 and true or false
-                        w.OnChange  = function(e)
-                            ApplyChange(uuid, resource, p,
-                                isVec3 and {e.Color[1], e.Color[2], e.Color[3]} or {e.Color[1], e.Color[2], e.Color[3], e.Color[4]})
-                        end
-                        w.OnRightClick = function(e)
-                            ResetToDefaultValue(uuid, resource, p)
-                        end
-
-
-                    elseif isVec2 then
-                        local minVal, maxVal, isLog = getConf(p)
-                        local w = parent:AddDrag(k, 1, minVal, maxVal)
-                        w.IDContext   = Ext.Math.Random(1, 1000)
-                        w.Value       = {v[1] or 0, v[2] or 0, 0, 0}
-                        w.Components  = 2
-                        w.Logarithmic = isLog and true or false
-                        w.OnChange    = function(e)
-                            ApplyChange(uuid, resource, p, {e.Value[1], e.Value[2]})
-                        end
-                        w.OnRightClick = function(e)
-                            ResetToDefaultValue(uuid, resource, p)
-                        end
-
-
-                    elseif not isVec4 and not isVec3 and not isVec2 then
-                        tbl2[k] = {}
-                        if depth == 1 then
-                            local subParent = mainParent:AddTree(k)
-                            trev(v, tbl2[k], depth + 1, subParent, p)
-                            local btnRandomTree = subParent:AddButton('Random')
-                                UI:Config(btnRandomTree, {
-                                    OnClick = function()
-                                        local node = Resource:GetResource(uuid, resource)
-                                        for _, key in ipairs(p) do node = node[key] end
-                                        randomizeSubtree(node, p)
-                                        CreateUI(uuid, resource, mainParent, PARAMETER_ORDER)
-                                    end
-                                })
-                        elseif depth == 2 then
-                            local subParent = parent:AddTree(k)
-                            trev(v, tbl2[k], depth + 1, subParent, p)
-                            local btnRandomTree = subParent:AddButton('Random')
-                                UI:Config(btnRandomTree, {
-                                    OnClick = function()
-                                        local node = Resource:GetResource(uuid, resource)
-                                        for _, key in ipairs(p) do node = node[key] end
-                                        randomizeSubtree(node, p)
-                                        CreateUI(uuid, resource, mainParent, PARAMETER_ORDER)
-                                    end
-                                })
-                        else
-                            trev(v, tbl2[k], depth + 1, parent, p)
-                        end
-                    end
-                    tbl2[k] = tbl2[k] or v
-
-                elseif Ext.Types.GetValueType(v) == 'boolean' then
-                    local w = parent:AddCheckbox(k)
-                    w.IDContext = Ext.Math.Random(1, 1000)
-                    w.Checked   = v
-                    w.OnChange  = function(e) ApplyChange(uuid, resource, p, e.Checked) end
-                    w.OnRightClick = function(e)
-                        ResetToDefaultValue(uuid, resource, p)
-                    end
-
-                elseif type(v) == 'string' then
-                    local w = parent:AddInputText(k)
-                    w.IDContext = Ext.Math.Random(1, 1000)
-                    w.Text      = tostring(v)
-                    w.OnChange  = function(e) ApplyChange(uuid, resource, p, e.Text) end
-                    w.OnRightClick = function(e)
-                        ResetToDefaultValue(uuid, resource, p)
-                    end
-
-                else --- int or float
-                    local minVal, maxVal, isLog = getConf(p)
-                    local isInt = math.type(v) == 'integer'
-                    local w
-
-                    if isInt then
-                        w = parent:AddSliderInt(k, 1, minVal, maxVal)
-                    elseif maxVal > 3000 then
-                        w = parent:AddSlider(k, 1, minVal, maxVal)
-                    else
-                        w = parent:AddDrag(k, 1, minVal, maxVal)
-                    end
-
-                    w.IDContext   = Ext.Math.Random(1, 1000)
-                    w.Value       = {v, 0, 0, 0}
-                    if isLog then w.Logarithmic = true end
-                    w.OnChange    = function(e) ApplyChange(uuid, resource, p, e.Value[1]) end
-                    w.OnRightClick = function(e)
-                        ResetToDefaultValue(uuid, resource, p)
-                    end
-                end
-                tbl2[k] = v
-            end
-            return tbl2
-        end
-
-        trev(Resource:GetResource(uuid, resource), {}, 1, mainParent, {})
-
-        local btnRandomAll = mainParent:AddButton('Random all')
-            UI:Config(btnRandomAll, {
-                OnClick = function()
-                    randomizeSubtree(Resource:GetResource(uuid, resource), {})
-                    CreateUI(uuid, resource, mainParent, PARAMETER_ORDER)
-                end
-            })
-    end
-
-    local uuid = '375af627-6f3c-19e8-1046-29265ae9e8f7'
-    local resource = 'Lighting'
-    local mainParent = E.collapseParamsLTN
-    CreateUI(uuid, resource, mainParent, LTN_ORDER)
-
-
-
-    local uuid = '73e03af9-7ab1-47a7-906b-a4e0362045ef'
-    local resource = 'Atmosphere'
-    local mainParent = E.collapseParamsATM
-    CreateUI(uuid, resource, mainParent, ATM_ORDER)
-
-
-
-    function SetLightingAndUpdateUI()
-        Anl.CapturedValues = {}
-
-        DisplayBlockedLevel()
-        -- Ext.Net.PostMessageToServer('LL_LightingApply', UI:SelectedOpt(E.comboLighting))
-        ANL.SetLigthing(LTN_Templates[UI:SelectedOpt(E.comboLighting)])
-        CreateUI(LTN_Templates[UI:SelectedOpt(E.comboLighting)], 'Lighting', E.collapseParamsLTN, LTN_ORDER) --yes.
-    end
-
-
-
-    function SetAtmosphereAndUpdateUI()
-        Anl.CapturedValues = {}
-
-        DisplayBlockedLevel()
-        -- Ext.Net.PostMessageToServer('LL_AtmosphereApply', UI:SelectedOpt(E.comboAtmosphere))
-        ANL.SetAtmosphere(ATM_Templates[UI:SelectedOpt(E.comboAtmosphere)])
-        CreateUI(ATM_Templates[UI:SelectedOpt(E.comboAtmosphere)], 'Atmosphere', E.collapseParamsATM, ATM_ORDER) --yes.
-    end
-
-
-
-    function ApplyParameters(type_)
-        if type_ == 'Lighting' or type_ == 'All' then
-            ANL.SetLigthing(LTN_Templates[UI:SelectedOpt(E.comboLighting)])
-            ANL.ApplyLighting()
-        end
-
-        if type_ == 'Atmosphere' or type_ == 'All' then
-            ANL.SetAtmosphere(ATM_Templates[UI:SelectedOpt(E.comboAtmosphere)])
-            ANL.ApplyAtmosphere()
-        end
-    end
-
-
-
-    function ResetLTN(all)
-        local ZipBomb = GetZipBombTemporary()
-
-        if all then
-            for name, uuid in pairs(LTN_Templates) do
-                ApplyCachedLighting(uuid, ZipBomb.CachedLighting)
-            end
-        else
-            local uuid = LTN_Templates[UI:SelectedOpt(E.comboLighting)]
-            ApplyCachedLighting(uuid, ZipBomb.CachedLighting)
-        end
-    end
-
-
-
-    function ResetATM(all)
-        local ZipBomb = GetZipBombTemporary()
-
-        if all then
-            for name, uuid in pairs(ATM_Templates) do
-                ApplyCachedAtmosphere(uuid, ZipBomb.CachedAtmosphere)
-            end
-        else
-            local uuid = ATM_Templates[UI:SelectedOpt(E.comboAtmosphere)]
-            ApplyCachedAtmosphere(uuid, ZipBomb.CachedAtmosphere)
-        end
-    end
-
-
-
-    function ApplyCachedLighting(uuid, CachedTable)
-        local CachedLTN = CachedTable[uuid]
-        if CachedLTN then
-            local values   = CachedLTN[2]
-            local lighting = Resource:GetResource(uuid, 'Lighting')
-            for k, v in pairs(values) do
-                lighting[k] = v
-            end
-        end
-    end
-
-
-
-    function ApplyCachedAtmosphere(uuid, CachedTable)
-        local CachedATM = CachedTable[uuid]
-        if CachedATM then
-            local values     = CachedATM[2]
-            local atmosphere = Resource:GetResource(uuid, 'Atmosphere')
-            for k, v in pairs(values) do
-                atmosphere[k] = v
-            end
-        end
-    end
-
-
-
-    local txtReminder = p:AddBulletText([[Hold alt while dragging to change value slowly. Hold shift to change it fast]])
-    txtReminder = p:AddBulletText([[Don't forget that you can double click on the sliders to enter a specific number]])
-    txtReminder:SetColor('Text', {1, 1, 1, 1})
-
-
-
-    -- function DumpANL()
-    --     local ltnName = UI:SelectedOpt(E.comboLighting)
-    --     local atmName = UI:SelectedOpt(E.comboAtmosphere)
-    --     DPrint('Atmosphere UUID: %s, Name: %s', ATM_Templates[atmName], atmName)
-    --     DPrint('  Lighting UUID: %s, Name: %s', LTN_Templates[ltnName], ltnName)
-    -- end
-
-    -- function DumpLTN()
-    --     DDump(Ext.Resource.Get(LTN_Templates[UI:SelectedOpt(E.comboLighting)], 'Lighting').Lighting)
-    -- end
-
-
-    -- function Temp()
-    --     local Xd = {}
-    --     local Templates = Ext.Template.GetAllRootTemplates()
-    --     for k, v in pairs(Templates) do
-    --         table.insert(Xd, k)
-    --     end
-    --     DD('Templates', Xd)
-    -- end
+	local Ltn = Resource:GetResource(ltnUuid, 'Lighting')
+	local Atm = Resource:GetResource(atmUuid, 'Atmosphere')
+
+	Anl.CurrentLighting   = UI:SelectedOpt(E.comboLighting)
+	Anl.CurrentAtmosphere = UI:SelectedOpt(E.comboAtmosphere)
+
+	-- local checkLock = p:AddCheckbox('Lock')
+	-- checkLock.OnChange = function(e)
+	-- 	Ext.GameRenderView.GetGameRenderView().LockLightingIdChange = e.Checked
+	-- 	Ext.GameRenderView.GetGameRenderView().LightingIsLocked = e.Checked
+	-- 	_DS(Ext.GameRenderView.GetGameRenderView())
+	-- end
+
+    p:AddText([[YOU CAN CHANGE ATMOSPHERE AND LIGHTING IN PHOTOMODE]])
+    p:AddSeparator()
+
+	p:AddSeparatorText('Parameters')
+
+	local collapseLighting = p:AddCollapsingHeader('Lighting')
+	collapseLighting.DefaultOpen = true
+
+	local collapseAtmosphere = p:AddCollapsingHeader('Atmosphere')
+	collapseAtmosphere.DefaultOpen = false
+
+
+	Anl.CurrentLighting   = UI:SelectedOpt(E.comboLighting)
+	Anl.CurrentAtmosphere = UI:SelectedOpt(E.comboAtmosphere)
+
+	Anl.CreateParameterControls(Ltn, collapseLighting)
+	Anl.CreateParameterControls(Atm, collapseAtmosphere)
 
 end
