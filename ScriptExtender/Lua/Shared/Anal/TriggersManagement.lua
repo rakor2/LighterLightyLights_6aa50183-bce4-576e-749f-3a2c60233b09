@@ -163,9 +163,6 @@ function ANL.SetLigthing(ltnUuid, Trigger)
 		end
 
 		for _, Trigger in pairs(LTN_Triggers) do
-
-			DPrint('a;lwkdnl')
-
 			ANL.AddLightingToResourceIDs(ltnUuid, Trigger)
 
 			Trigger[ComponentNames.Lighting].field_84 = 0
