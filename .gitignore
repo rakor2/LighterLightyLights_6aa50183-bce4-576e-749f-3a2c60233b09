@@ -1,5 +1,7 @@
-.cursor
-.vscode
 Levels
 Scripts
 Dumps
+
+/ScriptExtender/Lua/_Libs/**
+*.sublime-project
+*.sublime-workspace
