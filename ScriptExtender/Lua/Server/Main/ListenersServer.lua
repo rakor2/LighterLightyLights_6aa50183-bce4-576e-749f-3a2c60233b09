@@ -1,44 +1,51 @@
-Ext.RegisterNetListener('LL_WhenLevelGameplayStarted', function (channel, payload, user)
-end)
-
-
-
 Ext.Events.ResetCompleted:Subscribe(function()
-    getLevelAvailableLTNTriggers()
-    getLevelAvailableATMTriggers()
-end)
-
-
-
-Ext.RegisterNetListener('LL_DeleteLookAtTarget', function(channel, payload, user)
-    if _GLL.tragetUuid then
-        Osi.RequestDelete(_GLL.tragetUuid)
-        _GLL.tragetUuid = nil
-        lookAtExists = false
-        _GLL.tragetEntity = nil
-    end
-end)
-
-
-
-Ext.RegisterNetListener('LL_MoveLookAtTarget', function(channel, payload, user)
-    local data = Ext.Json.Parse(payload)
-    if _GLL.tragetUuid then
-        Osi.ToTransform(_GLL.tragetUuid, data.x, data.y, data.z, 0, 0, 0)
-    end
-end)
-
-
-
-Ext.RegisterNetListener('LL_MoveLookAtTargetToCam', function(channel, payload, user)
-    local data = Ext.Json.Parse(payload)
-    if _GLL.tragetUuid then
-        Osi.ToTransform(_GLL.tragetUuid, data[1], data[2], data[3], 0, 0, 0)
-    end
+    -- getLevelAvailableLTNTriggers()
+    -- getLevelAvailableATMTriggers()
 end)
 
 
 
 Ext.Entity.OnDestroyDeferred('JumpFollow', function()
-    Ext.Net.BroadcastMessage("LL_JumpFollow", "")
+    Ch.JumpFollow:Broadcast({})
 end)
+
+
+
+Ch.DisableCrowd:SetHandler(function(data)
+    Settings.disableCrowd = data
+end)
+
+Ext.Events.GameStateChanged:Subscribe(function(e)
+    if Settings.disableCrowd then
+            if e.FromState == 'LoadLevel' then
+                local Entities = Ext.Entity.GetAllEntitiesWithComponent('ServerCrowdCharacterTrigger')
+                for k, v in pairs(Entities) do
+                    if v.ServerCrowdCharacterTrigger then
+                    v.ServerCrowdCharacterTrigger.MaxCharacters = 0
+                end
+            end
+        end
+    end
+end)
+
+
+
+Ch.RemoveAllCombat:SetHandler(function()
+    local Entities = Ext.Entity.GetAllEntities()
+    for _, v in pairs(Entities) do
+        if v.CombatParticipant and v.Uuid then
+            --- idk how to remove flags with SE :PepeLaugh:
+            Osi.SetCanJoinCombat(v.Uuid.EntityUuid, 0)
+        end
+    end
+end)
+
+
+--- Thank you Mazzle for pointing to the right place
+-- Ext.Osiris.RegisterListener('EnteredTrigger', 2, "after", function(character, trigger)
+--     DDump({character, trigger})
+--     DPrint('DOESNT WORK NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO')
+-- end)
+
+
+

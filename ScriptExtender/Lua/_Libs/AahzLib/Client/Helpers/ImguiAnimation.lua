@@ -50,38 +50,38 @@ local currentFadeMap = {}
 ---@param initialColor vec4
 ---@param fadeColor vec4
 ---@param fadeTime number # time in seconds for the fade effect
-function Imgui.FadeColor(el, colorProp, initialColor, fadeColor, fadeTime)
-    if fadeTime == 0 then return end
+-- function Imgui.FadeColor(el, colorProp, initialColor, fadeColor, fadeTime)
+--     if fadeTime == 0 then return end
 
-    local framesPassed = 0
-    local totalFrames = fadeTime * 60  -- Assuming 60 fps
+--     local framesPassed = 0
+--     local totalFrames = fadeTime * 60  -- Assuming 60 fps
 
-    local fadeKey = el.Handle .. '_' .. Ext.Math.Random(1,10000)
+--     local fadeKey = el.Handle .. '_' .. Ext.Math.Random(1,10000)
 
-    -- Cancel any ongoing fade for this element and color property
-    if currentFadeMap[fadeKey] then
-        currentFadeMap[fadeKey]:Unsubscribe()
-        currentFadeMap[fadeKey] = nil
-    end
+--     -- Cancel any ongoing fade for this element and color property
+--     if currentFadeMap[fadeKey] then
+--         currentFadeMap[fadeKey]:Unsubscribe()
+--         currentFadeMap[fadeKey] = nil
+--     end
 
-    -- based on frame number, lerp between initial color and fade color
-    local function fadeTween(frame)
-        framesPassed = framesPassed + 1
-        local percent = framesPassed / totalFrames * 100  -- Convert to percent (0-100)
-        el:SetColor(colorProp, Helpers.Color.NormalizedLerp(initialColor, fadeColor, percent))
-        if frame % 10 == 0 then  -- Print every 10 frames for debugging
-            -- RPrint(("Fading... %s"):format(percent))
-        end
-    end
+--     -- based on frame number, lerp between initial color and fade color
+--     local function fadeTween(frame)
+--         framesPassed = framesPassed + 1
+--         local percent = framesPassed / totalFrames * 100  -- Convert to percent (0-100)
+--         el:SetColor(colorProp, Helpers.Color.NormalizedLerp(initialColor, fadeColor, percent))
+--         if frame % 10 == 0 then  -- Print every 10 frames for debugging
+--             -- RPrint(("Fading... %s"):format(percent))
+--         end
+--     end
 
-    local function resetColor()
-        el:SetColor(colorProp, fadeColor)
-        currentFadeMap[fadeKey] = nil
-    end
+--     local function resetColor()
+--         el:SetColor(colorProp, fadeColor)
+--         currentFadeMap[fadeKey] = nil
+--     end
 
-    -- Subscribe to the fade animation and store the subscription
-    currentFadeMap[fadeKey] = Imgui.MainTick:Take(totalFrames):Subscribe(fadeTween, resetColor, resetColor)
-end
+--     -- Subscribe to the fade animation and store the subscription
+--     currentFadeMap[fadeKey] = Imgui.MainTick:Take(totalFrames):Subscribe(fadeTween, resetColor, resetColor)
+-- end
 
 --- Tracks original pre-jiggle position of imgui element, by handle
 ---@type table<integer, vec2>

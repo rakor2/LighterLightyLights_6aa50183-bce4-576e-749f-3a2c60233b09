@@ -1,7 +1,9 @@
-Ext.Require('Server/Main/MainServer.lua')
-Ext.Require('Server/Main/ListenersServer.lua')
-Ext.Require('Server/Main/OriginPointServer.lua')
-Ext.Require('Server/Main/AnalServer.lua')
-Ext.Require('Server/Main/GoboServer.lua')
-Ext.Require('Server/Main/SaverServer.lua')
--- Ext.Require('Server/Main/SaverServer.lua')
+RequireFiles('Server/Main/', {
+	'MainServer',
+	'BoneZoneGizmo',
+	'ListenersServer',
+	'OriginPointServer',
+	'AnalServer',
+	'GoboServer',
+	'SaverServer',
+})

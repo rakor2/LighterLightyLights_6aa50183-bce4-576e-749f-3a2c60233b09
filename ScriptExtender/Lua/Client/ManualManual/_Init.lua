@@ -1,2 +1,4 @@
-Ext.Require('Client/ManualManual/ManualManual_1.lua')
-Ext.Require('Client/ManualManual/ManualManual_Config.lua')
+RequireFiles('Client/ManualManual/', {
+	'ManualManual_1',
+	'ManualManual_Config',
+})

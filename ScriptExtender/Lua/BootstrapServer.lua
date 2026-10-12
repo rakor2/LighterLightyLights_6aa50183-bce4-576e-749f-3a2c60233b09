@@ -1,8 +1,14 @@
-Ext.Require("_Libs/_InitLibs.lua")
--- Ext.Require("Shared/_Libs.lua")
-Ext.Require("Shared/_init.lua")
-Ext.Require("Server/_init.lua")
+if Mods.Realm_Builder then
+    setmetatable(Mods.LL2, {__index = Mods.Realm_Builder})
+end
+
+
 
 if Mods.GizmoLib then
-    Utils:StripPrefixes(Mods.LL2, Mods.GizmoLib)
+    setmetatable(Mods.LL2, {__index = Mods.GizmoLib})
 end
+
+
+
+Ext.Require("Shared/_init.lua")
+Ext.Require("Server/_init.lua")

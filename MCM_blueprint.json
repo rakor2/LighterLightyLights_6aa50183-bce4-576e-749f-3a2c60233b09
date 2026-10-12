@@ -165,20 +165,20 @@
                 "BlockIfLevelNotStarted": true
               }
             },
-            {
-              "Id": "ll_apply_anl",
-              "Name": "Apply AnL",
-              "Type": "keybinding_v2",
-              "Default": {
-                "Keyboard": {
-                  "Key": "NUM_3",
-                  "ModifierKeys": ["LShift"]
-                }
-              },
-              "Options": {
-                "BlockIfLevelNotStarted": true
-              }
-            },
+            // {
+            //   "Id": "ll_apply_anl",
+            //   "Name": "Apply AnL",
+            //   "Type": "keybinding_v2",
+            //   "Default": {
+            //     "Keyboard": {
+            //       "Key": "NUM_3",
+            //       "ModifierKeys": ["LShift"]
+            //     }
+            //   },
+            //   "Options": {
+            //     "BlockIfLevelNotStarted": true
+            //   }
+            // },
             {
               "Id": "ll_hide_gobo",
               "Name": "Hide gobo",
@@ -209,6 +209,20 @@
               }
             },
             {
+              "Id": "ll_pm_next_dummy",
+              "Name": "Next dummy",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "E",
+                  "ModifierKeys": ["LShift"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true
+              }
+            },
+            {
               "Id": "ll_pm_prev_dummy",
               "Name": "Previous dummy",
               "Type": "keybinding_v2",
@@ -223,13 +237,13 @@
               }
             },
             {
-              "Id": "ll_pm_next_dummy",
-              "Name": "Next dummy",
+              "Id": "ll_dummy_popup",
+              "Name": "Toggle dummy popup",
               "Type": "keybinding_v2",
               "Default": {
                 "Keyboard": {
-                  "Key": "E",
-                  "ModifierKeys": ["LShift"]
+                  "Key": "",
+                  "ModifierKeys": [""]
                 }
               },
               "Options": {
@@ -304,6 +318,78 @@
               },
               "Options": {
                 "BlockIfLevelNotStarted": true
+              },
+            },
+            // {
+            //   "Id": "ll_select_bone",
+            //   "Name": "Select bone [Do not use]",
+            //   "Type": "keybinding_v2",
+            //   "Default": {
+            //     "Keyboard": {
+            //       "Key": "",
+            //       "ModifierKeys": [""]
+            //     }
+            //   },
+            //   "Options": {
+            //     "BlockIfLevelNotStarted": true
+            //   },
+            // },
+            // {
+            //   "Id": "ll_cycle_bone_gizmo",
+            //   "Name": "Cycle bone gizmo mode [Do not use]",
+            //   "Type": "keybinding_v2",
+            //   "Default": {
+            //     "Keyboard": {
+            //       "Key": "",
+            //       "ModifierKeys": [""]
+            //     }
+            //   },
+            //   "Options": {
+            //     "BlockIfLevelNotStarted": true
+            //   },
+            // },
+            // {
+            //   "Id": "ll_add_bone",
+            //   "Name": "Add bone to selection [Do not use]",
+            //   "Type": "keybinding_v2",
+            //   "Default": {
+            //     "Keyboard": {
+            //       "Key": "",
+            //       "ModifierKeys": [""]
+            //     }
+            //   },
+            //   "Options": {
+            //     "BlockIfLevelNotStarted": true
+            //   }
+            // },
+            {
+              "Id": "ll_hide_window",
+              "Name": "Hides window",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "F10",
+                  "ModifierKeys": [""]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true,
+                "PreventAction": false,
+                "AllowConflict": true
+              }
+            },
+            {
+              "Id": "ll_bz_quicksave",
+              "Name": "Quickly saves a pose",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "S",
+                  "ModifierKeys": ["LShift"]
+                }
+              },
+              "Options": {
+                "BlockIfLevelNotStarted": true,
               }
             }
           ]

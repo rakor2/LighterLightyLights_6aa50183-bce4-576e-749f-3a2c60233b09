@@ -112,6 +112,11 @@ SDLScanCodes = {
     "APPLICATION",
     "POWER",
     "KP_EQUALS",
+
+2 matches in 1 file
+
+
+Searching 248 files for "PopulateWithDefaultValues"
     "F13",
     "F14",
     "F15",

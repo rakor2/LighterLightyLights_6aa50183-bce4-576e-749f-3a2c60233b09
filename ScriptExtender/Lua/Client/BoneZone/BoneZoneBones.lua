@@ -1,0 +1,929 @@
+GroupOrder = {
+    'BonesBody',
+    'BonesFacial',
+    'BonesTail',
+    'BonesWings',
+    'BonesGen',
+    'BonesTentacles',
+    'BonesBear',
+    'BonesHair',
+}
+
+CategoryOrder = {
+    'Bonez',
+    'MisAmora',
+
+    'Spine',
+    -- 'Shoulders',
+    'Arms',
+    'Hands',
+    'Legs',
+    'DummyFX',
+    'DummyLimb',
+    'DummySheath',
+
+    'Eyes',
+    'Brows',
+    'Cheek',
+    'Lips',
+    'Tongue',
+    'Chin',
+    'Teeth',
+    'Piercing',
+    'SmileLines',
+    'Wrinkle',
+    'Beard',
+
+    'Nose_DGB',
+    'Tongue_DGB',
+    'Chin_DGB',
+    'LipsEdge_DGB',
+    'Mouth_DGB',
+    'Cheek_DGB',
+    'EyeOrbit_DGB',
+    'Brows_DGB',
+    'Jugal_DGB',
+
+    'Tail',
+
+    'WingScapula',
+    'WingShoulders',
+    'WingElbows',
+    'WingWrist',
+
+    'Tentacles',
+    'Bear',
+
+    'Genitals',
+
+    'SocketChest',
+    'SocketCrown',
+    'SocketFace',
+    'SocketEars',
+    'SocketNeck',
+    'SocketScapula',
+    'SocketTop',
+    'HairBun',
+    'HairDreads',
+    'HairStraightB',
+    'HairStraightC',
+    'HairBraids',
+    'HairPonytailMain',
+    'HairSide',
+}
+
+BodyBones = {
+    Spine = {
+        'Root_M',
+        'Spine1_M',
+        'Spine2_M',
+        'Chest_M',
+        'Neck_M',
+        'Head_M',
+    },
+
+    Arms = {
+        'Scapula_L',
+        'Shoulder_L',
+        'Shoulder_L_Twist_01',
+        'Shoulder_L_Twist_02',
+        'Shoulder_Twist_L',
+        'Elbow_L',
+        'Elbow_Twist_L',
+        'Wrist_L',
+
+        'Scapula_R',
+        'Shoulder_R',
+        'Shoulder_R_Twist_01',
+        'Shoulder_R_Twist_02',
+        'Shoulder_Twist_R',
+        'Elbow_R',
+        'Elbow_Twist_R',
+        'Wrist_R',
+    },
+
+    Hands = {
+        'ThumbFinger1_L',
+        'ThumbFinger2_L',
+        'ThumbFinger3_L',
+
+        'IndexFinger1_L',
+        'IndexFinger2_L',
+        'IndexFinger3_L',
+
+        'MiddleFinger1_L',
+        'MiddleFinger2_L',
+        'MiddleFinger3_L',
+
+        'RingFinger0_L',
+        'RingFinger1_L',
+        'RingFinger2_L',
+        'RingFinger3_L',
+
+        'PinkyFinger0_L',
+        'PinkyFinger1_L',
+        'PinkyFinger2_L',
+        'PinkyFinger3_L',
+
+        'ThumbFinger1_R',
+        'ThumbFinger2_R',
+        'ThumbFinger3_R',
+
+        'IndexFinger1_R',
+        'IndexFinger2_R',
+        'IndexFinger3_R',
+
+        'MiddleFinger1_R',
+        'MiddleFinger2_R',
+        'MiddleFinger3_R',
+
+        'RingFinger0_R',
+        'RingFinger1_R',
+        'RingFinger2_R',
+        'RingFinger3_R',
+
+        'PinkyFinger0_R',
+        'PinkyFinger1_R',
+        'PinkyFinger2_R',
+        'PinkyFinger3_R',
+    },
+
+    Legs = {
+        'Hip_L',
+        'Hip_L_Twist_01',
+        'Hip_L_Twist_02',
+        'Knee_L',
+        'Ankle_L',
+        'Toes_L',
+
+        'Hip_R',
+        'Hip_R_Twist_01',
+        'Hip_R_Twist_02',
+        'Knee_R',
+        'Ankle_R',
+        'Toes_R',
+    },
+
+    DummyFX = {
+        'Dummy_HeadFX',
+        'Dummy_EyeFX_01',
+        'Dummy_EyeFX_02',
+        'Dummy_MouthFX',
+        'Dummy_NeckFX',
+        'Dummy_OverheadFX',
+        'Dummy_ChestFX',
+        'Dummy_BodyFX',
+        'Dummy_StatusFX',
+        'Dummy_Playerlight',
+        'Dummy_CastFX',
+        'Dummy_Custom_Anim',
+        'Dummy_FollowPhysics',
+        'Dummy_HitImpactFX',
+        'Dummy_WingFX',
+        'Dummy_Root',
+    },
+
+    DummyLimb = {
+        'Dummy_L_Hand',
+        'Dummy_L_HandFX',
+        'Dummy_L_Hand_IK',
+        'Dummy_L_KneeFX_01',
+        'Dummy_L_Foot_01',
+        'Dummy_L_Foot_IK',
+        'Dummy_L_TentacleFX',
+
+        'Dummy_R_Hand',
+        'Dummy_R_HandFX',
+        'Dummy_R_Hand_IK',
+        'Dummy_R_KneeFX_01',
+        'Dummy_R_Foot_01',
+        'Dummy_R_Foot_IK',
+        'Dummy_R_TentacleFX',
+    },
+
+    DummySheath = {
+        'Dummy_Sheath_Hip_L',
+        'Dummy_Sheath_Lower_L',
+        'Dummy_Sheath_Upper_L',
+
+        'Dummy_Sheath_Hip_R',
+        'Dummy_Sheath_Lower_R',
+        'Dummy_Sheath_Upper_R',
+
+        'Dummy_Sheath_Shield',
+        'Dummy_Sheath_Ranged',
+        'Dummy_Sheath_Music',
+    },
+}
+
+FacialBones = {
+    Eyes = {
+        'eye_l',
+        'eye_l_lowerlid_01',
+        'eye_l_lowerlid_02',
+        'eye_l_lowerlid_03',
+        'eye_l_outer_corner',
+        'eye_l_upperlid_01',
+        'eye_l_upperlid_02',
+        'eye_l_upperlid_03',
+
+        'eye_r',
+        'eye_r_lowerlid_01',
+        'eye_r_lowerlid_02',
+        'eye_r_lowerlid_03',
+        'eye_r_outer_corner',
+        'eye_r_upperlid_01',
+        'eye_r_upperlid_02',
+        'eye_r_upperlid_03',
+    },
+
+    EyeOrbit_DGB = {
+        'eyeorbit_l_02',
+        'eyeorbit_l_03',
+        'eyeorbit_l_04',
+        'eyeorbit_l_05',
+        'eyeorbit_l_06',
+
+        'eyeorbit_r_02',
+        'eyeorbit_r_03',
+        'eyeorbit_r_04',
+        'eyeorbit_r_05',
+        'eyeorbit_r_06',
+    },
+
+    Brows = {
+        'brow_l_01',
+        'brow_l_02',
+        'brow_l_03',
+        'brow_l_04',
+
+        'brow_r_01',
+        'brow_r_02',
+        'brow_r_03',
+        'brow_r_04',
+
+        'brow_m',
+    },
+
+    Brows_DGB = {
+        'eyebrow_l_01',
+        'eyebrow_l_02',
+        'eyebrow_l_03',
+        'eyebrow_l_04',
+
+        'eyebrow_r_01',
+        'eyebrow_r_02',
+        'eyebrow_r_03',
+        'eyebrow_r_04',
+    },
+
+    Cheek = {
+        'cheek_lower_l',
+        'cheek_middle_l',
+        'cheek_outer_l',
+        'cheek_upper_l',
+
+        'cheek_lower_r',
+        'cheek_middle_r',
+        'cheek_outer_r',
+        'cheek_upper_r',
+    },
+
+    Cheek_DGB = {
+        'cheek_l_01',
+        'cheek_l_02',
+        'cheek_l_03',
+
+        'cheek_r_01',
+        'cheek_r_02',
+        'cheek_r_03',
+    },
+
+    Nose = {
+        'nose_nasal_l_01',
+        'nose_nasal_l_02',
+        'nose_wing_l',
+
+        'nose_nasal_r_01',
+        'nose_nasal_r_02',
+        'nose_wing_r',
+
+        'nose_bridge',
+        'nose_tip',
+        'nose_under',
+    },
+
+    Nose_DGB = {
+        'nosetip_m_01',
+        'nosetip_m_02',
+
+        'nose_l_01',
+        'nose_l_02',
+        'nose_l_03',
+        'nose_l_04',
+
+        'nose_r_01',
+        'nose_r_02',
+        'nose_r_03',
+        'nose_r_04',
+
+        'nose_m_01',
+
+        'nosebridge_m_01',
+        'nosebridge_m_02',
+        'nosebridge_m_03',
+    },
+
+    Lips = {
+        'lowerlip_00',
+        'lowerlip_01',
+        'lowerlip_02',
+        'lowerlip_03',
+        'lowerlip_04',
+        'lowerlip_05',
+        'lowerlip_06',
+        'lowerlip_07',
+        'lowerlip_08',
+        'lowerlip_09',
+        'lowerlip_10',
+        'lowerlip_11',
+        'lowerlip_12',
+
+        'upperlip_00',
+        'upperlip_01',
+        'upperlip_02',
+        'upperlip_03',
+        'upperlip_04',
+        'upperlip_05',
+        'upperlip_06',
+        'upperlip_07',
+        'upperlip_08',
+        'upperlip_09',
+        'upperlip_10',
+        'upperlip_11',
+        'upperlip_12',
+    },
+
+    LipsEdge_DGB = {
+        'lowerlip_edge_l_01',
+        'lowerlip_edge_l_02',
+        'lowerlip_edge_l_03',
+        'lowerlip_edge_l_04',
+        'lowerlip_edge_l_05',
+        'lowerlip_edge_l_06',
+        'lowerlip_edge_l_07',
+        'lowerlip_edge_l_08',
+
+        'lowerlip_edge_r_01',
+        'lowerlip_edge_r_02',
+        'lowerlip_edge_r_03',
+        'lowerlip_edge_r_04',
+        'lowerlip_edge_r_05',
+        'lowerlip_edge_r_06',
+        'lowerlip_edge_r_07',
+        'lowerlip_edge_r_08',
+
+        'lowerlip_edge_m_01',
+
+        'upperlip_edge_r_01',
+        'upperlip_edge_r_02',
+        'upperlip_edge_r_03',
+        'upperlip_edge_r_04',
+        'upperlip_edge_r_05',
+        'upperlip_edge_r_06',
+        'upperlip_edge_r_07',
+        'upperlip_edge_r_08',
+
+        'upperlip_edge_l_01',
+        'upperlip_edge_l_02',
+        'upperlip_edge_l_03',
+        'upperlip_edge_l_04',
+        'upperlip_edge_l_05',
+        'upperlip_edge_l_06',
+        'upperlip_edge_l_07',
+        'upperlip_edge_l_08',
+
+        'upperlip_edge_m_01',
+    },
+
+    Tongue = {
+        'tongue_l_01',
+        'tongue_l_02',
+        'tongue_r_01',
+        'tongue_r_02',
+    },
+
+    Tongue_DGB = {
+        'tongue_01',
+        'tongue_02',
+        'tongue_03',
+        'tongue_04',
+    },
+
+    Chin = {
+        'chin_l',
+        'chin_r',
+        'jaw',
+    },
+
+    Chin_DGB = {
+        'chin_m_01',
+        'jaw_m',
+        'gullet_m_01',
+        'gullet_m_02',
+    },
+
+    Jugal_DGB = {
+        'jugal_l_01',
+        'jugal_l_02',
+        'jugal_l_03',
+        'jugal_l_04',
+        'jugal_l_05',
+        'jugal_l_06',
+
+        'jugal_r_01',
+        'jugal_r_02',
+        'jugal_r_03',
+        'jugal_r_04',
+        'jugal_r_05',
+        'jugal_r_06',
+    },
+
+    Teeth = {
+        'lower_teeth',
+        'upper_teeth',
+    },
+
+    Piercing = {
+        'piercing_bridge_a_l',
+        'piercing_brow_a_l',
+        'piercing_brow_b_l',
+        'piercing_helix_a_l',
+        'piercing_helix_b_l',
+        'piercing_lobe_a_l',
+        'piercing_lobe_b_l',
+        'piercing_nostril_a_l',
+        'piercing_tragus_a_l',
+
+        'piercing_bridge_a_r',
+        'piercing_brow_a_r',
+        'piercing_brow_b_r',
+        'piercing_helix_a_r',
+        'piercing_helix_b_r',
+        'piercing_lobe_a_r',
+        'piercing_lobe_b_r',
+        'piercing_nostril_a_r',
+        'piercing_tragus_a_r',
+
+        'piercing_base',
+        'piercing_septum_a_m',
+    },
+
+    SmileLines = {
+        'smilelines_l_01',
+        'smilelines_l_02',
+        'smilelines_l_03',
+        'smilelines_l_04',
+
+        'smilelines_r_01',
+        'smilelines_r_02',
+        'smilelines_r_03',
+        'smilelines_r_04',
+    },
+
+    Mouth_DGB = {
+        'mouthcorner_l',
+        'mouthcorner_r',
+
+        'sneer_l_01',
+        'sneer_l_02',
+        'sneer_r_01',
+        'sneer_r_02',
+    },
+
+    Wrinkle = {
+        'wrinkle_01',
+        'wrinkle_02',
+        'wrinkle_03',
+        'wrinkle_base',
+    },
+
+    Beard = {
+        'beard_cheek_l',
+        'beard_chin_l',
+        'beard_ear_l',
+        'beard_jaw_base_l',
+        'beard_jaw_l',
+        'beard_labiomental_l',
+        'beard_lower_lip1_l',
+        'beard_lower_lip2_l',
+        'beard_philtrum_l',
+        'beard_smileline1_l',
+        'beard_smileline2_l',
+        'beard_smileline3_l',
+        'beard_upper_lip1_l',
+        'beard_upper_lip2_l',
+
+        'beard_base',
+        'beard_jaw_m',
+        'beard_labiomental_m',
+        'beard_lower_lip_m',
+        'beard_philtrum_m',
+        'beard_upper_lip_m',
+
+        'beard_cheek_r',
+        'beard_chin_r',
+        'beard_ear_r',
+        'beard_jaw_base_r',
+        'beard_jaw_r',
+        'beard_labiomental_r',
+        'beard_lower_lip1_r',
+        'beard_lower_lip2_r',
+        'beard_philtrum_r',
+        'beard_smileline1_r',
+        'beard_smileline2_r',
+        'beard_smileline3_r',
+        'beard_upper_lip1_r',
+        'beard_upper_lip2_r',
+    }
+}
+
+TailBones = {
+    Tail = {
+        'Tail7_M',
+        'Tail6_M',
+        'Tail5_M',
+        'Tail4_M',
+        'Tail3_M',
+        'Tail2_M',
+        'Tail1_M',
+        'Tail0_M',
+    }
+}
+
+WingsBones = {
+    WingScapula = {
+        'Wing_Scapula_L',
+        'Wing_Scapula_R',
+    },
+
+
+    WingShoulders = {
+        'Wing_Shoulder_L',
+        'Wing_Shoulder1_0_L',
+        'Wing_Shoulder1_1_L',
+
+        'Wing_Shoulder_R',
+        'Wing_Shoulder1_0_R',
+        'Wing_Shoulder1_1_R',
+
+        'Wing_Shoulder2_0_L',
+        'Wing_Shoulder2_1_L',
+
+        'Wing_Shoulder2_0_R',
+        'Wing_Shoulder2_1_R',
+
+        'Wing_Shoulder3_0_L',
+        'Wing_Shoulder3_1_L',
+
+        'Wing_Shoulder3_0_R',
+        'Wing_Shoulder3_1_R',
+    },
+
+    WingElbows = {
+        'Wing_Elbow_L',
+        'Wing_Elbow1_0_L',
+        'Wing_Elbow1_1_L',
+
+        'Wing_Elbow_R',
+        'Wing_Elbow1_0_R',
+        'Wing_Elbow1_1_R',
+
+        'Wing_Elbow2_0_L',
+        'Wing_Elbow2_1_L',
+
+        'Wing_Elbow2_0_R',
+        'Wing_Elbow2_1_R',
+
+        'Wing_Elbow3_0_L',
+        'Wing_Elbow3_1_L',
+
+        'Wing_Elbow3_0_R',
+        'Wing_Elbow3_1_R',
+
+        'Wing_Elbow4_0_L',
+        'Wing_Elbow4_1_L',
+
+        'Wing_Elbow4_0_R',
+        'Wing_Elbow4_1_R',
+
+        'Wing_Elbow5_0_L',
+        'Wing_Elbow5_1_L',
+
+        'Wing_Elbow5_0_R',
+        'Wing_Elbow5_1_R',
+    },
+
+    WingWrist = {
+        'Wing_Wrist_L',
+        'Wing_Wrist1_0_L',
+
+        'Wing_Wrist_R',
+        'Wing_Wrist1_0_R',
+    },
+}
+
+
+HairBones = {
+    SocketBack = {
+        'Socket_Hair_Back_L',
+        'Socket_Hair_Back_M',
+        'Socket_Hair_Back_R',
+    },
+
+    SocketChest = {
+        'Socket_Hair_Chest1_L',
+        'Socket_Hair_Chest1_R',
+        'Socket_Hair_Chest2_L',
+        'Socket_Hair_Chest2_R',
+    },
+
+    SocketCrown = {
+        'Socket_Hair_Crown_L',
+        'Socket_Hair_Crown_M',
+        'Socket_Hair_Crown_R',
+
+        'Socket_Hair_CrownTop_L',
+        'Socket_Hair_CrownTop_M',
+        'Socket_Hair_CrownTop_R',
+    },
+
+    SocketFace = {
+        'Socket_Hair_Forehead_L',
+        'Socket_Hair_Forehead_M',
+        'Socket_Hair_Forehead_R',
+
+        'Socket_Hair_FrontTop_M',
+
+        'Socket_Hair_Sideburn_L',
+        'Socket_Hair_Sideburn_R',
+
+        'Socket_Hair_Temple_L',
+        'Socket_Hair_Temple_R',
+    },
+
+    SocketEars = {
+        'Socket_Hair_Ear_L',
+        'Socket_Hair_Ear_R',
+
+        'Socket_Hair_Ear_Adjust_L',
+        'Socket_Hair_Ear_Adjust_R',
+
+        'Socket_Hair_LowerEar_L',
+        'Socket_Hair_LowerEar_R',
+    },
+
+    SocketNeck = {
+        'Socket_Hair_Neck_L',
+        'Socket_Hair_Neck_R',
+        'Socket_Hair_Neck1_M',
+        'Socket_Hair_Neck2_L',
+        'Socket_Hair_Neck2_M',
+        'Socket_Hair_Neck2_R',
+    },
+
+    SocketScapula = {
+        'Socket_Hair_Scapula1_L',
+        'Socket_Hair_Scapula1_R',
+        'Socket_Hair_Scapula2_L',
+        'Socket_Hair_Scapula2_R',
+    },
+
+    SocketTop = {
+        'Socket_Hair_Top_M',
+        'Socket_Hair_Top1_L',
+        'Socket_Hair_Top1_R',
+        'Socket_Hair_Top2_L',
+        'Socket_Hair_Top2_R',
+    },
+
+    HairBun = {
+        'Hair_Bun_00_L',
+        'Hair_Bun_00_R',
+        'Hair_Bun_01_L',
+        'Hair_Bun_01_R',
+    },
+
+    HairDreads = {
+        'Hair_FemDreads_Long_A_0',
+        'Hair_FemDreads_Long_A_1',
+        'Hair_FemDreads_Long_A_2',
+        'Hair_FemDreads_Long_A_3',
+    },
+
+    HairStraightB = {
+        'Hair_FemStraight_Long_B_0',
+        'Hair_FemStraight_Long_B_1',
+        'Hair_FemStraight_Long_B_2',
+        'Hair_FemStraight_Long_B_3',
+    },
+
+    HairStraightC = {
+        'Hair_FemStraight_Long_C_0',
+        'Hair_FemStraight_Long_C_1',
+        'Hair_FemStraight_Long_C_2',
+        'Hair_FemStraight_Long_C_3',
+        'Hair_FemStraight_Long_C_4',
+        'Hair_FemStraight_Long_C_5',
+        'Hair_FemStraight_Long_C_6',
+        'Hair_FemStraight_Long_C_7',
+    },
+
+    HairBraids = {
+        'Hair_MenBraids_Long_B_0',
+        'Hair_MenBraids_Long_B_1',
+        'Hair_MenBraids_Long_B_2',
+        'Hair_MenBraids_Long_B_3',
+        'Hair_MenBraids_Long_B_4',
+    },
+
+    HairPonytailMain = {
+        'Hair_Ponytail_00_L',
+        'Hair_Ponytail_00_M',
+        'Hair_Ponytail_00_R',
+
+        'Hair_Ponytail_01_L',
+        'Hair_Ponytail_01_M',
+        'Hair_Ponytail_01_R',
+
+        'Hair_Ponytail_02_L',
+        'Hair_Ponytail_02_M',
+        'Hair_Ponytail_02_R',
+
+        'Hair_Ponytail_03_L',
+        'Hair_Ponytail_03_M',
+        'Hair_Ponytail_03_R',
+
+        'Hair_Ponytail_04_L',
+        'Hair_Ponytail_04_M',
+        'Hair_Ponytail_04_R',
+
+        'Hair_Ponytail_05_L',
+        'Hair_Ponytail_05_R',
+
+        'Hair_ponytail_0_L1',
+        'Hair_ponytail_0_R1',
+        'Hair_ponytail_1_L',
+        'Hair_ponytail_1_R',
+        'Hair_ponytail_2_L',
+        'Hair_ponytail_2_R',
+    },
+
+    HairSide = {
+        'Hair_Side_00_L',
+        'Hair_Side_00_R',
+        'Hair_Side_01_L',
+        'Hair_Side_01_R',
+        'Hair_Side_02_L',
+        'Hair_Side_02_R',
+        'Hair_Side_03_L',
+        'Hair_Side_03_R',
+        'Hair_Side_04_L',
+        'Hair_Side_04_R',
+    },
+}
+
+BearBones = {
+    Bear = {
+    'Neck1_M',
+    'Neck2_M',
+    'Palm_R',
+    'Palm_L',
+    }
+}
+
+TentaclesBones = {
+    Tentacles = {
+        'Tentacle_10_BL',
+        'Tentacle_09_BL',
+        'Tentacle_08_BL',
+        'Tentacle_07_BL',
+        'Tentacle_06_BL',
+        'Tentacle_05_BL',
+        'Tentacle_04_BL',
+        'Tentacle_03_BL',
+        'Tentacle_02_BL',
+        'Tentacle_01_BL',
+        'Tentacle_00_BL',
+        'Tentacle_10_FL',
+        'Tentacle_09_FL',
+        'Tentacle_08_FL',
+        'Tentacle_07_FL',
+        'Tentacle_06_FL',
+        'Tentacle_05_FL',
+        'Tentacle_04_FL',
+        'Tentacle_03_FL',
+        'Tentacle_02_FL',
+        'Tentacle_01_FL',
+        'Tentacle_00_FL',
+        'tentacle_l',
+        'Tentacle_10_BR',
+        'Tentacle_09_BR',
+        'Tentacle_08_BR',
+        'Tentacle_07_BR',
+        'Tentacle_06_BR',
+        'Tentacle_05_BR',
+        'Tentacle_04_BR',
+        'Tentacle_03_BR',
+        'Tentacle_02_BR',
+        'Tentacle_01_BR',
+        'Tentacle_00_BR',
+        'Tentacle_10_FR',
+        'Tentacle_09_FR',
+        'Tentacle_08_FR',
+        'Tentacle_07_FR',
+        'Tentacle_06_FR',
+        'Tentacle_05_FR',
+        'Tentacle_04_FR',
+        'Tentacle_03_FR',
+        'Tentacle_02_FR',
+        'Tentacle_01_FR',
+        'Tentacle_00_FR',
+        'tentacle_r',
+    }
+}
+
+
+
+GenBones = {
+    Genitals = {
+        'Penis1_M',
+        'Penis2_M',
+        'Scrotum1_M',
+    }
+}
+
+
+
+Bones = {
+    Bonez = {
+        'eye_r',
+        'eye_l',
+        'Head_M',
+        'Neck_M',
+        'Spine1_M',
+        'Spine2_M',
+        'Chest_M',
+    }
+}
+
+
+BonesFacialDani = {
+    MisAmora = {
+        'eye_l_lowerlid_01',
+        'eye_l_lowerlid_02',
+        'eye_l_lowerlid_03',
+        'eye_l_outer_corner',
+        'eye_l_upperlid_01',
+        'eye_l_upperlid_02',
+        'eye_l_upperlid_03',
+        'eye_r_lowerlid_01',
+        'eye_r_lowerlid_02',
+        'eye_r_lowerlid_03',
+        'eye_r_outer_corner',
+        'eye_r_upperlid_01',
+        'eye_r_upperlid_02',
+        'eye_r_upperlid_03',
+    }
+}
+
+AllBones = {
+    -- Bones = Bones,
+    -- BonesFacialDani = BonesFacialDani,
+    BonesBody = BodyBones,
+    BonesFacial = FacialBones,
+    BonesTail = TailBones,
+    BonesWings = WingsBones,
+    BonesGen = GenBones,
+    BonesTentacles = TentaclesBones,
+    BonesBear = BearBones,
+    -- BonesHair = HairBones,
+}
+
+
+AllBonesArray = {}
+
+function PopulateAllBonesArray()
+     for _, postfix in pairs({'_Trans', '_Rot', '_Scale'}) do
+        for boneGroupName, BoneCategories in pairs(AllBones) do
+            for boneCategory, Bones in pairs(BoneCategories) do
+                for _, boneName in pairs(Bones) do
+                    local varName = boneName .. postfix
+                    table.insert(AllBonesArray, varName)
+                end
+            end
+        end
+    end
+end
+
+PopulateAllBonesArray()

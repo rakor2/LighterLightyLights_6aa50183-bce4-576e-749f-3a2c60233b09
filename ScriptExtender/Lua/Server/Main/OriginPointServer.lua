@@ -2,7 +2,7 @@ Ch.CreateOriginPoint:SetRequestHandler(function (Data)
     if _GLL.States.pointIsExisting then return end
     local x, y, z = table.unpack(Data.Position)
     if z then
-        _GLL.pointUuid = Osi.CreateAt(lightMarkerGUID, x, y, z, 0, 0, '')
+        _GLL.pointUuid = Osi.CreateAt('12f13f99-c12f-4b79-a487-4dc187d44cb5', x, y, z, 0, 0, '')
         _GLL.pointEntity = Ext.Entity.Get(_GLL.pointUuid)
         _GLL.States.pointIsExisting = true
         local Response = {
