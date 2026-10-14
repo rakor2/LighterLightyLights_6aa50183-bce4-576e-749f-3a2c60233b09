@@ -388,34 +388,22 @@ function Anal3Tab(p)
             SameLine = true,
             OnClick  = function()
             	Anl.ResetValues('Lighting')
-                -- ResetLTN(false)
-                -- Anl.ApplyParameters('Lighting')
-                -- CreateUI(LTN_Templates[UI:SelectedOpt(E.comboLighting)], 'Lighting', E.collapseParamsLTN, LTN_ORDER)
             end,
             OnRightClick = function()
-            	Anl.ResetValues('Lighting')
-                -- ResetLTN(true)
-                -- Anl.ApplyParameters('Lighting')
-                -- CreateUI(LTN_Templates[UI:SelectedOpt(E.comboLighting)], 'Lighting', E.collapseParamsLTN, LTN_ORDER)
+            	Anl.ResetValues('Lighting', true)
             end
         })
 
-    E.btnResetCATM = p:AddButton('Reset atmosphere')
+
 
     E.btnResetCATM = p:AddButton('Reset atmosphere')
         UI:Config(E.btnResetCATM, {
             SameLine = true,
             OnClick  = function()
             	Anl.ResetValues('Atmosphere')
-                -- ResetATM(false)
-                -- Anl.ApplyParameters('Atmosphere')
-                -- CreateUI(ATM_Templates[UI:SelectedOpt(E.comboAtmosphere)], 'Atmosphere', E.collapseParamsATM, ATM_ORDER)
             end,
             OnRightClick = function()
-            	Anl.ResetValues('Atmosphere')
-                -- ResetATM(true)
-                -- Anl.ApplyParameters('Atmosphere')
-                -- CreateUI(ATM_Templates[UI:SelectedOpt(E.comboAtmosphere)], 'Atmosphere', E.collapseParamsATM, ATM_ORDER)
+            	Anl.ResetValues('Atmosphere', true)
             end
         })
 
