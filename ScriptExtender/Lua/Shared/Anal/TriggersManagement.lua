@@ -1,7 +1,24 @@
 ANL = {}
+-- ANL = Ext.Require('Client/Anal/Anal.lua')
 
 ANL.Blocked = {
 	['Stash_PhinaCamp'] = true,
+}
+
+ANL.BlockedTriggers = {
+	-- Lighting mirror and portraits
+	['ac6e827d-4988-8365-2fc0-2335387bbaaa'] = true,
+	['c91f161d-f938-8cd9-42fc-f7250adbad53'] = true,
+	['00fd9f62-16d5-c800-b128-96fce29ebf00'] = true,
+	['8a83e37d-b3fd-c0ce-f7a4-105e8692c5bb'] = true,
+	['121d4caf-a43f-cd04-b78b-bade259a69f0'] = true,
+
+	-- Atmosphere mirror and portraits
+	['eeddb905-b403-8bd3-45a5-dfafe608a21a'] = true,
+	['bb3a96a5-28d1-84e4-28b3-da06819ca637'] = true,
+	['18210d12-510b-c0f9-dff1-c3edc664bd8a'] = true,
+	['d47ca45f-c6e0-c4e7-e826-c6d1477f934b'] = true,
+	['2a41ba5f-ef65-c5fd-d554-e7cf0960677a'] = true,
 }
 
 ANL.CurrentlyBlockedLevels = {}
@@ -49,7 +66,10 @@ function ANL.GetTriggers()
 
 	for k, Trigger in pairs(CLT) do
 		local levelName = Trigger.Level.LevelName
-		if ANL.Blocked[levelName] then
+		local uuid = Trigger.Uuid.EntityUuid
+		if ANL.Blocked[levelName]
+			or (not Settings.allowMirror and ANL.BlockedTriggers[uuid])
+		then
 			CLT[k] = nil
 			ANL.CurrentlyBlockedLevels[levelName] = true
 		end
@@ -57,7 +77,10 @@ function ANL.GetTriggers()
 
 	for k, Trigger in pairs(CAT) do
 		local levelName = Trigger.Level.LevelName
-		if ANL.Blocked[levelName] then
+		if ANL.Blocked[levelName]
+			or (not Settings.allowMirror and ANL.BlockedTriggers[uuid])
+		then
+
 			CAT[k] = nil
 			ANL.CurrentlyBlockedLevels[levelName] = true
 		end
