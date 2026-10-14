@@ -44,5 +44,6 @@ Settings:AddDefaultSettings({
     {'fadeableTickInterval',    10},
     {'disableCrowd',            false},
     {'degenExtendedScriptExtender', false},
+    {'allowMirror',             true},
 })
 Settings:Initialize()

@@ -345,6 +345,19 @@ function Settings2Tab(p)
 
 
 
+    p:AddSeparatorText('Atmosphere and Lighting')
+
+
+    E.checkAllowCC = p:AddCheckbox('Allows switching AnL in the mirror')
+        UI:Config(E.checkAllowCC, {
+            Checked = Settings.allowMirror,
+            OnChange = function (e)
+                Settings.allowMirror = e.Checked
+                Settings:Save()
+            end
+        })
+
+
 
     p:AddSeparatorText('Camera')
 

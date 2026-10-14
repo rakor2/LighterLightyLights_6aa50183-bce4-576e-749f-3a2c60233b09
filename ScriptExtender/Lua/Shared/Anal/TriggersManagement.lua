@@ -154,6 +154,27 @@ function ANL.MoveCameraToChangeANLBecauseThisGameIsWeird()
 		Camera.GameCameraBehavior.TargetCurrentLow = {T[1] + Settings.cameraOffset, T[2], T[3]}
 		Camera.GameCameraBehavior.TargetCurrentLow = {T[1] - Settings.cameraOffset, T[2], T[3]}
 	end
+
+	--- MOve cmaera in cc through noises garbo xD
+	if States.InCC() then
+		DealingWithNoesis(function()
+			local Garbo = Ext.UI:GetRoot():Find('ContentRoot'):Child(24):Child(1)
+			local canNext = Garbo.CanSetNextCameraMode
+
+			if canNext then
+				Garbo.NextCameraMode:Execute()
+				OnTicks(2, function()
+					Ext.UI:GetRoot():Find('ContentRoot'):Child(24):Child(1).PrevCameraMode:Execute()
+				end)
+			else
+				Garbo.PrevCameraMode:Execute()
+				OnTicks(2, function()
+					Ext.UI:GetRoot():Find('ContentRoot'):Child(24):Child(1).NextCameraMode:Execute()
+				end)
+			end
+		end)
+	end
+
 end
 
 
