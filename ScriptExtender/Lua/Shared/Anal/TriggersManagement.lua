@@ -198,7 +198,8 @@ function ANL.SetLigthing(ltnUuid, Trigger)
 		ANL.AddLightingToResourceIDs(ltnUuid, Trigger)
 		Trigger[ComponentNames.Lighting].field_84 = 0
 		Trigger[ComponentNames.Lighting].CurrentLightingResourceID = ltnUuid
-		return
+
+		goto xd
 	end
 
 	if not Trigger then
@@ -224,6 +225,8 @@ function ANL.SetLigthing(ltnUuid, Trigger)
 		Trigger[ComponentNames.Lighting].CurrentLightingResourceID = ltnUuid
 	end
 
+	::xd::
+
 	_GLL.CurrentLighting = UI:SelectedOpt(E.comboLighting)
 	Anl.CurrentLighting = UI:SelectedOpt(E.comboLighting)
 end
@@ -244,7 +247,8 @@ function ANL.SetAtmosphere(atmUuid, Trigger)
 		ANL.AddAtmosphereToResourceIDs(atmUuid, Trigger)
 		Trigger[ComponentNames.Atmosphere].field_84 = 0
 		Trigger[ComponentNames.Atmosphere].CurrentAtmosphereResourceID = atmUuid
-		return
+
+		goto xd
 	end
 
 	--- TBD: Probably separate it in a function
@@ -287,6 +291,8 @@ function ANL.SetAtmosphere(atmUuid, Trigger)
 		Trigger[ComponentNames.Atmosphere].field_84 = 0
 		Trigger[ComponentNames.Atmosphere].CurrentAtmosphereResourceID = atmUuid
 	end
+
+	::xd::
 
 	_GLL.CurrentAtmosphere = UI:SelectedOpt(E.comboAtmosphere)
 	Anl.CurrentAtmosphere = UI:SelectedOpt(E.comboAtmosphere)
@@ -378,7 +384,7 @@ end
 
 function ANL.ApplyLighting()
 	local switherLighting  = '3a7102a7-4818-185a-9060-d72318c181f4'
-	local currentLighitng  = LTN_Templates[_GLL.CurrentLighting]
+	local currentLighitng  = LTN_Templates[Anl.CurrentLighting]
 	local fallbackSwithcer = '32d627ea-192c-4d45-7a07-f6b7f1c9d745' --- in case if user selected '3a7102a7...'
 	local resetLighting    = switherLighting == currentLighitng and fallbackSwithcer or switherLighting
 	local LTN_Triggers     = {}
@@ -407,7 +413,7 @@ end
 
 function ANL.ApplyAtmosphere()
 	local switherAtmopshere  = 'f9862ce8-972f-d2b6-4bf9-c37746c9eaac'
-	local currentAtmosphere  = ATM_Templates[_GLL.CurrentAtmosphere]
+	local currentAtmosphere  = ATM_Templates[Anl.CurrentAtmosphere]
 	local resetAtmosphere    = switherAtmopshere
 	local ATM_Triggers       = {}
 

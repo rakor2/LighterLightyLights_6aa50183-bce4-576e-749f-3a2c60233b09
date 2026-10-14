@@ -1,14 +1,23 @@
-local function xd()
-    mw.Open = not mw.Open
+local function xd(xd)
+    if xd then
+        mw.Open = not mw.Open
+    else
+        DealingWithNoesis(function()
+            local state = Ext.UI:GetRoot():Find('ContentRoot'):Child(21).IsVisible
+            mw.Open = not state
+        end)
+    end
+
     if Changelog:ShouldShow() then
         Changelog:CreateWindow('Lighty Lights')
     end
+
     SelectLightingFromCurrentTrigger()
     SelectAtmosphereFromCurrentTrigger()
 end
 
 local keybindings = {
-    ll_toggle_window      = xd,
+    ll_toggle_window      = function() xd(true) end,
     
     ll_toggle_light       = function() toggleLightBtn() end,
 
@@ -81,7 +90,7 @@ local keybindings = {
 
     -- ll_add_bone = function() AddBoneToSelection() end,
 
-    ll_hide_window = xd,
+    ll_hide_window = function() xd() end,
 
     ll_bz_quicksave = function() BZ.QuickSave() end
 }

@@ -111,7 +111,6 @@ function BetterPMTab(parent)
     E.progressFade.Value = 0
 
 
-
 --- Crashes
 --[[
 for _, ent in pairs(Ext.Entity.GetAllEntitiesWithComponent('FadeableObstruction')) do
@@ -211,7 +210,7 @@ end
             Components  = 1,
             Value       = {1, 0, 0, 0},
             OnChange    = function()
-                local success, result = pcall(function()
+                local success, result = DealingWithNoesis(function()
                     return Ext.UI.GetRoot():Find('ContentRoot'):Child(21).DataContext.DOFStrength
                 end)
 

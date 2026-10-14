@@ -130,4 +130,4 @@ _D(_C().InventoryMemberSetTransform)
 
 -- _C().InventoryMemberSetTransform.SetTransform = {[_C()] = {RotationQuat = {1,0,0,0}, Translate = {1,1,1}, Scale = {2,2,2}}}
 
--- Ext.Entity.GetAllEntitiesWithComponent('TimeFactor')
+-- Ext.Entity.GetAllEntitiesWithComponent('TimeFactor')E

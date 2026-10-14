@@ -1,6 +1,6 @@
 local LTN_Templates, ATM_Templates = Ext.Require('Shared/Anal/ATM_LTN_Templates.lua')
 local CONFIG, ATM_ORDER, LTN_ORDER, IGNORE_PARAMS, RANDOM_EXCLUDE = GetANLbsTemporary()
-local Anl = Ext.Require('Client/Anal/Anal.lua')
+-- local Anl = Ext.Require('Client/Anal/Anal.lua')
 
 local AtmospherePresets = {}
 local LightingPresets = {}
@@ -560,9 +560,6 @@ if you haven't selected any Lighting or Atmosphere]])
 
 
 
-
-
-
 	local ltnUuid = LTN_Templates['LTN_CIN_Laezel_ROM_EV11_Dawn']
 	local atmUuid = ATM_Templates['ATM_CIN_WLD_Crash_Beach_FakeNight_01']
 
@@ -573,17 +570,11 @@ if you haven't selected any Lighting or Atmosphere]])
 	Anl.CurrentLighting   = UI:SelectedOpt(E.comboLighting)
 	Anl.CurrentAtmosphere = UI:SelectedOpt(E.comboAtmosphere)
 
-	-- local checkLock = p:AddCheckbox('Lock')
-	-- checkLock.OnChange = function(e)
-	-- 	Ext.GameRenderView.GetGameRenderView().LockLightingIdChange = e.Checked
-	-- 	Ext.GameRenderView.GetGameRenderView().LightingIsLocked = e.Checked
-	-- 	_DS(Ext.GameRenderView.GetGameRenderView())
-	-- end
-
-    p:AddText([[YOU CAN CHANGE ATMOSPHERE AND LIGHTING IN PHOTOMODE]])
-    p:AddSeparator()
 
 	p:AddSeparatorText('Parameters')
+
+
+    -- p:AddImage('a272351b-591f-35fc-39aa-b9aa76de85ee', {2048, 2048})
 
 	local collapseLighting = p:AddCollapsingHeader('Lighting')
 	collapseLighting.DefaultOpen = true
