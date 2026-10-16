@@ -113,7 +113,7 @@ local IgnoreParams = {
     ['EnvironmentEffectEnabledForTimeline.3'] = true,
     ['EnvironmentEffectEnabledForTimeline.4'] = true,
 
-    ['PostProcess.GradingLutEnabled'] = true,
+    -- ['PostProcess.GradingLutEnabled'] = true,
     ['PostProcess.ToneMapHighlightsFixAmount'] = true,
     ['PostProcess.UseViewModeHDRSettings'] = true,
     ['PostProcess.Vignette'] = true,
