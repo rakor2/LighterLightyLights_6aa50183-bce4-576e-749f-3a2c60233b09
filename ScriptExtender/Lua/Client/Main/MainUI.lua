@@ -81,7 +81,6 @@ function LLMCM(mt2)
     end
 
 
-
     local btnOpen = mt2:AddButton('Open')
         UI:Config(btnOpen, {
             OnClick   = function()
@@ -148,6 +147,7 @@ function LLMCM(mt2)
 
 
     ApplyStyle(mw, StyleSettings.selectedStyle)
+    -- SetTextColor(mw)
     MainWindow(mw)
 end
 
@@ -209,9 +209,13 @@ function MainWindow(mw)
     E.settingsTab = mainTabBar:AddTabItem('Settings')
     Settings2Tab(E.settingsTab)
 
+
+    E.todoTab = mainTabBar:AddTabItem('Todo')
+    Todo2App(E.todoTab)
+
+
     E.docsTab = mainTabBar:AddTabItem('Docs')
     Docs2Tab(E.docsTab)
-
 
 
     function Garbo2Floats()
@@ -219,7 +223,7 @@ function MainWindow(mw)
             E.mainMenu = mw:AddMainMenu('awdawd')
             if not gizmoLibError then
                 AddTabMenuItem('Main',         E.main2)
-                AddTabMenuItem('AnL 2',          E.anl3Tab)
+                AddTabMenuItem('AnL 2',        E.anl3Tab)
                 AddTabMenuItem('PM',           E.betterPM)
                 AddTabMenuItem('Bone Zone',    E.boneZone)
                 AddTabMenuItem('Origin Point', E.origin2PointTab)
@@ -227,6 +231,7 @@ function MainWindow(mw)
                 AddTabMenuItem('Useful',       E.utilsTab)
                 AddTabMenuItem('Saver',        saverTab)
                 AddTabMenuItem('Settings',     E.settingsTab)
+                AddTabMenuItem('Todo',         E.todoTab)
                 AddTabMenuItem('Docs',         E.docsTab)
             end
         end
