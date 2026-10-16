@@ -506,7 +506,7 @@ end
 
 
 
-
+--- TBD: Combine random all and smol randoms
 function RandomAll(resourceType)
 
 	local uuid = Anl[resourceType .. 'Templates'][Anl['Current' .. resourceType]]
@@ -627,6 +627,7 @@ function Anl.CreateParameterControls(Tbl, parent)
 						W['rng' .. currentPath] = currentParent:AddButton('Random')
 						UI:Config(W['rng' .. currentPath], {
 							OnClick = function(e)
+								--- TBD: Refactor to a separate function
 								for _, parameterPath in ipairs(Anl[resourceType .. 'Order']) do
 									if not Anl.IgnoreParams[parameterPath]
 										and not RANDOM_EXCLUDE[parameterPath]
@@ -663,7 +664,7 @@ function Anl.CreateParameterControls(Tbl, parent)
 										elseif valueType == 'string' then
 											if parameterPath:find('Coverage') then
 												local rng = Ext.Math.Random(1, #Coverage)
-												local uuid = Coverage[rng]
+												local uuid = Res.Coverage[rng]
 											elseif parameterPath:find('Tears') then
 											elseif parameterPath:find('AlbedoTex') then
 											elseif parameterPath:find('AlbedoTex') then
@@ -768,7 +769,7 @@ function Anl.CreateParameterControls(Tbl, parent)
 					end
 
 					if k == 'ParentGUID' or k == 'GUID' then
-						local x = currentParent:AddButton('Randon all')
+						local x = currentParent:AddButton('Random all')
 						x.OnClick = function()
 							RandomAll(resourceType)
 						end

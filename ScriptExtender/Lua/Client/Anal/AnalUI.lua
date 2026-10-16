@@ -14,7 +14,7 @@ function Anal3Tab(p)
     _GLL.FilteredLTNOptions = _GLL.LtnComboOptions
     _GLL.FilteredATMOptions = _GLL.AtmComboOptions
 
-    p:AddText([[YOU CAN'T CHANGE ATMOSPHERE AND LIGHTING IN PHOTOMODE]])
+    p:AddText([[YOU CAN'T CHANGE ATMOSPHERE AND LIGHTING IN PHOTOMODE. Yet :)]])
     p:AddSeparator()
 
     local dddd = p:AddButton([[Select current atmosphere and lighting]])
