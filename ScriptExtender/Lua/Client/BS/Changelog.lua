@@ -1,5 +1,37 @@
-Changelog.currentVersion = '1.13.0.3'
+Changelog.currentVersion = '1.14.3.2'
 Changelog.ChangelogText = {
+    {
+        version = '1.14.3',
+        Text = {
+            [[ MAIN:]],
+            [[    All confirm buttons now work in Otis_Inf tool pause]],
+            [[ ATMOSPHERE AND LIGHTING:]],
+            [[    Unsloped and remade AnL Parameters. Functionally nothing have changed, unnoticeably faster]],
+            [[    Coverage Texture (TexResource) in Sun and Volumetric Clouds is now randomable]],
+            [[    Environment Effects (1,2,3,4) in EnvironmentEffect in now randomable.
+    Don't forget to enable them]],
+            [[    Fixed presets not switching in character creation mirror]],
+            [[ SETTINGS:]],
+            [[    Added Allow switching AnL in the mirror; allows switch AnL in the mirror. Enabled by default]],
+            [[ KEYBINDS:]],
+            [[    Now F10 keybind hides mod's window with photo mode ui how I intended - properly at the same time]],
+            [[ TODO:]],
+            [[    Added todo]],
+            [[ UI:]],
+            [[    Added Daniela Blue]],
+            [[    Added Jerinski Yellow]],
+            [[    Added Echo Red]],
+            [[ THANK YOU DANIELA FOR DANIELA]],
+            [[ THANK YOU MAZZLE FOR NOESIS DEBUGGER]],
+        }
+    },
+    {
+        version = '1.13.1',
+        Text = {
+            [[ SETTINGS:]],
+            [[    CharacterLight is Off by default. Don't forget that you can make it On by default in the Settings]],
+        }
+    },
     {
         version = '1.13.0',
         Text = {

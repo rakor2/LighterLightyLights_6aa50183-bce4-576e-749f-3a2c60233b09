@@ -345,6 +345,19 @@ function Settings2Tab(p)
 
 
 
+    p:AddSeparatorText('Atmosphere and Lighting')
+
+
+    E.checkAllowCC = p:AddCheckbox('Allows switching AnL in the mirror')
+        UI:Config(E.checkAllowCC, {
+            Checked = Settings.allowMirror,
+            OnChange = function (e)
+                Settings.allowMirror = e.Checked
+                Settings:Save()
+            end
+        })
+
+
 
     p:AddSeparatorText('Camera')
 
@@ -548,6 +561,17 @@ I know all workarounds]])
                 Settings:Save()
             end
         })
+
+
+    E.checkGizmoToolbar = p:AddCheckbox([[Don't check if you want AnL being broken]])
+        UI:Config(E.checkGizmoToolbar, {
+            Checked = Settings.degenExtendedScriptExtender,
+            OnChange = function (e)
+                Settings.degenExtendedScriptExtender = e.Checked
+                Settings:Save()
+            end
+        })
+
 
     -- function TableTest()
     --     local colCnt = 0

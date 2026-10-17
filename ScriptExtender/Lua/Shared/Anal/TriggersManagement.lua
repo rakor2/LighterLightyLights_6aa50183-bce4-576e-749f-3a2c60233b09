@@ -1,11 +1,27 @@
 ANL = {}
+-- ANL = Ext.Require('Client/Anal/Anal.lua')
 
 ANL.Blocked = {
 	['Stash_PhinaCamp'] = true,
 }
 
-ANL.CurrentlyBlockedLevels = {}
+ANL.BlockedTriggers = {
+	-- Lighting mirror and portraits
+	['ac6e827d-4988-8365-2fc0-2335387bbaaa'] = true,
+	['c91f161d-f938-8cd9-42fc-f7250adbad53'] = true,
+	['00fd9f62-16d5-c800-b128-96fce29ebf00'] = true,
+	['8a83e37d-b3fd-c0ce-f7a4-105e8692c5bb'] = true,
+	['121d4caf-a43f-cd04-b78b-bade259a69f0'] = true,
 
+	-- Atmosphere mirror and portraits
+	['eeddb905-b403-8bd3-45a5-dfafe608a21a'] = true,
+	['bb3a96a5-28d1-84e4-28b3-da06819ca637'] = true,
+	['18210d12-510b-c0f9-dff1-c3edc664bd8a'] = true,
+	['d47ca45f-c6e0-c4e7-e826-c6d1477f934b'] = true,
+	['2a41ba5f-ef65-c5fd-d554-e7cf0960677a'] = true,
+}
+
+ANL.CurrentlyBlockedLevels = {}
 
 
 local LTN_Templates, ATM_Templates = Ext.Require('Shared/Anal/ATM_LTN_Templates.lua')
@@ -50,7 +66,10 @@ function ANL.GetTriggers()
 
 	for k, Trigger in pairs(CLT) do
 		local levelName = Trigger.Level.LevelName
-		if ANL.Blocked[levelName] then
+		local uuid = Trigger.Uuid.EntityUuid
+		if ANL.Blocked[levelName]
+			or (not Settings.allowMirror and ANL.BlockedTriggers[uuid])
+		then
 			CLT[k] = nil
 			ANL.CurrentlyBlockedLevels[levelName] = true
 		end
@@ -58,7 +77,10 @@ function ANL.GetTriggers()
 
 	for k, Trigger in pairs(CAT) do
 		local levelName = Trigger.Level.LevelName
-		if ANL.Blocked[levelName] then
+		if ANL.Blocked[levelName]
+			or (not Settings.allowMirror and ANL.BlockedTriggers[uuid])
+		then
+
 			CAT[k] = nil
 			ANL.CurrentlyBlockedLevels[levelName] = true
 		end
@@ -132,6 +154,27 @@ function ANL.MoveCameraToChangeANLBecauseThisGameIsWeird()
 		Camera.GameCameraBehavior.TargetCurrentLow = {T[1] + Settings.cameraOffset, T[2], T[3]}
 		Camera.GameCameraBehavior.TargetCurrentLow = {T[1] - Settings.cameraOffset, T[2], T[3]}
 	end
+
+	--- MOve cmaera in cc through noises garbo xD
+	if States.InCC() then
+		DealingWithNoesis(function()
+			local Garbo = Ext.UI:GetRoot():Find('ContentRoot'):Child(24):Child(1)
+			local canNext = Garbo.CanSetNextCameraMode
+
+			if canNext then
+				Garbo.NextCameraMode:Execute()
+				OnTicks(2, function()
+					Ext.UI:GetRoot():Find('ContentRoot'):Child(24):Child(1).PrevCameraMode:Execute()
+				end)
+			else
+				Garbo.PrevCameraMode:Execute()
+				OnTicks(2, function()
+					Ext.UI:GetRoot():Find('ContentRoot'):Child(24):Child(1).NextCameraMode:Execute()
+				end)
+			end
+		end)
+	end
+
 end
 
 
@@ -145,6 +188,19 @@ SavedLastATMResource = {}
 
 function ANL.SetLigthing(ltnUuid, Trigger)
 	local LTN_Triggers = LTN_Triggers or {}
+	local Lighting = Ext.Resource.Get(ltnUuid, 'Lighting').Lighting
+
+	if Settings.degenExtendedScriptExtender and _GLL.States.inPhotoMode then
+		local CT = _C().Transform.Transform.Translate
+		local Trigger = FindClosestTrigger(ComponentNames.Lighting, CT)
+		Ext.GameRenderView.SetLighting(Lighting, 0, true)
+
+		ANL.AddLightingToResourceIDs(ltnUuid, Trigger)
+		Trigger[ComponentNames.Lighting].field_84 = 0
+		Trigger[ComponentNames.Lighting].CurrentLightingResourceID = ltnUuid
+
+		goto xd
+	end
 
 	if not Trigger then
 		if not next(LTN_Triggers) then
@@ -168,7 +224,11 @@ function ANL.SetLigthing(ltnUuid, Trigger)
 		Trigger[ComponentNames.Lighting].field_84 = 0
 		Trigger[ComponentNames.Lighting].CurrentLightingResourceID = ltnUuid
 	end
+
+	::xd::
+
 	_GLL.CurrentLighting = UI:SelectedOpt(E.comboLighting)
+	Anl.CurrentLighting = UI:SelectedOpt(E.comboLighting)
 end
 
 
@@ -177,6 +237,19 @@ local dofFulAtmosphere
 
 function ANL.SetAtmosphere(atmUuid, Trigger)
 	local ATM_Triggers = ATM_Triggers or {}
+	local Atmosphere = Ext.Resource.Get(atmUuid, 'Atmosphere').Atmosphere
+
+	if Settings.degenExtendedScriptExtender and _GLL.States.inPhotoMode then
+		local CT = _C().Transform.Transform.Translate
+		local Trigger = FindClosestTrigger(ComponentNames.Atmosphere, CT)
+		Ext.GameRenderView.SetAtmosphere(Atmosphere)
+
+		ANL.AddAtmosphereToResourceIDs(atmUuid, Trigger)
+		Trigger[ComponentNames.Atmosphere].field_84 = 0
+		Trigger[ComponentNames.Atmosphere].CurrentAtmosphereResourceID = atmUuid
+
+		goto xd
+	end
 
 	--- TBD: Probably separate it in a function
 	do  --- Disables dof, cuz if it's enabled, it will break photo mode dof controls xd
@@ -211,14 +284,18 @@ function ANL.SetAtmosphere(atmUuid, Trigger)
 			Trigger[ComponentNames.Atmosphere].field_84 = 0
 			Trigger[ComponentNames.Atmosphere].CurrentAtmosphereResourceID = atmUuid
 		end
+
 		ANL.MoveCameraToChangeANLBecauseThisGameIsWeird()
 	else
 		ANL.AddAtmosphereToResourceIDs(atmUuid, Trigger)
-
 		Trigger[ComponentNames.Atmosphere].field_84 = 0
 		Trigger[ComponentNames.Atmosphere].CurrentAtmosphereResourceID = atmUuid
 	end
+
+	::xd::
+
 	_GLL.CurrentAtmosphere = UI:SelectedOpt(E.comboAtmosphere)
+	Anl.CurrentAtmosphere = UI:SelectedOpt(E.comboAtmosphere)
 end
 
 
@@ -260,17 +337,20 @@ function ANL.ResetLightingToResourceIDs()
 		local LR = Trigger[ComponentNames.Lighting].LightingResourceIDs
 		local lastIndex = #LR
 		local triggetUuid = Trigger.Uuid.EntityUuid
-		Trigger[ComponentNames.Lighting].LightingResourceIDs[lastIndex] = SavedLastLTNResource[triggetUuid]
 
-		if lastIndex == 1 then
-			--- If triggers has one resource reset normally
-			ANL.SetLigthing(SavedLastLTNResource[triggetUuid], Trigger)
-		else
-			--- If triggers has more resources reset to the first one
-			ANL.SetLigthing(LR[1], Trigger)
+		if SavedLastLTNResource[triggetUuid] then
+			Trigger[ComponentNames.Lighting].LightingResourceIDs[lastIndex] = SavedLastLTNResource[triggetUuid]
+
+			if lastIndex == 1 then
+				--- If triggers has one resource reset normally
+				ANL.SetLigthing(SavedLastLTNResource[triggetUuid], Trigger)
+			else
+				--- If triggers has more resources reset to the first one
+				ANL.SetLigthing(LR[1], Trigger)
+			end
 		end
+		ANL.MoveCameraToChangeANLBecauseThisGameIsWeird()
 	end
-	ANL.MoveCameraToChangeANLBecauseThisGameIsWeird()
 end
 
 
@@ -286,23 +366,25 @@ function ANL.ResetAtmosphereToResourceIDs()
 		local AR = Trigger[ComponentNames.Atmosphere].AtmosphereResourceIDs
 		local lastIndex = #AR
 		local triggetUuid = Trigger.Uuid.EntityUuid
-		Trigger[ComponentNames.Atmosphere].AtmosphereResourceIDs[lastIndex] = SavedLastATMResource[triggetUuid]
 
-		if lastIndex == 1 then
-			ANL.SetAtmosphere(SavedLastATMResource[triggetUuid], Trigger)
+		if SavedLastATMResource[triggetUuid] then
+			Trigger[ComponentNames.Atmosphere].AtmosphereResourceIDs[lastIndex] = SavedLastATMResource[triggetUuid]
 
-		else
-			ANL.SetAtmosphere(AR[1], Trigger)
+			if lastIndex == 1 then
+				ANL.SetAtmosphere(SavedLastATMResource[triggetUuid], Trigger)
+			else
+				ANL.SetAtmosphere(AR[1], Trigger)
+			end
 		end
+		ANL.MoveCameraToChangeANLBecauseThisGameIsWeird()
 	end
-	ANL.MoveCameraToChangeANLBecauseThisGameIsWeird()
 end
 
 
 
 function ANL.ApplyLighting()
 	local switherLighting  = '3a7102a7-4818-185a-9060-d72318c181f4'
-	local currentLighitng  = LTN_Templates[_GLL.CurrentLighting]
+	local currentLighitng  = LTN_Templates[Anl.CurrentLighting]
 	local fallbackSwithcer = '32d627ea-192c-4d45-7a07-f6b7f1c9d745' --- in case if user selected '3a7102a7...'
 	local resetLighting    = switherLighting == currentLighitng and fallbackSwithcer or switherLighting
 	local LTN_Triggers     = {}
@@ -310,6 +392,7 @@ function ANL.ApplyLighting()
 	local Saved = Ext.Types.Serialize(Ext.Resource.Get(currentLighitng, 'Lighting').Lighting)
 	Saved.ParentGUID = resetLighting
 	Ext.Types.Unserialize(Ext.Resource.Get(resetLighting, 'Lighting').Lighting, Saved)
+
 
 	if not next(LTN_Triggers) then
 		LTN_Triggers = ANL.GetTriggers()[Enum.LTN]
@@ -330,7 +413,7 @@ end
 
 function ANL.ApplyAtmosphere()
 	local switherAtmopshere  = 'f9862ce8-972f-d2b6-4bf9-c37746c9eaac'
-	local currentAtmosphere  = ATM_Templates[_GLL.CurrentAtmosphere]
+	local currentAtmosphere  = ATM_Templates[Anl.CurrentAtmosphere]
 	local resetAtmosphere    = switherAtmopshere
 	local ATM_Triggers       = {}
 
@@ -448,7 +531,7 @@ end
 
 
 
-local function FindClosestTrigger(component, CT)
+function FindClosestTrigger(component, CT)
     local triggers = Ext.Entity.GetAllEntitiesWithComponent(component)
     local minDist = math.huge
     local found
@@ -476,6 +559,7 @@ function GetCurrentAtmosphere()
 	-- local start = Ext.Timer.MonotonicTime()
     local CT = _C().Transform.Transform.Translate
     local Trigger = FindClosestTrigger(ComponentNames.Atmosphere, CT)
+    -- DPrint(Trigger.Uuid.EntityUuid)
     -- DPrint('GetCurrentAtmosphere took: %s', Ext.Timer.MonotonicTime() - start)
     return Trigger and Trigger[ComponentNames.Atmosphere].CurrentAtmosphereResourceID
 end
@@ -485,6 +569,7 @@ end
 function GetCurrentLighting()
     local CT = _C().Transform.Transform.Translate
     local Trigger = FindClosestTrigger(ComponentNames.Lighting, CT)
+    -- DPrint(Trigger.Uuid.EntityUuid)
     return Trigger and Trigger[ComponentNames.Lighting].CurrentLightingResourceID
 end
 

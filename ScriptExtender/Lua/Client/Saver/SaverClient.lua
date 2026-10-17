@@ -5,6 +5,7 @@ _GLL.Scene.Server = {}
 
 
 function Saver2Tab(p)
+    p:AddSeparatorText('Do not use. Unless you are knower')
     local btnSaveScene = p:AddButton('Save scene')
     btnSaveScene.OnClick = function(e)
         _GLL.Scene.Client = {

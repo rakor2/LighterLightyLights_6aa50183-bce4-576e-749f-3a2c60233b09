@@ -13,7 +13,6 @@ end
 
 
 Ext.Require('Shared/_init.lua')
-Ext.Require('Client/_init.lua')
 
 
 local LTN_Templates, ATM_Templates = Ext.Require('Shared/Anal/ATM_LTN_Templates.lua')
@@ -107,6 +106,8 @@ function GetZipBombTemporary()
     return ZipBomb
 end
 
+Ext.Require('Client/_init.lua')
+
 
 print('')
 DPrint([[files location: AppData/Local/Larian Studios/Baldur's Gate 3/Script Extender/LightyLights]])
@@ -129,4 +130,4 @@ _D(_C().InventoryMemberSetTransform)
 
 -- _C().InventoryMemberSetTransform.SetTransform = {[_C()] = {RotationQuat = {1,0,0,0}, Translate = {1,1,1}, Scale = {2,2,2}}}
 
--- Ext.Entity.GetAllEntitiesWithComponent('TimeFactor')
+-- Ext.Entity.GetAllEntitiesWithComponent('TimeFactor')E

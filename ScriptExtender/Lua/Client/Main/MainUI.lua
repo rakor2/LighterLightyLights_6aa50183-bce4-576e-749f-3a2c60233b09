@@ -81,22 +81,6 @@ function LLMCM(mt2)
     end
 
 
-
-    -- Utils:SubUnsubToTick(1, 'wad', function()
-    --     local status = mw.StatusFlags
-    --     print(status.__Labels)   -- true/false
-    -- end)
-
-    -- local xddd = mw:AddMainMenu()
-
-    -- local file = xddd:AddMenu("File")
-    -- local g = file:AddItem("Open")
-    -- g.OnClick = function()
-    --     DPrint('Opeenawawd')
-    -- end
-
-
-
     local btnOpen = mt2:AddButton('Open')
         UI:Config(btnOpen, {
             OnClick   = function()
@@ -108,6 +92,7 @@ function LLMCM(mt2)
                 SelectAtmosphereFromCurrentTrigger()
             end
         })
+
 
 
     local btnLog = mt2:AddButton('Show changelog')
@@ -162,15 +147,15 @@ function LLMCM(mt2)
 
 
     ApplyStyle(mw, StyleSettings.selectedStyle)
+    -- SetTextColor(mw)
     MainWindow(mw)
 end
 
 
 
 function MainWindow(mw)
-    -- mw:SetSizeConstraints({10, 10}, {20, 20})
 
-    function AddTabMenuItem(label, tab)
+    local function AddTabMenuItem(label, tab)
         E['menu'..label] = E.mainMenu:AddMenu(label)
         E['menu'..label].OnClick = function()
             tab.SetSelected = true
@@ -197,8 +182,11 @@ function MainWindow(mw)
 
     MainTab(E.main2)
 
-    E.anal2Tab = mainTabBar:AddTabItem('AnL')
-    Anal2Tab(E.anal2Tab)
+    -- E.anal2Tab = mainTabBar:AddTabItem('AnL')
+    -- Anal2Tab(E.anal2Tab)
+
+    E.anl3Tab = mainTabBar:AddTabItem('AnL2')
+    Anal3Tab(E.anl3Tab)
 
     E.betterPM = mainTabBar:AddTabItem('PM')
     BetterPMTab(E.betterPM)
@@ -221,9 +209,13 @@ function MainWindow(mw)
     E.settingsTab = mainTabBar:AddTabItem('Settings')
     Settings2Tab(E.settingsTab)
 
+
+    E.todoTab = mainTabBar:AddTabItem('Todo')
+    Todo2App(E.todoTab)
+
+
     E.docsTab = mainTabBar:AddTabItem('Docs')
     Docs2Tab(E.docsTab)
-
 
 
     function Garbo2Floats()
@@ -231,8 +223,7 @@ function MainWindow(mw)
             E.mainMenu = mw:AddMainMenu('awdawd')
             if not gizmoLibError then
                 AddTabMenuItem('Main',         E.main2)
-                AddTabMenuItem('AnL',          E.anal2Tab)
-                AddTabMenuItem('AnL',          E.anal2Tab)
+                AddTabMenuItem('AnL 2',        E.anl3Tab)
                 AddTabMenuItem('PM',           E.betterPM)
                 AddTabMenuItem('Bone Zone',    E.boneZone)
                 AddTabMenuItem('Origin Point', E.origin2PointTab)
@@ -240,22 +231,23 @@ function MainWindow(mw)
                 AddTabMenuItem('Useful',       E.utilsTab)
                 AddTabMenuItem('Saver',        saverTab)
                 AddTabMenuItem('Settings',     E.settingsTab)
+                AddTabMenuItem('Todo',         E.todoTab)
                 AddTabMenuItem('Docs',         E.docsTab)
             end
         end
     end
-    Garbo2Floats()
 
 
 
-    function buttonSizes()
+    function ButtonSizes()
         for _, element in pairs(ER) do
             element.Size = {180/Style.buttonScale, 39/Style.buttonScale}
         end
     end
 
 
-    function funnyStuff()
+
+    function FunnyStuff()
         local AllElements = {}
 
         for _, element in pairs(E) do
@@ -293,9 +285,14 @@ function MainWindow(mw)
             end
         end
     end
-    funnyStuff()
-    buttonSizes()
-    Settings:Load()
+
+    do --- Init UI decorations
+        FunnyStuff()
+        ButtonSizes()
+        Settings:Load()
+        Garbo2Floats()
+    end
+
 end
 
 
@@ -419,7 +416,6 @@ function MainTab(p)
 
     E.btnOptionsPrev = p:AddButton('<')
         UI:Config(E.btnOptionsPrev, {
-            IDContext = 'adawd',
             SameLine  = true,
             OnClick   = function(e)
                 if not _GLL.selectedUuid then return end
@@ -448,7 +444,6 @@ function MainTab(p)
 
     E.btnOptionsNext = p:AddButton('>')
         UI:Config(E.btnOptionsNext, {
-            IDContext = 'adadwwd',
             SameLine  = true,
             OnClick   = function(e)
                 if not _GLL.selectedUuid then return end

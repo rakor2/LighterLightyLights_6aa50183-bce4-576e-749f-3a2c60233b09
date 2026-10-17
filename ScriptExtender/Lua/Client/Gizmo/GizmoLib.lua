@@ -28,7 +28,6 @@ if Mods.GizmoLib then
 
 
 
-
     _GLL.gizmo = API.CreateManipulator()
     -- _GLL.gizmo.Config.IsSelectableEntity = function(info)
     --     return info.Type == "Unknown"
