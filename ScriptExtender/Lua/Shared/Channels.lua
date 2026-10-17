@@ -34,6 +34,7 @@ Net:CreateChannels({
 
 	'SceneSave',
 	'SceneLoad',
+	'SelectedScene',
 
 	'GetTriggers',
 

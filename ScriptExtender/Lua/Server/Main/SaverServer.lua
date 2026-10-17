@@ -1,87 +1,81 @@
-_GLL.Scene = {}
-_GLL.Scene.Client = {}
-_GLL.Scene.Server = {}
+local Saver = {}
+Saver.Scene = {}
+Saver.Scene.Client = {}
+Saver.Scene.Server = {}
+
+local selectedScene
+
+
+
+Ch.SelectedScene:SetHandler(function(Data)
+    selectedScene = Data
+end)
 
 
 
 Ch.SceneSave:SetHandler(function(Data)
-    _GLL.Scene.Client = Data
-    _GLL.Scene.Server = {
+    Saver.Scene.Client = Data
+    Saver.Scene.Server = {
         CreatedLightsServer   = _GLL.CreatedLightsServer,
         LightParametersServer = _GLL.LightParametersServer,
         OrbitParams           = _GLL.OrbitParams,
-        -- markerUuid            = _GLL.markerUuid,
         selectedUuid          = _GLL.selectedUuid,
-        -- GoboLightMap          = _GLL.GoboLightMap,
-        -- GoboDistances         = _GLL.GoboDistances,
     }
-    local json = Ext.Json.Stringify(_GLL.Scene)
-    Ext.IO.SaveFile("LightyLights/SceneState.json", json)
+
+    local Json = Ext.Json.Stringify(Saver.Scene)
+    Ext.IO.SaveFile('LightyLights/Scenes/' .. Data.sceneName ..'.json', Json)
+
+    local SavedScene = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/Scenes/1a_SAVED_SCENES.json'))
+    table.insert(SavedScene, Data.sceneName)
+    Ext.IO.SaveFile('LightyLights/Scenes/1a_SAVED_SCENES.json', Ext.Json.Stringify(SavedScene))
 end)
 
 
 
 Ch.SceneLoad:SetRequestHandler(function(Data)
-    _GLL.Scene = Ext.Json.Parse(Ext.IO.LoadFile("LightyLights/SceneState.json"))
-    local GSC = _GLL.Scene.Client
-    local GSS = _GLL.Scene.Server
+    if not selectedScene then return DError('No selected scene') end
 
-    Helpers.Timer:OnTicks(1, function()
-        for i, savedEntry in ipairs(GSC.LightsUuidNameMap) do
-            local oldUuid  = savedEntry.uuid
-            local newLight = Data[i]
-            local newUuid  = newLight.uuid
-            local LPS      = GSS.LightParametersServer[oldUuid]
+    -- if not selectedScene then
+    --     local SavedScene = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/Scenes/1a_SAVED_SCENES.json'))
+    --     selectedScene = SavedScene[1]
+    -- end
 
+    local json = Ext.IO.LoadFile('LightyLights/Scenes/' .. selectedScene .. '.json')
+    if not json then return false end
+
+    Saver.Scene = Ext.Json.Parse(json)
+
+    local GSC = Saver.Scene.Client
+    local GSS = Saver.Scene.Server
+
+    for oldUuid, newUuid in pairs(Data) do
+        local LPS = GSS.LightParametersServer and GSS.LightParametersServer[oldUuid]
+        local Orbit = GSS.OrbitParams and GSS.OrbitParams[oldUuid]
+
+        if LPS then
             _GLL.LightParametersServer[newUuid]               = _GLL.LightParametersServer[newUuid] or {}
-
             _GLL.LightParametersServer[newUuid].Translate     = LPS.Translate
-            _GLL.LightParametersServer[newUuid].RotationQuat  = LPS.RotationQuat
             _GLL.LightParametersServer[newUuid].HumanRotation = LPS.HumanRotation
-            _GLL.OrbitParams[newUuid]                         = GSS.OrbitParams[oldUuid]
-        end
-    end)
-    return _GLL.Scene.Client
-end)
+            _GLL.LightParametersServer[newUuid].RotationQuat  = LPS.RotationQuat
 
-
-
---- Slop for fun (it's dogshit, I don't care, my brain is fried, I want some fun)
-Ch.SceneAnimate:SetHandler(function(Data)
-    local STEPS       = 30
-    local INTERVAL_MS = 50
-
-    local function lerp(a, b, t) return Ext.Math.Lerp(a, b, t) end
-    local function ease(t) return 1 - (1 - t) * (1 - t) end
-    -- local function ease(t) return t end
-    -- local function ease(t) return t * t end
-    -- local function ease(t) return 1 - (1 - t) * (1 - t) * (1 - t) end
-
-
-    for _, light in ipairs(Data) do
-        local uuid          = light.uuid
-        local tx, ty, tz    = light.tx, light.ty, light.tz
-        local rx, ry, rz    = light.rx, light.ry, light.rz
-        local sx, sy, sz    = Osi.GetPosition(uuid)
-        local srx, sry, srz = Osi.GetRotation(uuid)
-        local step = 0
-
-        local function tick()
-            step = step + 1
-            local t = ease(step / STEPS)
-            Osi.ToTransform(uuid,
-                lerp(sx, tx, t), lerp(sy, ty, t), lerp(sz, tz, t),
-                lerp(srx, rx, t), lerp(sry, ry, t), lerp(srz, rz, t)
-            )
-            if step < STEPS then
-                Ext.Timer.WaitFor(INTERVAL_MS, tick)
-            else
-                _GLL.LightParametersServer[uuid].Translate     = {tx, ty, tz}
-                _GLL.LightParametersServer[uuid].HumanRotation = {rx, ry, rz}
-                _GLL.selectedUuid = uuid
+            if LPS.Translate and LPS.HumanRotation then
+                Osi.ToTransform(
+                    newUuid,
+                    LPS.Translate[1],
+                    LPS.Translate[2],
+                    LPS.Translate[3],
+                    LPS.HumanRotation[1],
+                    LPS.HumanRotation[2],
+                    LPS.HumanRotation[3]
+                )
             end
         end
 
-        Ext.Timer.WaitFor(INTERVAL_MS, tick)
+        _GLL.OrbitParams[newUuid] = Orbit
+
     end
+
+    _GLL.selectedUuid = Data[GSC.selectedUuid] or _GLL.selectedUuid
+
+    return true
 end)

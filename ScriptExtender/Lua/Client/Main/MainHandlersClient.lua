@@ -29,7 +29,7 @@ local EnumChannelBits = {
 }
 
 
-local EnumLighType = {
+EnumLighType = {
     [0] = 'Point',
     [1] = 'Spotlight',
     [2] = 'Directional',
@@ -44,7 +44,7 @@ local EnumLighTypeDecypher = {
 
 
 Ch.WhenLevelGameplayStarted:SetHandler(function(Data)
-    Helpers.Timer:OnTicks(100, function()
+    OnTicks(100, function()
         if POGGERS then
             _GLL.SourceTranslate = getSourcePositionCl()
             Ext.Stats.GetStatsManager().ExtraData["PhotoModeCameraFloorDistance"] = -99887766
@@ -58,7 +58,7 @@ end)
 
 
 Ext.Events.ResetCompleted:Subscribe(function()
-    Helpers.Timer:OnTicks(100, function()
+    OnTicks(100, function()
         _GLL.SourceTranslate = getSourcePositionCl()
     end)
     CharacterLightSetupState(Settings.lightSetupState)
@@ -213,7 +213,7 @@ function UpdateCreatedLightsCombo()
     E.comboIHateCombos.Options  = _GLL.LightsNames
     E.comboIHateCombos2.Options = _GLL.LightsNames
 
-    Helpers.Timer:OnTicks(5, function ()
+    OnTicks(5, function ()
         local lightName = getSelectedLightName() or 'None'
         if lightName then selectedLightNotification.Label = lightName end
     end)
@@ -222,6 +222,7 @@ end
 
 
 function RegisterNewLight(uuid, lightType)
+    DPrint(uuid)
     nameIndex = nameIndex + 1
     local name = '+' .. ' ' .. '#' .. nameIndex .. ' ' .. lightType
 
@@ -308,13 +309,13 @@ function CreateLight(uuid)
                     return
                 end
 
-                Helpers.Timer:OnTicks(10 + Settings.lightCreateDelay, function()
+                OnTicks(10 + Settings.lightCreateDelay, function()
                     _GLL.LightParametersClient[_GLL.selectedUuid] = {}
                     _GLL.selectedEntity = Ext.Entity.Get(_GLL.selectedUuid)
 
 
 
-                    Helpers.Timer:OnTicks(8 + Settings.lightCreateDelay, function()
+                    OnTicks(8 + Settings.lightCreateDelay, function()
                         local Types = {Spotlight = 1, Directional = 2}
                         SetLightType(Types[lightType] or 0)
                         _GLL.selectedLightType = lightType
@@ -327,7 +328,7 @@ function CreateLight(uuid)
                         StickToCamera()
                     end
 
-                    Helpers.Timer:OnTicks(10 + Settings.lightCreateDelay, function()
+                    OnTicks(10 + Settings.lightCreateDelay, function()
                         if Position then
                             local x, y, z = table.unpack(Position)
                             UpdateElements(_GLL.selectedUuid)
@@ -365,6 +366,7 @@ function CreateLight(uuid)
             E.btnCreate2.Disabled = false
         end)
     end)
+    return true
 end
 
 
@@ -397,7 +399,7 @@ function DuplicateLight()
 
                         RegisterNewLight(_GLL.selectedUuid, EnumLighType[lightTypeOld])
 
-                        Helpers.Timer:OnTicks(15, function ()
+                        OnTicks(15, function ()
                             _GLL.selectedEntity = Ext.Entity.Get(_GLL.selectedUuid)
 
                             --- TBD: perhaps as a separate function? But what's the point?
@@ -697,7 +699,7 @@ end
 
 
 Ch.MarkerHandler:SetHandler(function (Data)
-    Helpers.Timer:OnTicks(15, function ()
+    OnTicks(15, function ()
         _GLL.markerEntity = Ext.Entity.Get(Data)
         if _GLL.markerEntity and Entity:hasVisual(_GLL.markerEntity) then
             _GLL.markerEntity.Visual.Visual:SetWorldScale({Settings.markerScale, Settings.markerScale, Settings.markerScale})
