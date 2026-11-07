@@ -17,16 +17,32 @@ end)
 
 Ext.Events.GameStateChanged:Subscribe(function(e)
     if Settings.disableCrowd then
-            if e.FromState == 'LoadLevel' then
-                local Entities = Ext.Entity.GetAllEntitiesWithComponent('ServerCrowdCharacterTrigger')
-                for k, v in pairs(Entities) do
-                    if v.ServerCrowdCharacterTrigger then
-                    v.ServerCrowdCharacterTrigger.MaxCharacters = 0
+        if e.FromState == 'LoadLevel' then
+        -- if e.ToState == 'Sync' then
+            local Entities = Ext.Entity.GetAllEntitiesWithComponent('ServerCrowdCharacterTrigger')
+            for k, v in pairs(Entities) do
+                v.ServerCrowdCharacterTrigger.MaxCharacters = 0
+                v.ServerCrowdCharacterTrigger.GroupSizeMax = 0
+                v.ServerCrowdCharacterTrigger.GroupSizeMin = 0
+
+                v.ServerCrowdCharacterTrigger.GroupSpawnTimeMax = 0
+                v.ServerCrowdCharacterTrigger.GroupSpawnTimeMin = 0
+
+                v.ServerCrowdCharacterTrigger.DetourChance = 0
+
+                v.ServerCrowdCharacterTrigger.ProxiesOnly = true
+
+                v.ServerCrowdCharacterTrigger.PatrolSplines = {}
+
+                for _, xd in pairs(v.ServerCrowdCharacterTrigger.SpawnTemplates) do
+                    xd.SpawnWeight = 0
+                    xd.CharacterTemplateId = ''
                 end
             end
         end
     end
 end)
+
 
 
 
