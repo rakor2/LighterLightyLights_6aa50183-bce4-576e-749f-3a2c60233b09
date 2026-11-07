@@ -1,10 +1,14 @@
+local uiHidden = false
+
 local function xd(xd)
     if xd then
         mw.Open = not mw.Open
     else
         DealingWithNoesis(function()
-            local state = Ext.UI:GetRoot():Find('ContentRoot'):Child(21).IsVisible
-            mw.Open = not state
+            -- local state = Ext.UI:GetRoot():Find('ContentRoot'):Child(21).IsVisible
+            -- local state = Ext.UI:GetRoot():Find('ContentRoot'):Child(22).IsVisible
+            -- DDump(state)
+            mw.Open = uiHidden
         end)
     end
 
@@ -15,6 +19,7 @@ local function xd(xd)
     SelectLightingFromCurrentTrigger()
     SelectAtmosphereFromCurrentTrigger()
 end
+
 
 local keybindings = {
     ll_toggle_window      = function() xd(true) end,
@@ -92,7 +97,20 @@ local keybindings = {
 
     ll_hide_window = function() xd() end,
 
-    ll_bz_quicksave = function() BZ.QuickSave() end
+    ll_bz_quicksave = function() BZ.QuickSave() end,
+
+    ll_pm_hideuiandkeepcontrols = function()
+        if Settings.devel then
+            if _GLL.States.inPhotoMode then
+                Ext.UI.Defer(function()
+                    uiHidden = not uiHidden
+                    local DC = Ext.UI.GetRoot():Find("ContentRoot"):Child(_GLL.npmi).DataContext
+                    DC.PhotoPreviewOn = uiHidden
+                    DC.ToggleUICameraControl:Execute(Ext.UI.Box(true))
+                end)
+            end
+        end
+    end
 }
 
 for key, callback in pairs(keybindings) do

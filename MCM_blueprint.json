@@ -391,6 +391,21 @@
               "Options": {
                 "BlockIfLevelNotStarted": true,
               }
+            },
+            {
+              "Id": "ll_pm_hideuiandkeepcontrols",
+              "Name": "Hide UI and keep controls (in Photo Mode)",
+              "Type": "keybinding_v2",
+              "Default": {
+                "Keyboard": {
+                  "Key": "F11",
+                  "ModifierKeys": [""]
+                }
+              },
+              "Options": {
+                "PreventAction": true,
+                "BlockIfLevelNotStarted": true,
+              }
             }
           ]
         }
