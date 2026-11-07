@@ -15,6 +15,34 @@ end
 
 
 
+function FindNoesisPhotoMode()
+    for i = 1, 50 do
+        local Root = Ext.UI.GetRoot():Find("ContentRoot"):Child(i)
+        if Root then
+            local s, fileName = pcall(function() return Root.FileName end)
+            if s and fileName == "Pages/PhotoMode.xaml" then
+                return i
+            end
+        end
+    end
+end
+
+
+
+function FindNoesisChildIndex(page)
+    for i = 1, 50 do
+        local Root = Ext.UI.GetRoot():Find("ContentRoot"):Child(i)
+        if Root then
+            local s, fileName = pcall(function() return Root.FileName end)
+            if s and fileName == page then
+                return i
+            end
+        end
+    end
+end
+
+
+
 local function AttachWindowToEntity(window, targetTranslate, winSize)
     local pos = Screen.WorldToScreenPoint(targetTranslate)
     if not pos then window.Visible = false return end
