@@ -158,18 +158,19 @@ function ANL.MoveCameraToChangeANLBecauseThisGameIsWeird()
 	--- MOve cmaera in cc through noises garbo xD
 	if States.InCC() then
 		DealingWithNoesis(function()
-			local Garbo = Ext.UI:GetRoot():Find('ContentRoot'):Child(24):Child(1)
+			local index = FindNoesisChildIndex('Pages/CharacterChangeAppearance.xaml')
+			local Garbo = Ext.UI:GetRoot():Find('ContentRoot'):Child(index):Child(1)
 			local canNext = Garbo.CanSetNextCameraMode
 
 			if canNext then
 				Garbo.NextCameraMode:Execute()
 				OnTicks(2, function()
-					Ext.UI:GetRoot():Find('ContentRoot'):Child(24):Child(1).PrevCameraMode:Execute()
+					Ext.UI:GetRoot():Find('ContentRoot'):Child(index):Child(1).PrevCameraMode:Execute()
 				end)
 			else
 				Garbo.PrevCameraMode:Execute()
 				OnTicks(2, function()
-					Ext.UI:GetRoot():Find('ContentRoot'):Child(24):Child(1).NextCameraMode:Execute()
+					Ext.UI:GetRoot():Find('ContentRoot'):Child(index):Child(1).NextCameraMode:Execute()
 				end)
 			end
 		end)
@@ -557,20 +558,24 @@ end
 
 function GetCurrentAtmosphere()
 	-- local start = Ext.Timer.MonotonicTime()
-    local CT = _C().Transform.Transform.Translate
-    local Trigger = FindClosestTrigger(ComponentNames.Atmosphere, CT)
-    -- DPrint(Trigger.Uuid.EntityUuid)
-    -- DPrint('GetCurrentAtmosphere took: %s', Ext.Timer.MonotonicTime() - start)
-    return Trigger and Trigger[ComponentNames.Atmosphere].CurrentAtmosphereResourceID
+	if _C() then
+	    local CT = _C().Transform.Transform.Translate
+	    local Trigger = FindClosestTrigger(ComponentNames.Atmosphere, CT)
+	    -- DPrint(Trigger.Uuid.EntityUuid)
+	    -- DPrint('GetCurrentAtmosphere took: %s', Ext.Timer.MonotonicTime() - start)
+	    return Trigger and Trigger[ComponentNames.Atmosphere].CurrentAtmosphereResourceID
+	end
 end
 
 
 
 function GetCurrentLighting()
-    local CT = _C().Transform.Transform.Translate
-    local Trigger = FindClosestTrigger(ComponentNames.Lighting, CT)
-    -- DPrint(Trigger.Uuid.EntityUuid)
-    return Trigger and Trigger[ComponentNames.Lighting].CurrentLightingResourceID
+	if _C() then
+	    local CT = _C().Transform.Transform.Translate
+	    local Trigger = FindClosestTrigger(ComponentNames.Lighting, CT)
+	    -- DPrint(Trigger.Uuid.EntityUuid)
+	    return Trigger and Trigger[ComponentNames.Lighting].CurrentLightingResourceID
+	end
 end
 
 

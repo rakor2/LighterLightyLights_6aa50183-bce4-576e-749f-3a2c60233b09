@@ -61,12 +61,14 @@ local function createDummySelectionCheckbox(dummy, dummyId)
     UI:Config(E.checkAddTarget[dummyId], {
         SameLine = true,
         OnChange = function(e)
-            local uuid = dummy.Dummy.Entity.Uuid.EntityUuid
+            if dummy.Dummy and dummy.Dummy.Entity and dummy.Dummy.Entity.Uuid then
+                local uuid = dummy.Dummy.Entity.Uuid.EntityUuid
 
-            if e.Checked then
-                _GLL.gizmo:AddTarget(dummy.Dummy.Entity)
-            else
-                _GLL.gizmo:RemoveTarget(dummy.Dummy.Entity)
+                if e.Checked then
+                    _GLL.gizmo:AddTarget(dummy.Dummy.Entity)
+                else
+                    _GLL.gizmo:RemoveTarget(dummy.Dummy.Entity)
+                end
             end
         end,
     })
@@ -74,7 +76,7 @@ end
 
 
 
-local function createDummyFloatingWidget(dummy, dummyName)
+local function CreateDummyFloatingWidget(dummy, dummyName)
     local wn = Ext.IMGUI.NewWindow(Ext.Math.Random(1, 100))
     wn.Visible       = false
     wn.NoDecoration  = true
@@ -126,53 +128,46 @@ end
 
 
 
-function initDummy(dummy)
-    local uuid     = dummy.Dummy.Entity.Uuid.EntityUuid
-    -- DPrint(uuid)
-    local name     = Dummy:Name(dummy)
-    -- DPrint(name)
-    local dummyId  = name .. '##' .. uuid
-    -- DPrint(dummyId)
+function InitDummy(dummy)
+    if dummy.Dummy and dummy.Dummy.Entity and dummy.Dummy.Entity.Uuid then
+        local uuid     = dummy.Dummy.Entity.Uuid.EntityUuid
+        -- DPrint(uuid)
+        local name     = Dummy:Name(dummy)
+        -- DPrint(name)
+        local dummyId  = name .. '##' .. uuid
+        -- DPrint(dummyId)
 
 
-    _GLL.DummyVeryOriginalTransforms[uuid] = Ext.Types.Serialize(dummy.Transform.Transform)
+        _GLL.DummyVeryOriginalTransforms[uuid] = Ext.Types.Serialize(dummy.Transform.Transform)
 
-    _GLL.DummyNameMap[dummyId] = dummy
-    _GLL.DummyNames            = MapToArray(_GLL.DummyNameMap)
+        _GLL.DummyNameMap[dummyId] = dummy
+        _GLL.DummyNames            = MapToArray(_GLL.DummyNameMap)
 
-    local Options               = _GLL.DummyNames
-    local SelectedIndex         =  GetClientControlIndex() or 0
-    E.comboDummies.Options       =  Options
-    E.cmbBoneDummies.Options    =  Options
-    E.comboDummies.SelectedIndex     = SelectedIndex
-    E.cmbBoneDummies.SelectedIndex  = SelectedIndex
-    selectedCharacter = E.cmbBoneDummies.SelectedIndex + 1
-    -- DPrint('initDummy, character: %s', selectedCharacter)
+        local Options               = _GLL.DummyNames
+        local SelectedIndex         =  GetClientControlIndex() or 0
+        E.comboDummies.Options      =  Options
+        E.cmbBoneDummies.Options    =  Options
+        E.comboDummies.SelectedIndex     = SelectedIndex
+        E.cmbBoneDummies.SelectedIndex  = SelectedIndex
+        selectedCharacter = E.cmbBoneDummies.SelectedIndex + 1
+        -- DPrint('InitDummy, character: %s', selectedCharacter)
 
 
-    if Mods.GizmoLib then
-        createDummySelectionCheckbox(dummy, dummyId)
+        if Mods.GizmoLib then
+            createDummySelectionCheckbox(dummy, dummyId)
+        end
+
+        local window = CreateDummyFloatingWidget(dummy, name)
+        PM.DummyWidgets[dummyId] = {Window = window, Size = window.LastSize, Dummy = dummy, Name = name}
+
+        GetGenomeVariablesIndicies(dummy)
+        if not boneZoneInit then
+            TableBoneValues(dummy)
+        end
+
+        ApplySavedTransform(dummy, dummyId)
     end
-
-    local window = createDummyFloatingWidget(dummy, name)
-    PM.DummyWidgets[dummyId] = {Window = window, Size = window.LastSize, Dummy = dummy, Name = name}
-
-    GetGenomeVariablesIndicies(dummy)
-    if not boneZoneInit then
-        TableBoneValues(dummy)
-    end
-
-    ApplySavedTransform(dummy, dummyId)
 end
-
-
-
--- local function syncDofDistance()
---     pcall(function()
-        -- local distance = Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.DOFDistance
---         E.dofDistance.Value = {distance, 0, 0, 0}
---     end)
--- end
 
 
 
@@ -182,12 +177,12 @@ local function UpdateFloatingWidgets()
     for _, key in ipairs(E.comboDummies.Options) do
         local entry = PM.DummyWidgets[key]
         local x, y, z = table.unpack(entry.Dummy.Visual.Visual.WorldTransform.Translate)
-        local target   = {x, y + HEIGHT_OFFSET, z}
-        local camPos   = Camera:GetActiveCamera().Transform.Transform.Translate
-        local distance = Ext.Math.Distance(target, camPos)
+        local Target   = {x, y + HEIGHT_OFFSET, z}
+        local CamPos   = Camera:GetActiveCamera().Transform.Transform.Translate
+        local distance = Ext.Math.Distance(Target, CamPos)
 
         entry.Window.Visible = distance < MAX_DISTANCE
-        AttachWindowToEntity(entry.Window, target, entry.Size)
+        AttachWindowToEntity(entry.Window, Target, entry.Size)
     end
 end
 
@@ -199,11 +194,11 @@ local function OnPhotoModeTick()
 end
 
 
-function OnPhotoModeCreate()
 
+function OnPhotoModeCreate()
     if gizmoLibError then return end
+
     DDebug('ENTERED PHOTOMODE')
-    DDebug('Current delay: %i', Settings.pmInitDelay[1])
     PM.DummyWidgets = {}
     AssignSoftBody(_C())
 
@@ -217,6 +212,11 @@ function OnPhotoModeCreate()
     Helpers.Timer:OnTicks(Settings.pmInitDelay[1], function()
         DDebug('PHOTOMODE BS START')
 
+        if not _GLL.npmi then
+            _GLL.npmi = FindNoesisPhotoMode()
+        end
+
+
         if Settings.degenExtendedScriptExtender then
             Anl.Switch()
         end
@@ -227,7 +227,7 @@ function OnPhotoModeCreate()
 
         local Dummies = Dummy:GetAll()
         for _, dummy in pairs(Dummies) do
-            initDummy(dummy)
+            InitDummy(dummy)
         end
 
         if Mods.GizmoLib then
@@ -252,21 +252,8 @@ function OnPhotoModeCreate()
 
         --- Gizmo
         if Mods.GizmoLib then
-            if Settings.autoOpenToolbar then
-            -- _GLL.gizmo:SetActive(false)
+            if Settings.autoOpenToolbar and _GLL.gizmo then
                 _GLL.gizmo:SetActive(true)
-            -- Helpers.Timer:OnTicks(5, function()
-                -- Delete the main gizmo, cuz it creates on initialization, a
-                -- local globalEditor = GL_GLOBALS.TransformEditor or Mods.GizmoLib.GL_GLOBALS.TransformEditor
-                -- if not globalEditor.Gizmo.Guid then
-                --     Mods.GizmoLib.NetChannel.ManageGizmo:RequestToServer({Clear = true}, function(response)
-                --         globalEditor.Gizmo.Guid = nil
-                --         globalEditor.Gizmo.SavedGizmos = {}
-                --     end)
-                -- end
-                -- globalEditor.Gizmo:DeleteItem()
-                -- globalEditor.Target = nil
-            -- end)
             end
         end
 
