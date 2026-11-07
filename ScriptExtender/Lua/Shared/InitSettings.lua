@@ -45,5 +45,14 @@ Settings:AddDefaultSettings({
     {'disableCrowd',            false},
     {'degenExtendedScriptExtender', false},
     {'allowMirror',             true},
+    {'devel',                   false},
 })
 Settings:Initialize()
+
+
+
+
+Ext.RegisterConsoleCommand('ll_dev', function(_, enabled)
+    Settings.devel = enabled
+    Settings:Save()
+end)

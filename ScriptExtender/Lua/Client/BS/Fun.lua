@@ -107,9 +107,9 @@ for k, v in pairs(x) do
 end
 ]]--
 
-Ext.Entity.OnSystemUpdate('ClientVisual', function()
-	DPrint('ddd')
-end)
+-- Ext.Entity.OnSystemUpdate('ClientVisual', function()
+-- 	DPrint('ddd')
+-- end)
 
 --[[
 e = Ext.Entity.GetAllEntitiesWithComponent('ServerCrowdCharacterTrigger')

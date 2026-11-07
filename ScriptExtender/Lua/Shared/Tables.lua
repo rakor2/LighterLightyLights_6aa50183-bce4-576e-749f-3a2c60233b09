@@ -230,6 +230,7 @@ MOTD = {
     [[Beautiful bebe uwu]],
     [[15-16]],
     [[Te pido perdon, mis luna de amora]],
+    [[COOKY PAJARITA CHEF]],
 }
 
 
@@ -655,6 +656,7 @@ local CONFIG = {
     ["PostProcess.Camera.LensFlareChromaticDistortion"]                 = {min = 0, max = 5},
     ["PostProcess.Camera.LensFlareGhostDispersal"]                      = {min = 0, max = 100},
     ["PostProcess.Camera.LensFlareHaloWidth"]                           = {min = 0, max = 100},
+
     ["PostProcess.Camera.LensFlareIntensity"]                           = {min = 0, max = 100},
     ["PostProcess.Camera.LensFlareTreshold"]                            = {min = 0, max = 10},
 

@@ -76,6 +76,7 @@ end
 
 
 function CreateLight(x, y, z, HumanRotation, OrbitParams, rtUuid)
+    -- DPrint('CreateLight sv')
     if rtUuid then changeRootTemplateState(rtUuid) end
     local rtUuid = rtUuid or getAvailableRootTemplate()
     if not rtUuid then return nil end
@@ -93,9 +94,9 @@ function CreateLight(x, y, z, HumanRotation, OrbitParams, rtUuid)
         HumanRotation = HumanRotation,
     }
 
-    _GLL.OrbitParams[entUuid]          = OrbitParams
-    _GLL.CreatedLightsServer[entUuid]  = rtUuid
-    _GLL.States.lastMode[entUuid]      = 'World'
+    _GLL.OrbitParams[entUuid]         = OrbitParams
+    _GLL.CreatedLightsServer[entUuid] = rtUuid
+    _GLL.States.lastMode[entUuid]     = 'World'
 
     if _GLL.markerUuid then
         UpdateMarkerPosition()
@@ -103,6 +104,8 @@ function CreateLight(x, y, z, HumanRotation, OrbitParams, rtUuid)
     else
         CreateMarker(true)
     end
+
+    -- DPrint('CreateLight pre return')
 
     return {
         _GLL.CreatedLightsServer,
@@ -114,6 +117,8 @@ end
 
 
 Ch.CreateLight:SetRequestHandler(function(Data)
+    -- DPrint('received')
+
     local OFFSET = 2
     local PosFallback = _C().Transform.Transform.Translate
     local Translate = Data.Position or PosFallback
@@ -132,6 +137,7 @@ Ch.CreateLight:SetRequestHandler(function(Data)
 
     local uuid = Data.uuid or nil
 
+    -- DPrint('pre return')
     return CreateLight(x, y + OFFSET, z, HumanRotation, nil, uuid)
 end)
 
@@ -140,15 +146,18 @@ end)
 Ch.DuplicateLight:SetRequestHandler(function()
     if not _GLL.selectedUuid then return end
     local Prev = _GLL.LightParametersServer[_GLL.selectedUuid]
+    if Prev then
+        local x, y, z = table.unpack(Prev.Translate)
+        local HumanRotation = Prev.HumanRotation
 
-    local x, y, z = table.unpack(Prev.Translate)
-    local HumanRotation = Prev.HumanRotation
+        local Response = CreateLight(x, y, z, HumanRotation, _GLL.OrbitParams[_GLL.selectedUuid])
 
-    local Response = CreateLight(x, y, z, HumanRotation, _GLL.OrbitParams[_GLL.selectedUuid])
+        Response[3] = _GLL.LightParametersServer[Response[2]]
 
-    Response[3] = _GLL.LightParametersServer[Response[2]]
-
-    return Response
+        return Response
+    else
+        DError('Ch.DuplicateLight: No Prev')
+    end
 end)
 
 
@@ -476,6 +485,7 @@ Ch.StickToCamera:SetHandler(function (Data)
 end)
 
 
+
 --- TBD: compress
 Ch.SaveLoadLightPos:SetHandler(function (action)
 
@@ -673,6 +683,8 @@ Ch.EntityRotation:SetHandler(function (Data)
     UpdatePositionsForSomeBS()
     return transforms
 end)
+
+
 
 _GLL.OrbitParams = _GLL.OrbitParams or {}
 

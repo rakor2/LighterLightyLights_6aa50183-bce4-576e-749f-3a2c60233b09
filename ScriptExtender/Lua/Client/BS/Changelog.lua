@@ -1,22 +1,84 @@
-Changelog.currentVersion = '1.14.3.2'
+Changelog.currentVersion = '1.16.0.0'
 Changelog.ChangelogText = {
+    {
+        version = '1.16.0',
+        Text = {
+            [[ BONE ZONE:]],
+            [[    Added new creatures: Snake, Dragon, Cat with wings, Cat with tentacles, Rabbit, Spider, Shadow, Spectator.
+    KEEP IN MIND, they all share bones between each other. For example to control snake's head, you need to find Head_M in Body.
+    Look at new misc file to see what bones each creature uses. I'll make it better at some point]],
+            [[    Increased performance for _finally_ noticeable 41x. Everything is faster now monkaSTEER]],
+
+            [[ PHOTO MODE]],
+            [[    Fixed a thing that would continue working after exiting photo mode and continue stacking on each photo mode enter.
+    Potentially causing performance issue. But computer are fast, so who cares]],
+
+            [[ MAIN:]],
+            [[    Duplicate light keybind creates a new light if no lights created]]
+        }
+    },
+    {
+        version = '1.15.2',
+        Text = {
+            [[ USEFUL:]],
+            [[    Added Status manager; allows to add or remove statuses from the game or mods. Check tooltips.
+    If you want to opt-out, dm me]],
+            [[    Updated tooltip for Disable combat]],
+
+            [[ SAVER:]],
+            [[    Updated saver; now works]],
+
+            [[ PHOTO MODE:]],
+            [[    Added FoV slider]],
+            [[    Camera save/load saves FoV; you don't need to use mod's slider specifically, it saves vanilla UI value as well]],
+            [[    Fixed camera not loading saved position properly]],
+            [[    Fixed DoF sliders not working]],
+
+            [[ ATTACHIES:]],
+            [[    Daniela's daggers invisible box replaced with actual invisible daggers; no more fullscreen boxes]],
+
+            [[ BONE ZONE:]],
+            [[    Fixed a bug where sliders would keep values from another dummy]],
+
+            [[ SETTINGS:]],
+            [[    Fixed CharacterLight off by default not saving]],
+
+            [[ UI:]],
+            [[    Added Axi Teal]],
+            [[    Added Tina Cyan]],
+            [[    Added Stacey Pink]],
+            [[    Added Aku Mint]],
+            [[    Added DieRadian Bluegreen]],
+            [[    Your current style will shift. Choose it back]],
+            [[    AnL2 renamed to AnL]],
+            [[    Fixed saver tab not having fade effect on hover]],
+
+            [[ MOD:]],
+            [[    Renamed to Danielafied Photo Mode]],
+        }
+    },
     {
         version = '1.14.3',
         Text = {
             [[ MAIN:]],
             [[    All confirm buttons now work in Otis_Inf tool pause]],
+
             [[ ATMOSPHERE AND LIGHTING:]],
             [[    Unsloped and remade AnL Parameters. Functionally nothing have changed, unnoticeably faster]],
             [[    Coverage Texture (TexResource) in Sun and Volumetric Clouds is now randomable]],
             [[    Environment Effects (1,2,3,4) in EnvironmentEffect in now randomable.
     Don't forget to enable them]],
             [[    Fixed presets not switching in character creation mirror]],
+
             [[ SETTINGS:]],
             [[    Added Allow switching AnL in the mirror; allows switch AnL in the mirror. Enabled by default]],
+
             [[ KEYBINDS:]],
             [[    Now F10 keybind hides mod's window with photo mode ui how I intended - properly at the same time]],
+
             [[ TODO:]],
             [[    Added todo]],
+
             [[ UI:]],
             [[    Added Daniela Blue]],
             [[    Added Jerinski Yellow]],

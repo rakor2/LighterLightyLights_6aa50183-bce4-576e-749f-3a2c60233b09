@@ -37,5 +37,4 @@ Res.RNGCover()
 Res.RNGEffect()
 
 
-
 return Res
