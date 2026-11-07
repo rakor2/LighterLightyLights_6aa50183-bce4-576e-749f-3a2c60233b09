@@ -3,17 +3,17 @@ Saver.Scene = {}
 Saver.selectedScene = mil
 
 function Saver2Tab(p)
-    p:AddSeparatorText('Do not use. Unless you are knower')
+    p:AddSeparatorText('Save lights')
 
 
     function LoadSavedScene()
         local SavedScene = Ext.IO.LoadFile('LightyLights/Scenes/1a_SAVED_SCENES.json')
         if SavedScene then
-            DPrint('SavedScenes')
+            -- DPrint('SavedScenes')
             Saver.SavedScene = Ext.Json.Parse(SavedScene)
             Saver.selectedScene = Saver.SavedScene[1]
         else
-            DPrint('No SavedScenes')
+            -- DPrint('No SavedScenes')
             Ext.IO.SaveFile('LightyLights/Scenes/1a_SAVED_SCENES.json', Ext.Json.Stringify({}))
             Saver.SavedScene = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/Scenes/1a_SAVED_SCENES.json'))
         end
@@ -51,11 +51,11 @@ function Saver2Tab(p)
                 local GSS = Saver.Scene.Server
 
                 local UuidMap = {}
-                local SavedLightType = lightType
+                -- local SavedLightType = lightType
 
                 local function CreateNext(i)
                     if i > #Lights then
-                        lightType = SavedLightType
+                        -- lightType = SavedLightType
 
                         _GLL.selectedUuid = UuidMap[GSC.selectedUuid] or _GLL.selectedUuid
 
@@ -75,15 +75,16 @@ function Saver2Tab(p)
 
                     lightType = EnumLighType[Params and Params.LightType] or 'Point'
 
-                    OnTicks(1, function()
+                    OnTicks(0, function()
                         -- DPrint('20')
                         CreateLight(rtUuid)
 
-                        OnTicks(30 + Settings.lightCreateDelay, function()
+                        -- OnTicks(40 + Settings.lightCreateDelay, function()
+                        Ext.Timer.WaitFor(100 + Settings.lightCreateDelay, function()
                             -- DPrint('40')
 
                             local newUuid = _GLL.selectedUuid
-
+                            _GLL.selectedEntity = Ext.Entity.Get(newUuid)
                             -- if not newUuid then
                             --     lightType = SavedLightType
                             --     CreateNext(i + 1)
@@ -95,21 +96,21 @@ function Saver2Tab(p)
                             local Params = SavedParams[oldUuid]
                             if Params then
                                 _GLL.LightParametersClient[newUuid] = Params
-                                SetLightType(Params.LightType)
-                                SetLightColor(Params.Color)
-                                SetLightIntensity(Params.Intensity)
-                                SetLightRadius(Params.Radius)
-                                SetLightOuterAngle(Params.SpotLightOuterAngle)
-                                SetLightInnerAngle(Params.SpotLightInnerAngle)
-                                SetLightDirectionalParameters('DirectionLightAttenuationEnd',      Params.DirectionLightAttenuationEnd)
-                                SetLightDirectionalParameters('DirectionLightAttenuationFunction', Params.DirectionLightAttenuationFunction)
-                                SetLightDirectionalParameters('DirectionLightAttenuationSide',     Params.DirectionLightAttenuationSide)
-                                SetLightDirectionalParameters('DirectionLightAttenuationSide2',    Params.DirectionLightAttenuationSide2)
-                                SetLightDirectionalParameters('DirectionLightDimensions',          Params.DirectionLightDimensions)
-                                SetLightFill(Params.Flags)
-                                SetLightScattering(Params.ScatteringIntensityScale)
-                                SetLightEdgeSharp(Params.EdgeSharpening)
-                                SetLightChannel(Params.SliderLightChannelFlag)
+                                SetLightType(Params.LightType, newUuid)
+                                SetLightColor(Params.Color, newUuid)
+                                SetLightIntensity(Params.Intensity, newUuid)
+                                SetLightRadius(Params.Radius, newUuid)
+                                SetLightOuterAngle(Params.SpotLightOuterAngle, newUuid)
+                                SetLightInnerAngle(Params.SpotLightInnerAngle, newUuid)
+                                SetLightDirectionalParameters('DirectionLightAttenuationEnd',      Params.DirectionLightAttenuationEnd, newUuid)
+                                SetLightDirectionalParameters('DirectionLightAttenuationFunction', Params.DirectionLightAttenuationFunction, newUuid)
+                                SetLightDirectionalParameters('DirectionLightAttenuationSide',     Params.DirectionLightAttenuationSide, newUuid)
+                                SetLightDirectionalParameters('DirectionLightAttenuationSide2',    Params.DirectionLightAttenuationSide2, newUuid)
+                                SetLightDirectionalParameters('DirectionLightDimensions',          Params.DirectionLightDimensions, newUuid)
+                                SetLightFill(Params.Flags, newUuid)
+                                SetLightScattering(Params.ScatteringIntensityScale, newUuid)
+                                SetLightEdgeSharp(Params.EdgeSharpening, newUuid)
+                                SetLightChannel(Params.SliderLightChannelFlag, newUuid)
                             end
 
                             -- for _, light in ipairs(_GLL.LightsUuidNameMap) do
@@ -164,11 +165,40 @@ function Saver2Tab(p)
     end
 
 
-    local txtInfo = p:AddText('Perhaps some scene info here idk:')
+
+
+    E.btnDeleteScene = p:AddButton('Delete')
+    local resetId = UI:CreateConfirmButton(p, E.btnDeleteScene, 'Delete', function()
+        local sceneName = UI:SelectedOpt(E.comboScenes)
+        Ext.IO.SaveFile('LightyLights/Scenes/' .. sceneName ..'.json', Ext.Json.Stringify({}))
+
+        local SavedScene = Ext.Json.Parse(Ext.IO.LoadFile('LightyLights/Scenes/1a_SAVED_SCENES.json'))
+        local index = table.find(SavedScene, sceneName)
+        table.remove(SavedScene, index)
+        Ext.IO.SaveFile('LightyLights/Scenes/1a_SAVED_SCENES.json', Ext.Json.Stringify(SavedScene))
+
+        OnTicks(5, function()
+            E.comboScenes.Options = LoadSavedScene()
+            E.comboScenes.SelectedIndex = 0
+        end)
+
+    end)
+        UI:Config(E.btnDeleteScene, {
+            OnClick = function()
+                UI:Confirm(E.btnDeleteScene, resetId, 60)
+            end
+        })
+
+
+
+    local txtInfo = p:AddText([[Perhaps some lights info here idk:
+like level name anddddddddd
+for now just put level name in the name yourself]])
 
     local txtInfo = p:AddSeparatorText('Warning')
-    local txtInfo = p:AddText([[Scene saves relative to the world coordinates.
-If you load your scene on different levels, it will be recreated in different places]])
+    local txtInfo = p:AddText([[Currently saves lights relative to the world coordinates.
+If you load your scene on different levels, it will be recreated in different places.
+Currently won't save light names.]])
 
 
 end
