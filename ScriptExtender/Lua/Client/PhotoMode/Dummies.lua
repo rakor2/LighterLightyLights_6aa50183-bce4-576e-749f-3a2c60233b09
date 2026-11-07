@@ -31,8 +31,11 @@ function UpdateDummyCombo(e)
         SetVarValuesToSliders()
         LoadAttachState(getSelectedDummy())
 
-        PM.DummyWidgets[dummyId].Window:SetColor('WindowBg', Style.Colors.special)
+        local Color = Style.Colors and Style.Colors.special or {0.5, 0.5, 0.5, 1.0}
+
+        PM.DummyWidgets[dummyId].Window:SetColor('WindowBg', Color)
         SetHighlightColor(PM.DummyWidgets[dummyId].Window)
+
     end
 end
 
