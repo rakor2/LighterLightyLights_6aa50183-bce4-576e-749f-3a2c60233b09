@@ -3,12 +3,12 @@ function CameraSaveLoadPosition(index)
     local CameraXd = CameraXd or {}
 
     if not _GLL.States.inPhotoMode then return end
-    local pmCamera = Camera:GetPhotoModeCamera()
-    local activeCam = Camera:GetActiveCamera()
+    local PmCamera = Camera:GetPhotoModeCamera()
+    local ActiveCam = Camera:GetActiveCamera()
 
-    if pmCamera then
-        CameraPositions[tostring(index)] = Ext.Types.Serialize(activeCam.Transform.Transform)
-        CameraXd[tostring(index)] = {LookAt = activeCam.Camera.Controller.LookAt, field_58 = activeCam.Camera.Controller.field_58}
+    if PmCamera then
+        CameraPositions[tostring(index)] = Ext.Types.Serialize(ActiveCam.Transform.Transform)
+        cameraFov = ActiveCam.Camera.Controller.FOV
 
         -- {
         --     Translate = activeCam.Transform.Transform.Translate,
@@ -16,7 +16,7 @@ function CameraSaveLoadPosition(index)
         --     Scale = activeCam.Transform.Transform.Scale,
         -- }
     end
-    return CameraPositions, CameraXd
+    return CameraPositions, cameraFov
 end
 
 
@@ -31,7 +31,7 @@ function CreateSelectableForSavedCameraPos()
     local currentIndex = btnCounter
     local size = 0
 
-    local CameraPositions, CameraXd = CameraSaveLoadPosition(currentIndex)
+    local CameraPositions, cameraFov = CameraSaveLoadPosition(currentIndex)
 
     E.windowLoadPos.Size = {
         E.windowLoadPos.Size[1],
@@ -75,8 +75,6 @@ function CreateSelectableForSavedCameraPos()
             local Translate = CameraPositions[index].Translate
             local RotationQuat = CameraPositions[index].RotationQuat
 
-            Camera.SetRotationQuat(RotationQuat)
-            Camera.SetTranslate(Translate)
             Ext.Types.Unserialize(ActiveCamera.PhotoModeCameraSavedTransform.Transform, CameraPositions[index])
 
             OnTicks(5, function()
@@ -84,7 +82,16 @@ function CreateSelectableForSavedCameraPos()
                 -- DDump(CameraXd)
                 -- Ext.System.PhotoModeMovementSystem:UpdateCameraController(ActiveCamera.Camera, CameraXd[index].LookAt, CameraXd[index].field_58)
                 -- Ext.System.PhotoModeMovementSystem.field_30 = 1
-                Ext.UI.GetRoot():Find("ContentRoot"):Child(21).DataContext.RecallCameraTransform:Execute()
+                -- Ext.UI.Defer(function ()
+                -- ActiveCamera.Camera.Controller.FOV = cameraFov
+                E.camFov.Value = {cameraFov, 0,0,0}
+
+                Ext.UI.Defer(function ()
+                    Ext.UI.GetRoot():Find("ContentRoot"):Child(_GLL.npmi).DataContext.FieldOfView = cameraFov
+                end)
+
+                Ext.UI.GetRoot():Find("ContentRoot"):Child(_GLL.npmi).DataContext.RecallCameraTransform:Execute()
+                -- end)
             end)
         end
     end
@@ -98,8 +105,12 @@ function CameraControlls(type, value)
     if camera then
         if type == 'FarPlane' then
             camera.Camera.Controller.FarPlane = value
-        else --- type == 'NearPlane'
+        elseif type == 'NearPlane' then
             camera.Camera.Controller.NearPlane = value
+        elseif type == 'FOV' then
+            Ext.UI.Defer(function ()
+                Ext.UI.GetRoot():Find("ContentRoot"):Child(_GLL.npmi).DataContext.FieldOfView = value
+            end)
         end
     end
 end
