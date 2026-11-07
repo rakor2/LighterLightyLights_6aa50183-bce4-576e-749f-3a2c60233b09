@@ -264,7 +264,6 @@ end
 
 
 local function OnPhotoModeDestroy()
-
     if Settings.degenExtendedScriptExtender then
         OnTicks(6, function()
             Anl.Switch()
@@ -299,6 +298,7 @@ local function OnPhotoModeDestroy()
     _GLL.BZOldValues    = {}
 
     DetachAllAttachies()
+    Utils:SubUnsubToTick(0, 'PhotoMode')
 
     if Mods.GizmoLib then
         _GLL.GizmoDummySelections = {}
