@@ -391,7 +391,7 @@ function Settings2Tab(p)
 
     E.checkLightSetupState = p:AddCheckbox('CharacterLight setup off by default')
         UI:Config(E.checkLightSetupState, {
-            Checked = lightSetupState,
+            Checked = Settings.lightSetupState,
             OnChange = function (e)
                 Settings.lightSetupState = e.Checked
                 E.checkLightSetup.Checked = Settings.lightSetupState
