@@ -15,6 +15,7 @@ local LTN_Templates, ATM_Templates = Ext.Require('Shared/Anal/ATM_LTN_Templates.
 local CONFIG, ATM_ORDER, LTN_ORDER, IGNORE_PARAMS, RANDOM_EXCLUDE = GetANLbsTemporary()
 local Res = Ext.Require('Client/Anal/Resources.lua')
 
+
 Anl.LightingOrder, Anl.AtmosphereOrder = Ext.Require('Client/Anal/AnalOrders.lua')
 Anl.IgnoreParams = Ext.Require('Client/Anal/AnalIgnored.lua')
 
@@ -490,8 +491,10 @@ function Anl.ResetValues(resourceType, all)
 	else
 		if all then
 			for _, uuid in pairs(Anl[resourceType .. 'Templates']) do
-				local CachedTable = ZipBomb['Cached' .. resourceType][uuid][2]
-				Ext.Types.Unserialize(Resource:GetResource(uuid, resourceType), CachedTable)
+				if ZipBomb['Cached' .. resourceType][uuid] then
+					local CachedTable = ZipBomb['Cached' .. resourceType][uuid][2]
+					Ext.Types.Unserialize(Resource:GetResource(uuid, resourceType), CachedTable)
+				end
 			end
 		else
 			local uuid = Anl[resourceType .. 'Templates'][Anl['Current' .. resourceType]]
@@ -503,8 +506,6 @@ function Anl.ResetValues(resourceType, all)
 		Anl.UpdateControlValues(resourceType)
 	end
 end
-
-
 
 --- TBD: Combine random all and smol randoms
 function RandomAll(resourceType)
@@ -663,7 +664,7 @@ function Anl.CreateParameterControls(Tbl, parent)
 
 										elseif valueType == 'string' then
 											if parameterPath:find('Coverage') then
-												local rng = Ext.Math.Random(1, #Coverage)
+												local rng = Ext.Math.Random(1, #Res.Coverage)
 												local uuid = Res.Coverage[rng]
 											elseif parameterPath:find('Tears') then
 											elseif parameterPath:find('AlbedoTex') then
