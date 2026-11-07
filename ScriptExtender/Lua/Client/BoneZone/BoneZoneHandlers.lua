@@ -305,20 +305,22 @@ end
 
 function SetVarValuesToSliders()
     local characterUuid = getSelectedDummyOwnerUuid()
-    if not _GLL.PoseValues[characterUuid] then return end
 
     local function restoreGroup(slTable, postfix, defaultValue)
         for boneGroupName, BoneCategories in pairs(AllBones) do
             for boneCategory, Bones in pairs(BoneCategories) do
                 for _, boneName in pairs(Bones) do
                     local varName = boneName .. postfix
-                    local poseData = _GLL.PoseValues[characterUuid][varName]
+                    local poseData = _GLL.PoseValues[characterUuid] and _GLL.PoseValues[characterUuid][varName]
+
                     for i = 1, 3 do
                         local sl = slTable[varName .. '_' .. i]
                         if sl then
-                            if poseData and poseData.HumanValue then
+                            if not _GLL.PoseValues[characterUuid] then
+                                sl.Value = {0, 0, 0, 0}
+                            elseif poseData and poseData.HumanValue then
                                 if postfix == '_Trans' or postfix == '_Scale' then
-                                    sl.Value = {poseData.HumanValue[i]*100, 0, 0, 0}
+                                    sl.Value = {poseData.HumanValue[i] * 100, 0, 0, 0}
                                 else
                                     sl.Value = {poseData.HumanValue[i], 0, 0, 0}
                                 end
@@ -331,6 +333,7 @@ function SetVarValuesToSliders()
             end
         end
     end
+
     restoreGroup(E.slBZ, '_Trans', 0)
     restoreGroup(E.slBZ, '_Rot',   0)
     restoreGroup(E.slBZ, '_Scale', 1)
@@ -339,31 +342,25 @@ end
 
 
 function ResetSliderValue()
-    local function resetGroup(slTable, postfix, defaultValue)
-        for boneGroupName, BoneCategories in pairs(AllBones) do
-            for boneCategory, Bones in pairs(BoneCategories) do
-                for _, boneName in pairs(Bones) do
-                    for i = 1, 3 do
-                        local sl = slTable[boneName .. postfix .. '_' .. i]
-                        if sl then
-                            sl.Value = {defaultValue, 0, 0, 0}
-                        end
-                    end
-                end
+    for _, varName in ipairs(AllBonesArray) do
+        local defaultValue = varName:find('_Scale') and 1 or 0
+
+        for i = 1, 3 do
+            local sl = E.slBZ[varName .. '_' .. i]
+            if sl then
+                sl.Value = {defaultValue, 0, 0, 0}
             end
         end
     end
-
-    resetGroup(E.slBZ, '_Trans', 0)
-    resetGroup(E.slBZ, '_Rot',   0)
-    resetGroup(E.slBZ, '_Scale', 1)
 end
 
 
 
 function SetValuesToVars(entity)
     local entity = entity or getSelectedDummy()
-    local characterUuid = entity.Dummy.Entity.Uuid.EntityUuid or getSelectedDummyOwnerUuid()
+    local characterUuid = entity.Dummy
+            and entity.Dummy.Entity.Uuid
+            and entity.Dummy.Entity.Uuid.EntityUuid or getSelectedDummyOwnerUuid()
 
     if _GLL.PoseValues[characterUuid] then
         for varName, value in pairs(_GLL.PoseValues[characterUuid]) do
@@ -405,8 +402,15 @@ end
 
 local Postfixes = {'_Trans', '_Rot', '_Scale'}
 
-function ResetAllBones()
-    local uuid = getSelectedDummyOwnerUuid()
+function ResetAllBones(dummy)
+    local ownerUuid
+
+    if dummy then
+        local owner = Dummy:Owner(dummy)
+        ownerUuid = owner.Uuid.EntityUuid
+    end
+
+    local uuid = ownerUuid or getSelectedDummyOwnerUuid()
     -- if uuid then
     --     for _, postfix in pairs(Postfixes) do
     --         for boneGroupName, BoneCategories in pairs(AllBones) do
@@ -547,6 +551,7 @@ end
 
 
 function TableBoneValues(entity)
+    -- DPrint('TableBoneValues')
     local entity = entity or getSelectedDummy()
     local characterUuid = getDummyOwnerUuid(entity)
     -- local varName
@@ -563,12 +568,17 @@ function TableBoneValues(entity)
                         -- DDump(value)
 
                         Utils:EnsureTable(_GLL.PoseValues, characterUuid, varName)
+        -- DPrint('3')
 
                         if value.Type == 'Rotator3' then
+        -- DPrint('4')
+
                             local HumanValue = Helpers.Math.QuatToEuler(value.Value)
                             _GLL.PoseValues[characterUuid][varName]['Quats'] = value.Value
                             _GLL.PoseValues[characterUuid][varName]['HumanValue'] = HumanValue
                         else
+        -- DPrint('5')
+
                             _GLL.PoseValues[characterUuid][varName]['HumanValue'] = value.Value
                         end
                     end
@@ -1017,7 +1027,7 @@ end
 
 
 function ResetBoneZoneTab()
-    Imgui.ClearChildren(E.boneZone)
+    Imgui.ClearChildren(E.tabItemBZ)
 
     ---TBD: Should have put all elements to a sub table smhing my head
     E.btnPose          = nil
@@ -1043,7 +1053,7 @@ function ResetBoneZoneTab()
     end)
 
     Helpers.Timer:OnTicks(20, function ()
-        BoneZoneTab(E.boneZone)
+        BoneZoneTab(E.tabItemBZ)
     end)
 end
 
