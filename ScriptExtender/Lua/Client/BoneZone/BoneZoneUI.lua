@@ -1,43 +1,33 @@
-local bz
-local bz2
-
-function BoneZoneTab(p)
-    E.grpBZ = p:AddGroup('BZ')
-    bz  = E.grpBZ
-    E.grpBZAgreed = p:AddGroup('BZ2')
-    bz2 = E.grpBZAgreed
-    bz2.Visible = false
-
+function BoneZoneAgree(p)
     if not Settings.readTheRules then
         DPrint([[User haven't agreed]])
-        local txtRule = bz:AddText([[
-        By using this mod to create and share poses,
-        you agree that all shared poses must be licensed under CC BY-SA 4.0
-        and cannot be restricted from modification by others.]])
+        local txtRule = p:AddText([[
+By using this mod to create and share poses, I agree that my all created
+and shared poses must be licensed under CC BY-SA 4.0 and cannot be restricted
+from modification by others.]])
 
-        local dum = bz:AddDummy(34, 1)
-
-        E.checkRule = bz:AddButton('Agree')
-            UI:Config(E.checkRule, {
-                SameLine = true,
+        local checkRule = p:AddButton('I agree')
+            UI:Config(checkRule, {
                 OnClick = function(e)
                     Settings.readTheRules = true
                     Settings:Save()
-                    bz:Destroy()
-                    bz2.Visible = true
+                    p:Destroy()
+                    E.tabItemBZ.Visible = true
+                    E.tabItemBZSaved.Visible = true
+                    E.tabItemBZAtt.Visible = true
                 end
             })
-    else
-        bz2.Visible = true
-        DPrint([[User has agreed]])
     end
+end
 
 
 
-    local txtBone = bz2:AddSeparatorText('BoneZone')
+
+function BoneZoneTab(p)
+    local txtBone = p:AddSeparatorText('Boning tab')
     _GLL.States.bonesUnlocked = false
 
-    E.collapseBZGuide = bz2:AddCollapsingHeader('Bone Zone Info [must read]')
+    E.collapseBZGuide = p:AddCollapsingHeader('Bone Zone Info [must read]')
     E.collapseBZGuide.DefaultOpen = Settings.openByDefaultBZInfo
 
     E.txtBZGuide = E.collapseBZGuide:AddText([[
@@ -81,7 +71,7 @@ You can find all races and body types on the BG3 Community Wiki:
 
 
 
-    E.cmbBoneDummies = bz2:AddCombo('Dummies')
+    E.cmbBoneDummies = p:AddCombo('Dummies')
         UI:Config(E.cmbBoneDummies, {
             SelectedIndex = E.comboDummies.SelectedIndex or 0,
             Options = {'Not in Photo Mode'},
@@ -96,125 +86,45 @@ You can find all races and body types on the BG3 Community Wiki:
 
 
 
-    E.checkAutoTail = bz2:AddCheckbox('Disable tail physics')
+    E.collapsePhys = p:AddCollapsingHeader('Disable physics')
+
+    E.collapsePhys:AddText('You need to disable before entering photo mode')
+
+
+    E.checkAutoTail = E.collapsePhys:AddCheckbox('Tail')
     E.checkAutoTail.Checked = Settings.autoDisablePhys or false
 
-    E.checkAutoHair  = bz2:AddCheckbox('Disable hair physics')
-    E.checkAutoHair.SameLine = true
+    E.checkAutoHair  = E.collapsePhys:AddCheckbox('Hair')
+    -- E.checkAutoHair.SameLine = true
     E.checkAutoHair.Disabled = true
 
-    E.checkAutoTent  = bz2:AddCheckbox('Disable tentacles physics')
-    E.checkAutoTent.SameLine = true
+    E.checkAutoTent  = E.collapsePhys:AddCheckbox('Tentacles')
+    -- E.checkAutoTent.SameLine = true
 
-    E.checkAutoWings = bz2:AddCheckbox('Disable wings physics')
+    E.checkAutoWings = E.collapsePhys:AddCheckbox('Wings')
 
-    E.checkAutoDick  = bz2:AddCheckbox('Disable dick physics')
-    E.checkAutoDick.SameLine = true
-
-    bz2:AddText('You need to disable it before entering')
+    E.checkAutoDick  = E.collapsePhys:AddCheckbox('Dick')
+    -- E.checkAutoDick.SameLine = true
 
 
 
-    bz2:AddSeparatorText('Attachies')
 
+    p:AddDummy(0, 20)
+    p:AddSeparatorText('Info')
 
-
-    E.btnGetDaggers = bz2:AddButton([[Get Daniela's daggers]])
-        UI:Config(E.btnGetDaggers, {
-            OnClick = function(e)
-                Ch.GetDaggers:SendToServer({})
-            end
-        })
-
-
-
-    E.inputAttachItem = bz2:AddInputText('')
-    E.inputAttachItem.SameLine = false
-
-
-
-    E.checkAttachies = bz2:AddCheckbox('')
-        UI:Config(E.checkAttachies, {
-            SameLine = true,
-            OnChange = function(e)
-                if not _GLL.States.inPhotoMode then e.Checked = false return end
-                tickAttach(e, 'Main')
-                SaveAttachState(getSelectedDummy())
-            end
-        })
-
-
-
-    bz2:AddText('Main hand').SameLine = true
-
-
-
-    E.slAttachScale = bz2:AddDrag('', 1, 0.001, 1000, 1)
-        UI:Config(E.slAttachScale, {
-            OnChange = function(e)
-                if not _GLL.States.inPhotoMode then e.Value = {1,0,0,0} return end
-                ScaleAttachment('Main', e.Value[1]/100)
-                SaveAttachState(getSelectedDummy())
-            end
-        })
-
-
-
-    bz2:AddDummy(40,0).SameLine = true
-    bz2:AddText('Main scale').SameLine = true
-
-
-
-    E.inputAttachItemOff = bz2:AddInputText('')
-    E.inputAttachItemOff.SameLine = false
-
-
-
-    E.checkAttachiesOff = bz2:AddCheckbox('')
-    UI:Config(E.checkAttachiesOff, {
-        SameLine = true,
-        OnChange = function(e)
-            if not _GLL.States.inPhotoMode then e.Checked = false return end
-            tickAttach(e, 'Off')
-            SaveAttachState(getSelectedDummy())
-        end
-    })
-
-
-
-    bz2:AddText('Off hand').SameLine = true
-
-
-
-    E.slAttachScaleOff = bz2:AddDrag('', 1, 0.001, 1000, 1)
-        UI:Config(E.slAttachScaleOff, {
-            OnChange = function(e)
-                if not _GLL.States.inPhotoMode then e.Value = {1,0,0,0} return end
-                ScaleAttachment('Off', e.Value[1]/100)
-                SaveAttachState(getSelectedDummy())
-            end
-        })
-
-    bz2:AddDummy(40,0).SameLine = true
-    bz2:AddText('Off scale').SameLine = true
-
-    bz2:AddText('Dummy_R/L_Hand bones to control item position')
-
-    bz2:AddSeparatorText('Garbo')
-
-    bz2:AddText([[    If you want to make a pose from scratch,
+    p:AddText([[    If you want to make a pose from scratch,
     you should start from this T-Pose IMP_Rig_TPose.]])
 
-    bz2:AddDummy(1,10)
-    bz2:AddText([[    You can change gradient color in the settings.]])
+    p:AddDummy(1,10)
+    p:AddText([[    You can change gradient color in the settings.]])
+
+
+    p:AddDummy(0, 20)
+    p:AddSeparatorText('Garbo 2')
 
 
 
-    bz2:AddSeparatorText('Garbo 2')
-
-
-
-    E.btnTposeQSAT = bz2:AddButton('TPOSE [You need QSAT for this to work]')
+    E.btnTposeQSAT = p:AddButton('TPOSE [You need QSAT for this to work]')
             UI:Config(E.btnTposeQSAT, {
                 SameLine = false,
                 OnClick = function(e)
@@ -241,21 +151,21 @@ You can find all races and body types on the BG3 Community Wiki:
 
 
 
-    E.btnResetBpnes = bz2:AddButton('Reset all')
-    local resetId = UI:CreateConfirmButton(bz2, E.btnResetBpnes, 'Reset all', function()
+    E.btnResetBpnes = p:AddButton('Reset all')
+    local resetId = UI:CreateConfirmButton(p, E.btnResetBpnes, 'Reset all', function()
         ResetAllBones()
         SetVarValuesToSliders()
     end)
         UI:Config(E.btnResetBpnes, {
             OnClick = function()
                 if not _GLL.States.inPhotoMode then return end
-                UI:Confirm(E.btnResetBpnes, resetId, 1000)
+                UI:Confirm(E.btnResetBpnes, resetId, 60)
             end
         })
 
 
 
-    E.btnUndo = bz2:AddButton('Undo|Shift+Z')
+    E.btnUndo = p:AddButton('Undo|Shift+Z')
         UI:Config(E.btnUndo, {
             SameLine = false,
             OnClick = function()
@@ -265,7 +175,7 @@ You can find all races and body types on the BG3 Community Wiki:
 
 
 
-    E.btnRedo = bz2:AddButton('Redo|Shift+X')
+    E.btnRedo = p:AddButton('Redo|Shift+X')
         UI:Config(E.btnRedo, {
             SameLine = true,
             OnClick = function()
@@ -277,7 +187,7 @@ You can find all races and body types on the BG3 Community Wiki:
 
     _GLL.States.bzSymmetry = false
 
-    E.checkSymm = bz2:AddCheckbox('Symmetry|Alt+F')
+    E.checkSymm = p:AddCheckbox('Symmetry|Alt+F')
         UI:Config(E.checkSymm, {
             SameLine = false,
             OnChange = function(e)
@@ -293,14 +203,14 @@ You can find all races and body types on the BG3 Community Wiki:
         })
 
 
-    E.btnQuickSave = bz2:AddButton('QuickSave|Shift+S')
+    E.btnQuickSave = p:AddButton('QuickSave|Shift+S')
         UI:Config(E.btnQuickSave, {
             OnClick = function()
                 BZ.QuickSave()
             end
         })
 
-    -- E.checkBoneGizmo = bz2:AddCheckbox('Enable bone gizmo')
+    -- E.checkBoneGizmo = p:AddCheckbox('Enable bone gizmo')
     --     UI:Config(E.checkBoneGizmo, {
     --         SameLine = false,
     --         OnChange = function(e)
@@ -321,7 +231,7 @@ You can find all races and body types on the BG3 Community Wiki:
     --         end
     --     })
 
-    bns = bz2:AddGroup('Bones')
+    bns = p:AddGroup('Bones')
 
 
     E.inputSearchBones = bns:AddInputText('')
@@ -451,13 +361,17 @@ You can find all races and body types on the BG3 Community Wiki:
 
     additionalGroup:AddSeparator()
 
+end
 
 
-    bz2:AddSeparatorText('Saved poses')
 
 
 
-    E.inputSearch = bz2:AddInputText('Search')
+function BoneZoneSaved(p)
+    p:AddSeparatorText('Saved poses and stuff')
+
+
+    E.inputSearch = p:AddInputText('Search')
         UI:Config(E.inputSearch, {
             OnChange = function(e)
                 FilterPoses(E.inputSearch.Text)
@@ -466,7 +380,7 @@ You can find all races and body types on the BG3 Community Wiki:
 
 
 
-    E.comboCats = bz2:AddCombo('Category')
+    E.comboCats = p:AddCombo('Category')
         UI:Config(E.comboCats, {
             Options = SaveCategories,
             SelectedIndex = 0
@@ -474,13 +388,13 @@ You can find all races and body types on the BG3 Community Wiki:
 
 
 
-    E.inputPoseName = bz2:AddInputText('')
+    E.inputPoseName = p:AddInputText('')
 
 
 
     _GLL.SavedPoses = _GLL.SavedPoses or {}
 
-    E.btnSavePose = bz2:AddButton('Save pose')
+    E.btnSavePose = p:AddButton('Save pose')
         UI:Config(E.btnSavePose, {
             SameLine = true,
             OnClick = function(e)
@@ -520,7 +434,7 @@ You can find all races and body types on the BG3 Community Wiki:
 
 
 
-    E.btnLoadPose = bz2:AddButton('Load pose')
+    E.btnLoadPose = p:AddButton('Load pose')
         UI:Config(E.btnLoadPose, {
             SameLine = true,
             OnClick = function(e)
@@ -537,11 +451,11 @@ You can find all races and body types on the BG3 Community Wiki:
         })
 
 
-    E.inputCatName = bz2:AddInputText('')
+    E.inputCatName = p:AddInputText('')
 
 
 
-    E.btnAddCat = bz2:AddButton('Add category')
+    E.btnAddCat = p:AddButton('Add category')
         UI:Config(E.btnAddCat, {
             SameLine = true,
             OnClick = function(e)
@@ -565,42 +479,42 @@ You can find all races and body types on the BG3 Community Wiki:
 
 
 
-    -- E.checkPoseUpd = bz2:AddCheckbox('Blender to Bone Zone')
-    --     UI:Config(E.checkPoseUpd, {
-    --         OnChange = function(e)
-    --             local ticks = 0
-    --             local uuid = getSelectedDummyOwnerUuid()
+    E.checkPoseUpd = p:AddCheckbox('Blender to Bone Zone')
+        UI:Config(E.checkPoseUpd, {
+            OnChange = function(e)
+                local ticks = 0
+                local uuid = getSelectedDummyOwnerUuid()
 
-    --             if e.Checked then
-    --                 DPrint('Fetching started')
-    --                 Utils:SubUnsubToTick(1, 'POSEFILEFETCH', function()
-    --                     ticks = ticks + 1
-    --                     if ticks % E.slFetchInterval.Value[1] == 1 then
-    --                         DPrint('Fetched')
-    --                         -- local poseName = E.inputPoseName.Text
-    --                         local poseName = 'BBZ'
-    --                         -- ResetAllBones()
-    --                         local File = Ext.IO.LoadFile('LightyLights/Poses/Blender/' .. poseName .. '.json')
-    --                         if File then
-    --                             local SavedPose = Ext.Json.Parse(File)
-    --                             _GLL.PoseValues[uuid] = SavedPose
-    --                             SetValuesToVars()
-    --                         else
-    --                             DPrint('No file')
-    --                         end
-    --                     end
-    --                 end)
-    --             else
-    --                 SetVarValuesToSliders()
-    --                 DPrint('Fetching stopped')
-    --                 Utils:SubUnsubToTick(0, 'POSEFILEFETCH', _)
-    --             end
-    --         end
-    --     })
+                if e.Checked then
+                    DPrint('Fetching started')
+                    Utils:SubUnsubToTick(1, 'POSEFILEFETCH', function()
+                        ticks = ticks + 1
+                        if ticks % E.slFetchInterval.Value[1] == 1 then
+                            DPrint('Fetched')
+                            -- local poseName = E.inputPoseName.Text
+                            local poseName = 'BBZ'
+                            -- ResetAllBones()
+                            local File = Ext.IO.LoadFile('LightyLights/Poses/Blender/' .. poseName .. '.json')
+                            if File then
+                                local SavedPose = Ext.Json.Parse(File)
+                                _GLL.PoseValues[uuid] = SavedPose
+                                SetValuesToVars()
+                            else
+                                DPrint('No file')
+                            end
+                        end
+                    end)
+                else
+                    SetVarValuesToSliders()
+                    DPrint('Fetching stopped')
+                    Utils:SubUnsubToTick(0, 'POSEFILEFETCH', _)
+                end
+            end
+        })
 
-    -- E.slFetchInterval = bz2:AddSliderInt('Update interval', 10, 2, 100, 1)
+    E.slFetchInterval = p:AddSliderInt('Update interval', 10, 2, 100, 1)
 
-    E.savedPoseParent = bz2:AddChildWindow('Saved poses')
+    E.savedPoseParent = p:AddChildWindow('Saved poses')
     E.savedPoseParent.Size = {-1, 500}
 
 
@@ -622,8 +536,6 @@ You can find all races and body types on the BG3 Community Wiki:
     end
     CreateCategoriesAndButtons()
 
-
-
     -- Test = {
     --     Categories = {'PETR', 'DANI', 'MooN'},
     --     Poses = {
@@ -632,4 +544,110 @@ You can find all races and body types on the BG3 Community Wiki:
     --         MooN = {'Kiss', ':xd:'}
     --     }
     -- }
+end
+
+
+
+function BoneZoneAtt(p)
+    p:AddSeparatorText('Attachies')
+
+    E.btnGetDaggers = p:AddButton([[Get Daniela's daggers]])
+        UI:Config(E.btnGetDaggers, {
+            OnClick = function(e)
+                Ch.GetDaggers:SendToServer({})
+            end
+        })
+
+
+
+    E.inputAttachItem = p:AddInputText('')
+    E.inputAttachItem.SameLine = false
+
+
+
+    E.checkAttachies = p:AddCheckbox('')
+        UI:Config(E.checkAttachies, {
+            SameLine = true,
+            OnChange = function(e)
+                if not _GLL.States.inPhotoMode then e.Checked = false return end
+                tickAttach(e, 'Main')
+                SaveAttachState(getSelectedDummy())
+            end
+        })
+
+
+
+    p:AddText('Main hand').SameLine = true
+
+
+
+    E.slAttachScale = p:AddDrag('', 1, 0.001, 1000, 1)
+        UI:Config(E.slAttachScale, {
+            OnChange = function(e)
+                if not _GLL.States.inPhotoMode then e.Value = {1,0,0,0} return end
+                ScaleAttachment('Main', e.Value[1]/100)
+                SaveAttachState(getSelectedDummy())
+            end
+        })
+
+
+
+    p:AddDummy(40,0).SameLine = true
+    p:AddText('Main scale').SameLine = true
+
+
+
+    E.inputAttachItemOff = p:AddInputText('')
+    E.inputAttachItemOff.SameLine = false
+
+
+
+    E.checkAttachiesOff = p:AddCheckbox('')
+    UI:Config(E.checkAttachiesOff, {
+        SameLine = true,
+        OnChange = function(e)
+            if not _GLL.States.inPhotoMode then e.Checked = false return end
+            tickAttach(e, 'Off')
+            SaveAttachState(getSelectedDummy())
+        end
+    })
+
+
+
+    p:AddText('Off hand').SameLine = true
+
+
+
+    E.slAttachScaleOff = p:AddDrag('', 1, 0.001, 1000, 1)
+        UI:Config(E.slAttachScaleOff, {
+            OnChange = function(e)
+                if not _GLL.States.inPhotoMode then e.Value = {1,0,0,0} return end
+                ScaleAttachment('Off', e.Value[1]/100)
+                SaveAttachState(getSelectedDummy())
+            end
+        })
+
+    p:AddDummy(40,0).SameLine = true
+    p:AddText('Off scale').SameLine = true
+
+    p:AddText('Dummy_R/L_Hand bones to control item position')
+
+    p:AddSeparatorText('How to use')
+
+    local inputGuide = p:AddInputText('w')
+    inputGuide.Multiline = true
+    inputGuide.ReadOnly = true
+    inputGuide.ItemWidth = 800
+    inputGuide.Text = [[1. Verify in MCM what are your keybinds for the attachments.
+2. Create/drop your object on the floor.
+3. Press "Get Daniela's Daggers", you will receive two invisible weapons.
+4. Equip them and unseathe them with U key.
+5. Enter photomode, verify in Bone Zone tab
+     that you're selecting your character in the dummy dropdown.
+6. Hover your cursor over the object and press the keys you set in MCM.
+7. The name of the object will appear in the attachies,
+     check the corresponding box and it will equip.
+8. Use the scale sliders if you wish to.
+9. Position with Dummy_R/L_Hand bones.]]
+
 end

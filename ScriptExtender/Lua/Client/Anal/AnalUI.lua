@@ -8,6 +8,8 @@ local LightingPresets = {}
 
 
 function Anal3Tab(p)
+    p:AddSeparatorText('Basic controls over atmosphere and lighting')
+
     local CHILD_WIN_SIZE = {554, 200}
     local winLtnFav
     local winAtmFav
@@ -22,7 +24,7 @@ function Anal3Tab(p)
             OnClick = function(e)
                 SelectAtmosphereAndLightingFromCurrentTrigger()
             end,
-            Tooltip = [[       Select level's atmosphere and lighting. It also selects when you open the window]]
+            Tooltip = [[       Select level's atmosphere and lighting. It also selects when you open the window		]]
         })
 
     E.grpBlocked = p:AddGroup('Blocked')
@@ -249,6 +251,9 @@ function Anal3Tab(p)
 
 
 
+    p:AddDummy(0, 50)
+
+
     p:AddSeparatorText('Atmosphere')
 
 
@@ -370,43 +375,12 @@ function Anal3Tab(p)
     end
 
 
-
-    p:AddSeparatorText('Parameters')
-
-
-    E.btnApplyParam = p:AddButton('Apply')
-        UI:Config(E.btnApplyParam, {
-            OnClick = function(e)
-                Anl.ApplyParameters('All')
-            end
-        })
+end
 
 
 
-    E.btnResetCLTN = p:AddButton('Reset lighting')
-        UI:Config(E.btnResetCLTN, {
-            SameLine = true,
-            OnClick  = function()
-            	Anl.ResetValues('Lighting')
-            end,
-            OnRightClick = function()
-            	Anl.ResetValues('Lighting', true)
-            end
-        })
-
-
-
-    E.btnResetCATM = p:AddButton('Reset atmosphere')
-        UI:Config(E.btnResetCATM, {
-            SameLine = true,
-            OnClick  = function()
-            	Anl.ResetValues('Atmosphere')
-            end,
-            OnRightClick = function()
-            	Anl.ResetValues('Atmosphere', true)
-            end
-        })
-
+function AnalParamsTab(p)
+    p:AddSeparatorText('Advanced controls over atmosphere and lighting')
 
 
     function SaveAsPreset(fileName, type_)
@@ -444,18 +418,94 @@ function Anal3Tab(p)
 
 
 
-    local collapsePreset = p:AddCollapsingHeader('Preset manager')
+    local ltnUuid = LTN_Templates['LTN_CIN_Laezel_ROM_EV11_Dawn']
+    local atmUuid = ATM_Templates['ATM_CIN_WLD_Crash_Beach_FakeNight_01']
+
+
+    local Ltn = Resource:GetResource(ltnUuid, 'Lighting')
+    local Atm = Resource:GetResource(atmUuid, 'Atmosphere')
+
+    Anl.CurrentLighting   = UI:SelectedOpt(E.comboLighting)
+    Anl.CurrentAtmosphere = UI:SelectedOpt(E.comboAtmosphere)
 
 
 
-    E.inputPresetNameLighting = collapsePreset:AddInputText('')
+    E.btnApplyParam = p:AddButton('Apply')
+        UI:Config(E.btnApplyParam, {
+            OnClick = function(e)
+                Anl.ApplyParameters('All')
+            end
+        })
+
+
+
+    E.btnResetCLTN = p:AddButton('Reset lighting')
+        UI:Config(E.btnResetCLTN, {
+            SameLine = true,
+            OnClick  = function()
+                Anl.ResetValues('Lighting')
+            end,
+            OnRightClick = function()
+                Anl.ResetValues('Lighting', true)
+            end
+        })
+
+
+
+    E.btnResetCATM = p:AddButton('Reset atmosphere')
+        UI:Config(E.btnResetCATM, {
+            SameLine = true,
+            OnClick  = function()
+                Anl.ResetValues('Atmosphere')
+            end,
+            OnRightClick = function()
+                Anl.ResetValues('Atmosphere', true)
+            end
+        })
+
+
+    p:AddText([[Right click on any parameter will reset it]])
+
+
+    p:AddDummy(0, 20)
+    p:AddSeparatorText('Parameters')
+
+
+    -- p:AddImage('a272351b-591f-35fc-39aa-b9aa76de85ee', {2048, 2048})
+
+    local collapseLighting = p:AddCollapsingHeader('Lighting')
+    collapseLighting.DefaultOpen = false
+
+
+    p:AddDummy(0, 50)
+    p:AddSeparator()
+
+    local collapseAtmosphere = p:AddCollapsingHeader('Atmosphere')
+    collapseAtmosphere.DefaultOpen = false
+
+
+    Anl.CurrentLighting   = UI:SelectedOpt(E.comboLighting)
+    Anl.CurrentAtmosphere = UI:SelectedOpt(E.comboAtmosphere)
+
+    Anl.CreateParameterControls(Ltn, collapseLighting)
+    Anl.CreateParameterControls(Atm, collapseAtmosphere)
+
+
+
+
+
+    p:AddDummy(0, 50)
+    p:AddSeparatorText('Preset manager')
+
+
+    E.inputPresetNameLighting = p:AddInputText('')
         UI:Config(E.inputPresetNameLighting, {
             Text = ''
         })
 
 
 
-    E.btnSavePresetLighting = collapsePreset:AddButton('Save lighting')
+    E.btnSavePresetLighting = p:AddButton('Save lighting')
         UI:Config(E.btnSavePresetLighting, {
             SameLine  = true,
             OnClick   = function(e)
@@ -478,7 +528,7 @@ function Anal3Tab(p)
 
 
 
-    E.colPresetsLighting = collapsePreset:AddTree('Lighting presets')
+    E.colPresetsLighting = p:AddTree('Lighting presets')
         UI:Config(E.colPresetsLighting, {})
 
 
@@ -499,14 +549,14 @@ function Anal3Tab(p)
 
 
 
-    E.inputPresetNameAtmosphere = collapsePreset:AddInputText('')
+    E.inputPresetNameAtmosphere = p:AddInputText('')
         UI:Config(E.inputPresetNameAtmosphere, {
-            Text      = ''
+            Text = ''
         })
 
 
 
-    E.btnSavePresetAtmosphere = collapsePreset:AddButton('Save atmosphere')
+    E.btnSavePresetAtmosphere = p:AddButton('Save atmosphere')
         UI:Config(E.btnSavePresetAtmosphere, {
             SameLine  = true,
             OnClick   = function(e)
@@ -530,7 +580,7 @@ function Anal3Tab(p)
 
 
 
-    E.colPresetsAtmosphere = collapsePreset:AddTree('Atmosphere Presets')
+    E.colPresetsAtmosphere = p:AddTree('Atmosphere Presets')
         UI:Config(E.colPresetsAtmosphere, {})
 
 
@@ -547,46 +597,5 @@ function Anal3Tab(p)
     else
         AtmospherePresets = {}
     end
-
-
-    p:AddSeparator()
-
-
-    p:AddBulletText([[Don't forget to press Select current atmosphere and lighting
-if you haven't selected any Lighting or Atmosphere]])
-
-    p:AddBulletText([[Right click on any parameter will reset it]])
-
-
-
-
-	local ltnUuid = LTN_Templates['LTN_CIN_Laezel_ROM_EV11_Dawn']
-	local atmUuid = ATM_Templates['ATM_CIN_WLD_Crash_Beach_FakeNight_01']
-
-
-	local Ltn = Resource:GetResource(ltnUuid, 'Lighting')
-	local Atm = Resource:GetResource(atmUuid, 'Atmosphere')
-
-	Anl.CurrentLighting   = UI:SelectedOpt(E.comboLighting)
-	Anl.CurrentAtmosphere = UI:SelectedOpt(E.comboAtmosphere)
-
-
-	p:AddSeparatorText('Parameters')
-
-
-    -- p:AddImage('a272351b-591f-35fc-39aa-b9aa76de85ee', {2048, 2048})
-
-	local collapseLighting = p:AddCollapsingHeader('Lighting')
-	collapseLighting.DefaultOpen = true
-
-	local collapseAtmosphere = p:AddCollapsingHeader('Atmosphere')
-	collapseAtmosphere.DefaultOpen = false
-
-
-	Anl.CurrentLighting   = UI:SelectedOpt(E.comboLighting)
-	Anl.CurrentAtmosphere = UI:SelectedOpt(E.comboAtmosphere)
-
-	Anl.CreateParameterControls(Ltn, collapseLighting)
-	Anl.CreateParameterControls(Atm, collapseAtmosphere)
 
 end

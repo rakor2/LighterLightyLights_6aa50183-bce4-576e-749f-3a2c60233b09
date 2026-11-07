@@ -18,33 +18,33 @@ nameIndex = 0
 
 
 --- TBD: Remove these
-E = {
-    slIntLightType,
-    pickerLightColor,
-    slLightIntensity,
-    slLightTemp,
-    slLightRadius,
-    slLightOuterAngle,
-    slLightInnerAngle,
-    checkLightFill,
-    checkLightChannel,
-    slLightScattering,
-    slLightEdgeSharp,
-}
+-- E = {
+--     slIntLightType,
+--     pickerLightColor,
+--     slLightIntensity,
+--     slLightTemp,
+--     slLightRadius,
+--     slLightOuterAngle,
+--     slLightInnerAngle,
+--     checkLightFill,
+--     checkLightChannel,
+--     slLightScattering,
+--     slLightEdgeSharp,
+-- }
 
-ER = {
-    btnLightIntensityReset,
-    btnLightTempReset,
-    btnLightRadiusReset,
-    btnLightOuterReset,
-    btnLightInnerReset,
-    btnLightScatterReset,
-    btnLightSharpReset,
-}
+-- ER = {
+--     btnLightIntensityReset,
+--     btnLightTempReset,
+--     btnLightRadiusReset,
+--     btnLightOuterReset,
+--     btnLightInnerReset,
+--     btnLightScatterReset,
+--     btnLightSharpReset,
+-- }
 
+ER = {}
 
-
-local OPENQUESTIONMARK = false
+-- local OPENQUESTIONMARK = false
 IMGUI:AntiStupiditySystem()
 
 
@@ -60,7 +60,7 @@ function LLMCM(mt2)
 
     mw = Ext.IMGUI.NewWindow(funnyModNameXd)
     mw.Font = 'Font'
-    mw.Open = OPENQUESTIONMARK
+    mw.Open = Settings.OPENQUESTIONMARK
     mw.Closeable = true
     ViewportSize = Ext.IMGUI.GetViewportSize()
     mw:SetPos({ViewportSize[1] / 6, ViewportSize[2] / 10})
@@ -68,7 +68,7 @@ function LLMCM(mt2)
         mw:SetSize({670, 710})
         COMBO_WIDTH = 565
     else
-        mw:SetSize({860, 1000})
+        mw:SetSize({770, 1000})
         COMBO_WIDTH = 556
     end
     mw.AlwaysAutoResize = false
@@ -117,7 +117,9 @@ function LLMCM(mt2)
                     CreateLightNumberNotification()
                 end
 
-                if Mods.Mazzle_Docs then
+                Settings:Save()
+
+                if Mods.Mazzle_Docs and API and API.Rebuild then
                     initMazzleColors()
                     API.Rebuild('LL2', 'Lighty Lights Elucidator')
                 end
@@ -130,7 +132,6 @@ function LLMCM(mt2)
                     --     return
                     -- end
                 end
-                Settings:Save()
             end
         })
 
@@ -169,67 +170,133 @@ function MainWindow(mw)
     end
 
 
-    mainTabBar = mw:AddTabBar('LL')
-    E.main2 = mainTabBar:AddTabItem('Main')
-
-
     --- idk wtf is going on, it's just can keep up with initizlizations or something
     if gizmoLibError then
-        local txt = E.main2:AddText('IF YOU SEE THIS TRY PUTTING LIGHTY LIGHTS MUCH LOVER THAN GIZMOLIB')
+        local txt = E.tabItemMain:AddText('IF YOU SEE THIS TRY PUTTING LIGHTY LIGHTS MUCH LOWER THAN GIZMOLIB')
         return
     end
 
 
-    MainTab(E.main2)
 
-    -- E.anal2Tab = mainTabBar:AddTabItem('AnL')
-    -- Anal2Tab(E.anal2Tab)
+    local mainTabBar = mw:AddTabBar('LL')
 
-    E.anl3Tab = mainTabBar:AddTabItem('AnL2')
-    Anal3Tab(E.anl3Tab)
 
-    E.betterPM = mainTabBar:AddTabItem('PM')
-    BetterPMTab(E.betterPM)
+    -- Lights
+    E.tabItemLL = mainTabBar:AddTabItem('Lighty Lights')
 
-    E.boneZone = mainTabBar:AddTabItem('Bone Zone')
-    BoneZoneTab(E.boneZone)
+    E.barMain = E.tabItemLL:AddTabBar('Create')
 
-    E.origin2PointTab = mainTabBar:AddTabItem('Origin Point')
-    Origin2PointTab(E.origin2PointTab)
 
-    E.goboTab = mainTabBar:AddTabItem('Gobo')
-    Gobo2Tab(E.goboTab)
+    E.tabItemMain = E.barMain:AddTabItem('Lights')
+    MainTab(E.tabItemMain)
 
-    E.utilsTab = mainTabBar:AddTabItem('Useful')
-    Utils2Tab(E.utilsTab)
+    E.tabItemOP = E.barMain:AddTabItem('Origin Point')
+    Origin2PointTab(E.tabItemOP)
 
-    saverTab = mainTabBar:AddTabItem('Saver')
-    Saver2Tab(saverTab)
+    E.tabItemGobo = E.barMain:AddTabItem('Gobo')
+    Gobo2Tab(E.tabItemGobo)
+
+    E.tabItemSaver = E.barMain:AddTabItem('Saver')
+    Saver2Tab(E.tabItemSaver)
+
+
+
+    -- Anl
+    E.tabItemAnlM = mainTabBar:AddTabItem('AnL')
+
+    E.barAnl = E.tabItemAnlM:AddTabBar('AnL2')
+
+    E.tabItemAnl = E.barAnl:AddTabItem('Basic')
+    Anal3Tab(E.tabItemAnl)
+
+    E.tabItemAnlParams = E.barAnl:AddTabItem('Advanced')
+    AnalParamsTab(E.tabItemAnlParams)
+
+
+
+
+    -- PM
+    E.tabItemPM = mainTabBar:AddTabItem('Photo Mode')
+    E.tabItemPM.IDContext = 'ddwd'
+
+    E.barPM = E.tabItemPM:AddTabBar('xd')
+    E.barPM.IDContext = 'klamdlkamdwdwdwd'
+
+    E.tabItemDum = E.barPM:AddTabItem('Dummies')
+    E.tabItemDum.IDContext = 'klamdlkamwd'
+    BetterPMDummy(E.tabItemDum)
+
+    E.tabItemEnb = E.barPM:AddTabItem('Environment')
+    E.tabItemEnb.IDContext = 'klddddddddddddamdlkamwd'
+    BetterPMTab(E.tabItemEnb)
+
+    E.tabItemCam = E.barPM:AddTabItem('Camera')
+    E.tabItemCam.IDContext = 'kldddwdwdwddddddddddamdlkamwd'
+    BetterPMCam(E.tabItemCam)
+
+
+
+
+    -- Bone Zone
+    E.tabItemBZM = mainTabBar:AddTabItem('Bone Zone')
+
+    E.barBZ = E.tabItemBZM:AddTabBar('awdawdawdawd')
+
+    if not Settings.readTheRules then
+        E.tabItemBZA = E.barBZ:AddTabItem('User agreement')
+        BoneZoneAgree(E.tabItemBZA)
+    end
+
+    E.tabItemBZ = E.barBZ:AddTabItem('Boner')
+    E.tabItemBZ.Visible = Settings.readTheRules
+    BoneZoneTab(E.tabItemBZ)
+
+    E.tabItemBZSaved = E.barBZ:AddTabItem('Pose Manager')
+    E.tabItemBZSaved.Visible = Settings.readTheRules
+    BoneZoneSaved(E.tabItemBZSaved)
+
+    E.tabItemBZAtt = E.barBZ:AddTabItem('Attachies')
+    E.tabItemBZAtt.Visible = Settings.readTheRules
+    BoneZoneAtt(E.tabItemBZAtt)
+
+
+
+    -- Useful
+    E.tabItemUse = mainTabBar:AddTabItem('Useful2')
+
+    E.barUse = E.tabItemUse:AddTabBar('xd3dddddddddddddddddddddd')
+
+    E.tabUtils = E.barUse:AddTabItem('Useful')
+    Utils2Tab(E.tabUtils)
+
+    E.tabUtilsStatus = E.barUse:AddTabItem('Status manager')
+    UsefulStatus(E.tabUtilsStatus)
+
+    E.tabUtilsTodo = E.barUse:AddTabItem('Todo')
+    Todo2App(E.tabUtilsTodo)
+
+    -- E.tabUtilsDocs = E.barUse:AddTabItem('Docs')
+    -- Docs2Tab(E.tabUtilsDocs)
+
+
+
 
     E.settingsTab = mainTabBar:AddTabItem('Settings')
     Settings2Tab(E.settingsTab)
-
-
-    E.todoTab = mainTabBar:AddTabItem('Todo')
-    Todo2App(E.todoTab)
-
-
-    E.docsTab = mainTabBar:AddTabItem('Docs')
-    Docs2Tab(E.docsTab)
 
 
     function Garbo2Floats()
         if Settings.showFloats then
             E.mainMenu = mw:AddMainMenu('awdawd')
             if not gizmoLibError then
-                AddTabMenuItem('Main',         E.main2)
-                AddTabMenuItem('AnL 2',        E.anl3Tab)
+                AddTabMenuItem('Lights',       E.tabItemMain)
+                AddTabMenuItem('AnL',          E.anl3Tab)
                 AddTabMenuItem('PM',           E.betterPM)
                 AddTabMenuItem('Bone Zone',    E.boneZone)
                 AddTabMenuItem('Origin Point', E.origin2PointTab)
                 AddTabMenuItem('Gobo',         E.goboTab)
                 AddTabMenuItem('Useful',       E.utilsTab)
-                AddTabMenuItem('Saver',        saverTab)
+                AddTabMenuItem('Saver',        E.saverTab)
                 AddTabMenuItem('Settings',     E.settingsTab)
                 AddTabMenuItem('Todo',         E.todoTab)
                 AddTabMenuItem('Docs',         E.docsTab)
@@ -248,40 +315,51 @@ function MainWindow(mw)
 
 
     function FunnyStuff()
-        local AllElements = {}
+        local AllWidgets = {}
 
-        for _, element in pairs(E) do
-            table.insert(AllElements, element)
+        for _, widget in pairs(E) do
+            table.insert(AllWidgets, widget)
         end
 
-        for _, element in pairs(ER) do
-            table.insert(AllElements, element)
+        for _, widget in pairs(ER) do
+            table.insert(AllWidgets, widget)
         end
 
+        for _, widget in pairs(AllWidgets) do
+            widget.OnHoverEnter = function()
+                local elementType = tostring(widget):match('^(%w+)')
 
-        for _, element in pairs(AllElements) do
-            element.OnHoverEnter = function(e)
-                local elementType = tostring(e):match('^(%w+)')
                 if elementType == 'Button' then
-                    Imgui.FadeColor(e, 'Button', Style.Colors.buttonHovered, Style.Colors.button, Settings.fadeTime)
+                    -- Imgui.FadeColor(widget, 'Button', Style.Colors.buttonHovered, Style.Colors.button, Settings.fadeTime)
+
                 elseif elementType == 'Checkbox' then
-                    Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, Settings.fadeTime)
+                    -- Imgui.FadeColor(widget, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, Settings.fadeTime)
+
                 elseif elementType == 'SliderScalar' or elementType == 'SliderInt' then
-                    Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, Settings.fadeTime)
-                    Imgui.FadeColor(e, 'FrameBgHovered', Style.Colors.frameBgHovered, Style.Colors.frameBgHovered, Settings.fadeTime)
+                    -- Imgui.FadeColor(widget, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, Settings.fadeTime)
+                    -- Imgui.FadeColor(widget, 'FrameBgHovered', Style.Colors.frameBgHovered, Style.Colors.frameBgHovered, Settings.fadeTime)
+
                 elseif elementType == 'InputText' then
-                    Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, Settings.fadeTime)
+                    -- Imgui.FadeColor(widget, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, Settings.fadeTime)
+
                 elseif elementType == 'ColorEdit' then
-                    Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, Settings.fadeTime)
+                    -- Imgui.FadeColor(widget, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, Settings.fadeTime)
+
                 elseif elementType == 'Combo' then
-                    Imgui.FadeColor(e, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, Settings.fadeTime)
+                    -- Imgui.FadeColor(widget, 'FrameBg', Style.Colors.frameBgHovered, Style.Colors.frameBg, Settings.fadeTime)
+
                 elseif elementType == 'TabItem' then
-                    Imgui.FadeColor(e, 'TabActive', Style.Colors.tabHovered, Style.Colors.tabActive, Settings.fadeTime)
-                    -- Imgui.FadeColor(e, 'TabHovered', Style.Colors.tabHovered, Style.Colors.tab, Settings.fadeTime)
-                    Imgui.FadeColor(e, 'Tab', Style.Colors.tabHovered, Style.Colors.tab, Settings.fadeTime)
+                    -- Imgui.FadeColor(widget, 'TabActive', Style.Colors.tabHovered, Style.Colors.tabActive, Settings.fadeTime)
+                    -- Imgui.FadeColor(widget, 'Tab', Style.Colors.tabHovered, Style.Colors.tab, Settings.fadeTime)
+
                 elseif elementType == 'CollapsingHeader' then
-                    Imgui.FadeColor(e, 'Header', Style.Colors.headerHovered, Style.Colors.header, Settings.fadeTime)
+                    -- Imgui.FadeColor(widget, 'Header', Style.Colors.headerHovered, Style.Colors.header, Settings.fadeTime)
+
                 end
+
+                -- DPrint(widget.Label)
+                -- DPrint(widget.Handle)
+
             end
         end
     end
@@ -290,7 +368,7 @@ function MainWindow(mw)
         FunnyStuff()
         ButtonSizes()
         Settings:Load()
-        Garbo2Floats()
+        -- Garbo2Floats()
     end
 
 end
@@ -317,6 +395,7 @@ function MainTab(p)
         [[Use Origin point]],
         [[Don't use Point light for everything]],
         [[Save lights to try a different set up, if you don't like it, you can just load back]],
+        [[To place any object in hands use Attachies in Bone Zone tab]],
     }
 
     local rngMax2 = #Xdddd
@@ -365,8 +444,8 @@ function MainTab(p)
             SameLine = true,
             OnClick  = function()
                 local lt = 'Point'
-                if lightType == 'Spotlight'   then lt = 'Spot' end
-                if lightType == 'Directional' then lt = 'Direction' end
+                if _GLL.selectedLightType == 'Spotlight'   then lt = 'Spot' end
+                if _GLL.selectedLightType == 'Directional' then lt = 'Direction' end
 
                 local Template = Ext.Template.GetRootTemplate('aca228c3-f0c5-41e0-bc00-d11ddee12ed0')
                 Template.LightType = lt
@@ -376,7 +455,7 @@ function MainTab(p)
                 CreateLight()
                 -- E.checkGroup.Checked = false
             end,
-            Tooltip = [[    Creates a light with selected type]]
+            Tooltip = [[    Creates a light with selected type		]]
         })
 
     E.grpErr = p:AddGroup('Error')
@@ -393,7 +472,7 @@ function MainTab(p)
                 -- E.checkGroup.Checked = _GLL.LightsToInclude[getSelectedUuid()] or false
                 SelectLight()
             end,
-            Tooltip = [[    A list of all created lights]]
+            Tooltip = [[    A list of all created lights		]]
         })
 
 
@@ -421,7 +500,7 @@ function MainTab(p)
                 if not _GLL.selectedUuid then return end
                 prevOptionBtn()
             end,
-            Tooltip = [[    Previous light]]
+            Tooltip = [[    Previous light		]]
         })
 
 
@@ -449,7 +528,7 @@ function MainTab(p)
                 if not _GLL.selectedUuid then return end
                 nextOptionBtn()
             end,
-            Tooltip = [[    Next light]]
+            Tooltip = [[    Next light		]]
         })
 
 
@@ -579,7 +658,7 @@ function MainTab(p)
             OnChange = function(e)
                 windowNotification.Visible = E.checkSelectedLightNotification.Checked
             end,
-            Tooltip = [[    A small popup that show currently selected light]]
+            Tooltip = [[    A small popup that show currently selected light		]]
         })
 
 
@@ -621,7 +700,7 @@ function MainTab(p)
                 if not _GLL.selectedUuid then return end
                 toggleLightBtn()
             end,
-            Tooltip = [[    Toggles selected light]]
+            Tooltip = [[    Toggles selected light		]]
         })
 
 
@@ -663,7 +742,7 @@ function MainTab(p)
                 if not _GLL.selectedUuid then return end
                 toggleAllLightsBtn()
             end,
-            Tooltip = [[    Toggles all lights]]
+            Tooltip = [[    Toggles all lights		]]
         })
 
 
@@ -675,7 +754,7 @@ function MainTab(p)
                 if not _GLL.selectedUuid then return end
                 ToggleMarker(_GLL.markerUuid)
             end,
-            Tooltip = [[    Toggles marker]]
+            Tooltip = [[    Toggles marker		]]
         })
 
 
@@ -688,7 +767,7 @@ function MainTab(p)
                 Ch.MarkerHandler:RequestToServer({}, function(Response)
                 end)
             end,
-            Tooltip = [[    Toggles markers for all lights]]
+            Tooltip = [[    Toggles markers for all lights		]]
         })
 
 
@@ -700,7 +779,7 @@ function MainTab(p)
                 if not _GLL.selectedUuid then return end
                 Ch.MazzleBeam:SendToServer({})
             end,
-            Tooltip = [[    A beam that kinda shows light direction]]
+            Tooltip = [[    A beam that kinda shows light direction		]]
         })
 
 
@@ -709,8 +788,10 @@ function MainTab(p)
     p:AddSeparatorText('Parameters')
     ---------------------------------------------------------
 
-    local txtttt = p:AddText([[Drag sliders (without middle thingy) suppoer Shift + Drag, Alt + Drag, Shift + Alt + Drag]])
-    local txtttt = p:AddText([[Double click to enter value manually]])
+    local txtttt = p:AddText([[    Drag sliders (without middle thingy) support
+    Shift + Drag, Alt + Drag, Shift + Alt + Drag]])
+
+    local txtttt = p:AddText([[    Double click to enter value manually]])
 
     E.collapseParameters = p:AddCollapsingHeader('Main parameters')
     E.collapseParameters.DefaultOpen = true
@@ -761,14 +842,14 @@ function MainTab(p)
                     end
                 end
             end,
-            Tooltip = [[    0 - Point, 1 - Spotlight, 3 - Directional]]
+            Tooltip = [[    0 - Point, 1 - Spotlight, 3 - Directional		]]
         })
 
 
 
     textLightType = E.treeGen:AddText('Type')
         UI:Config(textLightType, {SameLine = true,
-            Tooltip = [[    0 - Point, 1 - Spotlight, 3 - Directional]]})
+            Tooltip = [[    0 - Point, 1 - Spotlight, 3 - Directional		]]})
 
 
 
@@ -905,13 +986,13 @@ function MainTab(p)
             OnChange  = function(e)
                 SetLightChannel(e.Value[1])
             end,
-            Tooltip = [[    What object is affected by light]]
+            Tooltip = [[    What object is affected by light		]]
         })
 
 
 
     textChannel = E.treeGen:AddText('Light channel')
-        UI:Config(textChannel, {SameLine = true, Tooltip = [[    What object is affected by light]]})
+        UI:Config(textChannel, {SameLine = true, Tooltip = [[    What object is affected by light		]]})
 
 
 
@@ -1153,7 +1234,7 @@ function MainTab(p)
                 if not _GLL.selectedUuid then return end
                 Ch.SaveLoadLightPos:SendToServer('SaveAll')
             end,
-            Tooltip = [[    Right click saves position for all lights]]
+            Tooltip = [[    Right click saves position for all lights		]]
         })
 
 
@@ -1169,7 +1250,7 @@ function MainTab(p)
                 if not _GLL.selectedUuid then return end
                 Ch.SaveLoadLightPos:SendToServer('LoadAll')
             end,
-            Tooltip = [[    Right click loads position for all lights]]
+            Tooltip = [[    Right click loads position for all lights		]]
         })
 
 
@@ -1563,7 +1644,7 @@ function MainTab(p)
                 local r = _GLL.RotDragValues[_GLL.selectedUuid]
                 RotateEntityAbs(_GLL.selectedEntity, r[1], r[2], r[3])
             end,
-            Tooltip = [[    Right click resets to 0]]
+            Tooltip = [[    Right click resets to 0		]]
         })
 
 
@@ -1596,7 +1677,7 @@ function MainTab(p)
                 local r = _GLL.RotDragValues[_GLL.selectedUuid]
                 RotateEntityAbs(_GLL.selectedEntity, r[1], r[2], r[3])
             end,
-            Tooltip = [[    Right click resets to 0]]
+            Tooltip = [[    Right click resets to 0		]]
         })
 
 
@@ -1628,7 +1709,7 @@ function MainTab(p)
                 local r = _GLL.RotDragValues[_GLL.selectedUuid]
                 RotateEntityAbs(_GLL.selectedEntity, r[1], r[2], r[3])
             end,
-            Tooltip = [[    Right click resets to 0]]
+            Tooltip = [[    Right click resets to 0		]]
         })
 
 
@@ -1667,7 +1748,7 @@ function MainTab(p)
             OnChange = function(e)
                 SourcePoint(e.Checked)
             end,
-            Tooltip = [[    Origin point is the center of character relative controls]]
+            Tooltip = [[    Origin point is the center of character relative controls		]]
         })
 
 
@@ -1679,7 +1760,7 @@ function MainTab(p)
             OnChange = function(e)
                 SourceCutscene(e.Checked)
             end,
-            Tooltip = [[    Cutscene character is the center of character relative controls]]
+            Tooltip = [[    Cutscene character is the center of character relative controls		]]
         })
 
 
@@ -1691,7 +1772,7 @@ function MainTab(p)
             OnChange = function(e)
                 SourceClient(e.Checked)
             end,
-            Tooltip = [[    Client-side character is the center of character relative controls]]
+            Tooltip = [[    Client-side character is the center of character relative controls		]]
         })
 
 
@@ -1788,4 +1869,17 @@ Ext.RegisterConsoleCommand('lldumpall', function (cmd, ...)
     DDump(_GLL.markerUuid)
     DPrint('nameIndex ----------------------------------------')
     DDump(nameIndex)
+end)
+
+
+
+Ext.RegisterConsoleCommand('ll_open', function()
+    Settings.OPENQUESTIONMARK = true
+    Settings:Save()
+end)
+
+
+Ext.RegisterConsoleCommand('ll_close', function()
+    Settings.OPENQUESTIONMARK = false
+    Settings:Save()
 end)

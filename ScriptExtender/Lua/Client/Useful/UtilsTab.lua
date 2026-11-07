@@ -1,10 +1,7 @@
 function Utils2Tab(p)
-
-
     local function isLightyLight(light)
         return light.Template and light.Template.Name:find('LLL_')
     end
-
 
 
     local WorldLights = {}
@@ -40,6 +37,12 @@ function Utils2Tab(p)
         end
     end
 
+
+
+    p:AddSeparatorText('VFX')
+    -- p:AddDummy(0, 20)
+
+    -- p.DefaultOpen = true
 
 
     E.btnPreplaced = p:AddCheckbox('Disable pre-placed lights')
@@ -92,6 +95,9 @@ function Utils2Tab(p)
         UI:Config(E.checkLightSetup, {
             Checked  = Settings.lightSetupState,
             OnChange = function(e)
+                if Settings.lightSetupState then
+                    e.Checked = true
+                end
                 CharacterLightSetupState(e.Checked)
             end
         })
@@ -108,27 +114,24 @@ function Utils2Tab(p)
 
 
 
+
+
+    p:AddDummy(0, 20)
+    p:AddSeparatorText('Environment')
+
+
+
     E.btnRemoveSurface = p:AddButton('Remove blood puddles')
         UI:Config(E.btnRemoveSurface, {
             OnClick = function(e)
                 Ch.RemoveSurface:SendToServer({})
             end,
-            Tooltip = [[            Removes all blood puddles]]
+            Tooltip = [[            Removes all blood puddles		]]
         })
 
 
 
-    E.btnRemoveCombat = p:AddButton('Disable combat for all characters [savefile persistant]')
-        UI:Config(E.btnRemoveCombat, {
-            OnClick = function(e)
-                Ch.RemoveAllCombat:SendToServer({})
-            end,
-            Tooltip = [[            Do backup savefile before pressing the button]]
-        })
-
-
-
-    E.checkCrowd = p:AddCheckbox('Disable crowd [needs savefile reload]')
+    E.checkCrowd = p:AddCheckbox('[no workies] Disable crowd [needs savefile reload] ')
         UI:Config(E.checkCrowd, {
             Checked = Settings.disableCrowd,
             OnChange = function(e)
@@ -141,6 +144,177 @@ function Utils2Tab(p)
     if Settings.disableCrowd then
         Ch.DisableCrowd:SendToServer(Settings.disableCrowd)
     end
+
+
+
+    E.btnRemoveCombat = p:AddButton('Disable combat for all characters [savefile persistant]')
+        UI:Config(E.btnRemoveCombat, {
+            OnClick = function(e)
+                Ch.RemoveAllCombat:SendToServer({})
+            end,
+            Tooltip = [[        Do backup savefile before pressing the button.
+        It just disables combat, cutscenes and other stuff still going to play]]
+        })
+
+
+end
+
+
+
+
+
+function UsefulStatus(p)
+    p:AddSeparatorText('Status manager thing')
+
+
+    local Blocked = {
+        -- ['6ef1eb35-14e2-4a26-bec4-de1ae3e6dfba'] = true,
+    }
+
+    local AllStatuses = {}
+
+    local function GetAllStatuses()
+        if not next(AllStatuses) then
+            for _, statName in pairs(Ext.Stats.GetStats()) do
+                local Stat = Ext.Stats.Get(statName)
+                if Stat.ModifierList == 'StatusData' and not Blocked[Stat.ModId] then
+                    local name = Ext.Loca.GetTranslatedString(Stat.DisplayName)
+                    if name:find('A Barbarian and a Wizard') or name:find('%%%', 1, true) then
+                        name = 'Unknown'
+                    end
+                    local statName = name .. '_' .. statName
+                    table.insert(AllStatuses, statName)
+                end
+            end
+        end
+        return AllStatuses
+    end
+
+
+
+    function UpdateCurrentStatuses()
+        Imgui.ClearChildren(E.winStatuses)
+
+        OnTicks(10, function()
+            local Statuses = {}
+
+            if _C().StatusContainer then
+                for k, v in pairs(_C().StatusContainer.Statuses) do
+                    table.insert(Statuses, v)
+                end
+
+                for _, status in ipairs(Statuses) do
+                    local selectStatus = E.winStatuses:AddSelectable(status)
+                        UI:Config(selectStatus, {
+                            OnClick = function(e)
+                                Ch.ManageStatus:SendToServer(status)
+                                selectStatus:Destroy()
+                            end,
+                            Tooltip = [[        ]] .. Ext.Loca.GetTranslatedString(Ext.Stats.Get(status).DisplayName)
+                        })
+                end
+            end
+        end)
+
+    end
+
+
+
+    E.comboAllStatuses = p:AddCombo('All available statuses')
+        UI:Config(E.comboAllStatuses, {
+            Options = GetAllStatuses(),
+            SelectedIndex = 0,
+            OnChange = function(e)
+                local status = UI:SelectedOpt(e):match("_(.*)")
+                Ch.ManageStatus:SendToServer(status)
+                UpdateCurrentStatuses()
+            end,
+            OnRightClick = function(e)
+                local status = UI:SelectedOpt(e):match("_(.*)")
+                Ch.ManageStatus:SendToServer(status)
+                UpdateCurrentStatuses()
+            end,
+            Tooltip = [[        Names in the list are split with a "_",
+        where the part before "_" is in-game name, and part after is internal name
+
+        You can search by in-game or internal name
+
+        Satus is applied when you click on it in the list
+
+        If it's a first entry, right click on the list to add/remove the status]]
+        })
+
+
+
+    E.inputSearchStatus = p:AddInputText('')
+    E.inputSearchStatus.Hint = 'Search input. Example: WET'
+    E.inputSearchStatus.OnChange = function(e)
+
+        --- TBD: Fix filter options not assigning AllOptions
+        if e.Text == '' then
+            E.comboAllStatuses.Options = GetAllStatuses()
+            return
+        end
+
+        E.comboAllStatuses.Options = UI:FilterOptions(e.Text, E.comboAllStatuses.Options)
+    end
+
+
+
+    E.btnSeachStatus = p:AddButton('Clear')
+        UI:Config(E.btnSeachStatus, {
+            SameLine = true,
+            OnClick = function(e)
+                E.inputSearchStatus.Text = ''
+                E.comboAllStatuses.Options = GetAllStatuses()
+            end
+        })
+
+
+
+    -- E.inputStatus = p:AddInputText('')
+    -- E.inputStatus.Hint = 'WET'
+
+
+
+    -- E.btnAddPixie = p:AddButton('Add/Remove status by name')
+    --     UI:Config(E.btnAddPixie, {
+    --         SameLine = true,
+    --         OnClick = function(e)
+    --             local status = E.inputStatus.Text
+    --             Ch.ManageStatus:SendToServer(status)
+    --             UpdateCurrentStatuses()
+    --         end
+    --     })
+
+
+    p:AddSeparatorText('Current statuses')
+    p:AddText('Hover over a status to see its in-game name')
+    p:AddText('Click on a status to remove it')
+
+    E.winStatuses = p:AddChildWindow('xd')
+    E.winStatuses.Size = {0, 400}
+
+    E.btnGetCurrentStatuses = p:AddButton('Get current statuses')
+        UI:Config(E.btnGetCurrentStatuses, {
+            OnClick = function(e)
+                UpdateCurrentStatuses()
+            end,
+            Tooltip = [[            Statuses get automatically when
+            you switch between characters when the window is opened            ]]
+        })
+
+
+
+    p:AddSeparatorText('Useful statuses')
+
+    local x = p:AddInputText('Pixie blessing')
+    x.Text = 'GLO_PIXIESHIELD'
+
+
+    local x = p:AddInputText('Cloud giant strength')
+    x.Text = 'POTION_OF_STRENGTH_CLOUD_GIANT'
+
 
 
     if Settings.degenExtendedScriptExtender then
@@ -160,9 +334,7 @@ function Utils2Tab(p)
                     Ext.GameRenderView.SetLODScale(e.Value[1])
                 end
             })
-
     end
-
 end
 
 
