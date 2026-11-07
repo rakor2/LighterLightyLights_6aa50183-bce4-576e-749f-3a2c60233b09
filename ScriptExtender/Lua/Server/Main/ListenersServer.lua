@@ -41,6 +41,17 @@ Ch.RemoveAllCombat:SetHandler(function()
 end)
 
 
+
+Ch.ManageStatus:SetHandler(function(status)
+    local uuid = _C().Uuid.EntityUuid
+    if Osi.HasAppliedStatus(uuid, status) == 1 then
+        Osi.RemoveStatus(uuid, status)
+    else
+        Osi.ApplyStatus(uuid, status, -1)
+    end
+end)
+
+
 --- Thank you Mazzle for pointing to the right place
 -- Ext.Osiris.RegisterListener('EnteredTrigger', 2, "after", function(character, trigger)
 --     DDump({character, trigger})

@@ -355,6 +355,9 @@ end)
 
 Ext.Entity.OnCreate('ClientControl', function(entity)
     _GLL.lastClientControlUuid = entity and entity and entity.Uuid and entity.Uuid.EntityUuid
+    if mw and mw.Open then
+        UpdateCurrentStatuses()
+    end
 end)
 
 

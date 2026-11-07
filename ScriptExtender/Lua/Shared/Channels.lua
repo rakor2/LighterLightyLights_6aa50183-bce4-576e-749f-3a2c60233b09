@@ -69,6 +69,7 @@ Net:CreateChannels({
 	'RemoveSurface',
 	'RemoveAllCombat',
 	'DisableCrowd',
+	'ManageStatus',
 
 
 	'AnimationPlayed',
