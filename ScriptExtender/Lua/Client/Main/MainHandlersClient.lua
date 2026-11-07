@@ -6,6 +6,8 @@ _GLL.RotDragValues   = {}
 
 DRAG_SENSE = 100
 
+_GLL.selectedLightType = Settings.defaultLightType
+
 
 local EnumFuncType = {
     [0] = 'Linear',
@@ -33,6 +35,9 @@ EnumLighType = {
     [0] = 'Point',
     [1] = 'Spotlight',
     [2] = 'Directional',
+    ['Point'] = 0,
+    ['Spotlight'] = 1,
+    ['Directional'] = 2,
 }
 
 
@@ -127,7 +132,7 @@ end
 
 
 function getDummyOwnerUuid(entity)
-    if entity and entity.Dummy then
+    if entity and entity.Dummy and entity.Dummy.Entity and entity.Dummy.Entity.Uuid then
         local characterUuid = entity.Dummy.Entity.Uuid.EntityUuid
         if characterUuid then
             return characterUuid
@@ -166,7 +171,7 @@ function getSelectedDummyOwnerUuid()
     then
         local entity = _GLL.DummyNameMap[E.cmbBoneDummies.Options[selectedCharacter]]
         if entity then
-            local characterUuid = entity.Dummy.Entity.Uuid.EntityUuid
+            local characterUuid = entity.Dummy.Entity and entity.Dummy.Entity.Uuid and entity.Dummy.Entity.Uuid.EntityUuid
             if characterUuid then
                 return characterUuid
             end
@@ -222,8 +227,8 @@ end
 
 
 function RegisterNewLight(uuid, lightType)
-    DPrint(uuid)
     nameIndex = nameIndex + 1
+    local lightType = lightType or _GLL.selectedLightType
     local name = '+' .. ' ' .. '#' .. nameIndex .. ' ' .. lightType
 
     table.insert(_GLL.LightsUuidNameMap, {
@@ -274,98 +279,101 @@ end
 
 
 
-lightType = Settings.defaultLightType ---TBD: remove this
-
--- local xd = 0
-
 function CreateLight(uuid)
-    AntiSpamOnTicks(10, function()
-        _GLL.States.allowLightCreation = false
-        E.btnCreate2.Disabled = true
+    -- AntiSpamOnTicks(0, function()
+        -- _GLL.States.allowLightCreation = false
+        -- E.btnCreate2.Disabled = true
 
         local Position, source = getSourcePositionCl()
         if not Position then DPrint('No position, type: %s', source) end
 
         local Data = {
             uuid = uuid or nil,
-            lightType = lightType or 'Point',
+            lightType = Settings.defaultLightType or 'Point',
             Position  = Position,
         }
 
+        -- DPrint('pre callback')
+
+
         Ch.CreateLight:RequestToServer(Data, function(Response)
-            _GLL.CreatedLightsServer = Response[1]
-            _GLL.selectedUuid        = Response[2]
-            _GLL.markerUuid          = Response[3]
+            if Response then
+                _GLL.CreatedLightsServer = Response[1]
+                _GLL.selectedUuid        = Response[2]
+                _GLL.markerUuid          = Response[3]
 
-            local s, err = pcall(function()
-                -- xd = xd + 1
-                -- if xd == 5 then
-                --     assert(false)
-                -- end
+                local s, err = pcall(function()
+                    -- xd = xd + 1
+                    -- if xd == 5 then
+                    --     assert(false)
+                    -- end
 
-                if not Response then
-                    _GLL.States.allowLightCreation = true
-                    -- E.btnCreate2.Disabled = false
-                    return
-                end
+                    -- if not Response then
+                        -- _GLL.States.allowLightCreation = true
+                        -- E.btnCreate2.Disabled = false
+                        -- return
+                    -- end
 
-                OnTicks(10 + Settings.lightCreateDelay, function()
-                    _GLL.LightParametersClient[_GLL.selectedUuid] = {}
-                    _GLL.selectedEntity = Ext.Entity.Get(_GLL.selectedUuid)
+                    -- DPrint('callback')
 
+                    OnTicks(1 + Settings.lightCreateDelay, function()
+                        _GLL.LightParametersClient[_GLL.selectedUuid] = {}
+                        _GLL.selectedEntity = Ext.Entity.Get(_GLL.selectedUuid)
 
+                        -- OnTicks(1 + Settings.lightCreateDelay, function()
+                            -- SetLightType(EnumLighType[lightType] or 0)
+                            local lightType = _GLL.selectedLightType
+                            _GLL.LightParametersClient[_GLL.selectedUuid].LightType = EnumLighType[lightType] or 0
+                            _GLL.selectedLightType = lightType
+                        -- end)
 
-                    OnTicks(8 + Settings.lightCreateDelay, function()
-                        local Types = {Spotlight = 1, Directional = 2}
-                        SetLightType(Types[lightType] or 0)
-                        _GLL.selectedLightType = lightType
-                    end)
+                        DPrint(lightType)
+                        RegisterNewLight(_GLL.selectedUuid, lightType)
 
-                    RegisterNewLight(_GLL.selectedUuid, lightType)
-
-                    if Settings.stickToggleOff and Utils.subID and Utils.subID['Stick'] then
-                        E.checkStick.Checked = false
-                        StickToCamera()
-                    end
-
-                    OnTicks(10 + Settings.lightCreateDelay, function()
-                        if Position then
-                            local x, y, z = table.unpack(Position)
-                            UpdateElements(_GLL.selectedUuid)
-                            UpdateTranformInfo(x, y, z, 90, 0, 0)
-                            _GLL.States.allowLightCreation = true
-                            E.btnCreate2.Disabled = false
-                            if Settings.markerOff then ToggleMarker(_GLL.markerUuid) end
-                        else
-                            local txtError = E.grpErr:AddText('An error occured. No position found.')
-                            OnTicks(200, function()
-                                Imgui.ClearChildren(E.grpErr)
-                            end)
-                            Ch.Source:SendToServer(getSourcePositionCl())
+                        if Settings.stickToggleOff and Utils.subID and Utils.subID['Stick'] then
+                            E.checkStick.Checked = false
+                            StickToCamera()
                         end
+
+                        -- OnTicks(1 + Settings.lightCreateDelay, function()
+                            if Position then
+                                local x, y, z = table.unpack(Position)
+                                UpdateElements(_GLL.selectedUuid)
+                                UpdateTranformInfo(x, y, z, 90, 0, 0)
+                                _GLL.States.allowLightCreation = true
+                                E.btnCreate2.Disabled = false
+                                if Settings.markerOff then ToggleMarker(_GLL.markerUuid) end
+                            else
+                                local txtError = E.grpErr:AddText('An error occured. No position found.')
+                                OnTicks(200, function()
+                                    Imgui.ClearChildren(E.grpErr)
+                                end)
+                                Ch.Source:SendToServer(getSourcePositionCl())
+                            end
+                        -- end)
                     end)
                 end)
-            end)
-            if s then
-                Imgui.ClearChildren(E.grpErr)
-            end
-            if err then
-                DPrint('NO LIGTH CREATED NOT XD')
-                local txtError = E.grpErr:AddText('An error occured. The game cant keep up.')
-                DeleteLightJank(Response[2])
-                _GLL.States.allowLightCreation = true
-                E.btnCreate2.Disabled = false
-                DDump(err)
-                OnTicks(200, function()
+                if s then
                     Imgui.ClearChildren(E.grpErr)
-                end)
+                end
+                if err then
+                    DPrint('NO LIGTH CREATED NOT XD')
+                    local txtError = E.grpErr:AddText('An error occured. The game cant keep up.')
+                    DeleteLightJank(Response[2])
+                    -- _GLL.States.allowLightCreation = true
+                    -- E.btnCreate2.Disabled = false
+                    DDump(err)
+                    OnTicks(200, function()
+                        Imgui.ClearChildren(E.grpErr)
+                    end)
+                end
             end
         end)
-        OnTicks(100, function()
-            _GLL.States.allowLightCreation = true
-            E.btnCreate2.Disabled = false
-        end)
-    end)
+        -- OnTicks(10, function()
+        -- _GLL.States.allowLightCreation = true
+        -- E.btnCreate2.Disabled = false
+        -- end)
+    -- end)
     return true
 end
 
@@ -373,10 +381,11 @@ end
 
 --- TBD: remove some DUPLICATIONS HAHAHAHAH GET IT????? LMAOOOOOOOOOOOOOOOOOO
 function DuplicateLight()
-    AntiSpamOnTicks(10, function()
+    if not next(_GLL.LightParametersClient) then CreateLight() return end
+    -- AntiSpamOnTicks(10, function()
         if _GLL.States.allowLightCreation and _GLL.selectedUuid then
-            _GLL.States.allowLightCreation = false
-            E.btnCreate2.Disabled = true
+            -- _GLL.States.allowLightCreation = false
+            -- E.btnCreate2.Disabled = true
 
             local prevoiusUuid = _GLL.selectedUuid
             local OrigLight = _GLL.LightParametersClient[prevoiusUuid]
@@ -387,19 +396,14 @@ function DuplicateLight()
                     if Response then
                         _GLL.CreatedLightsServer = Response[1]
                         _GLL.LightParametersClient[_GLL.selectedUuid] = _GLL.LightParametersClient[_GLL.selectedUuid] or {}
-                        local lightTypeOld = OrigLight.LightType
 
-                        -- if lightTypeOld == 1 then
-                        --    lightTypeOld = 'Spotlight'
-                        -- elseif lightTypeOld == 2 then
-                        --     lightTypeOld = 'Directional'
-                        -- else
-                        --     lightTypeOld = 'Point'
-                        -- end
+                        -- DPrint('Orign type: %s', OrigLight.LightType)
+
+                        local lightTypeOld = OrigLight.LightType
 
                         RegisterNewLight(_GLL.selectedUuid, EnumLighType[lightTypeOld])
 
-                        OnTicks(15, function ()
+                        -- OnTicks(15, function ()
                             _GLL.selectedEntity = Ext.Entity.Get(_GLL.selectedUuid)
 
                             --- TBD: perhaps as a separate function? But what's the point?
@@ -423,7 +427,7 @@ function DuplicateLight()
                             SetLightEdgeSharp(OrigLight.EdgeSharpening)
 
                             SetLightChannel(OrigLight.SliderLightChannelFlag)
-                        end)
+                        -- end)
 
                         if Settings.stickToggleOff and Utils.subID and Utils.subID['Stick'] then
                             E.checkStick.Checked = false
@@ -443,14 +447,14 @@ function DuplicateLight()
                             _GLL.RotDragValues[_GLL.selectedUuid] = {OrigRot[1], OrigRot[2], OrigRot[3]}
                         end
 
-                        OnTicks(25, function ()
+                        -- OnTicks(25, function ()
                             UpdateElements(_GLL.selectedUuid)
                             UpdateTranformInfo(x, y, z, rx, ry, rz)
-                            OnTicks(10, function()
-                                _GLL.States.allowLightCreation = true
-                                E.btnCreate2.Disabled = false
-                            end)
-                        end)
+                            -- OnTicks(10, function()
+                                -- _GLL.States.allowLightCreation = true
+                                -- E.btnCreate2.Disabled = false
+                            -- end)
+                        -- end)
                     end
                 end)
                 if s then
@@ -464,17 +468,17 @@ function DuplicateLight()
                     end)
                     DPrint(Response[2])
                     DeleteLightJank(Response[2])
-                    _GLL.States.allowLightCreation = true
-                    E.btnCreate2.Disabled = false
+                    -- _GLL.States.allowLightCreation = true
+                    -- E.btnCreate2.Disabled = false
                     DDump(err)
                 end
             end)
-            OnTicks(100, function()
-                _GLL.States.allowLightCreation = true
-                E.btnCreate2.Disabled = false
-            end)
+            -- OnTicks(100, function()
+                -- _GLL.States.allowLightCreation = true
+                -- E.btnCreate2.Disabled = false
+            -- end)
         end
-    end)
+    -- end)
 end
 
 
@@ -738,72 +742,79 @@ end
 
 
 
-function SetLightType(value)
+function SetLightType(value, lightUuid)
+    local lightUuid = lightUuid or _GLL.selectedUuid
     local lightEntity = getSelectedLightEntity()
     if lightEntity and lightEntity.LightType and value then
         lightEntity.LightType = value
         if _GLL.selectedUuid
-            and _GLL.LightParametersClient[_GLL.selectedUuid]
+            and _GLL.LightParametersClient[lightUuid]
         then
-            _GLL.LightParametersClient[_GLL.selectedUuid].LightType = value
+            _GLL.LightParametersClient[lightUuid].LightType = value
         end
     end
 end
 
 
 
-function SetLightColor(value)
+function SetLightColor(value, lightUuid)
+    local lightUuid = lightUuid or _GLL.selectedUuid
     local lightEntity = getSelectedLightEntity()
     if lightEntity and lightEntity.Color and value then
         lightEntity.Color = value
-        _GLL.LightParametersClient[_GLL.selectedUuid].Color = value
+        _GLL.LightParametersClient[lightUuid].Color = value
         ColorizeMarkers()
     end
 end
 
 
 
-function SetLightIntensity(value)
-    if value and _GLL.selectedEntity.Effect and _GLL.selectedEntity.Effect.EffectResource then
+function SetLightIntensity(value, lightUuid)
+    local lightUuid = lightUuid or _GLL.selectedUuid
+    if value and _GLL.selectedEntity and _GLL.selectedEntity.Effect and _GLL.selectedEntity.Effect.EffectResource then
         _GLL.selectedEntity.Effect.EffectResource.Constructor.EffectComponents[1].Properties['Appearance.Intensity'].KeyFrames[1].Frames[1].Value = value
         _GLL.selectedEntity.Effect.EffectResource.Constructor.EffectComponents[1].Properties['Appearance.Intensity'].KeyFrames[1].Frames[2].Value = value
-        _GLL.LightParametersClient[_GLL.selectedUuid].Intensity = value
+        _GLL.LightParametersClient[lightUuid].Intensity = value
     end
 end
 
 
 
-function SetLightRadius(value)
-    if value and _GLL.selectedEntity.Effect and _GLL.selectedEntity.Effect.EffectResource then
+function SetLightRadius(value, lightUuid)
+    local lightUuid = lightUuid or _GLL.selectedUuid
+    if value and _GLL.selectedEntity and _GLL.selectedEntity.Effect and _GLL.selectedEntity.Effect.EffectResource then
         _GLL.selectedEntity.Effect.EffectResource.Constructor.EffectComponents[1].Properties['Appearance.Radius'].KeyFrames[1].Frames[1].Value = value
         _GLL.selectedEntity.Effect.EffectResource.Constructor.EffectComponents[1].Properties['Appearance.Radius'].KeyFrames[1].Frames[2].Value = value
-        _GLL.LightParametersClient[_GLL.selectedUuid].Radius = value
+        _GLL.LightParametersClient[lightUuid].Radius = value
     end
 end
 
 
 
-function SetLightOuterAngle(value)
+function SetLightOuterAngle(value, lightUuid)
+    local lightUuid = lightUuid or _GLL.selectedUuid
     local lightEntity = getSelectedLightEntity()
     if lightEntity and value then
         lightEntity.SpotLightOuterAngle = value
-        _GLL.LightParametersClient[_GLL.selectedUuid].SpotLightOuterAngle = value
+        _GLL.LightParametersClient[lightUuid].SpotLightOuterAngle = value
     end
 end
 
 
 
-function SetLightInnerAngle(value)
+function SetLightInnerAngle(value, lightUuid)
+    local lightUuid = lightUuid or _GLL.selectedUuid
     local lightEntity = getSelectedLightEntity()
     if lightEntity and value then
         lightEntity.SpotLightInnerAngle = value
-        _GLL.LightParametersClient[_GLL.selectedUuid].SpotLightInnerAngle = value
+        _GLL.LightParametersClient[lightUuid].SpotLightInnerAngle = value
     end
 end
 
 
 
-function SetLightDirectionalParameters(parameter, value)
+function SetLightDirectionalParameters(parameter, value, lightUuid)
+    local lightUuid = lightUuid or _GLL.selectedUuid
     local lightEntity = getSelectedLightEntity()
     if lightEntity and value then
         if parameter == 'DirectionLightAttenuationEnd' then
@@ -828,26 +839,29 @@ function SetLightDirectionalParameters(parameter, value)
         elseif parameter == 'DirectionLightDimensions' then
             lightEntity.DirectionLightDimensions = value
         end
-        _GLL.LightParametersClient[_GLL.selectedUuid][parameter] = value
+        _GLL.LightParametersClient[lightUuid][parameter] = value
     end
 end
 
 
 
-function SetLightFill(value)
+function SetLightFill(value, lightUuid)
+    local lightUuid = lightUuid or _GLL.selectedUuid
     local lightEntity = getSelectedLightEntity()
     if lightEntity and value then
         lightEntity.Flags = value
-        _GLL.LightParametersClient[_GLL.selectedUuid].Flags = value
+        _GLL.LightParametersClient[lightUuid].Flags = value
     end
 end
 
 
 --- TBD: figure flags
-function SetLightChannel(value)
+function SetLightChannel(value, lightUuid)
+    local lightUuid = lightUuid or _GLL.selectedUuid
     local lightEntity = getSelectedLightEntity()
+    DPrint(lightEntity)
     if lightEntity and value then
-        _GLL.LightParametersClient[_GLL.selectedUuid].SliderLightChannelFlag = value
+        _GLL.LightParametersClient[lightUuid].SliderLightChannelFlag = value
          --- TBD: use enums
 
         textChannel.Label = EnumChannelType[value]
@@ -863,17 +877,19 @@ function SetLightChannel(value)
         -- end
 
         lightEntity.LightChannelFlag = EnumChannelBits[value]
-        _GLL.LightParametersClient[_GLL.selectedUuid].LightChannelFlag = EnumChannelBits[value]
+        _GLL.LightParametersClient[lightUuid].LightChannelFlag = EnumChannelBits[value]
+        DPrint('channel set')
     end
 end
 
 
 
-function SetLightScattering(value)
+function SetLightScattering(value, lightUuid)
+    local lightUuid = lightUuid or _GLL.selectedUuid
     local lightEntity = getSelectedLightEntity()
     if lightEntity and value then
         lightEntity.ScatteringIntensityScale = value
-        _GLL.LightParametersClient[_GLL.selectedUuid].ScatteringIntensityScale = value
+        _GLL.LightParametersClient[lightUuid].ScatteringIntensityScale = value
     end
 end
 
